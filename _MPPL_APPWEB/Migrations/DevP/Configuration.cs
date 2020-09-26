@@ -22,6 +22,7 @@ namespace _MPPL_WEB_START.Migrations.DevP
             CnfigurationHelper.SeedDataNewRoles(context);
 
             CnfigurationHelper.Seed(context);
+            CnfigurationHelper.SeedData(context);
         }
     }
 

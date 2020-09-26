@@ -144,6 +144,7 @@ namespace _MPPL_WEB_START
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextOneprodMes>().WithParameter("nameOrConnectionString", connectionNameStr);
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextOneProdRTV>().WithParameter("nameOrConnectionString", connectionNameStr);
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextOneprodAPS>().WithParameter("nameOrConnectionString", connectionNameStr);
+            builder.RegisterType<DbContextAPP_Dev>().As<IDbContextOneprodQuality>().WithParameter("nameOrConnectionString", connectionNameStr);
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextMasterData>().WithParameter("nameOrConnectionString", connectionNameStr);
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextOneProdENERGY>().WithParameter("nameOrConnectionString", connectionNameStr);
             builder.RegisterType<DbContextAPP_Dev>().As<IDbContextiLOGIS>().WithParameter("nameOrConnectionString", connectionNameStr);

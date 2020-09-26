@@ -19,7 +19,7 @@
     <AssemblyName>_MPPL_WEB_START</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44336</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -491,6 +491,7 @@
     <Compile Include="Areas\ONEPROD\Controllers\QualityController.cs" />
     <Compile Include="Areas\ONEPROD\Controllers\MESController.WIP.cs" />
     <Compile Include="Areas\ONEPROD\Models\ElectrPLV.cs" />
+    <Compile Include="Areas\ONEPROD\Models\JobLabelCheckHub.cs" />
     <Compile Include="Areas\ONEPROD\Models\WorkplaceHub.cs" />
     <Compile Include="Areas\ONEPROD\Models\ProductionLogDataPreparer.cs" />
     <Compile Include="Areas\ONEPROD\ViewModels\APS\ResourceGroupViewModel.cs" />
@@ -937,6 +938,10 @@
     <Compile Include="Migrations\DevP\202008221009503_34P.cs" />
     <Compile Include="Migrations\DevP\202008221009503_34P.designer.cs">
       <DependentUpon>202008221009503_34P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DevP\202009261021233_35P.cs" />
+    <Compile Include="Migrations\DevP\202009261021233_35P.designer.cs">
+      <DependentUpon>202009261021233_35P.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ElectroluxPLB\201904242036100_1K.cs" />
     <Compile Include="Migrations\ElectroluxPLB\201904242036100_1K.Designer.cs">
@@ -1811,6 +1816,7 @@
     <Content Include="Areas\ONEPROD\Views\Quality\ItemParameter.cshtml" />
     <Content Include="Areas\ONEPROD\Views\Quality\ItemMeasurement.cshtml" />
     <Content Include="Areas\OTHER\Views\Test\RebitTest.cshtml" />
+    <Content Include="Areas\ONEPROD\Views\Quality\PrintingLabelInspector.cshtml" />
     <None Include="Properties\PublishProfiles\Publish_Electrolux_PLS %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Grandhome %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_WRP %28local%29.pubxml" />
@@ -4530,6 +4536,9 @@
     <EmbeddedResource Include="Migrations\DevP\202008221009503_34P.resx">
       <DependentUpon>202008221009503_34P.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\DevP\202009261021233_35P.resx">
+      <DependentUpon>202009261021233_35P.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Eldisy2\201903161928109_1K.resx">
       <DependentUpon>201903161928109_1K.cs</DependentUpon>
     </EmbeddedResource>
@@ -4998,7 +5007,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49962</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost</IISUrl>
+          <IISUrl>http://localhost/_MPPL_APPWEB</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

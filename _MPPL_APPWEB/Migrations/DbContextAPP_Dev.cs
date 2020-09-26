@@ -32,6 +32,8 @@ using MDL_ONEPROD.ComponentMes.Etities.MDL_ONEPROD.Model.Scheduling;
 using MDLX_MASTERDATA.Entities;
 using MDL_iLOGIS.ComponentWHDOC.Entities;
 using System.Data.Common;
+using MDL_ONEPROD.ComponentQuality._Interfaces;
+using MDL_ONEPROD.ComponentQuality.Entities;
 
 namespace _MPPL_WEB_START.Migrations
 {
@@ -83,7 +85,8 @@ namespace _MPPL_WEB_START.Migrations
                     IDbContextiLOGIS,
                     IDbContextOneprodWMS,
                     IDbContextPickByLight, 
-                    IDbContextOneProdENERGY
+                    IDbContextOneProdENERGY,
+                    IDbContextOneprodQuality
     {
         public DbContextAPP_Dev() : base("Dev")
         {
@@ -222,6 +225,10 @@ namespace _MPPL_WEB_START.Migrations
         public virtual DbSet<EnergyMeter> EnergyMeters { get; set; }
         public virtual DbSet<EnergyCost> EnergyCosts { get; set; }
         public virtual DbSet<EnergyConsumptionData> EnergyConsumptionDatas { get; set; }
+
+        //---------------MODULE-ONEPROD-QUALITY----------------------------------------
+        public virtual DbSet<ItemParameter> ItemParameters { get; set; }
+        public virtual DbSet<ItemMeasurement> ItemMeasurements { get; set; }
 
         //----------------MODULE-iLOGIS--------------------------------------------------
         public virtual DbSet<Package> Packages { get; set; }

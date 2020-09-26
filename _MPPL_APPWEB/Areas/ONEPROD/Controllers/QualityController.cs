@@ -1,10 +1,12 @@
-﻿using MDL_BASE.Models.IDENTITY;
+﻿using _MPPL_WEB_START.Areas.ONEPROD.Models;
+using MDL_BASE.Models.IDENTITY;
 using MDL_iLOGIS.ComponentConfig.Mappers;
 using MDL_iLOGIS.ComponentWMS.Mappers;
 using MDL_ONEPROD.ComponentQuality._Interfaces;
 using MDL_ONEPROD.ComponentQuality.Entities;
 using MDL_ONEPROD.ComponentQuality.UnitOfWorks;
 using MDL_ONEPROD.ComponentQuality.ViewModels;
+using Microsoft.AspNet.SignalR;
 
 //using MDL_ONEPROD.ComponentMes.ViewModels;
 using System.Collections.Generic;
@@ -73,5 +75,23 @@ namespace _MPPL_WEB_START.Areas.ONEPROD.Controllers
 
             return Json(new { data = list, itemsCount });
         }
+
+
+        //PrintingLabelInspector Methods
+        public ActionResult PrintingLabelInspector()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult TCPBarcodeReceived(string barcode)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<JobLabelCheckHub>();
+            context.Clients.All.broadcastMessage(barcode);
+            //context.Clients.All.broadcastMessage(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            //context.Clients.Group(workstationName).broadcastMessage(barcode);
+            return Json(0, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
