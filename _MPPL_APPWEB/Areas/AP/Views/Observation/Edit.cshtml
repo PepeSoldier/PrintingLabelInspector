@@ -1,0 +1,107 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ObservationEditViewModel
+
+@{
+    ViewBag.Title = "Obserwacja - Dodaj / Edytuj";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal formArea shadow">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.Observation.Id);
+
+                <div class="form-group">
+                    @Html.Label("Określ miejsce którego dotyczy obserwacja", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow"> 
+                                @Html.LabelFor(m => m.Observation.Area, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(m => m.Observation.AreaId, Model.Areas, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(m => m.Observation.Line, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(m => m.Observation.LineId, Model.Lines, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(m => m.Observation.Workstation, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(m => m.Observation.WorkstationId, Model.Workstations, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="formInlineGroup ">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(m => m.Observation.ShiftCode, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(m => m.Observation.ShiftCodeId, Model.ShiftCodes, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Observation.Date, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Observation.Date, "{0:yyyy-MM-dd }", new { @class = "form-control datepicker" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Observation.Problem, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Observation.Problem, "{0:yyyy-MM-dd }", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Observation.Category, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.Observation.CategoryId, Model.Categories, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Observation.Type, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.Observation.Type, EnumHelper.GetSelectList(typeof(MDL_AP.Models.ActionPlan.ObservationTypeEnum), Model.Observation.Type), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Zapisz" class="btn btn-default" />
+                    </div>
+                </div>
+               
+                @if (Model.Observation.Id > 0)
+                {
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Usuń", "Delete", "Observation", new { id = Model.Observation.Id }, new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Skin = "nasaSkin";
+}
+
+<style>
+    .jobListVisible .dValue {
+        font-size: 22px;
+        line-height: 31px;
+    }
+
+    .dValue {
+        font-size: 36px;
+        line-height: 31px;
+    }
+    .dBox {
+        height: 36px;
+    }
+</style>
+
+<div class="" id="content">
+
+</div>
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalR/hubs"></script>
+
+<script type="text/javascript">
+
+    var _port = @Html.Raw(Json.Encode(ViewBag.Port));
+    var _workstationIds = @Html.Raw(Json.Encode(ViewBag.WorkstationIds));
+    var _version = @Html.Raw(Json.Encode(ViewBag.Version));
+
+    $(document).ready(function () {
+        openFullscreen();
+        
+        console.log("preparing the hub");
+        jlmpR = $.connection.jobListMultiPageHub;
+        jlmpR.client.broadcastMessage = function (message) {
+            console.log("signalR");
+            console.log("broadcastMessage: " + message);
+            ChangePage(message);
+        };
+
+        $.connection.hub.start().done(function () {
+            console.log("Hub is started.");
+            jlmpR.server.joinWorkstation(_port);
+        });
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000); // Restart connection after 5 seconds.
+        });
+    });
+
+    $("#barcode").on('change keypress paste input', function () {
+        var text = $(this).val();
+        if (text.length == 20) {
+            console.log(text);
+            ChangePage(0);
+        }
+    });
+
+    var page = 0;
+    function ChangePage(val) {
+        var currentBarcodeVal = $("#barcode").val();
+        links = [
+            "/ONEPROD/JobList/Joblist?port=" + _port + "&workstationIds=" + _workstationIds + "&templateName=STA_I&dropLayout=true&version=" + _version,
+            "/ONEPROD/JobList/Joblist?port=" + _port + "&workstationIds=" + _workstationIds + "&templateName=STA_O&dropLayout=true&version=" + _version,
+        ];
+
+        console.log("ChangePage: " + val);
+
+        let intval = parseInt(val);
+
+        if (intval == -1 || intval == 1) {
+            page += intval;
+            console.log("page%2: " + page % 2);
+
+            var ReturnJson = new JsonHelper().GetData(links[page % 2], {});
+            ReturnJson.done(function (data) {
+                console.log("pilotem");
+                console.log("currentBarcodeVal:" + currentBarcodeVal);
+                $("#content").html(data);
+                $("#barcode").val(currentBarcodeVal);
+            });
+        }
+        else if (intval == 0) {
+            if ($("#joblistColumns").hasClass("jobListVisible")) {
+                $("#joblistColumns").removeClass("jobListVisible");
+                $("#joblistColumns").addClass("jobListInvisible");
+            }
+            else {
+                $("#joblistColumns").addClass("jobListVisible");
+                $("#joblistColumns").removeClass("jobListInvisible");
+            }
+        }
+    }
+
+</script>

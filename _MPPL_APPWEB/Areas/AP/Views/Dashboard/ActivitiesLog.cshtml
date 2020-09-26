@@ -1,0 +1,88 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionActivityLogViewModel
+@using MDL_AP.Models.ActionPlan
+
+@{
+    Layout = null;
+    string color = "#00ff94";
+}
+
+@foreach (ActionActivity aa in Model.ActionActivities)
+{
+    color = "#00ff94";
+    if(aa.ActivityEnum == ActionActivityTypeEnum.LogActivity)
+    {
+        color = "#ffbb00";
+    }
+    
+    <div class="ActionActivityBox" style="border-left-color: @color">
+        <div class="ActionActivityHeader">
+            <span class="badge">@aa.Creator.Initials</span> 
+            <span>@aa.Creator.FullName</span>
+            @if (aa.ActivityEnum == ActionActivityTypeEnum.UserActivity)
+            {
+                <span class="ActionActivityTypeHeader">dodał/a aktywność</span>
+            }
+            else
+            {
+                <span class="ActionActivityTypeHeader">zmienił/a parametry</span>
+            }
+            <span class="AATime raw" style="float: right;" orginal-date="@aa.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")">
+                @aa.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")
+            </span>
+        </div>
+        <div class="ActionActivityDescription ActionActivityLogDescription">
+            <div class="row">
+                <div class="col-3 ActionActivityTypeHeader">Akcja</div>
+                <div class="col-9"><a href="@Url.Action("Show","Action",new { id = aa.ActionId })"><h4>@aa.Action.Title</h4></a></div>
+            </div>
+            <div class="row">
+                <div class="col-3 ActionActivityTypeHeader">Aktywność</div>
+                <div class="col-9">@aa.ActivityDescription</div>
+            </div>
+        </div>
+
+        @if(aa.ActivityEnum == ActionActivityTypeEnum.UserActivity)
+        {
+        <div class="ActionActivityPhotos ActionActivityLogPhotos">
+            <div id="ActionActivityPhotos_Photos">
+                @foreach (MDL_BASE.Models.Base.Attachment p in aa.Attachments)
+                {
+                    if (p.Extension.ToLower() == "jpg")
+                    {
+                        <div class="ActionActivityPhotoFrame" attachmentId="@p.Id">
+                            <a href="@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "B." + p.Extension)" data-fancybox="group_@aa.Id">
+                                <div class="ActionActivityPhoto"><img src='@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "M." + p.Extension)' /></div>
+                            </a>
+                        </div>
+                    }
+                    if (p.Extension.ToLower() == "pdf")
+                    {
+                        <div class="ActionActivityPhotoFrame" attachmentId="@p.Id">
+                            <a href="@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "." + p.Extension)" data-fancybox="group_@aa.Id">
+                                <div class="ActionPhoto"><img src='@Url.Content("~/Content/Images/pdf.png")' /></div>
+                            </a>
+                        </div>
+                    }       
+                }
+            </div>
+        </div>
+        }
+        <div style="clear: both;"></div>
+    </div>
+}
+
+<script type="text/javascript">
+    InitFancyBox3();
+
+    $(document).ready(function () {
+
+        moment.locale('pl');
+        $(".AATime, .raw").each(function (index) {
+            $(this).text(moment($(this).attr("orginal-date"), "YYYY-MM-DD HH:mm:ss").fromNow());
+            $(this).removeClass("raw");
+        });
+
+    });
+
+
+</script>

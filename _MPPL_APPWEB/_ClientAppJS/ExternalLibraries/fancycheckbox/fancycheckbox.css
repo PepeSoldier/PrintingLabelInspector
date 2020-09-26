@@ -1,0 +1,66 @@
+﻿/*body {
+    background: #ecf0f1;
+    color: #8e44ad;
+}*/
+
+.fcbx .center-on-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.fcbx input[type="checkbox"], .fcbx input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.fcbx label {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 10px;
+    line-height: 36px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.fcbx label::before {
+    content: " ";
+    position: absolute;
+    top: 6px;
+    left: 0;
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(66, 86, 102, 0.5) !important;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.fcbx input[type="radio"] + label::before {
+    border-radius: 18px;
+}
+/* Checked */
+.fcbx input[type="checkbox"]:checked + label,
+.fcbx input[type="radio"]:checked + label {
+    padding-left: 10px;
+    color: #fff;
+}
+
+.fcbx input[type="checkbox"]:checked + label::before,
+.fcbx input[type="radio"]:checked + label::before {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 86, 102, 0.25) !important;
+}
+/* Transition */
+.fcbx label, .fcbx label::before {
+    -webkit-transition: .25s all ease;
+    transition: .25s all ease;
+}

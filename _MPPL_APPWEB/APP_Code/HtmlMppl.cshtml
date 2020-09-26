@@ -1,0 +1,88 @@
+﻿@*@inherits System.Web.Mvc.WebViewPage;*@
+@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using MDL_BASE.Models;
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using _MPPL_WEB_START.Areas._APPWEB.ViewModels
+@using XLIB_COMMON.Model;
+
+
+
+@helper DropDownCategory(string name, IEnumerable<object> data, string valueField, string nameField, string categoryField, int selectedValue)
+    {
+        <select id="@name.Replace('.', '_')" name="@name" class="selectpicker" data-style="btn-info" data-live-search="true">
+            @{ List<object> categories = data.Select(x => x.GetPropValue(categoryField)).Distinct().ToList(); }
+
+            @foreach (object category in categories)
+            {
+                <optgroup label="@((string)category)" data-max-options="2">
+                    @foreach (object d in data)
+                    {
+                        if ((string)d.GetPropValue(categoryField) == (string)category)
+                        {
+                            <option data-startDay="6" value="@d.GetType().GetProperty(valueField).GetValue(d)" @((int)d.GetPropValue(valueField) == selectedValue ? "selected" : "")>
+                                @d.GetType().GetProperty(nameField).GetValue(d)
+                            </option>
+                        }
+                    }
+                </optgroup>
+            }
+        </select>
+}
+
+@helper DropDownOneprodMachines(string name, IEnumerable<object> data, string valueField, string nameField, string categoryField, int selectedValue)
+    {
+        <select id="@name.Replace('.', '_')" name="@name" class="selectpicker" data-style="btn-info" data-live-search="true">
+            @{ List<object> categories = data.Select(x => x.GetPropValue(categoryField)).Distinct().ToList();
+                List<object> test = data.Select(x => x.GetPropValue("Name")).Distinct().ToList();
+            }
+
+            @foreach (object category in categories)
+            {
+                <optgroup label="@((string)category)" data-max-options="2">
+                    @foreach (object d in data)
+                    {
+                        if ((string)d.GetPropValue(categoryField) == (string)category)
+                        {
+
+                            <option data-startDay="@d.GetPropValue("ResourceGroupOP.ProdStartDay")"
+                                    value="@d.GetType().GetProperty(valueField).GetValue(d)"
+                                    @((int)d.GetPropValue(valueField) == selectedValue ? "selected" : "")>
+                                @d.GetType().GetProperty(nameField).GetValue(d)
+
+
+                            </option>
+
+                        }
+                    }
+                </optgroup>
+            }
+        </select>
+}
+
+@helper DropDownOneprodManyMachines(string name, IEnumerable<object> data, string valueField, string nameField, string categoryField, int selectedValue)
+    {
+        <select id="@name.Replace('.', '_')" name="@name" class="selectpicker" multiple data-style="btn-info" data-live-search="true">
+            @{ List<object> categories = data.Select(x => x.GetPropValue(categoryField)).Distinct().ToList();
+                List<object> test = data.Select(x => x.GetPropValue("Name")).Distinct().ToList();
+            }
+
+            @foreach (object category in categories)
+            {
+                <optgroup label="@((string)category)">
+                    @foreach (object d in data)
+                    {
+                        if ((string)d.GetPropValue(categoryField) == (string)category)
+                        {
+
+                            <option data-startDay="@d.GetPropValue("ResourceGroupOP.ProdStartDay")"
+                                    value="@d.GetType().GetProperty(valueField).GetValue(d)"
+                                    @((int)d.GetPropValue(valueField) == selectedValue ? "selected" : "")>
+                                @d.GetType().GetProperty(nameField).GetValue(d)
+                            </option>
+                        }
+                    }
+                </optgroup>
+            }
+        </select>
+}

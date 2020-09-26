@@ -1,0 +1,17 @@
+﻿
+
+    <div class="sgcBlock sgcBlockWorkorder sgcBlockSetup sgcBlockWorkorderGradient"
+         batchnumber="{{BatchNumber}} "
+         style="margin-left: {{MarginLeftStr}}px; width: {{WidthStr}}px; background-color: rgb(175,175,175);"
+         data-toggle="popover" title="{{ItemGroupName}}"
+         data-trigger="hover"
+         data-content="ANC$SETUP%Order$0%Qty$0%Tool${{ToolName}}%StartTime${{StartTime}}%EndTime${{EndTime}}">
+
+        {{#ToolId}}
+            <div class="workorderLabel" style="padding-top: 9px;">
+                <div class="WorkorderCaption">{{ToolName}}</div>
+            </div>
+        {{/ToolId}}
+        
+
+    </div>

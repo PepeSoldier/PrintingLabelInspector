@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNet.Identity
+
+    <ul style="position: fixed;top: 0px; right: 10px; z-index: 99999; list-style: none;">
+
+        @if (Request.IsAuthenticated)
+        {
+            if (_MPPL_WEB_START.Properties.Settings.Default.Client == "Eldisy")
+            {
+                @*<li>
+                    <a href='@Url.Action("Edit", "Account", new { area = "IDENTITY", id = User.Identity.GetUserId() })'
+                        class="glyphicon glyphicon-user">
+                        @User.Identity.Name
+                    </a>
+                </li>
+                <li>
+                    <a href='@Url.Action("LogOff", "Account", new { area = "IDENTITY"})'
+                        class="glyphicon glyphicon-log-out">
+                        Wyloguj
+                    </a>
+                </li>*@
+            }
+            else
+            {
+                <li class="dropdown">
+                    <div class="dropdown-toggle topMenuLoginBtn clickable" data-toggle="dropdown">
+                        <span class="fas fa-user"></span>
+                        <span>@User.Identity.Name</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-login">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="fas fa-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>@User.Identity.Name</strong></p>
+                                        <p class="text-left small">@User.Identity.GetUserName()</p>
+                                        <p class="text-left">
+                                            <a href='@Url.Action("Edit", "Account", new { area = "IDENTITY", id = User.Identity.GetUserId() })'
+                                               class="btn btn-primary btn-block btn-sm">Pokaż profil</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="navbar-login navbar-login-session">
+                                    <a href="javascript:document.getElementById('logoutForm').submit()"
+                                       class="btn btn-danger btn-block" style="width: 255px;">
+                                        <i class="fas fa-sign-out-alt fa-rotate-180"></i>
+                                        Wyloguj
+                                    </a>
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="dropdown topMenuLoginBtn">
+                <a href='@Url.Action("Login", "Account", new { area = "IDENTITY" })' class="" style="font-weight: 100;">
+                    <span class="fas fa-sign-in-alt"></span>
+                    <strong>Zaloguj</strong>
+                </a>
+            </li>
+        }
+    </ul>
+

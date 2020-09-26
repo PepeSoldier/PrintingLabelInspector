@@ -1,0 +1,37 @@
+﻿@using GridMvc.Html
+@using MDL_BASE.Models.MasterData;
+
+@{
+    ViewBag.Title = "";
+    Layout = null;
+    List<Workstation> workstations = ViewBag.Workstations;
+    int lenght = workstations.Count + 2;
+    decimal percent = (lenght > 0? (decimal)100 / (decimal)lenght : 100) - 0.1m;
+}
+
+    <div class="workstation" data-workstationName ="Załadunek" style="width: @(percent.ToString().Replace(',','.') + "%");">ZAŁ.</div>
+
+@foreach(Workstation workstation in workstations)
+{
+    if(workstation != null)
+    {
+        <div class="workstation" 
+             data-workstationId ="@workstation.Id" 
+             data-workstationName ="@workstation.Line.Name-@workstation.Name" 
+             style="width: @(percent.ToString("0.00").Replace(',','.') + "%");">
+            @workstation.Name
+        </div>
+    }
+}
+
+
+<script src="~/Areas/iLOGIS/Views/PFEP/TrainRoute.js"></script>
+<script type="text/javascript">
+
+    @*$(document).ready(function () {
+        var trainId = @Html.Raw(Json.Encode(ViewBag.TrainId));
+        var trainRoute = new TrainRoute(trainId);
+        trainRoute.TrainGetCurrentData();
+    });*@
+    
+</script>

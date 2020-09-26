@@ -1,0 +1,413 @@
+﻿@{
+    ViewBag.Title = "PickingListItems";
+    Layout = null;
+}
+<style>
+    @@media screen and (max-height: 380px) and (min-height: 0px) {
+        .pageHeader {
+            /*background: red !important;*/
+        }
+
+        .gridHeader {
+            line-height: 16px !important;
+            font-size: 10px;
+            min-height: 36px !important;
+        }
+
+        #contentView .PlatformName {
+            height: 18px;
+            width: 48px;
+            line-height: 14px;
+            font-size: 14px;
+            padding: 0 3px 0 3px;
+        }
+
+        body {
+            font-size: 14px;
+        }
+        #contentView .btn-bottom {
+            height: 40px !important;
+            line-height: 28px !important;
+            font-size: 14px !important;
+        }
+
+        .platformHeader {
+            line-height: 14px !important;
+            font-size: 14px !important;
+        }
+
+        #contentView .orderRow {
+            height: 50px !important;
+        }
+
+        #contentView .orderRowText {
+            font-size: 14px !important;
+            max-height: 25px;
+        }
+
+        /*#contentView .ItemName {
+            font-size: 8px !important;
+        }*/
+
+        #contentView .ItemCode {
+            font-size: 18px !important;
+        }
+
+        #contentView .StatusIcon {
+            font-size: 25px !important;
+            line-height: 50px  !important;
+        }
+    }
+
+    /*@@media screen and (max-height: 480px) and (min-height: 380px) {
+        .pageHeader {
+            background: pink !important;
+        }
+    }
+    @@media screen and (max-height: 580px) and (min-height: 480px) {
+        .pageHeader {
+            background: orange !important;
+        }
+    }
+    @@media screen and (max-height: 640px) and (min-height: 580px) {
+        .pageHeader {
+            background: yellow !important;
+        }
+    }*/
+
+    .orderItemCode, .QtyPlanned {
+        font-weight: bold;
+        color: #dee5e7;
+        font-size: 18px;
+    }
+
+    .ItemCode {
+        color: #c6dae1;
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .ItemName {
+        font-size: 12px;
+    }
+
+    .PlatformName {
+        height: 35px;
+        width: 77px;
+        line-height: 30px;
+        font-size: x-large;
+        padding: 0px 6px 0px 6px;
+        background-color: darkcyan;
+        border-radius: 0px;
+    }
+
+    .platformHeader {
+        line-height: 31px;
+        font-size: x-large;
+        height: auto !important;
+    }
+
+    .disabled {
+        background-color: #c7e0cd47 !important;
+        height: 35px;
+        width: 77px;
+        line-height: 30px;
+        font-size: x-large;
+        padding: 0px 6px 0px 6px;
+        margin: 1px;
+        border-radius: 0px;
+    }
+
+    .PlatformStyle {
+        height: 55px;
+        font-size: x-large;
+    }
+
+    #page-content-wrapper {
+        padding: 0 !important;
+    }
+
+    html, body, #divPickingList {
+        height: 500px;
+    }
+
+    .selectedPlatform {
+        background-color: #28a745 !important;
+        background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%) !important;
+    }
+
+    .alert-fixed {
+        position: fixed;
+        bottom: 5px;
+        right: 25px;
+        width: 300px;
+        z-index: 999999;
+        border-radius: 0;
+    }
+
+    .btn {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .orderRow {
+        height: 75px;
+        border-bottom: 1px solid #234345;
+        color: #5a8496;
+        text-align: center;
+    }
+
+    .orderRowText {
+        height: 50%;
+        font-size: larger;
+    }
+
+    .pageHeader {
+        height: 150px;
+        background: #214556;
+        color: #b7d4e1;
+    }
+
+    .header-bb {
+        border-bottom: 1px solid #2d5c72
+    }
+
+    .header-br {
+        border-right: 1px solid #2d5c72
+    }
+
+    .gridHeader {
+        line-height: 28px;
+        text-align: center;
+        color: #9bc0c5;
+        /* background-color: rgb(37, 104, 104); */
+        border-top: 1px solid #115f65;
+        padding-right: 10px;
+        background: #256868;
+        background: -moz-linear-gradient(-45deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+        background: -webkit-linear-gradient(-45deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+        background: linear-gradient(177deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#256868', endColorstr='#081515',GradientType=1 );
+    }
+
+    .selectedRow {
+        border: 0;
+        background-color: #173c4a;
+    }
+
+    .inputDisabled {
+        pointer-events: none;
+        tab-index: none;
+        opacity: 20%;
+    }
+
+    .btn-bottom {
+        width: 100%;
+        height: 60px;
+        line-height: 45px;
+        font-size: 20px;
+    }
+</style>
+
+
+<div class="h-100 d-flex flex-column" id="contentView" data-pickerId="@ViewBag.PickerId" data-workorderId="@ViewBag.WorkorderId" data-pickingListId="@ViewBag.PickingListId" data-pickingListGuid="@ViewBag.PickingListGuid">
+
+</div>
+
+
+<script id="PickingListItemsTemplate" type="x-tmpl-mustache">
+    @*Picker's data*@
+    <div class="row no-gutters justify-content-center pageHeader" style="min-height: 50px; max-height: 50px;" id="PickingListItemHeader">
+        <div class="col-4 header-bb header-br">
+            <div class="row no-gutters justify-content-center">
+                <div class="col-12 header-bb text-center">
+                    Numer zlecenia
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-12 text-center">
+                    Pnc
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-4 header-bb header-br">
+            <div class="row no-gutters ">
+                <div class="col-12 header-bb text-center">
+                    {{WorkOrderNo}}
+                </div>
+            </div>
+            <div class="row no-gutters justify-content-center text-center">
+                <div class="col-12 text-center">
+                    {{PncCode}}
+                </div>
+            </div>
+        </div>
+        <div class="col-2 header-bb header-br">
+            <div class="row no-gutters ">
+                <div class="col-12 header-bb text-center">
+                    {{NumberToPick}}
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-12  text-center">
+                    {{ResourceName}}
+                </div>
+            </div>
+        </div>
+        <div class="col-2 header-bb header-br">
+            <div class="row no-gutters">
+                <div class="col-12 header-bb text-center">
+                    H{{ParameterHView}}
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-12 text-center">
+                    {{PncQtyRemaining}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#ProductionOrderList}}
+        <div class="row no-gutters justify-content-center hidden productionOrderDetails">
+            {{OrderNumber}} | {{Pnc.Code}} | {{Line.Name}} | {{QtyRemain}}
+        </div>
+    {{/ProductionOrderList}}
+    <div class="row no-gutters justify-content-center pageHeader platformHeader">
+        <div class="col-4 header-br" id="selectedPlatformsTitle">
+            Platformy
+        </div>
+        <div class="col-8">
+            <div class="row no-gutters">
+                {{#PlatformList}}
+                <div class="col-4" style="padding:1px;">
+                    <div class="test btn PlatformName {{SelectedPlatform}}" data-platformId={{PlatformId}} data-platformlocationname={{PlatformLocationName}}>
+                        {{PlatformName}}
+                    </div>
+                </div>
+                {{/PlatformList}}
+            </div>
+        </div>
+        <div class="hidden" id="defaultTrolley">
+
+        </div>
+    </div>
+    @*Header Grid*@
+    <div class="row no-gutters justify-content-center gridHeader" id="gridHeaderId" style="max-height:60px; min-height: 60px;">
+        <div class="col-10">
+            <div class="row no-gutters">
+                <div class="col-5">
+                    Kod Itema
+                </div>
+                <div class="col-5">
+                    Lokalizacja
+                </div>
+                <div class="col-2">
+                    Pobrano
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-5">
+                    Nazwa Itema
+                </div>
+                <div class="col-5">
+                    Ilość
+                </div>
+                <div class="col-2">
+                    Bilans
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            Status
+        </div>
+    </div>
+    @*Grid*@
+    <div class="row no-gutters justify-content-center flex-grow-1 mb-auto" style="overflow-y:scroll">
+        <div class="col-12" id="OrderRows">
+            {{#PickingListItems}}
+            {{#Visible}}
+            <div class="row no-gutters orderRow" data-id={{Id}} data-itemId={{ItemWMSId}} data-warehouseLocationId={{WarehouseLocationId}} data-platformId={{PlatformId}} data-paramH={{H}}>
+                <div class="col-10" style="height:100%">
+                    <div class="row no-gutters orderRowText">
+                        <div class="col-5 ItemCode">{{ItemCode }}</div>
+                        <div class="col-5 WarehouseLocationName textBlue">{{WarehouseLocationName}}</div>
+                        <div class="col-2 QtyPicked">{{QtyPicked}}</div>
+                    </div>
+                    <div class="row no-gutters orderRowText">
+                        <div class="col-5 ItemName ">{{ItemName}}</div>
+                        <div class="col-5 QtyRequested">{{QtyRequested}}</div>
+                        <div class="col-2 Balance">{{Balance}}</div>
+                    </div>
+                </div>
+                <div class="col-2 Status">
+                    <div class="StatusIcon state{{Status}} {{StateIcon}}"></div>
+                </div>
+            </div>
+            {{/Visible}}
+            {{/PickingListItems}}
+        </div>
+        {{^PickingListItems}}
+        <div class="col-12" style="text-align: center; padding-top: 20px;">
+            BRAK ARTYKUŁÓW
+        </div>
+        {{/PickingListItems}}
+    </div>
+    <div class="row no-gutters justify-content-center" style="margin-bottom:0px;">
+        {{#SelectedPlatformId}}
+        <div class="col-12" style="height: 225px;">
+            <div class="row no-gutters">
+                <div class="col-12" id="kaypad115"></div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-12 headerTitle">
+                    Miejsce Platformy
+                </div>
+                <div class="col-6">
+                    <input class="form-control PlatformStyle" readonly="readonly" type="text" id="PlatformPosition_" value="{{PlatformLocationName}}" autocomplete="off" />
+                </div>
+                <div class="col-6">
+                    <div class="btn btn-warning PlatformStyle" id="SavePlatform_">ZAPISZ</div>
+                </div>
+            </div>
+        </div>
+        {{/SelectedPlatformId}}
+        {{^SelectedPlatformId}}
+        <div class="col-12" id="managingMenuBottom">
+            <div class="row no-gutters">
+                {{#IsDataNull}}
+                <div class="col-12">
+                    <div class="btn btn-default  btn-bottom" id="btnBackToPickingListDataNull">WRÓĆ</div>
+                </div>
+                {{/IsDataNull}}
+
+                {{^IsDataNull}}
+                <div class="col-4">
+                    <div class="btn btn-default  btn-bottom" id="btnBackToPickingList">WRÓĆ</div>
+                </div>
+                <div class="col-4">
+                    <div class="btn btn-info btn-bottom" id="btnGoToSummary">PODSUM.</div>
+                </div>
+                {{#PickinListStatusView}}
+                <div class="col-4">
+                    <div class="btn btn-success  btn-bottom" id="btnComplete">ZAKOŃCZ.</div>
+                </div>
+                {{/PickinListStatusView}}
+                {{^PickinListStatusView}}
+                <div class="col-4">
+                    <div class="btn btn-success btn-bottom" id="btnGoToItemManage">REALIZUJ</div>
+                </div>
+                {{/PickinListStatusView}}
+                {{/IsDataNull}}
+            </div>
+        </div>
+        {{/SelectedPlatformId}}
+    </div>
+</script>
+
+<script type="text/javascript">
+    var pickingListItem = new PickingListItem();
+    $(document).ready(function () {
+        pickingListItem.Init();
+    });
+</script>

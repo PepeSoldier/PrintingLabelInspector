@@ -1,0 +1,37 @@
+﻿@using GridMvc.Html
+
+@{
+    ViewBag.Title = "PackageItem";
+}
+
+<div class="row justify-content-center h-100 no-gutters flex-column">
+    <div class="col-12">
+        <div class="h-100 d-flex flex-column">
+            <div class="row no-gutters">
+                @{ Html.RenderAction("Index"); }
+            </div>
+            <div class="row justify-content-center h-100 mh-100 flex-grow-1 mt-2 mb-0 no-gutters" style="overflow: auto;">
+                <div class="col-12" id="packageItemGrid">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/_ClientAppJS/_APPWEB/Common/MyColorPicker.js"></script>
+    <script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+
+    <script type="text/javascript">
+        var wnd = null;
+        var packageItemGrid = new PackageItem("#packageItemGrid");
+        $(document).ready(function () {
+            packageItemGrid.InitGrid();
+            packageItemGrid.RefreshGrid();
+            SelectActiveMenuLink(@Html.Raw(Json.Encode(ViewContext.RouteData.Values["action"])));
+        });
+
+    </script>
+}

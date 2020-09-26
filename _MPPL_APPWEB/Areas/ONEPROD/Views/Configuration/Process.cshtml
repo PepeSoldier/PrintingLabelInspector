@@ -1,0 +1,29 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ItemViewModel
+
+@{
+    ViewBag.Title = "CONFIG: Procesy";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index"); }
+</div>
+
+<div class="row">
+    <div class="col-lg-12" style="width: 800px;">
+        <div id="GridProcess"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var grid;
+        $(document).ready(function () {
+            grid = new GridProcess("#GridProcess");
+            grid.InitGrid();
+            grid.RefreshGrid();
+        });
+    </script>
+}

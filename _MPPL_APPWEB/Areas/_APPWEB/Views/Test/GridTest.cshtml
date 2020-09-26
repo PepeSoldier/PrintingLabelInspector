@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Grid Test";
+}
+
+<h2>Grid Test</h2>
+
+<div id="testGrid"></div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        jsGrid.ControlField.prototype.editButtonClass = "fas fa-trash-alt";
+        jsGrid.ControlField.prototype.
+
+        jsGrid.setDefaults({
+            paging: true,
+            pageSize: 5,
+            pageButtonCount: 3,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Poprzedni",
+            pageNextText: "Nowy",
+            pageFirstText: "Pierwszy",
+            pageLastText: "Ostatni",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+        });
+
+        $("#testGrid").jsGrid({
+            height: "400px",
+            width: "100%",
+            autoload: true,
+            inserting: true,
+            filtering: true,
+        
+
+            deleteConfirm: function (item) {
+                return "The client \"" + item.Name + "\" will be removed. Are you sure?";
+            },
+            controller: {
+                loadData: function (filter) {
+                    var temp;
+                    $.ajax({
+                        async: false,
+                        type: "GET",
+                        url: "/Test/GritTestJsonData",
+                        data: filter,
+                        success: function (data) {
+                            console.log(data);
+                            temp = data;
+                        },
+                    });
+                    return temp
+                },
+                deleteItem: function (item) {
+                        $.ajax({
+                            async: false,
+                            type: "GET",
+                            url: "/Test/DeleteItem",
+                            data: item,
+                        })
+                    },
+                },
+            fields: [
+                { name: "Id", title: "Numer Id", type: "text", width: 200 },
+                { name: "Name", title: "Nazwa", type: "text", width: 200 },
+                { name: "Age", title: "Wiek", type: "text", width: 200 },
+                { name: "DataUrodzin", title: "Data Urodzin", type: "text", width: 200 },
+                {
+                    type: "control",
+                    modeSwitchButton: false,
+                    editButton: true
+                }
+            ]
+        });
+    </script>
+}
+
+
+

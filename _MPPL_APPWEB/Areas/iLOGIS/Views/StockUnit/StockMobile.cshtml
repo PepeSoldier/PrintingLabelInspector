@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "STOCK";
+    var barcodeTemplate = ViewBag.BarcodeTemplate;
+}
+
+<style>
+    .WindowBox {
+        border: 0 !important;
+    }
+
+    .shadow, .grid-mvc, .darkSkin .Window, .darkSkin .WindowJs, .defaultSkin .Window, .defaultSkin .WindowJs {
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    .form-control {
+        padding-left: 3px;
+        padding-right: 1px;
+        border-radius: 0px;
+    }
+     #stockWarehouseDetailsGrid {
+        max-height: calc( 100vh - 100px ) !important;
+    }
+</style>
+
+<div class="h-100 d-flex flex-column" id="contentView">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <div class="formArea shadow" style="padding: 0;">
+                <fieldset>
+                    <div class="form-group row no-gutters" id="formGroup">
+                        <div class="col-3">
+                            <input type="text" class="form-control" placeholder="Magazyn" id="warehouse" autocomplete="off">
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" placeholder="Lokacja" id="warehouseLocation" autocomplete="off">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" placeholder="ItemCode" id="itemCode" autocomplete="off">
+                        </div>
+                        <div class="col-2 btn btn-info form-control" id="searchButton">
+                            Szukaj
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="row no-gutters stocksGridParentDiv" style="display: none;">
+        <div class="col-12">
+            <div id="stocksGrid" style=""></div>
+        </div>
+    </div>
+    <div class="row no-gutters stockWarehouseDetailsGridParentDiv" style="display: inherit; height: 100%;">
+        <div class="col-12">
+            <div id="stockWarehouseDetailsGrid" style="height:100%;"></div>
+        </div>
+    </div>
+    <div class="row no-gutters stockLocationDetailsGridParentDiv" style="display: none;">
+        <div class="col-12">
+            <div id="stockLocationDetailsGrid" style=""></div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center fixed-bottom w-100" id="buttons" style="background-color: #1e3138;">
+        <div class="col-4">
+            <div class="btn btn-default btn-bottom" id="btnBack" data-href="#/iLOGIS/WMS/MobileMenu"> << WRÓĆ</div>
+        </div>
+        <div class="col-4">
+            <div class="btn btn-primary btn-bottom" id="btnWarehouses">Magazyny</div>
+        </div>
+        <div class="col-4">
+            <div class="btn btn-success btn-bottom" id="btnDetails">SZCZEGÓŁY</div>
+        </div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/ExternalLibraries/OnScan/onscan.min.js"></script>
+<script type="text/javascript">
+    var stocksGrid = new StocksGrid("#stocksGrid");
+    var stockLocationDetailsGrid = new StockLocationDetailsGrid("#stockLocationDetailsGrid");
+    var stockWarehouseDetailsGrid = new StockWarehouseDetailsGrid("#stockWarehouseDetailsGrid");
+    var ShowDetails = false;
+    var showWarehouses = false;
+    var barcodeTemplate = @Html.Raw(Json.Encode(barcodeTemplate));
+
+    function ParseBarcodeAndRefresh(sCode) {
+        let json = new JsonHelper().GetPostData("/CORE/Common/ParseBarcode", { barcode: sCode, template: barcodeTemplate });
+        json.done(function (barcodeParsedViewModel) {
+            if (barcodeParsedViewModel.ErrorText != null) {
+                let $activeElementId = document.activeElement.id;
+                 if ($activeElementId == "itemCode") {
+                    $("#itemCode").val(barcodeParsedViewModel.ItemCode);
+                } else if ($activeElementId == "warehouseLocation") {
+                    $("#warehouseLocation").val(barcodeParsedViewModel.Location);
+                } else {
+                    $("#warehouseLocation").val(barcodeParsedViewModel.Location);
+                    $("#itemCode").val(barcodeParsedViewModel.ItemCode);
+                }
+                Refreshgrid();
+            } else {
+                new Alert().Show("warning", barcodeParsedViewModel.ErrorText);
+            }
+        });
+    }
+
+    try {
+        onScan.detachFrom(document);
+    } catch (e) {
+        console.log("e");
+        console.log(e);
+    }
+
+    //onScan.deta
+    onScan.attachTo(document, {
+        scanButtonKeyCode:false,
+        scanButtonLongPressTime: 500,
+        timeBeforeScanTest: 100,
+        avgTimeByChar: 30,
+        minLength: 3,
+        suffixKeyCodes: [9, 13],
+        prefixKeyCodes: [],
+        ignoreIfFocusOn: false,
+        stopPropagation: false,
+        preventDefault: false,
+        reactToKeydown: true,
+        reactToPaste: true,
+        singleScanQty: 1,
+        reactToKeyDown: true,
+        reactToPaste: true,
+        singleScanQty: 1,
+        onKeyDetect: function (iKeyCode) { // output all potentially relevant key events - great for debugging!
+        },
+        onScan: function (sCode, iQty) {
+            $("#consola").text('Scanned: ' + iQty + 'x ' + sCode);
+            if (sCode.length > 3) {
+                ParseBarcodeAndRefresh(sCode);
+            }
+        },
+        onScanError: function (oDebug) {
+            $("#consola2").text('err: ' + JSON.stringify(oDebug));
+            console.log(oDebug);
+        }
+    });
+
+
+    $(document).ready(function () {
+        let h = $("#stockWarehouseDetailsGrid").height();
+        console.log("StockView.Ready");
+        RefreshView();
+        stocksGrid.InitGrid("500px", "");
+        stockLocationDetailsGrid.InitGrid("500px", "");
+        stockWarehouseDetailsGrid.InitGrid(h + "px", "hidden");
+    });
+    $(document).off("click", "#searchButton");
+    $(document).on("click", "#searchButton", function () {
+        Refreshgrid();
+    });
+    $(document).off("click", "#btnWarehouses");
+    $(document).on("click", "#btnWarehouses", function () {
+        showWarehouses = true;
+        ShowDetails = false;
+        RefreshView();
+        Refreshgrid();
+    });
+    $(document).off("click", "#btnDetails");
+    $(document).on("click", "#btnDetails", function () {
+        showWarehouses = false;
+        ShowDetails = true;
+        RefreshView();
+        Refreshgrid();
+    });
+     $(document).off("click", "#btnBack");
+    $(document).on("click", "#btnBack", function () {
+
+        if (showWarehouses == true || ShowDetails == true) {
+            showWarehouses = false;
+            ShowDetails = false;
+            RefreshView();
+        }
+        else {
+            window.location.hash = "#/iLOGIS/WMS/MobileMenu";
+        }
+    });
+
+    function Refreshgrid() {
+        console.log("Refreshgrid");
+
+        let itemCode = $("#itemCode").val();
+        let warehouseLocationName = $("#warehouseLocation").val();
+        let warehouseName = $("#warehouse").val();
+        let serialNo = "";
+        let gridToBeRefreshed = null;
+
+
+        if (showWarehouses == true) {
+            gridToBeRefreshed = stocksGrid;
+        }
+        else if (ShowDetails == true) {
+            gridToBeRefreshed = stockLocationDetailsGrid;
+        }
+        else {
+            gridToBeRefreshed = stockWarehouseDetailsGrid;
+        }
+
+        gridToBeRefreshed.RefreshGrid({ warehouseName, warehouseLocationName, itemCode, serialNo });
+
+        //if (itemCode.length > 0 || warehouseLocationName.length > 0 || warehouseName.length > 0) {
+        //}
+        //else {
+        //    new Alert().Show("info", "Brak parametru filtrowania");
+        //}
+    }
+
+    function RefreshView() {
+        console.log("RefreshView");
+        $(".stockWarehouseDetailsGridParentDiv").visible(!ShowDetails && !showWarehouses);
+        $(".stockLocationDetailsGridParentDiv").visible(ShowDetails);
+        $("#btnDetails").prop('disabled', ShowDetails);
+        $(".stocksGridParentDiv").visible(showWarehouses);
+
+        if (showWarehouses == true) {
+            $("#btnWarehouses").visible(false);
+            $("#btnDetails").visible(false);
+        }
+        else if (ShowDetails == true) {
+            $("#itemCode").val(stockWarehouseDetailsGrid.SelectedItem.ItemCode);
+            $("#warehouseLocation").val(stockWarehouseDetailsGrid.SelectedItem.WarehouseLocationName);
+            $("#btnWarehouses").visible(false);
+            $("#btnDetails").visible(false);
+        }
+        else {
+            $("#itemCode").val("");
+            $("#warehouseLocation").val("");
+            $("#btnWarehouses").visible(true);
+            $("#btnDetails").visible(true);
+            $("#btnWarehouses").text("MAGAZYNY");
+            $("#btnDetails").text("SZCZEGÓŁY");
+
+            if (stockWarehouseDetailsGrid.grid != null) {
+                $(stockWarehouseDetailsGrid.grid._bodyGrid[0].rows[stockWarehouseDetailsGrid.SelectedRowIndex]).mouseenter();
+            }
+        }
+    }
+
+    jQuery.fn.visible = function (b) {
+        if (b === undefined)
+            return this.css('visibility') == "visible";
+        else {
+            this.css('display', b ? 'inherit' : 'none');
+            return this;
+        }
+    }
+
+
+
+</script>

@@ -1,0 +1,163 @@
+﻿@using _MPPL_WEB_START.Areas.IDENTITY.ViewModels
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    bool operatorMode = ViewBag.OperatorMode;
+    var antiForgeryToken = Html.AntiForgeryToken();
+}
+
+<style>
+    @@media screen and (max-width: 600px){
+        .account-wall{
+            width: 320px;
+        }
+    }
+</style>
+
+<script type="text/javascript">
+    PrepareFullScreenView();
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="account-wall">
+                <div id="my-tab-content" class="tab-content">
+                    <div class="tab-pane active" id="login" style="position:relative; text-align: center;">
+
+                        @if (operatorMode)
+                        {
+                        <div style="position: relative;height: 370px;" class="cardLogin @(operatorMode ? "" : "hidden")">
+                            <div id="login3" class="test"
+                                 style="background: #FFFFFF;
+                                    position: absolute;
+                                    width: 100%; height: 100%;
+                                    z-index:99999999;">
+                                <div style="font-size: 39px;margin-bottom: 5px;">LOGOWANIE</div>
+                                <div class="fas fa-broadcast-tower" id="rfidIcon" style="
+                                        font-size: 110px;
+                                        border: 1px solid green;
+                                        border-radius: 43px;
+                                        padding: 25px;"></div>
+                                <div style="font-size: 39px;margin-top: 15px;">Przyłóż kartę do czytnika</div>
+                                <div style="font-size: 26px;padding-bottom: 15px;">lub wprowadz dane</div>
+                            </div>
+                            <div id="login2">
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+                                {
+                                    @antiForgeryToken
+                                    <input type="text" class="form-control" placeholder="Login" name="UserName" id="UserName2" required autofocus autocomplete="new-password">
+                                    @Html.ValidationMessageFor(m => m.UserName)
+                                    <input type="password" class="form-control" placeholder="Hasło" name="Password" id="Password2" required>
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                    <input type="submit" class="btn btn-lg btn-default btn-block" value="Zaloguj2" />
+                                }
+                            </div>
+                        </div>
+                        }
+
+                        <div class="login1">
+                            <img class="profile-img" src="~/Content/Images/loginviewicon.png" alt="">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+                            {
+                                @antiForgeryToken
+                                if (operatorMode)
+                                {
+                                    <input type="text" class="form-control" placeholder="Login" name="UserName"
+                                           id="UserName" required autocomplete="new-password">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" placeholder="Login" name="UserName"
+                                           id="UserName" required autofocus>
+                                }
+
+                                @Html.ValidationMessageFor(m => m.UserName)
+                                <input type="password" class="form-control" placeholder="Hasło" name="Password" id="Password" required>
+                                @Html.ValidationMessageFor(m => m.Password)
+                                <input type="submit" class="btn btn-lg btn-default btn-block" value="Zaloguj"  id="loginBtn"/>
+                                <div style="color: red;">
+                                    @Html.ValidationSummary(true)
+                                </div>
+                                
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    var prefix2 = "3847";
+    var prefix = "020021CF";
+    var length1 = 18;
+    var operatorMode = @Html.Raw(Json.Encode(ViewBag.OperatorMode));
+    var tip = "Ytv53p6@a"
+    $(document).ready(function () {
+        console.log(operatorMode == true ? "operatorMode" : "loginMode");
+        if (operatorMode == true) {
+            console.log("operator mode");
+            $("#login2 #UserName2").val(prefix2);
+            $("#login2 #UserName2").focus();
+        }
+    });
+
+
+    $(document).on("keypress", function (e) {
+        if (e.which == 13) {
+            $('form').submit();
+        }
+    });
+    $(document).on("focusout", "#UserName, #Password, #rfidIcon", function () {
+        FocusRFID();
+    });
+    $(document).on("click", "#rfidIcon", function () {
+        FocusRFID();
+    });
+    $(document).on("keyup", "#login2 #UserName2", function () {
+        console.log("textchanged " + $("#login2 #UserName2").val());
+
+        let prefix2 = "3847";
+        let prefix = "020021CF";
+        let length1 = 18;
+        let operatorMode = @Html.Raw(Json.Encode(ViewBag.OperatorMode));
+        let tip = "Ytv53p6@a"
+
+        let txt = $(this).val();
+        if (txt.length == length1) {
+            console.log("length passed");
+            if (txt.substring(4, 12) == prefix) {
+                console.log("prefix passed");
+                $("#login2 #UserName2").val(txt.substring(12,18));
+                $("#login2 #Password2").val(tip.substring(0,8));
+                $("#login2 form").submit();
+            }
+            else {
+                console.log("prefix failed");
+                console.log(txt.substring(4, 12));
+                $("#login2 #UserName2").val(prefix2);
+                $("#login2 #UserName2").focus();
+            }
+        }
+    });
+
+    function FocusRFID() {
+        if (operatorMode == true) {
+            console.log("focusRFID");
+            $("#login2 #UserName2").focus();
+        }
+    }
+
+
+
+
+
+</script>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

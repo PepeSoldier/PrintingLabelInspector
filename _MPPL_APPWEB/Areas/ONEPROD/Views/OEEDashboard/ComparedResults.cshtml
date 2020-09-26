@@ -1,0 +1,595 @@
+﻿@model _MPPL_WEB_START.Areas._APPWEB.ViewModels.ChartMultiViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Radar Raports";
+    int i = 0;
+    int[] tab = new int[]{12, 12, 6, 4, 3, 4, 4, 3, 3, 4, 3 };
+    int width = Model.ChartViewModels.Count < 10 ? tab[Model.ChartViewModels.Count] : 3; //Math.Min(3, 12 / Model.ChartViewModels.Count);
+    int width2 = 3;
+}
+<style>
+    .mt15 {
+        margin-top: 10px;
+    }
+
+    .SectionBox {
+        min-width: 650px;
+    }
+
+    .titleColor {
+        color: #21b191;
+    }
+
+    .radarChartCanvas {
+        width: 100%;
+        max-height: 500px;
+    }
+    .detailBoxTitle {
+        top: 5px;
+        left: 5px;
+        font-size: 18px;
+        color: #920000;
+    }
+
+    .detailBoxValue {
+        top: -12px;
+        right: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #888888;
+        text-align: right;
+    }
+    .chartTitle {
+        width: 100%;
+        padding: 15px 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .OEEresult {
+        font-weight: bold;
+        font-size: 22px;
+    }
+    .APQresult{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .rotate0, .rotate90 {
+    }
+    .rotate90 {
+        margin: 20px 0px 0px 0px; 
+        transform: rotate(-90deg);
+        /* Legacy vendor prefixes that you probably don't need... */
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        /* Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+</style>
+<style>
+    .clearPaddingR {
+        padding-right: 5px;
+    }
+</style>
+
+<section id="HMMM" class="SectionBox">
+    <div class="row mt15">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width clearPaddingR">
+                <div class="shadow WindowBox">
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+</section>
+
+
+<section id="OEEResults" class="SectionBox mt-2">
+    <div class="row no-gutters">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            { width2 = cmvm.datasets.Count < 10 ? tab[cmvm.datasets.Count] : 3; }
+
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox text-center">
+                    <div class="chartTitle">@cmvm.title</div>
+
+                    @*NAGLOWKI BRYGAD*@
+                    <div class="row no-gutters border-bottom mb-1">
+                        <div class="col-1">
+                            <div class="rotate90"></div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row no-gutters">
+                                @for (int k = 0; k < cmvm.datasets.Count; k++)
+                                {
+                                    <div class="col-@width2">
+                                        @cmvm.datasets[k].label:
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-gutters">
+
+                        @*WYNIKI OEE BRYGAD*@
+                        <div class="col-1 border-bottom mb-1">
+                            <div class="rotate90">OEE</div>
+                        </div>
+                        <div class="col-11 border-bottom mb-1">
+                            <div class="row no-gutters">
+                                @for (int k = 0; k < cmvm.datasets.Count; k++)
+                                {
+                                    <div class="col-@width2">
+                                        <div class="row no-gutters">
+                                            <div class="col-12 oeeGauge"
+                                                 id="oeeGauge_@(cmvm.id)_@k"
+                                                 data-result="@(cmvm.datasets[k].data[0].ToString("0.00"))"
+                                                 data-target="@((cmvm.targets[0].data[0]).ToString("0.00"))">
+                                            </div>
+                                            <div class="col-12 OEEresult @(cmvm.targets[0].data[0]*100 > cmvm.datasets[k].data[0]? "valueNotInTargetColor" : "valueInTargetColor")">
+                                                @(cmvm.datasets[k].data[0].ToString("0.00"))%
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        @*WYNIKI OEE DOSTEPNOSCI*@
+                        <div class="col-1">
+                            <div class="rotate0">A</div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row no-gutters">
+                                @for (int k = 0; k < cmvm.datasets.Count; k++)
+                                {
+                                    <div class="col-@width2">
+                                        <div class="row no-gutters">
+                                            <div class="col-12"
+                                                 id="oeeAGauge_@(cmvm.id)_@k"
+                                                 data-result="@(cmvm.datasets[k].data[1].ToString("0.00"))"
+                                                 data-target="@((cmvm.targets[0].data[1]).ToString("0.00"))">
+                                                <div class="APQresult @(cmvm.targets[0].data[1]*100 > cmvm.datasets[k].data[1]? "valueNotInTargetColor" : "valueInTargetColor")">
+                                                    @(cmvm.datasets[k].data[1].ToString("0.00"))%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @*WYNIKI OEE WYDAJNOŚĆ*@
+                        <div class="col-1">
+                            <div class="rotate0">P</div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row no-gutters">
+                                @for (int k = 0; k < cmvm.datasets.Count; k++)
+                                {
+                                    <div class="col-@width2">
+                                        <div class="row no-gutters">
+                                            <div class="col-12"
+                                                 id="oeeAGauge_@(cmvm.id)_@k"
+                                                 data-result="@(cmvm.datasets[k].data[2].ToString("0.00"))"
+                                                 data-target="@((cmvm.targets[0].data[2]).ToString("0.00"))">
+                                                <div class="APQresult @(cmvm.targets[0].data[2]*100 > cmvm.datasets[k].data[2]? "valueNotInTargetColor" : "valueInTargetColor")">
+                                                    @(cmvm.datasets[k].data[2].ToString("0.00"))%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @*WYNIKI OEE jAKOŚĆ*@
+                        <div class="col-1">
+                            <div class="rotate0">Q</div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row no-gutters">
+                                @for (int k = 0; k < cmvm.datasets.Count; k++)
+                                {
+                                    <div class="col-@width2">
+                                        <div class="row no-gutters">
+                                            <div class="col-12"
+                                                 id="oeeAGauge_@(cmvm.id)_@k"
+                                                 data-result="@(cmvm.datasets[k].data[3].ToString("0.00"))"
+                                                 data-target="@((cmvm.targets[0].data[3]).ToString("0.00"))">
+                                                <div class="APQresult @(cmvm.targets[0].data[3]*100 > cmvm.datasets[k].data[3]? "valueNotInTargetColor" : "valueInTargetColor")">
+                                                    @(cmvm.datasets[k].data[3].ToString("0.00"))%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+</section>
+
+<section id="RadarCharts" class="SectionBox">
+    <div class="row no-gutters">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+
+                    <div class="col-12 col-12 col-12 col-12 clearPaddingR">
+                        <div class="shadow WindowBox">
+                            <div class="chartTitle">@cmvm.title</div>
+                            <div id="gridProd_@i">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>            
+            { i++; }
+        }
+    </div>
+</section>
+
+<section id="Pareto" class="SectionBox">
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">AWARIE TOP 5 @cmvm.title</div>
+                            <div class="chartGroup">
+                                <div style="width: 100%;" id="chartParetoStop_31_@cmvm.id" class="chart GroupChartsParetoEntryType" data-reasonTypeId="31" data-machineId="@cmvm.id)"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">POSTOJE NIEPLANOWANE TOP 5 @cmvm.title</div>
+                            <div class="chartGroup">
+                                <div style="width: 100%;" id="chartParetoStop_30_@cmvm.id" class="chart GroupChartsParetoEntryType" data-reasonTypeId="30" data-machineId="@cmvm.id"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">PRZEZBROJENIA TOP 5 @cmvm.title</div>
+                            <div class="chartGroup">
+                                <div style="width: 100%;" id="chartParetoStop_33_@cmvm.id" class="chart GroupChartsParetoEntryType" data-reasonTypeId="33" data-machineId="@cmvm.id"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+
+    @*SCRAP SUMMARY*@
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-4 col-4 col-4 col-4 mb-2 pl-2">
+                            <div class="detailBoxTitle">SCRAP MAT.:</div>
+                            <span class="detailBoxValue" id="ScrapMaterialQty_@cmvm.id">szt</span>
+                        </div>
+                        <div class="col-5 col-5 col-5 col-5 mb-2 pl-2">
+                            <div class="detailBoxTitle">SCRAP PROC.:</div>
+                            <span class="detailBoxValue" id="ScrapProcessQty_@cmvm.id">szt</span>
+                        </div>
+                        <div class="col-3 col-3 col-3 col-3 mb-2 pl-2">
+                            <div class="detailBoxTitle">NRFT:</div>
+                            <span class="detailBoxValue" id="nrft_@cmvm.id">szt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+
+    @*PARETO BY REASON TYPE*@
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">SCRAP @cmvm.title</div>
+                            <div class="chartGroup">
+                                <div style="width: 100%;" id="chartParetoScrapReasonType_@cmvm.id" class="chart GroupChartsParetoScrap GroupChartsParetoEntryType" data-entryType="12" data-machineId="@cmvm.id)"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+    @*PARETO BY REASON*@
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">PARETO SCRAP POWODY</div>
+                            <div class="chartGroupScrap">
+                                <div style="width: 100%;" id="chartParetoScrapReason_@cmvm.id" class="chart GroupChartsParetoScrapReason" data-entryType="0" data-machineId="@cmvm.id"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+
+    @*PARETO BY ITEM CODE*@
+    <div class="row no-gutters mt-2">
+        @{i = 0;}
+        @foreach (var cmvm in Model.ChartViewModels)
+        {
+            <div class="col-@width col-@width col-@width col-@width mb-2 pl-2">
+                <div class="shadow WindowBox">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-12 col-12 col-12 col-12">
+
+                            <div class="chartTitle">PARETO KODY ANC</div>
+                            <div class="chartGroupScrap">
+                                <div style="width: 100%;" id="chartParetoScrapAnc_@cmvm.id" class="chart GroupChartsParetoScrapAnc" data-entryType="0" data-machineId="@cmvm.id"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            { i++; }
+        }
+    </div>
+</section>
+
+
+<script src="~/Areas/ONEPROD/Views/OEEDashboard/MachineDetails.js"></script>
+<script type="text/javascript">
+    var dataModel = @Html.Raw(Json.Encode(Model));
+    var data =[];
+
+    $(document).ready(function(){
+        console.log("tutaj");
+        RefreshGauges();
+        RefreshRadarCharts();
+        RefreshPareto();
+        RefreshChartParetoScrap();
+    });
+
+    function RefreshRadarCharts() {
+        $.each(dataModel.ChartViewModels, function (index, value) {
+            //console.log(value);
+            drawRadarChart(value, index);
+        });
+    }
+    function drawRadarChart(data,index){
+        console.log("draw chart" + index);
+        $("#gridProd_"+index).append('<canvas class="radarChartCanvas" height=500 width:435 id="canvasA_'+index+'"></canvas>');
+
+        for (i = 0; i < data.datasets.length; i++) {
+            data.datasets[i].datalabels = LabelsLine_2;
+        }
+
+        var chart = new Chart('canvasA_'+index, {
+            type: 'radar',
+            data: data,
+            options: options
+        });
+    }
+    var LabelsLine = {
+        anchor: 'center',
+        align: 'center',
+        padding: 3,
+        borderRadius: 8,
+        color: '#FFFFFF',
+        backgroundColor: function (context) {
+            return context.dataset.borderColor[0];
+        },
+        display: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            return value > 0;
+        },
+        font: {
+            weight: 'bold', size: 9
+        },
+        formatter: function (value, context) {
+            return value.toFixed(1).replace('.0', '')
+        }
+    };
+    var LabelsLine_2 = {
+        anchor: 'center',
+        align: 'center',
+        padding: 3,
+        borderRadius: 0,
+        color: '#FFFFFF',
+        //backgroundColor: function (context) {
+        //    return context.dataset.borderColor[0];
+        //},
+        display: function (context) {
+            //var value = context.dataset.data[context.dataIndex];
+            //return value > 0;
+            return false;
+        },
+        font: {
+            weight: 'bold', size: 9
+        },
+        formatter: function (value, context) {
+            return value.toFixed(1).replace('.0', '')
+        }
+    };
+    var options = {
+        maintainAspectRatio: true,
+        spanGaps: false,
+        elements: {
+            line: {
+                tension: 0.000001
+            }
+        },
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                min: 0,
+                max: 110,
+                stepSize:10,
+            }
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+        },
+        plugins: {
+            filler: {
+                propagate: false
+            },
+            'samples-filler-analyser': {
+                target: 'chart-analyser'
+            }
+        }
+    };
+    
+    function RefreshPareto() {
+
+        $.each($(".chartGroup"), function (i, el) {
+            var chartGroup = el.id;
+            $(".GroupChartsEntryType, .GroupChartsCumulatedEntryType, .GroupChartsParetoEntryType", el).each(function () {
+                filters.limit = 5;
+                filters.machineId = parseInt($(this).attr("data-machineId"));
+                filters.labourBrigadeId = -1;
+
+                RefreshOneChartByEntryType(this, chartGroup, false);
+            });
+
+            $(".GroupChartsParetoScrap", el).each(function () {
+                filters.limit = 5;
+                filters.machineId = parseInt($(this).attr("data-machineId"));
+                filters.labourBrigadeId = -1;
+                let id = $(this).attr("id");
+                if (id != null && id !== undefined) {
+                    RefreshChartParetoScrapReasonType(id);
+                }
+            });
+
+            console.log("grupa " + i + " gotowa /" + el.id);
+        });
+    }
+    
+    function RefreshChartParetoScrap(){
+        
+        $.each($(".chartGroupScrap"), function (i, el) {
+            $(".GroupChartsParetoScrapReason", el).each(function () {
+                filters.limit = 5;
+                filters.machineId = parseInt($(this).attr("data-machineId"));
+                filters.labourBrigadeId = -1;
+                let dp = new OEEDataProvider();
+                dp.GetData(filters);
+                let totalScrap = dp.data.ScrapProcessQty + dp.data.ScrapMaterialQty;
+                let totalProducedQty = dp.data.ProducedGoodQty + totalScrap;
+                let nrft = parseInt(1000000 * totalScrap / totalProducedQty);
+                $("#ScrapProcessQty_" + $(this).attr("data-machineid")).text(dp.data.ScrapProcessQty + " szt (" + (100 * dp.data.ScrapProcessQty / totalProducedQty).toFixed(2) + "%)");
+                $("#ScrapMaterialQty_" + $(this).attr("data-machineid")).text(dp.data.ScrapMaterialQty + " szt (" + (100 * dp.data.ScrapMaterialQty / totalProducedQty).toFixed(2) + "%)");
+                $("#nrft_" + $(this).attr("data-machineid")).text(nrft);
+                RefreshChartParetoScrapReason(this.id);
+            });
+
+            $(".GroupChartsParetoScrapAnc", el).each(function () {
+                filters.limit = 5;
+                filters.machineId = parseInt($(this).attr("data-machineId"));
+                filters.labourBrigadeId = -1;
+                RefreshChartParetoScrapAnc(this.id);
+            });
+            //console.log("grupa " + i + " gotowa /" + el.id);
+        });
+    }
+
+    function RefreshGauges() {
+
+        $(".oeeGauge").each(function (i) {
+            let result = parseFloat($(this).attr("data-result").replace(',','.'));
+            let target = parseFloat($(this).attr("data-target").replace(',','.'));
+            let id = $(this).attr("id");
+            console.log("id:" + id);
+            let oeeGauge = null;
+            oeeGauge = new OEEGauge(id);
+            oeeGauge.InitCompare();
+            oeeGauge.Refresh(result/100, target);
+        });        
+    }
+    
+</script>

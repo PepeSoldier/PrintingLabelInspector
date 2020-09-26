@@ -1,0 +1,209 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ResourceViewModel
+@{
+    ViewBag.Title = "WorkstationItem";
+}
+<style>
+    .card {
+        background-color: #5b7b84
+    }
+</style>
+<div class="row justify-content-center h-100 no-gutters flex-column">
+    <div class="col-12">
+        <div class="h-100 d-flex flex-column">
+            <div class="row no-gutters">
+                @{ Html.RenderAction("Index"); }
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="card mb-5">
+                        <div class="card-header">
+                            Drukowanie etykiet np. P001
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12" id="printForm">
+                                <div class="row no-gutters">
+                                    <label for="PrinterIp" class="col-3 col-form-label">
+                                        IP Drukarki (Zebra)
+                                    </label>
+                                    <label for="Prefix" class="col-1 col-form-label">
+                                        Prefix
+                                    </label>
+                                    <label for="StartNumber" class="col-2 col-form-label">
+                                        Nr. początkowy
+                                    </label>
+                                    <label for="EndNumber" class="col-2 col-form-label">
+                                        Nr. końcowy
+                                    </label>
+                                    <label for="Step" class="col-1 col-form-label">
+                                        Skok
+                                    </label>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-3 pr-1">
+                                        <input type="text" class="form-control" placeholder="IP Drukarki" name="PrinterIp" id="PrinterIp" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1 pr-1">
+                                        <input type="text" class="form-control" placeholder="Prefix" name="Prefix" id="Prefix" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. pocz." name="StartNumber" id="StartNumber" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. konc." name="EndNumber" id="EndNumber" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1 pr-1">
+                                        <input type="text" class="form-control" placeholder="Skok" name="Step" id="Step" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="btn btn-success" id="btnPrint">Drukuj</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-5">
+                        <div class="card-header">
+                            Drukowanie etykiet na magazyn np. 10-10-10
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12" id="printFormWh">
+                                <div class="row no-gutters">
+                                    <label for="PrinterIpWh" class="col-3 col-form-label">
+                                        IP Drukarki (Zebra)
+                                    </label>
+                                    <label for="StartNumberWh" class="col-2 col-form-label">
+                                        Nr. początkowy
+                                    </label>
+                                    <label for="EndNumberWh" class="col-2 col-form-label">
+                                        Nr. końcowy
+                                    </label>
+                                    <label for="StepWh" class="col-1 col-form-label">
+                                        Skok
+                                    </label>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-3 pr-1">
+                                        <input type="text" class="form-control" placeholder="IP Drukarki" name="PrinterIpWh" id="PrinterIpWh" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. pocz." name="StartNumberWh" id="StartNumberWh" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. konc." name="EndNumberWh" id="EndNumberWh" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1 pr-1">
+                                        <input type="text" class="form-control" placeholder="Skok" name="StepWh" id="StepWh" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="btn btn-success" id="btnPrintWh">Drukuj</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Drukowanie etykiet na Stanowiska LINE01.3A.L (Linia.Stanowisko.Flowrack)
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12" id="printFormWh">
+                                <div class="row no-gutters">
+                                    <label for="PrinterIpWst" class="col-3 col-form-label">
+                                        IP Drukarki (Zebra)
+                                    </label>
+                                    <label for="LineName" class="col-2 col-form-label">
+                                        Nazwa Linii
+                                    </label>
+                                    <label for="StartNumberWst" class="col-2 col-form-label">
+                                        Nr. początkowy
+                                    </label>
+                                    <label for="EndNumberWst" class="col-2 col-form-label">
+                                        Nr. końcowy
+                                    </label>
+                                    <label for="SpecialChar" class="col-1 col-form-label">
+                                        Znak Specjalny
+                                    </label>
+                                    <label for="SpecialChar" class="col-1 col-form-label">
+                                        Flowrack
+                                    </label>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-3 pr-1">
+                                        <input type="text" class="form-control" placeholder="IP Drukarki" name="PrinterIpWst" id="PrinterIpWst" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="LineName" name="LineName" id="LineName" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. pocz." name="StartNumberWst" id="StartNumberWst" autocomplete="nope">
+                                    </div>
+                                    <div class="col-2 pr-1">
+                                        <input type="text" class="form-control" placeholder="Nr. konc." name="EndNumberWst" id="EndNumberWst" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1 pr-1">
+                                        <input type="text" class="form-control" placeholder="np. A" name="SpecialChar" id="SpecialChar" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1 pr-1">
+                                        <input type="text" class="form-control" placeholder="np. L" name="Flowrack" id="Flowrack" autocomplete="nope">
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="btn btn-success" id="btnPrintWst">Drukuj</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+  
+
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            console.log("PrintLabel.Ready");    
+        });
+
+        $(document).on("click", "#btnPrint", function () {
+            Print($("#PrinterIp").val(), $("#Prefix").val(), $("#StartNumber").val(), $("#EndNumber").val(), $("#Step").val());
+        });
+
+        $(document).on("click", "#btnPrintWh", function () {
+            PrintWh($("#PrinterIpWh").val(), $("#StartNumberWh").val(), $("#EndNumberWh").val(), $("#StepWh").val());
+        });
+
+        $(document).on("click", "#btnPrintWst", function () {
+            PrintWst($("#PrinterIpWst").val(), $("#LineName").val(), $("#StartNumberWst").val(), $("#EndNumberWst").val(), $("#SpecialChar").val(), $("#Flowrack").val());
+        });
+
+        function Print(printerIp, prefix, startNumber, endNumber, step) {
+            let json = new JsonHelper().GetPostData("/iLOGIS/Config/PrintLabels",
+                { printerIp, prefix, startNumber, endNumber, step });
+            json.done(function (data) {
+                console.log("/iLOGIS/Config/PrintLabel.Done");
+            });
+        }
+
+        function PrintWh(printerIp,startNumber, endNumber, step) {
+            let json = new JsonHelper().GetPostData("/iLOGIS/Config/PrintLabelsWh",
+                { printerIp, startNumber, endNumber, step });
+            json.done(function (data) {
+                console.log("/iLOGIS/Config/PrintWh.Done");
+            });
+        }
+
+        function PrintWst(printerIp, lineName, startNumber, endNumber, specialChar, flowrack) {
+            let json = new JsonHelper().GetPostData("/iLOGIS/Config/PrintLabelsWorkstation",
+                { printerIp, lineName, startNumber, endNumber, specialChar, flowrack });
+            json.done(function (data) {
+                console.log("/iLOGIS/Config/PrintLabelsWorkstation.Done");
+            });
+        }
+
+    </script>
+}

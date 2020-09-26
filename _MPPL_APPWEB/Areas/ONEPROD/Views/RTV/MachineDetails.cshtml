@@ -1,0 +1,573 @@
+﻿@using MDLX_MASTERDATA.Entities;
+@model _MPPL_WEB_START.Areas.ONEPROD.ViewModels.RTV.RTVViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "MachineDetails";
+    string styleRTV = ".rtvReasonTypeId_0 { background-color: #5a5a5a !important; } ";
+}
+    
+@foreach(var x in Model.Reasontypes)
+{
+    if(x.Id == 10) { x.Color = "#0c6f35"; }
+    else if(x.Id == 0) { x.Color = "#5a5a5a"; }
+    else if(x.Id == 30 || x.Id == 31) { x.Color = "#9a092a"; }
+    else if(x.Id == 20) { x.Color = "#0059a2"; }
+    else if(x.Id == 33 || x.Id == 21) { x.Color = "#ae59d2"; }
+    styleRTV += ".rtvReasonTypeId_" + x.Id + "{ background-color: " + x.Color + " !important; } ";
+}
+
+<style>
+    @styleRTV
+</style>
+<style>
+    #CanvasDonut {
+        margin-left: -25px;
+        margin-top: 0px;
+        height: 97%;
+        width: 117%;
+    }
+</style>
+
+<div class="row" id="rtvMachineDetails">
+    <div class="col-12">
+        @*PIERWSZY WIERSZ*@
+        <div class="row">
+            <div class="col-12">
+                @*OEE RESULT*@
+                <div class="infoBoxCol20 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="infoBoxTitle" id="oeeClick">OEE</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeVeryBig colorOutOfTarget result" id="OeeResult">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*PRODUCTION QTY*@
+                <div class="infoBoxCol15 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="infoBoxTitle">Produkcja</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeVeryBig" id="ProducedQty"></div>
+                        </div>
+                    </div>
+                </div>
+                @*TARGET/DELTA*@
+                <div class="infoBoxCol15 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="infoBoxTitle">Cel</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeVeryBig" id="TargetQty"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="infoBoxCol15 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="infoBoxTitle">Odchylenie</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeVeryBig" id="DeltaQty"></div>
+                        </div>
+                    </div>
+                </div>
+                @*COMPONENT*@
+                <div class="infoBoxCol35 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="infoBoxTitle">Aktualny Program</div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-2">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeBig" id="ProgramNo" style="text-align: center;overflow: hidden;font-size: 50px;line-height: 50px;"></div>
+                        </div>
+                        <div class="col-10">
+                            <div class="WindowBox brdB infoBoxRowFirst fontSizeBig" id="ProgramName" style="text-align: center;overflow: hidden;font-size: 50px;line-height: 50px;"></div>
+                        </div>
+                    </div>
+                </div>
+                @*PIROMETERS*@
+                @*<div class="infoBoxCol10 infoBoxCol">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="infoBoxTitle">Nr Programu</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowFirst">
+                                <div id="ProgramNo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+        @*DRUGI WIERSZ*@
+        <div class="row">
+            <div class="col-12">
+                @*OEE APQ*@
+                <div class="infoBoxCol20 infoBoxCol">
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-6 clearPaddingR">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Wydajność</div>
+                        </div>
+                        <div class="col-6 clearPaddingL">
+                            <div class="WindowBox brdB infoBoxRowSmall colorOutOfTarget apqFontSize result" id="PerformanceResult"></div>
+                        </div>
+                    </div>
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-6 clearPaddingR">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Dostępność</div>
+                        </div>
+                        <div class="col-6 clearPaddingL">
+                            <div class="WindowBox brdB infoBoxRowSmall colorOutOfTarget apqFontSize result" id="AvailabilityResult"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 clearPaddingR">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Jakość</div>
+                        </div>
+                        <div class="col-6 clearPaddingL">
+                            <div class="WindowBox brdB infoBoxRowSmall colorOutOfTarget apqFontSize result" id="QualityResult"></div>
+                        </div>
+                    </div>
+                </div>
+                @*CYCLE TIME*@
+                <div class="infoBoxCol15 infoBoxCol">
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Czas cyklu Maszyny</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRow fontSizeBig" id="CycleTime"></div>
+                        </div>
+                    </div>
+                </div>
+                @*CYCLE TIME AVG*@
+                <div class="infoBoxCol15 infoBoxCol">
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Czas cyklu ost. <span id="ctQty">0</span><span> szt.</span></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRow fontSizeBig" id="CycleTimeAvg"></div>
+                        </div>
+                    </div>
+                </div>
+                @*PART CODE*@
+                <div class="infoBoxCol25 infoBoxCol">
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Kod Produkowanego Komponentu</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRow fontSizeSmall">
+                                <div id="PartCode"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*NOTHING*@
+                <div class="infoBoxCol25 infoBoxCol">
+                    <div class="row infoBoxMarginBot">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRowSmall ">Nazwa Produkowanego Komponentu</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="WindowBox brdB infoBoxRow fontSizeSmall" style="font-size: 30px; overflow: hidden;">
+                                <div id="PartName"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row no-gutters">
+            <div class="infoBoxCol85">
+                @*TRZECI WIERSZ - CHART*@
+                <div class="row">
+                    <div class="col-12">
+                        @*MAIN CHART*@
+                        <div class="infoBoxCol100 chartRowBox">
+                            <div class="WindowBox brdB" style="height: 100%;">
+                                <div id="chartRTV" style="margin-top: 15px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*CZWARTY WIERSZ - CHART HOUR / MINUTE / PLAN*@
+                <div class="row">
+                    <div class="col-12">
+                        @*CHART HOUR / CHART MINUTE / PLAN*@
+                        <div class="chartBoxCol infoBoxCol100 infoBoxCol">
+                            @*CHART HOUR*@
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="WindowBox brdB infoBoxMarginBot" style="height:60px;">
+                                        <div style="width: 1480px; margin: auto; border: 0px solid red; height:100%;">
+                                            <div style="width:1440px; float: right; border: 0px solid gray; height: 100%;">
+                                                @for (int i = 0; i < 8; i++)
+                                                {
+                                                    <div class="chartHour" data-hour="@i"></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*CHART MINUTE*@
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="WindowBox brdB infoBoxMarginBot" style="height:25px;">
+                                        <div style="width: 1480px; margin: auto; border: 0px solid red; height:100%;">
+                                            <div style="width:1440px; float: right; border: 0px solid gray; height: 100%;">
+                                                @{ string width = "";}
+                                                @for (int i = 0; i < 480; i++)
+                                                {
+                                                    if (i % 3 == 0)
+                                                    {
+                                                        width = "3px";
+                                                    }
+                                                    else
+                                                    {
+                                                        width = "3px";
+                                                    }
+                                                    <div class="chartMinute" style="width:@width;" data-minute="@i"></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*PLAN*@
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="WindowBox brdB" style="height:80px;">
+                                        <div style="width: 1480px; margin: auto; border: 0px solid red; height:100%;">
+                                            <div id="plan" style="width:1440px; float: right; border: 0px solid gray; height: 100%; position: relative; overflow: hidden; background: #173039;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*PIATY & SZOSTY WIERSZ - DONUT CHART*@
+                <div class="row no-gutters">
+                    <div class="col-7">
+                        @*PIATY WIERSZ*@
+                        <div class="row">
+                            <div class="col-12">
+                                @*NOTHING*@
+                                <div class="infoBoxCol100 infoBoxCol">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="WindowBox brdB infoBoxRowMedium">
+                                                <h5>POPRZEDNIA ZMIANA</h5><br />
+                                                <h5 id="prevShiftDate" style="margin-left: 15px;"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*SZOSTY WIERSZ*@
+                        <div class="row">
+                            <div class="col-12">
+                                @*PREV SHIFT OEE*@
+                                <div class="infoBoxCol35 infoBoxCol">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="WindowBox brdB infoBoxRowLastShift fontSizeBig colorOutOfTarget resultLastShift" id="OeeResultLastShift"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*PREV SHIFT APQ*@
+                                <div class="infoBoxCol65 infoBoxCol">
+                                    
+                                    <div class="row">
+                                        <div class="col-4 clearPaddingR">
+                                            <div class="row infoBoxMarginBot">
+                                                <div class="col-4 clearPaddingR">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift">Wyd.</div>
+                                                </div>
+                                                <div class="col-8 clearPaddingL">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift apqFontSize resultLastShift" id="PerformanceResultLastShift"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 clearPaddingL clearPaddingR">
+                                            <div class="row infoBoxMarginBot">
+                                                <div class="col-4 clearPaddingR">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift ">Dost.</div>
+                                                </div>
+                                                <div class="col-8 clearPaddingL">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift apqFontSize resultLastShift" id="AvailabilityResultLastShift"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 clearPaddingL">
+                                            <div class="row">
+                                                <div class="col-4 clearPaddingR">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift">Jakość</div>
+                                                </div>
+                                                <div class="col-8 clearPaddingL">
+                                                    <div class="WindowBox brdB infoBoxRowLastShift apqFontSize  resultLastShift" id="QualityResultLastShift"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        @*CT Analysis*@
+                        <div class="infoBoxCol100 infoBoxCol two-div">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="WindowBox brdB infoBoxRowBig" style="height: 165px;">
+                                        <div id="chartCTAnalysis" style="width: 100%; height: 100%; margin-top: 20px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="infoBoxCol15">
+                @*TRZECI WIERSZ - CHART*@
+                <div class="row">
+                    <div class="col-12">
+                        <div class="infoBoxCol100 chartRowBox">
+                            @*MACHINE SPECIFIC AREA - PIROMETERS, OIL...*@
+                            @if (Model.Machine.ResourceGroup != null & Model.Machine.ResourceGroup.Id == 16)
+                            {
+                                <div class="WindowBox brdB" style="height: 100%; display:block;">
+                                    <div class="row no-gutters">
+                                        <div class="col-12" style=" text-align: center; margin-bottom: 10px; line-height: 48px;">
+                                            <div style="font-size: 22px;">OIL TEMP. [*C]</div>
+                                            <div style="font-size: 48px;"><i class="fas fa-oil-can"></i></div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters">
+                                        @for (int i = 0; i < 4; i++)
+                                        {
+                                            <div class="col-3" style="padding: 5px 15px;">
+                                                <div class="" style="height: 150px; width: 100%; position: relative; border: 1px solid #1b3841; ">
+                                                    <div id="OilTemp@(i+1)_indicator" style="width:100%; height: 50%; position: absolute; bottom:0;"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row no-gutters">
+                                        @for (int i = 0; i < 4; i++)
+                                        {
+                                            <div class="col-3" style="padding: 5px 15px; text-align: center;">
+                                                <div class="" id="OilTemp@(i+1)_val" style="height: 35px; width: 100%; border-bottom: 1px solid #1b3841;">00</div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else if (Model.Machine.ResourceGroup != null & Model.Machine.ResourceGroup.Id == 17)
+                            {
+                                for (int i = 1; i <= 8; i++)
+                                {
+                                    <div class="row infoBoxMarginBot">
+                                        <div class="col-4 clearPaddingR">
+                                            <div class="WindowBox brdB infoBoxRowSmall" id="PirometerNo@(i)">@i</div>
+                                        </div>
+                                        <div class="col-8 clearPaddingL">
+                                            <div class="WindowBox brdB infoBoxRowSmall pirometerFontSize">
+                                                <div id="PirometerDetail@(i)" style="width: 160px; display: block;">
+                                                    <div id="PirometerTemp@(i)" style="float: left;"></div>
+                                                    <div id="PirometerTempMin@(i)" style="display:none"></div>
+                                                    <div id="PirometerTempMax@(i)" style="display:none"></div>
+                                                    <div style="float: right;">
+                                                        <i id="PiroTermometer@(i)" class="fas fa-thermometer-empty"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else if (Model.Machine.ResourceGroup != null & Model.Machine.ResourceGroup.Id == 18)
+                            {
+                                <div></div>
+                            }
+                            else
+                            {
+                                <div class="WindowBox brdB" style="height: 100%; display:block;">
+                                    <div class="row no-gutters">
+                                        <div class="col-12" style=" text-align: center; margin-bottom: 10px; line-height: 48px;">
+                                            <div style="font-size: 22px;"></div>
+                                            <div style="font-size: 48px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @*CZWARTY WIERSZ - CHART HOUR / MINUTE*@
+                <div class="row">
+                    <div class="col-12">
+                        @*MINUTES SUMMARY*@
+                        <div class="chartBoxCol infoBoxCol100 infoBoxCol">
+                            <div class="WindowBox brdB" style="display:block; height: 245px; padding: 5px;">
+                                <div class="row" id="donutLegend">
+                                    <div class="col-6 clearPaddingR">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvReasonTypeId_10" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteProduction">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvYellow" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteMicroStops">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvReasonTypeId_31" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteBreakdowns">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 clearPaddingL">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvReasonTypeId_20" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteBreaks">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvReasonTypeId_33" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteSetups">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="minuteDetail rtvGray" style="height: 20px; width: 100%;"></div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="minuteDetail" id="minuteNoData">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                            <div id="chartDonut" style="width:100%; height: 100%;" 
+                                                 data-classes="@string.Join(",", Model.Reasontypes.Select(x=>x.Id))"
+                                                 data-colors="@string.Join(",", Model.Reasontypes.Select(x=>x.Color))"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*PIATY WIERSZ - DONUT CHART*@
+                
+                @*SZOSTY WIERSZ - CONNECTIONS*@
+                <div class="row">
+                    <div class="col-12">
+                        @*CONNECTION*@
+                        <div class="infoBoxCol100 infoBoxCol">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="WindowBox brdB infoBoxRowLastShift" style="display: block; height: 96px;">
+                                        <div class="colorInactive" id="Connection" style="height:100%;width:46%;float:right;font-size:60px;margin-top:-10px;">
+                                            <i class="fas fa-wifi"></i>
+                                        </div>
+                                        <div class="connectionSmallIcon colorInactive" id="PLCStatus">
+                                            <i class="fas fa-hdd"></i>
+                                        </div>
+                                        <div class="connectionSmallIcon colorInactive" id="PLCConnectorStatus">
+                                            <i class="fas fa-plug"></i>
+                                        </div>
+                                        <div class="connectionSmallIcon colorInactive" id="PLCDataAnalyzerStatus">
+                                            <i class="fas fa-cogs"></i>
+                                        </div>
+                                        <div class="connectionSmallIcon colorInactive" id="ConnectionAjax">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var machineId = @Html.Raw(Json.Encode(Model.Machine.Id));
+    var machineName = @Html.Raw(Json.Encode(Model.Machine.Name));
+
+    $(document).ready(function () {
+        $("#headerTitle").text(machineName);
+        rtv = new RTV(machineId, "#rtvMachineDetails",1, false);
+        rtv.Init();
+        rtvs.push(rtv);
+    });
+    
+    $("#oeeClick").on("click", function () {
+        RefreshAll();
+    })
+    $("#PirometerNo7").on("click", function () {
+        //shiftRelative++;
+        rtv.ModifyShiftRelative(1);
+        rtv.Init();
+    })
+    $("#PirometerNo8").on("click", function () {
+        //shiftRelative--;
+        rtv.ModifyShiftRelative(-1);
+        rtv.Init();
+    })
+    $("#PirometerNo6").on("click", function () {
+        rtv.RefreshAll_FORCE();
+    })
+</script>

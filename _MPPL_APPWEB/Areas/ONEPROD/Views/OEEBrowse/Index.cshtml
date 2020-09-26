@@ -1,0 +1,86 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.BrowseReportsViewModel
+@using _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels;
+@using MDL_ONEPROD.Model.OEEProd;
+@using XLIB_COMMON.Enums;
+@{
+    Layout = null;
+    ViewBag.Title = "Raporty OEE";
+}
+
+@*<div class="row">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+            <div style="width:100%; height:25px; background-color: red;"></div>
+        </div>
+    </div>*@
+
+<div class="row oee-browse" style="padding-top:20px;">
+    <div class="col-12 col-sm-6 col-md-7 col-lg-8 col-xl-9">
+        <div id="jsGrid" style="min-height: 750px;"></div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+        <div id="oeeSummaryDiv" style="max-width:430px;"></div>
+    </div>
+</div>
+
+
+
+<style>
+    .xdsoft_datetimepicker .xdsoft_calendar td:hover, .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div:hover {
+        color: #fff !important;
+        background: #50c5ff !important;
+        box-shadow: none !important;
+    }
+</style>
+
+
+<script>
+    InitMachineAutocompleteByName(".MachineAutoComplete", "#MachineName", "#MachineId");
+    var oeeBrowseGrid = new OeeBrowseGrid("#jsGrid");
+    var whp = new WorkingHoursPreview("#SelectedDate", "#SelectedShift");
+    
+    $(document).ready(function () {
+        $("#btnBrowse").addClass("hidden");
+        $("#btnDashboard").removeClass("hidden");
+        $("#btnMachineDetails").removeClass("hidden");
+        $("#btnReasonDetails").removeClass("hidden");
+
+        oeeBrowseGrid.InitGrid();
+        ReadFilters();
+        oeeBrowseGrid.RefreshGrid(filters);
+        LoadDetails(filters);
+    });
+
+    $(document).on("click", ".etDot", function () {
+        let elements = $(document).find(".etDot");
+        $(this).find(".fas").toggleClass("hidden");
+
+        for (var i = 0; i < elements.length; i++) {
+            let eyeClass = $(elements[i]).attr("class").split(' ')[0];
+
+            if ($(elements[i]).find(".fas").hasClass("hidden")) {
+                $("#jsGrid ." + eyeClass).addClass("hidden");
+            }
+            else {
+                $("#jsGrid ." + eyeClass).removeClass("hidden");
+            }
+        }
+    })
+
+    //$("#btnRefresh").click(function () {
+    //    ReadFilters();
+    //    console.log("refresh browse");
+    //    oeeBrowseGrid.RefreshGrid(filters);
+    //    LoadDetails(filters);
+    //});
+
+    function LoadDetails(filters) {
+        $("#oeeSummaryDiv").html("");
+        $.get("/ONEPROD/OEEBrowse/IndexDetails", filters, function (data) {
+            $("#oeeSummaryDiv").html(data);
+        });
+    }
+
+    
+
+</script>
+

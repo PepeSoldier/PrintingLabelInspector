@@ -1,0 +1,431 @@
+﻿@model MDL_PFEP.ViewModel.PackingInstructionViewModel
+@using MDL_PFEP.Model.ELDISY_PFEP;
+@{
+    ViewBag.ShowRightPanel = 2;
+    ViewBag.Title = "Edycja Instrukcji Pakowania";
+}
+
+<div class="row">
+    @*Widok wydruku*@
+    <div class="col-12" style="padding-top: 5px; overflow: hidden;">
+        @if (Model.StepTwo == true)
+        {
+            <h2>Tworzenie Instrukcji Pakownia - <font color="lightgray">KROK 1</font> | <font color="#008bc8">KROK 2</font></h2>
+        }
+        else
+        {
+            <h2>Tworzenie Instrukcji Pakownia - <font color="#008bc8">KROK 1</font> | <font color="lightgray">KROK 2</font></h2>
+        }
+        @using (Html.BeginForm("Edit", "PackingInstruction", FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-7" style="min-width: 1000px; width: 1000px;">
+
+                    @*STEP ONE*@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="shadow" style="border: 1px solid #dcdcdc; padding: 15px;">
+                                <div class="row" style="height:70px;">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(x => x.PackinInstructionObject.Id, new { Value = Model.PackinInstructionObject.Id })
+                                    @Html.HiddenFor(x => x.PackinInstructionObject.AreaId)
+                                    @Html.HiddenFor(x => x.StepTwo, new { Value = Model.StepTwo })
+                                    @Html.HiddenFor(x => x.PackinInstructionObject.InstructionNumber)
+                                    <div class="col-2">
+                                        <label class="control-label">Klient / Kunde </label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.ClientName, new { @class = "form-control ClientNameAC", @placeholder = "Nazwa Klienta" })
+                                    </div>
+                                    <div class="col-2">
+                                        <label> Profil </label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.ProfileName, new { @class = "form-control", @placeholder = "Numer Profilu" })
+                                    </div>
+                                </div>
+                                <div class="row" style="height: 70px;">
+                                    <div class="col-2">
+                                        <label class="control-label">Kunderartikelnr./<br />Nr wyrobu klienta</label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.ClientProfileCode, new { @class = "form-control", @placeholder = "Numer Wyrobu Klienta" })
+                                    </div>
+                                    <div class="col-2">
+                                        <label class="control-label">SAP Nr: </label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.ProfileCode, new { @class = "form-control", @placeholder = "Numer Sap" })
+                                    </div>
+                                </div>
+                                <div class="row" style="height: 40px;">
+                                    <div class="col-2">
+                                        <label class="control-label">Obszar / Linie: </label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.DropDownListFor(x => x.AreaName, Model.AreasSelectList, new {@class = "form-control" })
+                                    </div>
+                                    <div class="col-2">
+                                        <label class="control-label">Wersja / Index</label>
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.EnumDropDownListFor(x => x.PackinInstructionObject.InstructionVersion, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row" style="height:30px;">
+                                    <div class="col-3">
+                                        <label class="control-label">Ilość na wartwie</label>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="control-label">Il. w pojemniku: </label>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="control-label">Ilość na palecie</label>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="control-label">Jednostka</label>
+                                    </div>
+                                </div>
+                                <div class="row" style="height:40px;">
+                                    <div class="col-3">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.AmountOnLayer, new { @class = "form-control", @placeholder = "Ilość na Warstwie" })
+                                    </div>
+                                    <div class="col-3">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.AmountOnBox, new { @class = "form-control", @placeholder = "Ilość w Pojemniku" })
+                                    </div>
+                                    <div class="col-3">
+                                        @Html.TextBoxFor(x => x.PackinInstructionObject.AmountOnPallet, new { @class = "form-control", @placeholder = "Ilość na Palecie" })
+                                    </div>
+                                    <div class="col-3">
+                                        @Html.EnumDropDownListFor(x => x.PackinInstructionObject.UnitOfMeasure, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*STEP TWO*@
+                    <div class="row">
+                        <div class="col-12">
+                            @if (Model.StepTwo == true)
+                            {
+                                //OPAKOWANIA
+                                <div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2> OPAKOWANIA / Verpackungen</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="shadow" id="jsGrid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                //OPIS
+                                <div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2>Opis / Verpackungsbeschreibung</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="shadow" style="border: 1px solid #dcdcdc; padding: 15px;">
+                                        <div class="row" style="height:200px;">
+                                            <div class="col-12">
+                                                @Html.TextAreaFor(x => x.PackinInstructionObject.Description, new { @class = "form-control", @placeholder = "Opis", @rows = 9, @style = "max-width:100%;" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div style="border: 1px solid #dcdcdc; padding: 15px;">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label class="control-label">Wybierz sprawdzającego instrukcję:</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            @Html.DropDownListFor(x => x.PackinInstructionObject.ExaminerId, Model.EngineersSelectList, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div style="border: 1px solid #dcdcdc; padding: 15px;">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <label class="control-label">Wybierz zatwierdzającego instrukcję:</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            @Html.DropDownListFor(x => x.PackinInstructionObject.ConfirmId, Model.ManagersSelectList, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                //ZDJĘCIA
+                                <div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h2> Zdjęcia / Bilder </h2>
+                                        </div>
+                                    </div>
+                                    <div class="shadow" style="border: 1px solid #dcdcdc; padding: 15px;">
+                                        <div class="row">
+                                            <div class="col-2" style="min-width: 140px; width: 140px;">
+                                                <div class="UploadFile" id="UploadFile_1" style="height: 100px; width: 100px;">
+                                                    <label class="btn btn-default" style="height: 100%; width: 100%;">
+                                                        <span class="fa fa-upload" style="float: left; height: 50%; width: 100%; font-size: 26px;"></span>
+                                                        <span style="float: left; height: 25%; width: 100%;">Dodaj</span>
+                                                        <span style="float: left; height: 25%; width: 100%;">zdjęcie...</span>
+                                                        <input type="file" id="Upload" class="fileInput" style="display: none;">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div id="UploadedPhotos">
+                                                    @foreach (PackingInstructionPhoto photo in Model.PackingInstructionPhotos)
+                                                    {
+                                                        <div class="photoMini">
+                                                            <div class="photoMiniDelete" photoId="@photo.Id"><span class="fas fa-trash"></span></div>
+                                                            <img src="~/Uploads/packinginstr/@photo.Id-@(photo.ParentObjectId)M.@photo.Extension" />
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="row">
+                        <div class="col-offset-5 col-12">
+                            <input type="submit" value="Zapisz" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        }
+    </div>        
+</div>
+
+<div id="sidebar-wrapper-right2">
+    @*Prawe Menu*@
+    <div class="row">
+        <div class="col-12">
+            <hr />
+            @if (Model.PackinInstructionObject.Id > 0)
+            {
+                <a class="btn btn-primary" href="@Url.Action("SavePDF", new { id = Model.PackinInstructionObject.Id })">
+                    <span class="icon fas fa-file-pdf"></span><span class="caption">Pobierz PDF</span>
+                </a>
+                <a class="btn btn-default" href="@Url.Action("Show", new { id = Model.PackinInstructionObject.Id })">
+                    <span class="icon fas fa-eye"></span><span class="caption">Podgląd PDF</span>
+                </a>
+                <hr />
+                @*<h2>Historia zmian</h2>*@
+                if (Model.Corrections != null && Model.Corrections.Count() > 0)
+                {
+                    <div class="col-12">
+                        <div class="Window">
+                            <div class="WindowTitle">Zgłoszenia poprawek:</div>
+                            <div class="WindowContent" style="padding:0;">
+                                @foreach (var a in Model.Corrections)
+                                {
+                                    <div class="ActionActivityBox" style="border-left-color: red">
+                                        <div class="row">
+                                            <div class="col-10">
+                                                @*<div class="ActionActivityHeader">
+                                                    <span class="badge">@a.Applicant.Initials</span>
+                                                    <span>@a.Applicant.FullName [@a.ApplicationStart]</span>
+                                                </div>*@
+                                                <div class="ActionActivityDescription">
+                                                    @a.CorrectionText
+                                                </div>
+                                            </div>
+                                            <div class="col-2 RemoveCorrection" style="text-align:center; line-height:50px; vertical-align:middle" id="@a.Id">
+                                                <span class="glyphicon glyphicon-trash "></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="btn btn-success col-offset-4 RemoveCorrection" style="line-height:35px;">
+                            Potwierdź wykonanie poprawek
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/MyScripts.js"></script>
+<script src="~/_ClientAppJS/ExternalLibraries/jQuery/jquery.validate-vsdoc.js"></script>
+
+<script type="text/javascript">
+    InitAutocompetes();
+    InitAreaAutocompleteByName(".AreaAC", "#PackinInstructionObject_Area_Name", "#PackinInstructionObject_AreaId");
+
+    $(document).ready(function () {
+        var pckInstId = @Model.PackinInstructionObject.Id;
+        if (pckInstId > 0) {
+            var attachment = new Attachment("#UploadFile_1", "PackingInstruction", "UploadPhoto", pckInstId, UploadCallback);
+            attachment.Init();
+        }
+
+        $('.RemoveCorrection').click(function () {
+            var url = window.location.pathname;
+            $.ajax({
+                url: baseUrl + "PackingInstruction/RemoveCorrection",
+                type: "POST",
+                dataType: "json",
+                data: { PackingInstructionId: pckInstId },
+                success: function () {
+                    location.reload();
+                },
+            });
+        });
+        $("#UploadedPhotos").on("click", ".photoMiniDelete", function () {
+            var id = $(this).attr("photoId");
+            var el = $(this).parent()
+            $.ajax({
+                url: baseUrl + "PackingInstruction/DeletePhoto",
+                type: "POST", dataType: "json",
+                data: { photoId: id },
+                success: function () {
+                    console.log("zdjecie usunięte");
+                    $(el).remove();
+                },
+            });
+        });
+    });
+
+    function UploadCallback(data) {
+        $("#UploadedPhotos").append(
+            '<div class="photoMini">' +
+                '<div class="photoMiniDelete" photoId="' + data.Id + '"><span class="fas fa-trash"></span></div>' +
+                '<img src="/Uploads/packinginstr/' + data.Id + '-' + data.ParentObjectId + 'M.' + data.Extension + '" />' +
+            '</div>'
+        );
+    }
+
+    var MyField = function (config) {
+        jsGrid.Field.call(this, config);
+    };
+    var MyAutoCompleteField = function (config) {
+        jsGrid.Field.call(this, config);
+    };
+
+    MyField.prototype = new jsGrid.Field({
+        insertTemplate: function (value) {
+            return this._insertPicker = $("<input>").attr('id', 'idField')
+                                                    .prop('readonly', true);;
+        },
+        insertValue: function () {
+            return this._insertPicker["0"].value;
+        },
+    });
+    MyAutoCompleteField.prototype = new jsGrid.Field({
+        insertTemplate: function(value) {
+            $element = this._insertPicker = $('<input id="packageAC">');
+            InitPackageAutocompleteByCode($element,$element,"#idField");
+            return $element;
+        },
+        insertValue: function () {
+            return this._insertPicker["0"].value;
+        },
+    });
+
+    var db = {
+        loadData: function (filter) {
+            var temp;
+            var zm = $("#PackinInstructionObject_Id").val();
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: "PFEP/PackingInstruction/GetPackagesForInstruction",
+                data: { InstructionID: zm },
+                success: function (dataB) {
+                    temp = dataB;
+                },
+            });
+            return temp
+        },
+        insertItem: function (item) {
+            var zm = $("#PackinInstructionObject_Id").val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "PFEP/PackingInstruction/AddPackageToInstruction",
+                data: { item: item, InstructionID: zm },
+            })
+        },
+        deleteItem: function (item) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "PFEP/PackingInstruction/RemovePackageFromInstruction",
+                data: item,
+            })
+        }
+    };
+    window.db = db;
+    db.list = $.ajax({
+        async: false,
+        type: "GET",
+        url: "PFEP/PackingInstruction/GetUnitOfMeasures",
+        data: null,
+        success: function (dataB) {
+            temp = dataB;
+        },
+    });
+
+    jsGrid.fields.myAutoCompleteField = MyAutoCompleteField;
+    jsGrid.fields.myfield = MyField;
+    $("#jsGrid").jsGrid({
+        height: "320px",
+        width: "100%",
+        autoload: true,
+        inserting: true,
+        deleteConfirm: function (item) {
+            return "The client \"" + item.Name + "\" will be removed. Are you sure?";
+        },
+        controller:db,
+
+        loadError: function (jqXHR, textStatus, errorThrown) {
+            alert('HTTP status code: ' + jqXHR.status + '\n' +
+                    'textStatus: ' + textStatus + '\n' +
+                    'errorThrown: ' + errorThrown);
+            alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+        },
+        onItemInserted: function(item){
+            $("#jsGrid").jsGrid("loadData");
+        },
+        fields: [
+            { name: "Package.Code", title: "Nr. SAP", type: "myAutoCompleteField", width: 200, },
+            { name: "Package.Name", title: "Opis", type: "myfield", width: 200, editing: false },
+            { name: "Amount", title: "Ilosc", type: "text", width: 200 },
+            { name: "UnitOfMeasure", type: "select", items: db.list.responseJSON, valueField: "Value",
+                textField: "Text", title: "Jednostka",
+                itemTemplate:function(value){
+                    return db.list.responseJSON.find(x => x.Value === String(value)).Text;
+                }
+            },
+            { name: "PriceForHundredPackages", title: "Ilosc dla 100", type: "text", width: 200,filtering:false,editing:false,inserting:false },
+            { type: "control", modeSwitchButton: false, editButton: false,}
+        ]
+    });
+
+</script>

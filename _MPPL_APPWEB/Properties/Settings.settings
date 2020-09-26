@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="_MPPL_WEB_START.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SmtpServer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">10.26.10.85</Value>
+    </Setting>
+    <Setting Name="SmtpUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SmtpPwd" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EmailsEnabled" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SmtpPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="EmailSenderDisplayName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">System</Value>
+    </Setting>
+    <Setting Name="MTNG_Lic" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="LDAP_Server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">PLWS4029.biz.electrolux.com</Value>
+    </Setting>
+    <Setting Name="EmailSenderDisplayNameSuffix" Type="System.String" Scope="Application">
+      <Value Profile="(Default)"> PLV</Value>
+    </Setting>
+    <Setting Name="EmailReceiverCC" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EmailSenderMail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">noreply@electrolux.com</Value>
+    </Setting>
+    <Setting Name="AppAdress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://plws4036</Value>
+    </Setting>
+    <Setting Name="EmailReceiver" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">kamil.krzyzanowski@implea.pl</Value>
+    </Setting>
+    <Setting Name="LDAP_isActive" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CookieExpireTimeSpanInMinutes" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">485</Value>
+    </Setting>
+    <Setting Name="PasswordExpiresInDays" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CookieName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MPPL_Cookie</Value>
+    </Setting>
+    <Setting Name="Client" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">WRP</Value>
+    </Setting>
+    <Setting Name="LogFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\Log</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

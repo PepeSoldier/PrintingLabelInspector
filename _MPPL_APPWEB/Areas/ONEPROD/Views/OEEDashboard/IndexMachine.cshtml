@@ -1,0 +1,84 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.DashBoardMachineViewModel
+
+@{
+    Layout = null;
+}
+<style>
+    .goToDetails:hover {
+        cursor: pointer;
+        color: white;
+    }
+</style>
+
+<div class="dashboardMachineBoxHeader">
+    <div class="row" style="min-height:25px">
+        <div class="col-9">
+            <span class="dshMachineTitle">
+                @Model.MachineName
+            </span>
+        </div>
+        <div class="col-3" style="padding: 0; font-size:20px;">
+            @*<a href="@Url.Action("MachineDetails")">
+                <i class="fas fa-chart-bar"></i>
+            </a>*@
+            <div>
+                <i class="fas fa-chart-bar goToDetails" data-machineId="@Model.MachineId"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding: 5px;">
+    <div class="row no-gutters">
+        <div class="col-8" style="">
+            <div id="OeeResult" class="machineResult oeedshtxtShadow @(Model.OeeResult >= Model.Targets.OeeTarget? "valueInTargetColor" : "valueNotInTargetColor")">
+                <span style="font-size:52px;">@((Model.OeeResult * 100).ToString("0.00"))</span>
+                <span style="font-size: 38px;">%</span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12 @(Model.AvailabilityResult >= Model.Targets.AvailabilityTarget? "valueInTargetColor" : "valueNotInTargetColor")">
+                A: @Model.AvailabilityResult.ToString("P2")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 @(Model.PerformanceResult >= Model.Targets.PerformanceTarget? "valueInTargetColor" : "valueNotInTargetColor")">
+                P: @Model.PerformanceResult.ToString("P2")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 @(Model.QualityResult >= Model.Targets.QualityTarget? "valueInTargetColor" : "valueNotInTargetColor")">
+                Q: @Model.QualityResult.ToString("P2")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8" style="color: #88888899; padding-top: 5px;">
+            Cel: @Model.Targets.OeeTarget.ToString("P2")
+
+            @if (Model.Targets.OeeTarget > Model.OeeResult)
+            {
+                <br /><span>Brak do celu: <span style="font-weight: bold;">@((Model.Targets.OeeTarget - Model.OeeResult).ToString("P2"))</span></span>
+            }
+            else
+            {
+                <br /><span>Ponad celem: <span style="font-weight: bold; color:#8ed28e;">@((Model.OeeResult - Model.Targets.OeeTarget).ToString("P2"))</span></span>
+            }
+        </div>
+        <div class="col-4" style="padding-top: 5px;">
+            <div class="nrftTitle">NRFT</div>
+            <div class="nrftValue">@Model.NRFT</div>
+        </div>
+    </div>
+
+     <div class="row">
+         <div class="col-12" style="color: #5376e2; padding-top: 4px;">
+             @if (Model.UndefunedStopsCount > 0)
+             {
+                 <span>Nieopisane postoje: @Model.UndefunedStopsCount</span>
+             }
+         </div>
+    </div>
+</div>
+

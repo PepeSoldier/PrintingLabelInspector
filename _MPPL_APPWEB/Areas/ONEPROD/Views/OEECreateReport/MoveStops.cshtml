@@ -1,0 +1,134 @@
+﻿@using MDL_ONEPROD.Model.OEEProd;
+@using MDL_ONEPROD.Model.Scheduling;
+
+@{
+    
+    List<ResourceOP> resources = ViewBag.Machines;
+    List<Reason> reasons = ViewBag.Reasons;
+    List<ReasonType> reasonTypes = ViewBag.ReasonTypes;
+}
+
+<div class="row">
+    <dvi class="col-12">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "formReportStageOne" }))
+        {
+        <div class="formArea">
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>MASZYNA</label>
+                </div>
+                <div class="formInlineRow">
+                    @HtmlMppl.DropDownCategory("MachineId", resources, "Id", "Name", "Area.Name", 1)
+                    @*@Html.TextBoxFor(model => model.OeeReport.Machine.Name, new { @class = "form-control MachineAutoComplete" })
+                @Html.Hidden("OeeReport.MachineId")*@
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>Data od:</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.TextBox("DateFrom", "", new { @class = "form-control datepicker", @Value = DateTime.Now.Date.AddDays(-30).ToString("yyyy-MM-dd") })
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>Data do:</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.TextBox("DateTo", "", new { @class = "form-control datepicker", @Value = DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd") })
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>Liczba sekund</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.TextBox("Seconds", "", new { @class = "form-control ", @Value = 5 })
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>Powód Źródłowy</label>
+                </div>
+                <div class="formInlineRow">
+                    @HtmlMppl.DropDownCategory("SourceReasons", reasons, "Id", "Name", "ReasonType.Name", 0)
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>Powód Docelowy</label>
+                </div>
+                <div class="formInlineRow">
+                    @HtmlMppl.DropDownCategory("DestReasons", reasons, "Id", "Name", "ReasonType.Name", 0)
+                </div>
+            </div>
+
+            @*<div class="formInlineGroup">
+            <div class="formInlineRow">
+                <label>BRYGADA</label>
+            </div>
+            <div class="formInlineRow">
+                @Html.DropDownListFor(model => model.OeeReport.LabourBrigadeId, Model.LabourBrigades, new { @class = "form-control" })
+            </div>
+        </div>*@
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label></label>
+                </div>
+                <div class="formInlineRow">
+                    <div class="btn btn-default" id="btnStart">Start</div>
+                </div>
+            </div>
+
+            <div style="clear: both;"></div>
+        </div>
+        }
+    </dvi>
+</div>
+
+    
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        console.log("MoveStops");
+    });
+
+    $("#btnStart").off("click");
+    $("#btnStart").on("click", function () {
+        Execute();
+    });
+
+    function Execute() {
+
+        let dateFrom = $("#DateFrom").val();
+        let dateTo = $("#DateTo").val();
+        let machineId = $("#MachineId").val();
+        let seconds = $("#Seconds").val();
+        let sourceReasonId = $("#SourceReasons").val();
+        let destReasonId = $("#DestReasons").val();
+
+        console.log("yhm");
+
+        $.ajax({
+            url: "/ONEPROD/OEECreateReport/MoveStops",
+            type: "POST",
+            dataType: "json",
+            data: { dateFrom, dateTo, machineId, seconds, sourceReasonId, destReasonId },
+            success: function (data) {
+                console.log("MoveStops-success");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("error: " + thrownError);
+            }
+        })
+    }
+
+</script>

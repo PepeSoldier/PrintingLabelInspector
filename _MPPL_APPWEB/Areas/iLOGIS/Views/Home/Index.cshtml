@@ -1,0 +1,83 @@
+﻿@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using _MPPL_WEB_START.Areas._APPWEB.Models.Clients;
+@model _MPPL_WEB_START.Areas.iLOGIS.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "iLOGIS";
+    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+    AppClientApbstract appClient = AppClient.GetClient(ViewBag.ClientName);
+}
+
+<style>
+   
+</style>
+
+<div id="HomePage" class="row">
+    <div class="col-12" id="test85">
+
+        <div class="row">
+            <div class="col-12" id="moduleTitleRow">
+                <span id="moduleTitle">iLOGIS</span>
+                <span id="moduleDescr">WMS System</span>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="confMenu shadow menuCategory">
+                <div class="confMenuText menuCategoryTitle">Ogólne</div>
+            </div>
+
+            @foreach (MDL_BASE.Models.IMenuItem menuItem in MenuiLOGIS.MenuItem.Children.Where(x => x.Category == "General"))
+            {
+                if ((menuItem.Name != "Home" && menuItem.Name != "Użytkownicy") && AppMenu.CheckAccess(menuItem, appClient, User))
+                {
+                    <a href="@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea, id = "" })@(menuItem.HashSuffix != null? "#" + menuItem.HashSuffix : "")" class="confMenu shadow">
+                        <div class="confMenuIcon @menuItem.Class1"></div>
+                        <div class="confMenuText">@menuItem.Name</div>
+                    </a>
+                }
+            }
+        </div>
+
+        <div class="row">
+
+            <div class="confMenu shadow menuCategory">
+                <div class="confMenuText menuCategoryTitle">WMS</div>
+            </div>
+
+            @foreach (MDL_BASE.Models.IMenuItem menuItem in MenuiLOGIS.MenuItem.Children.Where(x => x.Category == "Desktop"))
+            {
+                if ((menuItem.Name != "Home" && menuItem.Name != "Użytkownicy") && AppMenu.CheckAccess(menuItem, appClient, User))
+                {
+                    <a href="@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea, id = "" })@(menuItem.HashSuffix != null? "#" + menuItem.HashSuffix : "")" class="confMenu shadow">
+                        <div class="confMenuIcon @menuItem.Class1"></div>
+                        <div class="confMenuText">@menuItem.Name</div>
+                    </a>
+                }
+            }
+        </div>
+
+        <div class="row">
+
+            <div class="confMenu shadow menuCategory">
+                <div class="confMenuText menuCategoryTitle">WMS Mobile</div>
+            </div>
+
+            @foreach (MDL_BASE.Models.IMenuItem menuItem in MenuiLOGIS.MenuItem.Children.Where(x => x.Category == "Mobile"))
+            {
+                if ((menuItem.Name != "Home" && menuItem.Name != "Użytkownicy") && AppMenu.CheckAccess(menuItem, appClient, User))
+                {
+                    <a href="@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea, id = "" })@(menuItem.HashSuffix != null? "#" + menuItem.HashSuffix : "")" class="confMenu shadow">
+                        <div class="confMenuIcon @menuItem.Class1"></div>
+                        <div class="confMenuText">@menuItem.Name</div>
+                    </a>
+                }
+            }
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript">
+
+</script>

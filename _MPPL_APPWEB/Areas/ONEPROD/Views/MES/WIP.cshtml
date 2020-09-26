@@ -1,0 +1,264 @@
+﻿@{
+}
+
+<style>
+    wipBox {
+    }
+
+    .chartBuff {
+        background-color: rgba(255,255,255,0.2);
+        width: 100%;
+        height: 8px;
+        margin-bottom: 5px;
+    }
+
+    .used {
+        background-color: orange !important;
+    }
+
+    .fontSizeXSmall {
+        font-size: 32px;
+    }
+
+    .WipItemGroup {
+        height: 150px;
+    }
+
+    .WipItems {
+        height: 400px !important;
+    }
+
+    .WipResourceHeader {
+        float: left;
+        width: 100px;
+        height: 60px;
+        font-size: 25px;
+        text-align: center;
+        background-color: #254b5b;
+        border-right: 1px solid white;
+    }
+
+    .WipResourceWorkorders {
+        float: left;
+        width: 150%;
+        height: 60px;
+        
+        overflow: hidden;
+        /*padding-left: 52px;*/
+    }
+
+    .WipResourceWorkordersCol {
+        max-width: 100%;
+        overflow: hidden;
+        /* border: 1px solid green; */
+        border-bottom: 1px solid white;
+    }
+    .workorder {
+        float: left;
+        width: 50px;
+        height: 60px;
+        background-color: #173039;
+        border-right: 1px solid white;
+        position: relative;
+    }
+
+    .workorderCovered{
+        position: absolute;
+        height: 90%;
+        width: 0%;
+        background-color: rgba(0,255,0,0.3);
+    }
+    .woColor {
+        position: absolute;
+        top: 90%;
+        height: 10%;
+        width: 100%
+    }
+
+    .Timer .WipResourceWorkorders,
+    .Timer .WipResourceHeader,
+    .hour {
+        height: 25px;
+        border-right: 1px solid white;
+        background-color: #3a709b78;
+        color: white;
+    }
+    .hour {
+        float: left;
+        width: 50px;
+        border-right: 1px solid white;
+        overflow: hidden;
+    }
+
+    #gantt22 {
+        border: 1px solid white;
+        border-bottom: 0;
+    }
+    .itemCode{
+        font-size: 28px;
+    }
+    .itemQty {
+        font-size: 28px;
+    }
+    .itemName {
+        color: #4b95b3;
+        max-height: 22px;
+    }
+</style>
+
+<div class="rtvSkin">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <div class="infoBoxCol20 infoBoxCol pr-4">
+                @*CHART & CONTAINERS INFO*@
+                <div class="WindowBox brdB " style="height: 300px;">
+                    <div class="col-3">
+                        @for (int i = 20; i > 0; i--)
+                        {
+                            <div class="chartBuff" data-val="@i"></div>
+                        }
+                    </div>
+                    <div class="col-9 text-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="trolleysUsed" style="font-size: 32px;">Kontenery</div>
+                            </div>
+                        </div>
+                        <div class="row  pr-3">
+                            <div class="col-12" style="border-bottom: 4px solid white;">
+                                <div class="fontSizeBig" id="trolleysUsed">43</div>
+                            </div>
+                        </div>
+                        <div class="row pr-3">
+                            <div class="col-12">
+                                <div class="fontSizeBig" id="trolleysAvailable">100</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="infoBoxCol80 infoBoxCol">
+                <div class="row no-gutters">
+                    <div class="col-12" id="WipItemGroups"></div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12" id="WipItems"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row no-gutters">
+        <div class="col-12" id="gantt22">
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12" id="gantt">
+            <div style="display:none" id="btnRefreshGantt">Refresh</div>
+            <input style="display:none" value="@DateTime.Now.AddHours(-2).ToString("yyyy-MM-dd HH:mm")" id="SelectedDateFrom" />
+            <input style="display:none" value="@DateTime.Now.AddHours(16).ToString("yyyy-MM-dd HH:mm")" id="SelectedDateTo" />
+            <input style="display:none" value="2" id="Zoom" />
+
+            @*<oneprod-aps-ganttchart data-refreshbtnid='btnRefreshGantt' data-resourceGroupsId="46"></oneprod-aps-ganttchart>*@
+        </div>
+    </div>
+
+</div>
+
+<script id="WipItemGroupTemplate" type="x-tmpl-mustache">
+    {{#ItemGroups}}
+    <div class="infoBoxCol20 infoBoxCol">
+        <div class="WindowBox brdB WipItemGroup">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="fontSizeXSmall">{{Name}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="fontSizeBig">{{Qty}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/ItemGroups}}
+</script>
+<script id="WipItemTemplate" type="x-tmpl-mustache">
+    <div class="infoBoxCol20 infoBoxCol">
+        <div class="WindowBox brdB WipItemGroup WipItems no-gutters">
+            <div class="col-12">
+                {{#Items}}
+                <div class="">
+                    <div class="row no-gutters">
+                        <div class="col-8">
+                            <div class="itemCode pl-2" style="border-left: 8px solid {{Color2}};">{{Code}}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="itemQty">{{Qty}}</div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="itemName">{{Name}}</div>
+                        </div>
+                    </div>
+                </div>
+                {{/Items}}
+            </div>
+        </div>
+    </div>
+</script>
+<script id="WipGanttTemplate" type="x-tmpl-mustache">
+    <div class="WipResource">
+        <div class="row no-gutters">
+            <div class="col-12 WipResourceWorkordersCol">
+                <div class="WipResourceWorkorders">
+                    <div class="WipResourceHeader">
+                        {{Name}}
+                    </div>
+                    {{#Workorders}}
+                    <div class="workorder" data-childItemId="{{Param1}}" style="width: {{width}}px;">
+                        <div class="workorderCovered" style="width:{{Width_Covered}}%;"></div>
+                        {{Qty_Covered}} / {{Qty_Remain}}
+                        <br />{{ClientOrderNo}}
+                        <div class="woColor" style="background-color: {{ItemColor2}}"></div>
+                    </div>
+                    {{/Workorders}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="WipGanttTimerTemplate" type="x-tmpl-mustache">
+    <div class="WipResource Timer">
+        <div class="row no-gutters">
+            <div class="col-12 WipResourceWorkordersCol">
+                <div class="WipResourceWorkorders">
+                    <div class="WipResourceHeader"></div>
+                    {{#Hours}}
+                    <div class="hour" style="width: {{width}}px;">{{hour}}</div>
+                    {{/Hours}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/javascript">
+
+    var wip = {};
+
+    $(document).ready(function () {
+        console.log("WIPView.Ready");
+        wip = new WIP(@Html.Raw(Json.Encode(ViewBag.ResourceGroupId)));
+        wip.Init();
+        $("#btnRefreshGantt").click();
+    });
+
+
+</script>

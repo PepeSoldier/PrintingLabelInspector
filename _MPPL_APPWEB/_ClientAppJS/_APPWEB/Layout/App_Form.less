@@ -1,0 +1,168 @@
+﻿/*--------------------------------------------FORMS---------------------------------------*/
+.formsStyle(@color_form_background) {
+    input,
+    select,
+    textarea {
+        max-width: 520px;
+    }
+
+    .display-mode {
+        display: inline-block;
+    }
+
+    .edit-mode {
+        display: none;
+    }
+
+    .formArea {
+        background-color: @color_form_background;
+        padding: 10px;
+    }
+
+    .formInlineGroup {
+        float: left;
+        margin-right: 5px;
+    }
+
+    .formInlineRow {
+        min-height: 25px;
+        width: 100%;
+    }
+
+    .formInlineRow2 {
+        min-height: 25px;
+        width: 50%;
+        float: left;
+    }
+
+    .formInlineRowLabel2 {
+        background-color: @color_form_background;
+        height: 34px;
+        line-height: 34px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+}
+
+input[type=checkbox], input[type=radio] {
+    margin: 0;
+}
+input {
+    //padding: .1em .2em !important;
+    //padding: .125rem .125rem !important;
+}
+label {
+    margin-bottom: 0 !important;
+}
+select.form-control-big{
+    height: 75px !important;
+}.form-control-big{
+    font-size: 40px;
+}
+
+.formArea .control-label {
+    padding-left: 4px;
+    font-size: 12px;
+}
+::placeholder {
+    color: #37717d !important;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #37717d !important;
+}
+
+::-ms-input-placeholder {
+    color: #37717d !important;
+}
+/*------------------------------------------LOGIN-FORM-------------------------------------*/
+.form-signin
+{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.account-wall {
+    width: 500px;
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 0px 20px 0px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+}
+.login-title
+{
+    color: #555;
+    font-size: 22px;
+    font-weight: 400;
+    display: block;
+}
+.profile-img
+{
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.select-img
+{
+    border-radius: 50%;
+    display: block;
+    height: 75px;
+    margin: 0 30px 10px;
+    width: 75px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.select-name
+{
+    display: block;
+    margin: 30px 10px 10px;
+}
+
+.logo-img
+{
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.form-control {
+    min-height: 37px;
+}

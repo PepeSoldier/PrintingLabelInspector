@@ -1,0 +1,81 @@
+﻿@model MDL_ONEPROD.Model.Scheduling.ProductionLog
+
+@{
+    Layout = null;
+    DateTime newDate = (DateTime)ViewBag.NewDate;
+}
+
+
+<style>
+   .btnTouch{
+        height: 75px;
+        border-radius: 0;
+        line-height: 60px;
+        font-size: 20px;
+    }
+</style>
+
+<div id="ChangeDeclarationDate" class="ChangeDeclarationDate" style="width: 100%;">
+    <span style="color:#58f9c6;">Szczegóły wybranej deklaracji</span>
+    <div class="row no-gutters" style="margin-top:0px; font-size: 32px;">
+        <div class="col-6">
+            Zamówienie:<br />
+            Numer seryjny:<br />
+            Ilość:<br />
+            Kod:<br />
+            Typ:<br />
+            <br />
+            Aktualna data: <br />
+            Nowa Data:
+        </div>
+        <div class="col-6">
+            @(Model.InternalWorkOrderNumber ?? Model.ClientWorkOrderNumber) <br />
+            @Model.SerialNo <br />
+            @Model.DeclaredQty <br />
+            @Model.Item.Code <br />
+            @Model.ReasonType.Name <br />
+            <br />
+            @Model.TimeStamp <br />
+            <span style="color: lawngreen;">@newDate</span>
+        </div>
+    </div>
+
+    <div class="row no-gutters" style="margin-top: 20px;">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6" style="color:#fd6969;font-size: 19px;">
+            Kliknięcie przycisku "WYKONAJ" spowoduje przeniesienie wybranej deklaracji na wcześniejszą zmianę bez możliwości cofnięcia tej decyzji.
+        </div>
+    </div>
+
+    <div class="row no-gutters" style="margin-top: 60px;">
+        <div class="col-6">
+
+        </div>
+        <div class="col-6" style="color:#fd6969;font-size: 19px;">
+            Na pewno chcesz wykonać?
+        </div>
+    </div>
+
+    <div class="row no-gutters" style="margin-top: 80px;">
+        <div class="col-6">
+
+        </div>
+        <div class="col-2">
+            <div class="btn btn-warning btnClose btnTouch" style="width:95%;">Anuluj</div>
+        </div>
+        <div class="col-4">
+            <div class="btn btn-success btnTouch" id="btnExecute" style="width:100%;">WYKONAJ</div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    //var prodLog = new StopSplit(@Html.Raw(Json.Encode(Model.Id)));
+
+</script>
+

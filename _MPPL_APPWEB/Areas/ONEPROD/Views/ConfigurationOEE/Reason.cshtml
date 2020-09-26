@@ -1,0 +1,89 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ReasonGridViewModel
+@{
+    ViewBag.Title = "CONFIG: Powody postojów";
+}
+
+<style>
+    .cellMachineDiv {
+        position: relative; 
+        width: 100%;
+        height: 27px;
+        background-color: rgba(131, 131, 131, 0.1);
+        margin: 0px;
+    }
+    .OK {
+        background-color: limegreen !important;
+        color: #3c813c !important;
+    }
+    .ERROR {
+        background-color: #a82c2c !important;
+        color: #571212 !important;
+    }
+    td.cellMachine:hover {
+        /*border: 1px solid blue !important;*/
+        background: #53dbba !important;
+        color: #497278 !important;
+    }
+    .jsgrid-header-cell{
+        height: 100px;
+        /*background-color: red !important;*/
+    }
+    .rotatedHeader {
+        width: 80px;
+        margin-left: -25px;
+        margin-top: -5px;
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        /* Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+    .cellGroup.active{
+        background-color: #2f7180;
+        height: 25px;
+        border-radius: 12px;
+        width: 25px;
+        margin-left: 6px;
+    }
+    .cellGroup input {
+        display: none;
+    }
+</style>
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="reasonsGrid" style="min-width: 1400px; max-width: 1800px"></div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/_APPWEB/Common/MyColorPicker.js"></script>
+<script type="text/javascript">
+    
+    var reasons = @Html.Raw(Json.Encode(Model.Reasons));
+    var machines = @Html.Raw(Json.Encode(Model.Machines));
+    var machineReasons = @Html.Raw(Json.Encode(Model.MachineReason));
+    var grid = new ReasonGrid("#reasonsGrid", machines, machineReasons);
+
+    $(document).ready(function () {
+        grid.InitGrid();
+        grid.RefreshGrid();
+    });
+</script>
+

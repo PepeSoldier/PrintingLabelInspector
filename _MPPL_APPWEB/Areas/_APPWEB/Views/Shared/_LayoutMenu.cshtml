@@ -1,0 +1,12 @@
+﻿@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using MDL_BASE.Models;
+
+
+@if (ViewBag.ClientName == "Eldisy")
+{
+    @MenuHelper.DrawMenu(MenuPFEP.MenuItem.Children, ViewBag.ClientName, Url, User)
+}
+else
+{
+    @MenuHelper.DrawMenu(AppMenu.MenuItems, ViewBag.ClientName, Url, User)
+}

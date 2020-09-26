@@ -1,0 +1,230 @@
+﻿@using MDLX_CORE.ComponentCore.Entities;
+@{
+    ViewBag.Title = "Plan Produkcji";
+}
+<style>
+    #statusGrid .jsgrid-cell {
+        padding: 0 !important;
+        overflow-x: hidden;
+        text-align: center;
+    }
+
+        #statusGrid .jsgrid-cell input {
+            padding: 4px 2px !important;
+        }
+
+        #statusGrid .jsgrid-cell select {
+            padding: 5px 0px !important;
+        }
+
+    #ScheduleGrid .stateA-1 .stateA,
+    #ScheduleGrid .stateB-1 .stateB {
+        color: transparent;
+    }
+
+    #ScheduleGrid .stateA0 .stateA,
+    #ScheduleGrid .stateB0 .stateB {
+        background-color: #88888842 !important;
+        color: transparent;
+    }
+
+    #ScheduleGrid .stateA10 .stateA,
+    #ScheduleGrid .stateB10 .stateB {
+        background-color: #ffe85180 !important;
+        color: transparent;
+    }
+
+    #ScheduleGrid .stateA50 .stateA,
+    #ScheduleGrid .stateB50 .stateB {
+        background-color: #00ff0042 !important;
+        color: transparent;
+    }
+
+    #ScheduleGrid .stateA90 .stateA,
+    #ScheduleGrid .stateB90 .stateB {
+        background-color: #ff000042 !important;
+        color: transparent;
+    }
+
+    .scheduleManageForm {
+        background-color: white;
+        border: 1px solid #dee2e6;
+        border-top: 0;
+        padding: 5px;
+    }
+</style>
+
+<div class="row" id="PrdSchedule">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+        <div id="ScheduleGrid"></div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="ScheduleGridControls" class="">
+                    <div id="tabs">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="primary-tab" data-toggle="tab" href="#primary" role="tab" aria-controls="primary" aria-selected="true">Narzędzia</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="snapshot-tab" data-toggle="tab" href="#snapshot" role="tab" aria-controls="snapshot" aria-selected="false">Snapshoty</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content scheduleManageForm" id="myTabContent">
+                            @*Content tab 1*@
+                            <div class="tab-pane fade show active" id="primary" role="tabpanel" aria-labelledby="primary-tab">
+                                <br />
+                                <div class="btn btn-success" id="btnRefreshGrid" style="width: 152px;">
+                                    <div class="fas fa-sync-alt"></div><span>Odśwież Plan</span>
+                                </div>
+                                <div class="btn btn-default" id="btnScheduleGridSave" style="width: 152px;">
+                                    <div class="fas fa-save"></div><span>Zapisz Zmiany</span>
+                                </div>
+                                <hr />
+                                <div id="selectedOrderInfo">
+                                    <div style="width: 152px; height: 34px; background-color: #bfe4ff; border-radius: 4px; padding: 8px 12px; margin-top: -3px; font-size: 14px;">Wybrane zlecenie:</div>
+                                    <input type="text" id="selectedOrderId" class="form-control" style="display: none;">
+                                    <input type="text" id="selectedOrderNo" class="form-control" style="width: 152px;">
+                                    <br />
+                                    <input type="text" id="newQty" class="form-control" style="width: 152px;">
+                                    <div class="btn btn-default" id="btnOrderChangeQty" style="width: 152px;"><div class="fas fa-edit"></div>Zmień Ilość</div>
+                                    <br />
+                                    <input type="text" id="qtyProducedInPast" class="form-control" style="width: 152px;">
+                                    <div class="btn btn-default" id="btnSetQtyProducedInPast" style="width: 152px;"><div class="fas fa-check-circle"></div>ilość wyprod.</div>
+                                    <br />
+                                    <input type="text" id="newLine" class="form-control" style="width: 152px;">
+                                    <div class="btn btn-default" id="btnScheduleGridChangeLine" style="width: 152px;"><div class="fas fa-exchange-alt"></div>Przenieś</div>
+                                    <br />
+                                    <input type="text" id="newStartTime" class="datetimepicker form-control" style="width: 152px;">
+                                    <div class="btn btn-default" id="btnScheduleGridCalculate" style="width: 152px;"><div class="fas fa-clock"></div>Przelicz</div>
+                                </div>
+                                <hr />
+                                <div class="btn btn-warning" id="btnScheduleGridUndo" style="width: 152px;">
+                                    <div class="fas fa-undo"></div><span>Cofnij Zmiany</span>
+                                </div>
+                                <div class="btn btn-danger" id="btnScheduleGridRestore" style="width: 152px;">
+                                    <div class="fas fa-undo"></div><span>Przywróc Plan</span>
+                                </div>
+                            </div>
+                            @*Content tab 2*@
+                            <div class="tab-pane fade" id="snapshot" role="tabpanel" aria-labelledby="snapshot-tab">
+                                <div class="btn btn-default" id="refreshSnapshots">
+                                    <div class="fas fa-sync-alt"></div><span>Odśwież</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-xl-12">
+                <div id="statusGrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/PRD/Schedule/StautsGrid.js"></script>
+<script type="text/javascript">
+    var statusGrid = new StatusGrid("#statusGrid");
+    var scheduleGrid = new ScheduleGrid(statusGrid);
+
+    $(document).ready(function () {
+        //$("#ScheduleGrid").jsGrid("loadData");
+        $('#myTab a[href="#primary"]').tab('show')
+        scheduleGrid.InitGrid();
+        scheduleGrid.RefreshGrid();
+        statusGrid.InitGrid();
+        InitDatepickers();
+    });
+
+    $("#refreshSnapshots").click(function () {
+        scheduleGrid.ShowSnapshots();
+    });
+    $("#btnRefreshGrid").click(function () {
+        scheduleGrid.RefreshGrid();
+    });
+
+    $("#btnScheduleGridSave").click(function () {
+        var line = scheduleGrid.FilterLineVal();
+        $.ajax({
+            url: "/PRD/Schedule/SaveChanges?LineName=" + line,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                new Alert().Show("success", "Zapisano");
+                scheduleGrid.RefreshGrid();
+            }
+        });
+    });
+    $("#btnScheduleGridUndo").click(function () {
+        var line = scheduleGrid.FilterLineVal();
+        $.ajax({
+            url: "/PRD/Schedule/DeleteSnapshot?snapshotNo=0&LineName=" + line,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                new Alert().Show("success", "Zapisano");
+                scheduleGrid.RefreshGrid();
+            }
+        });
+    });
+    $("#btnScheduleGridRestore").click(function () {
+        $.ajax({
+            url: "/PRD/Schedule/LoadOriginalSchedule",
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                new Alert().Show("success", "Zapisano");
+                scheduleGrid.RefreshGrid();
+            }
+        });
+    });
+    $("#btnOrderChangeQty").click(function () {
+        var orderId = $("#selectedOrderId").val();
+        var newQty = $("#newQty").val();
+        scheduleGrid.ChangeQty(orderId, newQty, scheduleGrid);
+    });
+    $("#btnSetQtyProducedInPast").click(function () {
+        var orderId = $("#selectedOrderId").val();
+        var qtyProducedInPast = $("#qtyProducedInPast").val();
+        scheduleGrid.SetQtyProducedInPast(orderId, qtyProducedInPast, scheduleGrid);
+    });
+    $("#btnScheduleGridChangeLine").click(function () {
+        var orderId = $("#selectedOrderId").val();
+        var lineName = $("#newLine").val();
+        scheduleGrid.ChangeLine(orderId, lineName);
+        scheduleGrid.RefreshGrid();
+    });
+    $("#btnScheduleGridCalculate").click(function () {
+        var orderId = $("#selectedOrderId").val();
+        var newStartTime = $("#newStartTime").val();
+        var lineName = scheduleGrid.FilterLineVal();
+        scheduleGrid.CalculateWholeLine(orderId, lineName, newStartTime);
+    });
+    $(document).on("click", "#btnScheduleGridCalculateClock", function () {
+        //var orderId = $("#selectedOrderId").val();
+        var orderId = $(this).parents('tr:first').find(".orderId").text();
+        var newStartTime = $(this).attr("data-newtime").replace('_', ' ');
+        var lineName = scheduleGrid.FilterLineVal();
+
+        //console.log("orderId,newStartTime,LineName:" + orderId + "," + newStartTime + "," + lineName);
+        scheduleGrid.CalculateWholeLine(orderId, lineName, newStartTime);
+    });
+
+    $("#ScheduleGrid").on('keypress', '.jsGridFilter', function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            scheduleGrid.RefreshGrid();
+        }
+    });
+    $("#snapshot").on('click', '.snapshotShowChanges', function (e) {
+        scheduleGrid.ShowChanges($(this).parent().find(".snapshotNo").text());
+    });
+    $("#snapshot").on('click', '.snapshotDelete', function (e) {
+        scheduleGrid.DeleteSnapShot($(this).parent().find(".snapshotNo").text());
+    });
+
+</script>

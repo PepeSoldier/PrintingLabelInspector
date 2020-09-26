@@ -1,0 +1,204 @@
+﻿@import "APP_variables_darkSkin.less";
+@import "APP_variables_defaultSkin.less";
+@import "../PopupWindow/Window.less";
+@import "App_Form.less";
+@import "App_Grid.less";
+@import "App_Layout.less";
+@import "App_Layout_menu.less";
+@import "App_Layout_sidebar.less";
+@import "App_Layout_top.less";
+@import "App_Layout_wrapper.less";
+@import "App_Photos.less";
+@import "App_Scrollbar.less";
+@import "App_Switchers.less";
+@import (inline) "../Alert/Alert.css";
+
+
+.darkSkin {
+    .formsStyle(@drk_form_bgColor);
+    .gridCommonStyle(@drk_grid_bgColor, @drk_grid_brdColor, @drk_selectionBgColor, @drk_selectionFontColor);
+    .gridStyle(@drk_selectionBgColor, @drk_selectionFontColor, @drk_orange, @drk_green, #4e4e4e,#4e4e4e,#1d1d1d,#2d2d2d);
+    .layoutStyle(@drk_bgColor,@drk_fontColor, @drk_linkColor, @drk_bgImage);
+    .menuStyle(@drk_menu_bgColor);
+    .sidebarStyle(@drk_form_bgColor);
+    .topStyle(@drk_logo, @drk_top_bgColor, @drk_color_gray_dark);
+    .switchersStyle(@drk_switcher_active, @drk_switcher_disabled, @drk_fontColor_hover);
+    .windowStyle(@drk_window_bgColor, @drk_color_gray_medium, @drk_window_titleFontColor, @drk_window_titleBgColor, @drk_grid_brdDarkerColor);
+}
+
+.defaultSkin {
+    .formsStyle(@dflt_form_bgColor);
+    .gridCommonStyle(@dflt_grid_bgColor, @dflt_grid_brdColor, @dflt_selectionBgColor, @dflt_selectionFontColor);
+    .gridStyle(@dflt_selectionBgColor, @dflt_selectionFontColor, @dflt_orange, @dflt_green, #e4e4e4,#ffffff,#fcfcfc,#f3f3f3);
+    .layoutStyle(@dflt_bgColor,@dflt_fontColor, @dflt_linkColor, @dflt_bgImage);
+    .menuStyle(@dflt_menu_bgColor);
+    .sidebarStyle(@dflt_form_bgColor);
+    .topStyle(@dflt_logo, @dflt_top_bgColor, @dflt_color_gray_dark);
+    .switchersStyle(@dflt_switcher_active, @dflt_switcher_disabled, @dflt_fontColor_hover);
+    .windowStyle(@dflt_window_bgColor, @dflt_color_gray_medium, @dflt_window_titleFontColor, @dflt_window_titleBgColor, @dflt_grid_brdDarkerColor);
+
+    #wrapper {
+        background: rgb(232, 232, 232);
+        background: -moz-linear-gradient(top, rgba(20,45,54,0) 0%, #cececee6 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(20,45,54,0)), color-stop(100%, #cececee6));
+        background: -webkit-linear-gradient(top, rgba(20,45,54,0) 0%, #cececee6 100%);
+        background: -o-linear-gradient(top, rgba(20,45,54,0) 0%, #cececee6 100%);
+        background: -ms-linear-gradient(top, rgba(20,45,54,0) 0%, #cececee6 100%);
+        background: linear-gradient(to bottom, rgba(20,45,54,0) 0%, #cececee6 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#142d36', endColorstr='#141e22', GradientType=0 );
+    }
+
+    .formArea {
+        border: 1px solid #d4d4d4;
+    }
+}
+
+
+@nasa_top_bgColor: linear-gradient(to bottom,#0d252d 0%,#0c1e25 57%,#0a1b21 100%);
+
+.nasaSkin {
+    .formsStyle(#2d464ed9);
+    /*.formsStyle(#48646dd9);*/
+    /*.formsStyle(rgba(34, 51, 58, 0.75));*/
+    .topStyle(@drk_logo, @nasa_top_bgColor, #569693);
+    .menuStyle(#182d32);
+    .gridCommonStyle(rgba(11, 31, 37, 0.65), #00bcff0d, #307f96, @drk_selectionFontColor);
+    .gridStyle(#38606f40, @drk_selectionFontColor, @drk_orange, @drk_green, rgba(25, 48, 56, 0.65),#274955,rgba(25, 48, 56, 0.65),#072d3a);
+    .windowStyle(rgba(11, 24, 29, 0.98), #2abaad, #d5e8ef, #2f4952, @drk_grid_brdDarkerColor);
+    /*rgba(10, 27, 33, 0.95)*/
+    /*BODY STYLE*/
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    color: aliceblue;
+    background-color: #142d36;
+    background-image: url('../../Content/images/background_nasa.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-print-color-adjust: exact;
+    /*input:disabled {
+        background-color: #162d351a !important;
+        border-color: #162d351a !important;
+    }*/
+    input:disabled, input[readonly="true"] {
+        background-color: #12292e !important;
+        /*background-color: #333b3e1c !important;*/
+        color: #75979e !important;
+        /*border-color: #366c5640 !important;*/
+    }
+    
+    .inputDisabled input {
+        pointer-events: none;
+        background-color: #162d351a !important;
+        border-color: #162d351a !important;
+        tab-index: none;
+    }
+
+    a {
+        color: #77cdf7;
+    }
+
+    .topMenuLoginBtn {
+        color: #569693 !important;
+    }
+
+    .nav > li > a:focus, .nav > li > a:hover {
+        background-color: unset !important;
+    }
+
+    .formArea {
+        color: aliceblue;
+    }
+
+    .formArea .control-label {
+        padding-left: 4px;
+        font-size: 12px;
+        color: #ffffffa1;
+    }
+
+    #wrapper {
+        background: rgba(20,45,54,1);
+        background: -moz-linear-gradient(top, rgba(20,45,54,0) 0%, #070f13e6 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(20,45,54,0)), color-stop(100%, #070f13e6));
+        background: -webkit-linear-gradient(top, rgba(20,45,54,0) 0%, #070f13e6 100%);
+        background: -o-linear-gradient(top, rgba(20,45,54,0) 0%, #070f13e6 100%);
+        background: -ms-linear-gradient(top, rgba(20,45,54,0) 0%, #070f13e6 100%);
+        background: linear-gradient(to bottom, rgba(20,45,54,0) 0%, #070f13e6 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#142d36', endColorstr='#141e22', GradientType=0 );
+    }
+
+    .WindowBox {
+        color: #b1c2d2;
+        background: rgba(0,20,26,0.3);
+        background: -moz-linear-gradient(top, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,20,26,0.3)), color-stop(100%, rgba(0,0,0,0.25)));
+        background: -webkit-linear-gradient(top, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+        background: -o-linear-gradient(top, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+        background: -ms-linear-gradient(top, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+        background: linear-gradient(to bottom, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00141a', endColorstr='#000000', GradientType=0 );
+        border: 0px solid;
+    }
+
+    .WindowBoxInactive {
+        color: #cecece;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .backcolorGray {
+        background-color: #86959c;
+    }
+
+    .colorGray {
+        color: #86959c;
+    }
+
+    .backcolorYellow {
+        background-color: #a78927;
+    }
+
+    .colorYellow {
+        color: #a78927;
+    }
+
+    .backcolorGreen {
+        background-color: #13a18d;
+        color: #004954;
+    }
+
+    .colorGreen {
+        color: #13a18d;
+    }
+
+    .backcolorRed {
+        background-color: #7b2435;
+    }
+
+    .colorRed {
+        color: #7b2435;
+    }
+
+    .brd {
+        border: 1px solid #21464e;
+    }
+
+    .brdL {
+        border-left: 1px solid #21464e;
+    }
+
+    .brdR {
+        border-right: 1px solid #21464e;
+    }
+
+    .brdT {
+        border-top: 1px solid #21464e;
+    }
+
+    .brdB {
+        border-bottom: 1px solid #21464e;
+    }
+
+    .modal-content {
+        color: black;
+    }
+}

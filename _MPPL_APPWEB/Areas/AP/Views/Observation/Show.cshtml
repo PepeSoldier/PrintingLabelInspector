@@ -1,0 +1,128 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ObservationShowViewModel
+@using MDL_AP.Models.ActionPlan
+
+@{
+    ViewBag.Title = "Obserwacja";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="Window">
+            <div class="WindowTitle">
+                <div style="float: left;">Szczegóły Obserwacji</div>
+                <div style="float: right;">
+                    @Html.ActionLink("Edytuj", "Edit", "Observation", new { id = Model.Observation.Id }, new { @class = "btn btn-primary" })
+                </div>
+                
+                <div class="clear_div"></div>
+            </div>
+            <div class="WindowContent">
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Zgłaszający:</div>
+                    <div class="col-md-8 ActionHeaderValue" style="font-size: 20px;">@Model.Observation.Creator.FullName</div>
+                </div>    
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Data zgłoszenia:</div>
+                    <div class="col-md-8 ActionHeaderValue" style="font-size: 20px;">@Model.Observation.Date.ToShortDateString()</div>
+                </div>    
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Obszar, Stanowisko, Zmiana:</div>
+                    <div class="col-md-8 ActionHeaderValue">@Model.Observation.Area.Name, @Model.Observation.Workstation.Name, @Model.Observation.ShiftCode.Name</div>
+                </div>
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Typ:</div>
+                    <div class="col-md-8 ActionHeaderValue">@Model.Observation.Type</div>
+                </div>
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Opis Problemu:</div>
+                    <div class="col-md-8 ActionHeaderValue">@Model.Observation.Problem</div>
+                </div>
+
+                <div class="row ActionHeaderRow">
+                    <div class="col-md-4 ActionHeaderTitle">Zdjęcia:</div>
+                    <div class="col-md-8 ActionHeaderValue">
+                        <label class="btn btn-default">
+                            <span class="fa fa-camera"></span>
+                            <span>Dodaj</span>
+                            <input type="file" id="Upload_2_@Model.ObservationId" class="fileInput" style="display: none;">
+                        </label>
+                        <div class="btn btn-default">
+                            <span class="fa fa-image"></span>
+                            <span id="ActionPhotoShowHide">Pokaż</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ObservationPhotos">
+                    <div id="ObservationPhotos_Photos">
+                        @foreach (Attachment p in Model.Attachments)
+                        {
+                            <a href="@Url.Content("~/Uploads/" + p.Id + "-" + Model.ObservationId + "B." + p.Extension)" data-fancybox="groupAction_@Model.ObservationId">
+                                <div class="ActionPhoto"><img src='@Url.Content("~/Uploads/" + p.Id + "-" + Model.ObservationId + "M." + p.Extension)' /></div>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="Window">
+            <div class="WindowTitle">
+                <div style="float: left;">Akcje</div>
+                <div style="float: right;">
+                    <a class="btn btn-primary" id="AddActionFromObservation">Dodaj akcje</a>
+                </div>
+                <div class="clear_div"></div>
+            </div>
+            <div class="WindowContent">
+                
+                    @if (!(Model.Actions.Count > 0))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Brak utowrzonych akcji dla tej obserwacji</p>
+                            </div>
+                        </div>
+                    }
+
+                    @foreach (ActionModel action in Model.Actions)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="ChildActionBox">
+                                    <div class="ChildActionBoxHeader">
+                                        <span class="badge">@action.Creator.Initials</span>
+                                        @action.Creator.FullName / @action.DateCreated
+                                    </div>
+                                    <div class="ChildActionBoxDescription">
+                                        <div style="float: left;">
+                                            @action.Title [odpowiedzialny: @((action.Assigned != null) ? action.Assigned.FullName : string.Empty )]
+                                        </div>
+                                        <div style="float: right;">
+                                            @Html.ActionLink("Otwórz", "Show", "Action", new { id = action.Id }, new { @class = "btn btn-primary" })
+                                        </div>
+                                    </div>
+                                    <div class="clear_div"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                
+                <div class="clear_div"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        InitCreateChild(@Model.Observation.Id);
+        InitFileSelect();
+    </script>
+}

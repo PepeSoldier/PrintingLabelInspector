@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "Delivery Inspection Blind Check";
+    var supplierId = ViewBag.SupplierId;
+    var deliveryId = ViewBag.DeliveryId;
+    var deliveryItemListGroupGuid = ViewBag.DeliveryItemListGroupGuid;
+    Layout = null;
+}
+
+<style>
+    #itemCode, #numberOfPackage, #qtyInPackage,
+    #packageCodeDef, #packageNameDef, #qtyInPackageDef, #packagesOnPalletDef
+    {
+        padding: 0.0rem .25rem !important;
+    }
+    .PackageItemOptionRow{
+        border-bottom: 1px solid #21464e;
+        background-color: #132c343d;
+        padding: 8px 0;
+        height:45px;
+    }
+</style>
+
+<div class="h-100 d-flex flex-column" id="deliveryInspectionBlindCheck">
+    ?
+</div>
+
+<script id="deliveryInspectionPackageItemOptionTemplate" type="x-tmpl-mustache">
+    {{#PackageItemOptions}}
+    <div class="row no-gutters PackageItemOptionRow" data-QtyPerPackage="{{QtyPerPackage}}" data-PackageItemId="{{Id}}">
+        <div class="col-7 pr-1 text-truncate"><span>{{PackageName}}</span></div>
+        <div class="col-4"><span>{{QtyPerPackage}}/op, {{PackagesPerPallet}}/p</span></div>
+        <div class="col-1"><i class="fas fa-check-circle"></i></div>
+    </div>
+    {{/PackageItemOptions}}
+</script>
+
+<script id="deliveryInspectionBlindCheckTemplate" type="x-tmpl-mustache">
+    <ilogis-wms-mobile-pageheader headerTitle="Blind Check" icon="fas fa-barcode" />
+    <div class="row no-gutters justify-content-center mb-1">
+        <div class="col-12">
+            <div class="card" style="border-radius: 0;">
+                <div class="card-body">
+                    <div id="deliveryInspectionInfoHeader"></div>
+                    <div class="row no-gutters justify-content-center mb-2 mt-2">
+                        <div class="col-12">
+                            <input type="text" id="itemCode" class="form-control fs40 text-center" placeholder="kod produktu" autocomplete="off" inputmode="text" />
+                        </div>
+                    </div>
+                    <div id="itemName" class="text-center text-truncate" style="color: #21464e;"></div>
+                    <section id="sectionPackageItemSelector" class="hidden">
+                        <div id="sectionPackageItemOptions">
+                        </div>
+                        <div class="row no-gutters PackageItemAddOptionRow" style="font-size:26px;">
+                            <div class="col-11 pr-1 text-truncate"><span>Dodaj sposób pakowania</span></div>
+                            <div class="col-1"><i class="fas fa-plus-circle"></i></div>
+                        </div>
+                    </section>
+                    <section id="sectionPackageItemDef" class="hidden">
+                        <div class="row no-gutters">
+                            <div class="col-2">
+                                <input type="text" id="SelectedPackageId" class="form-control text-center" placeholder="Id" autocomplete="off" inputmode="none" readonly="true"/>
+                            </div>
+                            <div class="col-10">
+                                <input type="text" id="packageDef" class="form-control text-center" placeholder="Kod lub Nazwa Opak." autocomplete="off" inputmode="text" />
+                            </div>
+                            <div class="col-5">
+                                <input type="text" id="qtyInPackageDef" class="form-control fs30 text-center" placeholder="szt w opak." autocomplete="off" inputmode="numeric" />
+                            </div>
+                            <div class="col-2 text-center pt-3" id="multiplySign">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="col-5">
+                                <input type="text" id="packagesOnPalletDef" class="form-control fs30 text-center" placeholder="opak na pal." autocomplete="off" inputmode="numeric" />
+                            </div>
+                        </div>
+                        <div class="row no-gutters mt-2">
+                            <div class="col-12">
+                                <select class="form-control" id="selectInputWarehouse" placeholder="Wybierz Magazyn"></select>
+                            </div>
+                        </div>
+                        <div class="row no-gutters mt-2">
+                            <div class="col-6">
+                                <select class="form-control" id="selectInputWarehouseLocationType" placeholder="Typ Lokacji"></select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control" id="selectInputPickingStrategy"  placeholder="Metoda pickowania"></select>
+                            </div>
+                        </div>
+                        <div class="row no-gutters mt-2">
+                            <div class="col-6">
+                                <div class="btn btn-default" id="btnPackageItemBack">< Cofnij</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="btn btn-success" id="btnAddPackageItem">Dodaj</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="sectionPackages" class="hidden">
+                        <div class="row no-gutters">
+                            <div class="col-5">
+                                <input type="text" id="qtyInPackage" class="form-control multiply fs30 text-center" placeholder="szt w opak" autocomplete="off" inputmode="numeric" />
+                            </div>
+                            <div class="col-2 text-center pt-3" id="multiplySign">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="col-5">
+                                <input type="text" id="numberOfPackage" class="form-control multiply fs30 text-center" placeholder="ilość opak." autocomplete="off" inputmode="numeric" />
+                            </div>
+                        </div>
+                    </section>
+                    <section id="sectionSummary" class="hidden">
+                        <div class="row no-gutters">
+                            <div class="col-6">
+                                suma:
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-5">
+                                <input type="text" id="sum" class="form-control fs30 text-center" readonly="true"
+                                       style=" background-color: #569693 !important; color: #21464e !important;" />
+                            </div>
+                            <div class="col-2 text-center">
+                                <input type="text" id="unitOfMeasure" class="form-control fs30 text-center" readonly="true"
+                                       style=" background-color: #569693 !important; color: #21464e !important;" />
+                            </div>
+                            <div class="col-5">
+                                <div class="btn btn-default text-center fs30" id="confirmDelivery">DODAJ</div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters pt-5">
+                            <div class="col-5">
+                                <div class="btn btn-danger text-center fs30" id="deletePackageItem">USUŃ</div>
+                            </div>
+                            <div class="col-2 text-center">
+                            </div>
+                            <div class="col-5">
+                                <div class="btn btn-warning text-center fs30" id="editPackageItem">EDYTUJ</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center mb-auto">
+        <div class="col-11" style="text-align:center">
+            <div id="kaypad116"></div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center">
+
+        <div class="col-6">
+            <a href="#/iLOGIS/Delivery/DeliveryInspection">
+                <div class="btn btn-warning btnAction">
+                    < WRÓĆ
+                </div>
+            </a>
+            @*<div class="btn btn-warning btnAction" id="closeButtonBlindCheck"></div>*@
+        </div>
+            
+        
+        <div class="col-6">
+            <div class="btn btn-primary btnAction" id="btnJumpToSummary">PODSUMOWANIE</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    var deliveryInspectionBlindCheck = new DeliveryInspectionBlindCheck(@Html.Raw(Json.Encode(supplierId)), @Html.Raw(Json.Encode(deliveryId)),@Html.Raw(Json.Encode(deliveryItemListGroupGuid)));
+
+    $(document).ready(function () {
+        deliveryInspectionBlindCheck.Init();
+    });
+
+    //try {
+    //    onScan.detachFrom(document);
+    //} catch (e) {
+    //    console.log("e");
+    //    console.log(e);
+    //}
+    //onScan.attachTo(document, {
+    //    scanButtonKeyCode: "0",
+    //    scanButtonLongPressTime: 500,
+    //    timeBeforeScantest: 100,
+    //    avgTimeByChar: 30,
+    //    minLength: 3,
+    //    suffixKeyCodes: [9, 13], // enter-key expected at the end of a scan
+    //    prefixKeyCodes: [],
+    //    ignoreIfFocusOn: false,
+    //    stopPropagation: false,
+    //    preventDefault: false,
+    //    reactToKeydown: true,
+    //    reactToPaste: true,
+    //    singleScanQty: 1,
+    //    onKeyDetect: function (iKeyCode) { // output all potentially relevant key events - great for debugging!
+    //    },
+    //    onScan: function (sCode, iQty) {
+    //        $("#consola").text('Scanned: ' + iQty + 'x ' + sCode);
+    //        if (sCode.length > 3) {
+    //            if (document.activeElement.id == "itemCode") {
+    //                $("#itemCode").val(sCode.split("/")[0]);
+    //            }
+    //        }
+    //    },
+    //    onScanError: function (oDebug) {
+    //        $("#consola2").text('err: ' + JSON.stringify(oDebug));
+    //        console.log(oDebug);
+    //    }
+    //});
+
+</script>

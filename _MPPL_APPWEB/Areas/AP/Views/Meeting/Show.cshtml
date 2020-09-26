@@ -1,0 +1,182 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.MeetingViewModel
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Spotkania Cykliczne";
+}
+<div class="row">
+    <div class="col-md-3">
+        @Html.ActionLink("Dodaj Akcję do spotkania", "Browse", "Action", new { id = Model.NewObject.Id }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-9">
+        @Html.ActionLink("Dodaj Nową Akcję do spotkania", "Edit", "Action", new { id = 0, meetingId = Model.NewObject.Id }, new { @class = "btn btn-default" })
+    </div>
+</div>
+<hr />
+
+<form class="form-inline">
+    <div class="form-group col-md-3">
+        @Html.LabelFor(x => x.NewObject.MeetingName):
+        @Model.NewObject.MeetingName
+    </div>
+    <div class="form-group col-md-3">
+        @Html.Label("Prowadzący:")
+        @Model.NewObject.Owner.FullName
+    </div>
+    <div class="form-group col-md-2">
+        @Html.Label("Data założenia:")
+        @Model.NewObject.BeginnigDate.ToShortDateString()
+    </div>
+</form>
+<hr>
+
+@{
+    string class1 = string.Empty;
+}
+
+<div class="row" style="margin-top: 15px;">
+
+@*GRID*@
+<div class="col-md-8 browseGrid">
+@Html.Grid(Model.ActionList).Columns(columns =>
+{
+
+columns.Add().Titled("<span class='col-sm-12'>Właściciel</span>").Encoded(false).Sanitized(false).SetWidth(100).RenderValueAs(u =>
+    @<div class="row">
+
+        @if ((u.State != MDL_AP.Models.ActionPlan.ActionStateEnum.stateAct && u.PlannedEndDate.Date < DateTime.Now.Date))
+        {
+            class1 = "ActionDelayed";
+        }
+               
+        else
+        {
+            class1 = "ActionFinished";
+        }
+
+        <div class="col-sm-12">
+            <div style="margin-left: -5px;" class="class1 @class1">
+                <div class="row upperRow">
+                    <div class="col-sm-12 ActionCreator" id="@u.Id">@u.Creator.FullName</div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+
+columns.Add().Titled("<span class='col-sm-4'>Opis Problemu</span>")
+.Encoded(false).Sanitized(false).SetWidth(200).RenderValueAs(u =>
+    @<div>
+            <div>@u.Problem</div>
+        </div>
+);
+columns.Add().Titled("<span class='col-sm-4'>Termin Rozpoczęcia</span>")
+        .Encoded(false).Sanitized(false).SetWidth(50).RenderValueAs(u =>
+        @<div class="row">
+            <div class="col-sm-12 ActionDateCreated">@u.DateCreated.ToShortDateString()</div>
+        </div>
+);
+
+columns.Add().Titled("Status").Encoded(false).Sanitized(false).SetWidth(80).RenderValueAs(u =>
+@<div>
+    <div class="row upperRow">
+        <div class="col-sm-12 statePicture">
+            @if ((u.State != MDL_AP.Models.ActionPlan.ActionStateEnum.stateAct && u.PlannedEndDate.Date < DateTime.Now.Date))
+            {
+                <img src="~/Content/Images/state@((int)u.State)_nok.png" />
+            }
+            else
+            {
+                <img src="~/Content/Images/state@((int)u.State)_ok.png" />
+            }
+        </div>
+    </div>
+</div>
+    );
+columns.Add().Titled("<span class='col-sm-4'>Termin Zakończenia</span>")
+                .Encoded(false).Sanitized(false).SetWidth(50).RenderValueAs(u =>
+            @<div class="row">
+                <div class="col-sm-12 ActionDateCreated">@u.PlannedEndDate.ToShortDateString()</div>
+            </div>
+    );
+
+columns.Add().Titled("<span class='col-sm-4'>Odpowiedzialny</span>")
+                .Encoded(false).Sanitized(false).SetWidth(50).RenderValueAs(u =>
+                @<div class="row">
+                    <div class="col-sm-12 ActionDateCreated">@((u.Assigned != null) ? u.Assigned.FullName : "N/A")</div>
+                        <div class="col-sm-12 ActionDateCreated">@((u.Assigned != null) ? u.Assigned.Department.Name : "" )</div>
+                </div>
+            );
+
+
+columns.Add().Titled("Podakcje").Encoded(false).Sanitized(false).SetWidth(60).RenderValueAs(u =>
+@<div>
+<div class="row upperRow">
+    <div class="col-sm-12 subactionsCount" id="BrowseAction_@u.Id">
+        @u.SubactionsCount
+    </div>
+</div>
+</div>
+);
+    
+
+columns.Add().Titled("").Encoded(false).Sanitized(false).SetWidth(80).Css("ActionLinkId").RenderValueAs(u =>
+@<div>
+<div class="row upperRow">
+    <div class="col-sm-12 ActionLink">
+        @Html.ActionLink("Otwórz", "Show","Action", new { id = u.Id }, null )
+    </div>
+</div>
+</div>
+);
+}).WithPaging(20)
+</div>
+
+@*ACTIVITIES*@
+<div class="col-md-4">
+    <div class="Window">
+        <div class="WindowTitle">Aktywności</div>
+        <div class="WindowContent" style="padding:0;">
+            <div id="ActivityAddForm"></div>
+            <div id="Activities"></div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+@section scripts{
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        InitAutocompetes("#FilterObject_Assigned_Id", "#AssignedId");
+        InitAutocompetes("#FilterObject_Creator_Id", "#CreatorId");
+        InitAddActionToMeeting();
+    });
+
+    $("tbody > tr").addClass("actionRowClick");
+
+    $(".buttonClick").on("click", function () {
+        var zm = $("#ActionActivity_ActivityDescription").text();
+        alert(zm);
+    });
+
+    $(".actionRowClick").on("click", function (prod) {
+        if (!prod.target.hasAttribute("href")) {
+            var idmetting = document.location.href.substring(document.location.href.lastIndexOf('/') + 1);
+            var idAction = $(this)["0"].firstElementChild.childNodes["0"].children["0"].children["0"].children["0"].childNodes[1].id
+
+            new ActionActivity().LoadListMeeting(idAction, idmetting);
+            new ActionActivity().ShowAddForm(idAction, idmetting, "#ActivityAddForm");
+        }
+    });
+
+    $(document).on("click", ".subactionsCount", function () {
+        new ActionBrowse().ShowChildrenActions(this);
+    });
+
+</script>
+}

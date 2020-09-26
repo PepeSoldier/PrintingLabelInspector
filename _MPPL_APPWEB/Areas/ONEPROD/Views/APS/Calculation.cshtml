@@ -1,0 +1,239 @@
+﻿@using MDL_ONEPROD.Model.Scheduling;
+@using MDLX_MASTERDATA.Entities;
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.APS.ViewModels.CalculationViewModel
+@{
+    ViewBag.Title = "Calculation";
+    bool enabled = true;
+}
+
+<style>
+    .bgGray1 {
+        background-color: #2a4550 !important;
+    }
+    .bgGreen{
+        background-color: #42a24e;
+    }
+    .LogDate{
+        color: #00ffd075;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row" style="">
+            @*form*@
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="shadow formArea">
+                    @using (Html.BeginForm("Calculation", "APS", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="formInlineGroup">
+                                    <div class="formInlineRow">
+                                        @Html.LabelFor(m => m.DateStart, new { @class = "control-label" })
+                                    </div>
+                                    <div class="formInlineRow">
+                                        @Html.TextBoxFor(m => m.DateStart, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control datetimepicker", @value = Model.DateStart })
+                                        @Html.HiddenFor(m => m.Guid)
+                                    </div>
+                                </div>
+                                <div class="formInlineGroup">
+                                    <div class="formInlineRow">
+                                        @Html.LabelFor(m => m.DateEnd, new { @class = "control-label" })
+                                    </div>
+                                    <div class="formInlineRow">
+                                        @Html.TextBoxFor(m => m.DateEnd, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control datetimepicker", @value = Model.DateEnd })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-12" style="max-width: 285px;">
+                                @{int i = 0;}
+                                @foreach (Resource2 area in Model.Areas)
+                                { 
+                                    enabled = area.Id != 46 && area.Id != 20; 
+
+                                    <div class="row">
+                                        <div class="col-7">@area.Name</div>
+                                        @if (enabled)
+                                        {
+                                        <div class="col-3">@Html.CheckBox("AreaId_" + area.Id, false, new { @class = "form-control cbArea", @style = "height: 30px;" })</div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-3">@Html.CheckBox("AreaId_" + area.Id, false, new { @class = "form-control cbArea", @style = "height: 30px;", @disabled = "disabled" })</div>
+                                        }
+                                        <div class="col-2">
+                                            <div class="btn btn-sm btn-danger clearArea" areaid="@area.Id">Clear</div>
+                                        </div>
+                                    </div>
+                                    i++;
+                                }
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-12" style="max-width: 285px;">
+                                <div class="row">
+                                    <div class="col-7">@Html.Label("Kalendarz", new { @class = "control-label" })</div>
+                                    <div class="col-3">@Html.CheckBoxFor(m => m.ConsiderCalendar, new { @class = "form-control", @disabled = "disabled", @checked = "checked", @style = "height: 30px;" })</div>
+                                    <div class="col-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7">@Html.Label("Grupowanie", new { @class = "control-label" })</div>
+                                    <div class="col-3">@Html.CheckBoxFor(m => m.BatchTasks, new { @class = "form-control", @disabled = "disabled", @checked = true, @style = "height: 30px;" })</div>
+                                    <div class="col-2"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                            </div>
+                            <div class="formInlineRow">
+                                @*<input type="submit" class="btn btn-default" value="Start" />*@
+                                <div class="btn btn-default" id="testBtn">Start</div>
+                            </div>
+                        </div>
+                    }
+                    <div class="clearBothDiv"></div>
+                </div>
+            </div>
+
+            @*alg status*@
+            <div class="col-12 col-sm-6 col-md-8 col-lg-9">
+                <div id="status1" class="algStatus formArea shadow" style="background-color: #1d353e66;"></div>
+                <div id="status2" class="algStatus formArea shadow" style="background-color: #1d353e66; min-height: 400px; max-height: 400px; overflow-y: scroll;">
+                    <h4>alg status</h4><br />
+                </div>
+                <div class="formInlineRow">
+                    <div class="btn btn-default btnClearLog">Wyczyść Log</div>
+                    <div class="btn btn-default btnRefreshLog">Odśwież log</div>
+                    <div style="display: none;" id="unique">@Model.Guid</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12" id="testCPB">
+
+    </div>
+</div>
+
+<div class="row" style="display: none;">
+    <div class="col-12" style="max-width: 400px; height: 20px; background-color:antiquewhite;">
+        <div class="progress progress-striped">
+            <div class="progress-bar progress-bar-success" style="width: 90%">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <style>
+        .algStatus {
+            min-height: 190px;
+            overflow: auto;
+            padding: 5px;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .algStatusBox {
+            width: 150px;
+            height: 150px;
+            float: left;
+            margin: 10px 5px 0px 5px;
+        }
+
+            .algStatusBox .asbTxt {
+                min-height: 100px;
+                padding: 5px;
+                text-align: center;
+            }
+    </style>
+
+    <script type="text/javascript">
+
+        var BaseUrl = "/"; //$('#BaseUrl').attr('href');
+        var calcAlerts = new CalculationAlert($('#unique').text());
+
+        $(document).ready(function () {
+            //InitDateTimePickers();
+            $('#ConsiderCalendar')[0].checked = true;
+            $('#BatchTasks')[0].checked = true;
+        });
+
+        var x = setInterval(function () {
+            calcAlerts.GetAlerts();
+        }, 1000);
+
+        $('.clearArea').click(function () {
+            var id = $(this).attr('AreaId');
+
+            $.ajax({
+                url: BaseUrl + "ONEPROD/APS/ClearArea/" + id,
+                type: 'POST',
+                success: function (result) {
+                    new AlertBox(0).ShowAlert("Wyczyszczono obszar " + id, "100%", -1, 2, Date.now());
+                }
+            });
+        });
+        $('#testBtn').click(function () {
+            $('#testBtn').prop("disabled", true).addClass("ui-state-disabled");
+            new AlertBox(0).ShowAlert("Startuje...  Poczekaj", "", -1, 2, Date.now());
+            PostForm();
+        });
+        $('.btnClearLog').click(function () {
+            $('#status1').html('');
+            $('#status2').html('<h4>alg status</h4><br />');
+        });
+        $('.btnRefreshLog').click(function () {
+            calcAlerts.GetAlerts();
+        });
+
+
+        function PostForm() {
+            var DateStart = $('#DateStart').val();
+            var DateEnd = $('#DateEnd').val();
+            var ConsiderCalendar = $('#ConsiderCalendar')[0].checked;
+            var BatchTasks = $('#BatchTasks')[0].checked;
+            var Areas = $(document).find('.cbArea');
+            var ConsiderAreas = "[ 0";
+            var AreaId = "0";
+            var Guid = $('#Guid').val();
+
+            for (var i = 0; i < Areas.length; i++) {
+                if (Areas[i].checked) {
+                    AreaId = Areas[i].name.split('_')[1];
+                    ConsiderAreas += ", "
+                    ConsiderAreas += AreaId
+                }
+            }
+            ConsiderAreas += "]";
+
+            $.ajax({
+                url: BaseUrl + "ONEPROD/APS/Calculation",
+                type: 'POST',
+                data: '{DateStart: "' + DateStart + '", DateEnd: "' + DateEnd + '", ConsideredAreas: ' + ConsiderAreas +
+                    ', BatchTasks: ' + BatchTasks + ', ConsiderCalendar: ' + ConsiderCalendar + ', Guid: "' + Guid + '"}',
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                }
+            });
+        }
+
+    </script>
+
+}

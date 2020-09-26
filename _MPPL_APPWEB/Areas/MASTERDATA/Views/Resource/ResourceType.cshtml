@@ -1,0 +1,173 @@
+﻿
+@{
+    //Layout = null;
+}
+
+<h2>Typy Zasobów</h2>
+
+
+<div class="container">
+    <div class="row">
+        <div id="jsGrid"></div>
+    </div>
+</div>
+
+
+
+
+<style>
+    .colorSelector {
+        width: 26px;
+        height: 26px;
+        background: rgb(128,128,128);
+        padding: 1px;
+    }
+
+        .colorSelector div {
+            /*position: absolute;*/
+            /*top: 3px;*/
+            /*left: 3px;*/
+            width: 24px;
+            height: 24px;
+            /*background: url(../images/select.png) center;*/
+        }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    });
+
+    $("#jsGrid").jsGrid({
+        height: "400px",
+        width: "100%",
+        autoload: true,
+        inserting: true,
+        editing: true,
+        deleteConfirm: function (item) {
+            return "Typ \"" + item.Name + "\" zostanie usunięty. Czy chcesz kontynuować?";
+        },
+        controller: {
+            loadData: function (filter) {
+                var temp;
+                $.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "DEF/MasterData/GetResourceTypes",
+                    data: filter,
+                    success: function (dataB) {
+                        temp = dataB;
+                    },
+                });
+                return temp
+            },
+            insertItem: function (item) {
+                //$.ajax({
+                //    async: false,
+                //    type: "POST",
+                //    url: "PFEP/Area/AddArea",
+                //    data: item,
+                //})
+            },
+            deleteItem: function (item) {
+                //$.ajax({
+                //    async: false,
+                //    type: "POST",
+                //    url: "PFEP/Area/DeleteArea",
+                //    data: item,
+                //})
+            },
+        },
+        onDataLoaded: function (a, b) {
+            console.log("data loaded");
+        },
+        onItemEditing: function (a, b) {
+            console.log("data editing");
+        },
+        fields: [
+            { name: "Name", title: "Opis", type: "text", width: 200 },
+            { name: "Color", title: "Kolor", type: "text", width: 200, cellRenderer: renderColorCell, editTemplate: renderColorEditCell },
+            { name: "Icon", title: "Ikona", type: "text", width: 200, cellRenderer: renderIconCell, editTemplate: renderIconEditCell },
+            {
+                type: "control",
+                modeSwitchButton: false,
+                editButton: false,
+            }
+        ]
+    });
+
+    function renderColorCell(value, item) {
+        return $("<td>").append('<div class="colorSelector"><div id="Color1" objectId="' + item.Id + '" style="background-color: ' + item.Color + ';"></div></div>');
+    };
+    function renderColorEditCell(value, item) {
+        $colorPicker =  '<div class="colorSelector"><div class="colorSelectorInput" id="Color1" objectId="' + item.Id + '" style="background-color: ' + item.Color + ';"></div></div>';
+        setTimeout(function () { InitColorPicker(); }, 100);
+        return $colorPicker;
+    };
+    function renderIconCell(value, item) {
+        return $("<td>").append('<div class="iconSelector ' + value + '"><div id="Icon1" resourceId="' + item.Id + '"></div></div>');
+    };
+    function renderIconEditCell(value, item) {
+        console.log("data editing cell renderer");
+        $select = '<select class="selectpicker">' +
+            '<option data-icon="fas fa-building" value="fas fa-building">1</option>' +
+            '<option data-icon="far fa-square" value="far fa-square">2</option>' +
+            '<option data-icon="fas fa-cog" value="fas fa-cog">3</option>' +
+            '</select>';
+
+        setTimeout(function () { $('.selectpicker').selectpicker('render');}, 100);
+
+        return $select;
+    }
+
+    function InitColorPicker() {
+        $('.colorSelectorInput').ColorPicker({
+            color: '#0000ff',
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onSubmit: function (hsb, hex, rgb, el) {
+                $(el).css('backgroundColor', '#' + hex);
+                $(el).ColorPickerHide();
+                var objectId = $(el).attr("objectId");
+                console.log("objectId: " + objectId + ", color: " + "#" + hex);
+                saveColor(objectId, "#" + hex);
+            },
+            onBeforeShow: function () {
+                var ele2 = this;
+                var color1 = getBgColorHex($(ele2));
+                $(this).ColorPickerSetColor(color1);
+            }
+        });
+    }
+
+    function saveColor(objectId, color) {
+        $.ajax({
+            url: "/DEF/MasterData/UpdateResourceColor",
+            data: '{ id: ' + objectId + ', color: "' + color + '"}',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            }
+        });
+    }
+    function getBgColorHex(elem) {
+        var color = elem.css('background-color')
+        var hex;
+        if (color.indexOf('#') > -1) {
+            //for IE
+            hex = color;
+        } else {
+            var rgb = color.match(/\d+/g);
+            hex = '#' + ('0' + parseInt(rgb[0], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2);
+        }
+        return hex;
+    }
+
+</script>

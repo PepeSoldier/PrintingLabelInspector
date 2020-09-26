@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    @*<meta http-equiv="cache-control" content="no-cache, must-revalidate" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />*@
+
+    <title>@ViewBag.ModuleName @ViewBag.Title</title>
+    @*<base href="/"> <--- TO prawdopodobvnie do ANGULARA*@
+
+    @Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+    @Scripts.Render("~/bundles/ExternalScripts")
+    @Styles.Render("~/Content/AppStyles")
+    @Scripts.Render("~/bundles/AppScripts")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Html.Partial("_LayoutHeadIncludes")
+
+    @*<script src="/node_modules/core-js/client/shim.min.js"></script>
+        <script src="/node_modules/zone.js/dist/zone.js"></script>
+        <script src="/node_modules/systemjs/dist/system.src.js"></script>
+        <script src="/systemjs.config.js"></script>*@
+    @*<script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>*@
+    @*<script src="~/_ClientAppJS/_APPWEB/AppTS.js"></script>*@
+    @*<script>
+            System.import('_ClientApp/main.js').catch(function (err) { console.error(err); });
+        </script>*@
+    @*<script>
+            System.import('_ClientAppJS/_APPWEB/AppTS.js').catch(function (err) { console.error(err); });
+        </script>*@
+</head>
+@{
+    string wrapperClass = "inactive-right";
+    if (ViewBag.ShowRightPanel != null && ViewBag.ShowRightPanel == 1)
+    {
+        wrapperClass = "";
+    }
+    else if (ViewBag.ShowRightPanel != null && ViewBag.ShowRightPanel == 2)
+    {
+        wrapperClass = "active-right";
+    }
+    string skin = (ViewBag.Skin != null) ? ViewBag.Skin : "defaultSkin";
+    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+}
+
+<body class="@skin @ViewBag.ClientName @ViewBag.BodyClass">
+   
+    <a href="~/" id="BaseUrl" style="display: none;"></a>
+    @*<script>var exports = {};</script>*@
+    @*<script> var AppTS = new AppTS().AppTS(); </script>*@
+    <div style="display: none;"><a href="~/" id="BaseUrl"></a></div>
+    <div style="display: none;" id="CurrentUser" userName="@User.Identity.Name"></div>
+    <div class="alert-fixed" id="AlertDivFixes">
+        <app-notification></app-notification>
+    </div>
+
+    @*FULL SCREEN*@
+    <div class="no-print clickable" id="swichScreenMode"
+         style="color: #88888824; position: fixed;top: 5px; right: 410px; font-size: 29px; z-index: 99999;">
+        <i class="fas fa-expand"></i>
+    </div>
+    @*TOP MENU*@
+    <div id="topBar" class="navbar-fixed-top gradient-top no-print" style="background-color: white; min-height: 50px; max-height: 50px; overflow: hidden;">
+        <div class="navbar-header">
+            <div style="padding-top:4px; padding-left:4px;">
+                <a href='@Url.Action("Index", "Home", new { area = "" })' style="max-width: 200px; max-height: 50px; position: absolute;">
+                    <div class="logo" id="logodflt" style="background-image: url(@Url.Content("~/Content/Images/logo" + ViewBag.ClientName + ".png")) !important"></div>
+                    <div class="logo" id="logodrk" style="background-image: url(@Url.Content("~/Content/Images/logo" + ViewBag.ClientName + "_white.png")) !important"></div>
+                </a>
+            </div>
+        </div>
+        <div class="currentPageName gradient-top">@(ViewBag.Title != null ? Convert.ToString(ViewBag.Title).ToUpper() : "No Title")</div>
+        @*<div style="height: 35px; width: 35px; border: 1px solid red; margin-left: 250px;">
+                <app-notification-panel>...</app-notification-panel>
+        </div>*@
+        <div id="refreshAll" style="position: fixed;top: 5px; right: 200px; font-size: 24px; z-index: 99999;">
+            <div class="fas fa-sync-alt"></div>
+        </div>
+        @Html.Partial("_LoginPartial")
+    </div>
+
+    @*PAGE CONTENT AND LEFT-RIGHT PANELS*@
+    <div id="wrapper" class="movePrintContentToLeft @wrapperClass">
+        <div id="sidebar-wrapper-left" class="no-print">
+            @Html.Partial("_LayoutMenu")
+        </div>
+        <div id="page-content-wrapper" style="padding: 8px 15px 8px 8px;">
+            <div id="overlay-back"></div>
+            <div id="overlay"></div>
+            @RenderBody()
+            @*<app-notification-alert></app-notification-alert>*@
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <script type="text/javascript">
+        $("#refreshAll").on("click", function () { location.reload(true); });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

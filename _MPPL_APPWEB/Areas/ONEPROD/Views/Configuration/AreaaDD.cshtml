@@ -1,0 +1,66 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ResourceGroupViewModel
+@{
+    ViewBag.Title = "Dodaj Obszar";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            @using (Html.BeginForm("AreaAdd", "Configuration", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id="formAreaAdd" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="formInlineGroup" style="width: 250px;">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(m => m.NewObject.Name, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.TextBoxFor(m => m.NewObject.Name, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="formInlineGroup" style="width: 120px;">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(m => m.NewObject.SafetyTime, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.TextBoxFor(m => m.NewObject.SafetyTime, new { @class = "form-control", @style = "position: relative; z-index: 100000;" })
+                    </div>
+                </div>
+                <div class="formInlineGroup" style="width: 120px;">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(m => m.NewObject.StageNo, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.TextBoxFor(m => m.NewObject.StageNo, new { @class = "form-control", @style = "position: relative; z-index: 100000;" })
+                    </div>
+                </div>
+                <div class="formInlineGroup" style="width: 100px;">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(m => m.NewObject.IsBottleneck, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.CheckBoxFor(m => m.NewObject.IsBottleneck, new { @class = "form-control", @data_group_cls = "btn-group-justified", @style = "margin:0;", @data_off_active_cls = "btn-primary", @data_on_active_cls = "btn-success" })
+                    </div>
+                </div>
+                <div class="formInlineGroup">
+                    <div class="formInlineRow"></div>
+                    <div class="formInlineRow">
+                        <div class="btn btn-success" id="submitAreaAdd">Dodaj</div>
+                        @*<input type="submit" class="btn btn-default" value="Dodaj" />*@
+                    </div>
+                </div>
+            }
+            <div class="clearBothDiv"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+</script>
+

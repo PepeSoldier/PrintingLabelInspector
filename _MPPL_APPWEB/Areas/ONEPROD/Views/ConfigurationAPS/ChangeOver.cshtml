@@ -1,0 +1,31 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ChangeOverViewModel
+
+@{
+    ViewBag.Title = "Przezbrojenia";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.Grid(Model.ChangeOvers).Columns(columns =>
+        {
+            columns.Add(dd => dd.AreaID).Titled("Maszyna").SetWidth(60);
+            columns.Add(dd => dd.AncChange).Titled("Zmiana Kodu").SetWidth(60).Editable(true);
+            columns.Add(dd => dd.CatergoyChange).Titled("Zmiana Kategorii").SetWidth(60).Editable(true);
+            columns.Add(dd => dd.ToolChange).Titled("Zmiana narządzia").SetWidth(60).Editable(true);
+            columns.Add(dd => dd.MachineToolChange).Titled("Zmiana narzędzie pomiędzy maszynami").SetWidth(60).Editable(true);
+            columns.Add(dd => dd.ToolModification).Titled("Modyfikacja narzędzia").SetWidth(60).Editable(true);
+            columns.Add(dd => dd.Id).EditActionColumn("", "/Configuration/ChangeOverUpdate", "");
+        }).WithPaging(30)
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    InitEditableGrid();
+</script>

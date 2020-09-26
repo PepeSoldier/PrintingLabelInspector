@@ -1,0 +1,155 @@
+﻿@model MDL_iLOGIS.ComponentWHDOC.ViewModels.WhDocumentAbstractViewModel
+@{
+    ViewBag.Title = "Index Mobile Doc";
+    ViewBag.BodyClass = "mobile";
+}
+
+<style>
+    #page-content-wrapper {
+        padding: 0 !important;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 1px solid #384b5e !important;
+    }
+
+    .card {
+        background-color: #569693 !important;
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 0;
+        color: white;
+    }
+    .btn {
+        border-radius: 0px !important;
+    }
+</style>
+
+
+<div class="h-100 d-flex flex-column">
+    <div class="row no-gutters justify-content-center mb-2">
+        @*@Model.ToString()*@
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-1">
+                    <div class="form-group row no-gutters mb-0">
+                        <label for="ContractorName" class="col-4 col-form-label">Odbiorca: </label>
+                        <div class="col-8 col-form-label" id="ContractorName">
+                            @Model.ContractorName
+                        </div>
+                    </div>
+                    <div class="form-group row no-gutters mt-0 mb-0">
+                        <label for="DocumentDate" class="col-4 col-form-label">Data wysyłki: </label>
+                        <div class="col-8 col-form-label" id="DocumentDate">
+                            @Model.DocumentDate
+                        </div>
+                    </div>
+                    <div class="form-group row no-gutters mt-0 mb-0">
+                        <label for="Invoice" class="col-4 col-form-label">Nr Faktury: </label>
+                        <div class="col-8 col-form-label" id="Invoice">
+                            @Model.DocumentNumber
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row no-gutters justify-content-center mb-auto flex-grow-1" style="overflow-y: scroll">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Kod</th>
+                    <th scope="col">Nazwa</th>
+                    <th scope="col">Ilość</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.WhDocumentItems.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@Model.WhDocumentItems[i].ItemCode</th>
+                        <th scope="row">@Model.WhDocumentItems[i].ItemName</th>
+                        <th scope="row">@Model.WhDocumentItems[i].IssuedQty</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="row no-gutters justify-content-center" style="margin-bottom:0px;">
+        <div class="col-4">
+            <a href="/iLOGIS/WhDoc/Browse" id="BackButton">
+                <div class="btn btn-default btn-bottom btn-lg w-100">WRÓĆ</div>
+            </a>
+        </div>
+        @if (Model.Deleted == false && Model.Status < MDL_iLOGIS.ComponentWHDOC.Enums.EnumWhDocumentStatus.signed)
+        {
+            <div class="col-4" id="RefuseButton">
+                <div class="btn btn-danger btn-bottom btn-lg w-100" onclick="SetStatus(false)">ODRZUĆ</div>
+            </div>
+            <div class="col-4" id="AcceptButton">
+                <div class="btn btn-success btn-bottom btn-lg w-100" onclick="SetStatus(true)">AKCEPTUJ</div>
+            </div>
+        }
+        else
+        {
+            <div class="col-4">
+                <div class="btn btn-danger disabled btn-bottom btn-lg w-100">ODRZUĆ</div>
+            </div>
+            <div class="col-4">
+                <div class="btn btn-success disabled btn-bottom btn-lg w-100">AKCEPTUJ</div>
+            </div>
+        }
+        <div class="col-8 btn btn-secondary btn-bottom btn-lg w-100 disabled hidden" style="text-align: center; background-color:#569693;" id="StatusButton">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let isSigned = '@Model.isSigned';
+        if (isSigned == "True") {
+            Signed('Dok. podpisany');
+        }
+        console.log("WhDocument Index Loaded");
+        openFullscreen();
+    });
+
+    function SetStatus(isApproved) {
+        let documentId = @Html.Raw(Json.Encode(Model.Id));
+
+        jsonHelper = new JsonHelper();
+        let approveJson = jsonHelper.GetPostData("/iLogis/WhDoc/Approve",
+            {
+                id: documentId,
+                isApproved: isApproved
+            });
+        approveJson.done(function (jsonModel) {
+            if (jsonModel.Data != null) {
+                Signed(jsonModel.Data);
+                new Alert().Show(jsonModel.MessageTypeString, jsonModel.Message);
+            } else {
+                new Alert().Show(jsonModel.MessageTypeString, jsonModel.Message);
+            }
+        })
+    }
+    function Signed(data) {
+        $("#RefuseButton").addClass("hidden");
+        $("#AcceptButton").addClass("hidden");
+        $("#StatusButton").html(data).removeClass("hidden");
+    }
+
+</script>

@@ -1,0 +1,166 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionShowViewModel
+@using MDL_BASE.Models.Base;
+
+@{
+    Layout = null;
+    ViewBag.Title = "Szczegóły Akcji";
+}
+
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Tytuł:</div>
+    <div class="col-md-8 ActionHeaderValue" style="font-size: 20px;">@Model.Action.Title</div>
+</div>    
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Właściciel:</div>
+    <div class="col-md-8 ActionHeaderValue" style="font-size: 16px;">@((Model.Action.Creator != null) ? Model.Action.Creator.FullName : "brak")</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Data Utworzenia:</div>
+    <div class="col-md-8 ActionHeaderValue" style="font-size: 16px;">@Model.Action.DateCreated.ToShortDateString()</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Data Rozpoczęcia:</div>
+    <div class="col-md-8 ActionHeaderValue" style="font-size: 16px;">@Model.Action.StartDate.ToShortDateString()</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Planowana Data Ukończenia:</div>
+    <div class="col-md-8 ActionHeaderValue" style="font-size: 16px;">@Model.Action.PlannedEndDate.ToShortDateString()</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Opis Problemu:</div>
+    <div class="col-md-8 ActionHeaderValue">@Model.Action.Problem</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Typ:</div>
+    <div class="col-md-8 ActionHeaderValue">@Model.Action.Type.Name</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Obszar, Stanowisko, Zmiana:</div>
+    <div class="col-md-8 ActionHeaderValue">@Model.Action.Area.Name, @Model.Action.Workstation.Name, @Model.Action.ShiftCode.Name</div>
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Przypisany dział:</div>
+    @if (Model.Action.Department != null)
+    {
+    <div class="col-md-8 ActionHeaderValue">@Model.Action.Department.Name</div>
+    }
+    else
+    {
+    <div class="col-md-8 ActionHeaderValue"> Brak </div>
+    }
+</div>
+<div class="row ActionHeaderRow">
+    @using (Html.BeginForm("ChangeAssigned", "Action", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ActionId)
+        <div class="col-4 ActionHeaderTitle">
+            @Html.Label("Przypisz Odpowiedzialnego", htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-5 ActionHeaderValue" style="padding-right:0;">
+            @if (Model.IsUserAllowedToEdit)
+            {
+                @Html.DropDownListFor(model => model.AssignedId, Model.Users, "", new { @class = "form-control UserTextBox" })
+            }
+            else
+            {
+                @Html.DropDownListFor(model => model.AssignedId, Model.Users, "", new { @class = "form-control UserTextBox", @Disabled = "disabled" })
+            }
+        </div>
+        <div class="col-3 ActionHeaderButton" style="padding-left:0;">
+            @*<input type="submit" value="Przypisz" class="btn btn-default" @(!Model.IsUserAllowedToEdit ? "disabled" : string.Empty) />*@
+        </div>
+    }
+</div>
+<div class="row ActionHeaderRowState">
+    @using (Html.BeginForm("ChangeStatus", "Action", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ActionId)
+        <div class="col-4 ActionHeaderTitle">
+            @Html.LabelFor(model => model.Action.State, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-5 ActionHeaderValue" style="padding-right:0;">
+            @if (Model.IsUserAllowedToEdit)
+            {
+                @Html.EnumDropDownListFor(model => model.ActionStateEnum, null, new { @class = "form-control UserTextBox" })
+            }
+            else
+            {
+                @Html.EnumDropDownListFor(model => model.ActionStateEnum, null, new { @class = "form-control UserTextBox", @Disabled = "disabled" })
+            }
+        </div>
+        <div class="col-3 ActionHeaderButton" style="padding-left:0;">
+            @*<input type="submit" value="Ustaw" class="btn btn-default" @(!Model.IsUserAllowedToEdit ? "disabled" : string.Empty) />*@
+        </div>
+    }
+</div>
+<div class="row ActionHeaderRow">
+    <div class="col-md-4 ActionHeaderTitle">Załączniki:</div>
+    <div class="col-md-8 ActionHeaderValue">
+        <label class="btn btn-default">
+            <span class="fa fa-camera"></span>
+            <span>Dodaj Zdjęcie</span>
+            <input type="file" id="Upload_3_@Model.ActionId" class="fileInput" style="display: none;">
+        </label>
+        <div class="btn btn-default">
+            <span class="fa fa-link"></span>
+            <span id="AddAttachmentLink">Dodaj Link</span>
+        </div>
+        <label class="btn btn-default">
+            <span class="glyphicon glyphicon-save-file"></span>
+            <span>Dodaj PDF</span>
+            <input type="file" id="Upload_3_@Model.ActionId" class="fileInput" style="display: none;">
+        </label>
+        @if(Model.Action.Creator.UserName == User.Identity.Name)
+        {
+            <div class="btn btn-default EditAttachments">
+            <span class="glyphicon glyphicon-edit"></span>
+            <span>Edytuj</span>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="ActionPhotos">
+    <div id="ActionPhotos_Photos">
+        @foreach (Attachment p in Model.Attachments)
+        {
+            if (p.Extension.ToLower() == "jpg")
+            {
+            <a href="@Url.Content("~/Uploads/" + p.Id + "-" + Model.ActionId + "B." + p.Extension)" data-fancybox="groupAction_@Model.ActionId">
+                <div class="ActionPhoto" attachmentId="@p.Id" style="position:relative;">
+                    <img src='@Url.Content("~/Uploads/" + p.Id + "-" + Model.ActionId + "M." + p.Extension)' />
+                    <a>
+                        <div class="deleteAtt DeleteActivityPhoto" attachmentId="@p.Id" style="position:absolute; top:0px;left:65px; cursor:cell; display:none">
+                            <img src="~/Content/Images/Ic_cancel_48px.svg.png" width="35px;" height="35px;" />
+                        </div>
+                    </a>
+                </div>
+            </a>
+            }
+            if (p.Extension.ToLower() == "pdf")
+            {
+                <a href="@Url.Content("~/Uploads/" + p.Id + "-" + Model.ActionId + "." + p.Extension)" data-fancybox="groupAction_@Model.ActionId">
+                    <div class="ActionPhoto" attachmentId="@p.Id" style="position:relative;">
+                        <img src='@Url.Content("~/Content/Images/pdf.png")' alt="@p.Name" title="@p.Name" class="pdfExt" />
+                        <a>
+                            <div class="deleteAtt DeleteActivityPhoto" attachmentId="@p.Id" style="position:absolute; top:0px;left:60px; cursor:cell; display:none ">
+                                <img src="~/Content/Images/Ic_cancel_48px.svg.png" width="35px;" height="35px;" />
+                            </div>
+                        </a>
+                        <div>
+                            <span>@p.ShortN</span>
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</div>
+<div class="clear_div"></div>
+
+    
+           

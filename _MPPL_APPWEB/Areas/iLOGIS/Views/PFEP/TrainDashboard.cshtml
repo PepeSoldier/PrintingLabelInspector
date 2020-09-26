@@ -1,0 +1,102 @@
+﻿@using GridMvc.Html
+@using MDL_iLOGIS.ComponentConfig.Entities;
+
+@{
+    ViewBag.Title = "Transporter Dashboard";
+    List<Transporter> trains = ViewBag.Trains;
+}
+
+<style>
+.row.trainRow {
+    height: 80px;
+    border: 1px solid #366b7636;
+    background: linear-gradient(to bottom, rgba(0,20,26,0.3) 0%, rgba(0,0,0,0.25) 100%);
+}
+.trainName {
+    border-right: 1px solid #366b7636;
+    text-align: center;
+    line-height: 80px;
+    font-size: 22px;
+}
+.workstation{
+    display: inline-block;
+    height: 78px;
+    max-width: 100px; 
+    border-right: 1px solid #366b7636;
+    font-size: 27px;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 80px;
+    color: #a1d1e1a3;
+}
+.workstation.selected {
+    background: #409070;
+    color: white;
+}
+.trainName {
+    vertical-align: middle;
+    text-align: center;
+    color: #fdfdfde0;
+    background-image: radial-gradient(#142931, #14293100);
+}
+</style>
+
+<div class="row justify-content-center h-100 no-gutters flex-column">
+    <div class="col-12">
+        <div class="h-100 d-flex flex-column">
+            <div class="row no-gutters">
+            </div>
+            <div class="row justify-content-center h-100 mh-100 flex-grow-1 mt-2 mb-0 no-gutters" style="overflow: auto;">
+                <div class="col-12">
+                    @foreach(Transporter train in trains)
+                    {
+                    <div class="row no-gutters trainRow" data-transporterId="@train.Id">
+                        <div class="col-2 trainName">
+                            @train.Name
+                        </div>
+                        <div class="col-10">
+                            @{ Html.RenderAction("TrainRoute", "PFEP", new { area = "iLOGIS", trainId = train.Id }); }
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var trains = @Html.Raw(Json.Encode(trains));
+    var trainRoutes = [];
+    var interval = null;
+
+    $(document).ready(function(){
+        for (i = 0; i < trains.length; i++) {
+            trainRoutes.push(new TrainRoute(trains[i].Id));
+        }
+        StartThread();
+    });
+
+    function StartThread() {
+        if (interval != null) {
+            window.clearInterval(interval);
+            interval = null;
+        }
+
+        interval = setInterval(function () {
+            RefreshTrainRoutes();
+        }, 5000);
+    }
+
+    function RefreshTrainRoutes() {
+        console.log("Refresh trains");
+        for (i = 0; i < trainRoutes.length; i++) {
+            //console.log("Refresh train " + trains[i].Id);
+            trainRoutes[i].TrainGetCurrentData();
+        }
+    }
+
+</script>

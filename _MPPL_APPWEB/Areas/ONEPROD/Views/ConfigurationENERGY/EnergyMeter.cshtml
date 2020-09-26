@@ -1,0 +1,40 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ResourceViewModel
+@{
+    ViewBag.Title = "Energy Meter";
+}
+
+<style>
+    #resourceGrid input[type=checkbox], input[type=radio] {
+        height: 25px;
+        width: 25px;
+    }
+</style>
+
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index"); }
+</div>
+
+
+<div class="row">
+    <div class="col-md-12" style="max-width: 1600px;">
+        <div id="energyMeterGrid"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var energyMeterGrid = new EnergyMeter("#energyMeterGrid");
+        $(document).ready(function () {
+            energyMeterGrid.InitGrid();
+            energyMeterGrid.RefreshGrid();
+            SelectActiveMenuLink(@Html.Raw(Json.Encode(ViewContext.RouteData.Values["action"])));
+        });
+    </script>
+}
+
+
+

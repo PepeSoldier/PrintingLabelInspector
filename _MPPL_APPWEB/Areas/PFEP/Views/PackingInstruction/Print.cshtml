@@ -1,0 +1,356 @@
+﻿@model MDL_PFEP.ViewModel.PackingInstructionViewModel
+@using MDL_PFEP.Model.ELDISY_PFEP;
+
+@{
+    Layout = null;
+    if (!Model.StepTwo)
+    {
+        @*@Styles.Render("~/Content/ExternalStyles")*@
+        @Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+        @Scripts.Render("~/bundles/ExternalScripts")
+        @Styles.Render("~/Content/AppStyles")
+        @Scripts.Render("~/bundles/AppScripts")
+        @Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/Content/PFEP_Styles")
+        @Scripts.Render("~/bundles/PFEP_Scripts")
+    }
+}
+
+<script type="text/javascript">
+    window.onload = function setRelativeHeight() {
+        var h = document.getElementById('listDiv').offsetHeight;
+        var rotCon = document.getElementById('rotDiv');
+        rotCon.style.height = h + "px";
+        rotCon.style.lineHeight = h + "px";
+    }
+</script>
+<style>
+    /*body {
+        padding: 0;
+    }*/
+</style>
+<div id="pckgInstrContainer">
+    <div class="row">
+        <div class="col-2" id="logoDiv">
+            <img src='@Url.Content("~/Content/Images/logoEldisy.png")' />
+        </div>
+        <div class="col-10">
+            <div class="row ">
+                <div class="col-offset-1 col-11 bigText">
+                    <b>INSTRUKCJA PAKOWANIA</b> / Verpackungsvorschrift
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 textRight">
+                    nr
+                </div>
+                <div class="col-11">
+                    @Model.PackinInstructionObject.Id
+
+                    @Html.HiddenFor(model => model.PackinInstructionObject.ExaminerId)
+                    @Html.HiddenFor(model => model.PackinInstructionObject.ConfirmId)
+                    @Html.HiddenFor(model => model.PackinInstructionObject.InstructionNumber)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row brd1">
+        <div class="col-6">
+            <div class="row brdb1">
+                <div class="col-4 centerDiv brdr1">
+                    <b>KLIENT</b> / Kunde:
+                </div>
+                <div class="col-8 centerDiv brdr1">
+                    <span>
+                        <b>@Model.PackinInstructionObject.ClientName</b>
+                    </span>
+                </div>
+            </div>
+            <div class="row brdb1">
+                <div class="col-5 centerHighDiv brdr1">
+                    <span><b>Numer wyrobu klienta</b><br />Kundenartikelnr</span>
+                </div>
+                <div class="col-7 centerHighDiv brdr1">
+                    <span class="heightSpan"><b>@Model.PackinInstructionObject.ClientProfileCode</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 centerLowDiv brdr1">
+                    <b>OBSZAR</b> / Linie:
+                </div>
+                <div class="col-7 centerLowDiv brdr1">
+                    @Model.PackinInstructionObject.Area.Name
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row brdb1">
+                <div class="col-5 centerDiv brdr1">
+                    <b>PROFIL:</b>
+                </div>
+                <div class="col-7 centerDiv">
+                    <span><b>@Model.PackinInstructionObject.ProfileName</b></span>
+                </div>
+            </div>
+            <div class="row brdb1">
+                <div class="col-5 centerHighDiv brdr1">
+                    <span><b>SAP NR:</b></span>
+                </div>
+                <div class="col-7 centerHighDiv">
+                    <span class="heightSpan"><b>@Model.PackinInstructionObject.ProfileCode</b></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 centerLowDiv brdr1">
+                    <b>WERSJA / VERSION </b>
+                </div>
+                <div class="col-7 centerLowDiv">
+                    @Model.PackinInstructionObject.InstructionVersion.ToString()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row brd1" style="margin-top: 15px;">
+        <div class="col-7">
+            <div class="row">
+                <div class="col-3 centerDiv brdr1">
+                    <span><b>IL. NA WARSTWIE</b><br />Menge pro Lage:</span>
+                </div>
+                <div class="col-3 centerDiv brdr1 fntlg">
+                    @if (Model.PackinInstructionObject.AmountOnLayer == 0)
+                    {
+                        <b></b>
+                    }
+                    else
+                    {
+                        <b>@Model.PackinInstructionObject.AmountOnLayer @Model.PackinInstructionObject.UnitOfMeasure</b>
+                    }
+                </div>
+                <div class="col-3 centerDiv brdr1">
+                    <span><b>IL. W POJEMNIKU</b><br />Menge pro Behaelter:</span>
+                </div>
+                <div class="col-3 centerDiv brdr1 fntlg">
+                    @if (Model.PackinInstructionObject.AmountOnBox == 0)
+                    {
+                        <b></b>
+                    }
+                    else
+                    {
+                        <b>@Model.PackinInstructionObject.AmountOnBox @Model.PackinInstructionObject.UnitOfMeasure</b>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="row">
+                <div class="col-4 centerDiv brdr1">
+                    <span><b>ILOŚĆ NA PALECIE</b><br />Menge pro Palette:</span>
+                </div>
+                <div class="col-6 centerDiv brdr1 fntlg">
+                    @if (Model.PackinInstructionObject.AmountOnPallet == 0)
+                    {
+                        <b></b>
+                    }
+                    else
+                    {
+                        <b>@Model.PackinInstructionObject.AmountOnPallet @Model.PackinInstructionObject.UnitOfMeasure</b>
+                    }
+                </div>
+                <div class="col-2 centerDiv">
+                    <b>/</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 verticalHeading">
+            <b>OPAKOWANIA</b> / Verpackungen:
+        </div>
+    </div>
+
+    @*TABLE HEADER*@
+    <div class="row">
+        <div class="col-9">
+            <div class="row brdb1 brdt1">
+                <div class="col-2 itemDiv text-center brdr1 brdl1">
+                    <i><b>SAP-NR</b></i>
+                </div>
+                <div class="col-10 itemDiv text-center brdr1">
+                    <i><b>OPAKOWANIE</b> / Verpackung</i>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row brdb1 brdt1">
+                <div class="col-9 itemDiv text-center" style="border-right: 1px solid white;">
+                    <i><b>ILOŚĆ</b> / Menge</i>
+                </div>
+                <div class="col-3 itemDiv text-center brdr1" style="color: white;">
+                    <b>JM</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*TABLE ROWS*@
+    <div class="row">
+        @foreach (PackingInstructionPackage item in Model.PackingInstructionPackageList)
+        {
+            <div class="col-9">
+                <div class="row brdb1">
+                    <div class="col-2 itemDiv text-center brdr1 brdl1">
+                        @item.Package.Code
+                    </div>
+                    <div class="col-10 itemDiv brdr1">
+                        @item.Package.Name
+                    </div>
+                </div>
+            </div>
+            if (User.IsInRole("Admin"))
+            {
+                <div class="col-3">
+                    <div class="row brdb1">
+                        <div class="col-5 itemDiv text-center brdr1">
+                            @item.Amount
+                        </div>
+                        <div class="col-4 itemDiv text-center brdr1">
+                            @item.PriceForHundredPackages
+                        </div>
+                        <div class="col-3 itemDiv text-center brdr1">
+                            @item.UnitOfMeasure.ToString()
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-3">
+                    <div class="row brdb1">
+                        <div class="col-9 itemDiv text-center brdr1">
+                            @item.Amount
+                        </div>
+                        <div class="col-3 itemDiv text-center brdr1">
+                            @item.UnitOfMeasure.ToString()
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="row">
+        <div class="col-12 verticalHeading">
+            <b> OPIS</b> / Verpackungsbeschreibung:
+        </div>
+    </div>
+    <div class="row brd1">
+        <div class="col-11 itemDiv" id="listDiv">
+            @if (@Model.PackinInstructionObject.Description != null)
+            {
+                string[] lines = Model.PackinInstructionObject.Description.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                <ul style="padding-left: 0;">
+                    @foreach (string line in lines)
+                    {
+                        <li><span style="min-height:12px;">@line</span></li>
+                    }
+                </ul>
+            }
+        </div>
+        <div class="col-1 itemDiv brdl1" id="rotDiv">
+            <div id="rotate"><b>PRODUKCJA</b></div>
+        </div>
+    </div>
+    <div class="row verticalHeading">
+        <div class="col-12">
+            <b>ZDJĘCIA</b> / Bilder:
+        </div>
+    </div>
+    <div class="row brdl1 brdt1">
+        @for (int i = 0; i < 4; i++)
+        {
+            <div class="col-6 brdr1 brdb1" style="height: 252px; padding-top: 2px;">
+                @*<img class="instPhoto" src="~/Uploads/zz_photos/@(Model.PackinInstructionObject.TempPhoto1)" />*@
+                @if (i < Model.PackingInstructionPhotos.Count && Model.PackingInstructionPhotos[i] != null)
+                {
+                    <img class="instPhoto" src="~/Uploads/packinginstr/@Model.PackingInstructionPhotos[i].Id-@(Model.PackingInstructionPhotos[i].ParentObjectId)D.@(Model.PackingInstructionPhotos[i].Extension)" />
+                }
+            </div>
+        }
+    </div>
+
+    <div class="row brd1" style="overflow: hidden; margin-top: 15px;">
+        <div class="col-6">
+            <div class="row brdb1">
+                <div class="col-5 itemDiv brdr1 onelineheight">
+                    <b></b>
+                </div>
+                <div class="col-7 itemDiv text-center onelineheight">
+                    <b>Opracował</b> / erstellt von
+                </div>
+            </div>
+            <div class="row brdb1">
+                <div class="col-5 itemDiv brdr1 onelineheight">
+                    <b>Nazwisko</b> / Name
+                </div>
+                <div class="col-7 itemDiv onelineheight">
+                    @if (@Model.PackinInstructionObject.Creator != null)
+                    {
+                        @Model.PackinInstructionObject.Creator.FullName
+                    }
+                    else
+                    {
+                        <b>...</b>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 itemDiv brdr1 onelineheight">
+                    <b>Data</b> / Datum
+                </div>
+                <div class="col-7 itemDiv onelineheight">
+                    @Model.PackinInstructionObject.CreatedDate.ToString("yyyy-MM-dd")
+                </div>
+            </div>
+        </div>
+        <div class="col-6" style="margin-left:-1px">
+            <div class="row brdb1">
+                <div class="col-6 itemDiv text-center brdr1 brdl1 onelineheight">
+                    <b>Sprawdził QS</b> / geprueft von
+                </div>
+                <div class="col-6 itemDiv text-center onelineheight">
+                    <b>Zatwierdził</b> / bestaetigt von
+                </div>
+            </div>
+            <div class="row brdb1">
+                <div class="col-6 itemDiv onelineheight brdr1 brdl1" id="examinedUser">
+                    @if (Model.PackinInstructionObject.Examiner != null)
+                    {
+                        @Model.PackinInstructionObject.Examiner.FullName
+                    }
+
+                </div>
+                <div class="col-6 itemDiv onelineheight" id="confirmedUser">
+                    @if (Model.PackinInstructionObject.Confirm != null)
+                    {
+                        @Model.PackinInstructionObject.Confirm.FullName
+                    }
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 itemDiv onelineheight brdr1 brdl1" id="examinedDate">
+                    @if (Model.PackinInstructionObject.ExaminedDate.Date.Year != 1900 && Model.PackinInstructionObject.Examined == true)
+                    {
+                        @Model.PackinInstructionObject.ExaminedDate.ToString("yyyy-MM-dd")
+                    }
+                </div>
+                <div class="col-6 itemDiv onelineheight" id="confirmedDate">
+                    @if (Model.PackinInstructionObject.ConfirmedDate.Date.Year != 1900 && Model.PackinInstructionObject.Confirmed == true)
+                    {
+                        @Model.PackinInstructionObject.ConfirmedDate.ToString("yyyy-MM-dd")
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

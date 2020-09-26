@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Zamówienia";
+}
+
+<div class="row">
+    <div class="col-md-12" style="max-width: 100%;">
+        <div id="clientOrderGrid"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var clientOrderGrid = new ClientOrderGrid("#clientOrderGrid", "@ViewBag.ClientName");
+    clientOrderGrid.InitGrid();
+    clientOrderGrid.RefreshGrid();
+
+</script>

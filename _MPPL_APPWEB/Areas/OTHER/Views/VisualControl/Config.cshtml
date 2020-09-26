@@ -1,0 +1,58 @@
+﻿@{
+
+}
+
+<style>
+    .rowJob10 {
+        background-color: #fa000012 !important;
+        color: #de5050;
+    }
+    .rowShadow.rowJob10 {
+        background-color: #fa000022 !important;
+    }
+    .rowShadow {
+        background-color: #c7c7c752 !important;
+    }
+    .badgeShadow {
+        -webkit-box-shadow: 1px 1px 5px 0px rgba(112,112,112,1);
+        -moz-box-shadow: 1px 1px 5px 0px rgba(112,112,112,1);
+        box-shadow: 1px 1px 5px 0px rgba(112,112,112,1);
+    }
+    .itemCodeColumn{
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<h2>Visual Control Config</h2>
+<div id="JobItemConfigGrid"></div>
+
+<h3>Uwaga!</h3>
+Numer pary pozwala laczyc 2 lub wiecej komponentow w zbior wymaganych kodow do uruchomienia JOB'a [wtedy warunkiem uruchomienia joba jest znalezienie wszystkich kodow w BOM]<br />
+Numer pary uzywany jest rowniez jako priorytet wyboru JOB'a dla kamery - jezeli PNC bedzie zawieralo kody ANC przypisane do kilku JOB'ow priorytetem bedzie JOB z najnizszym numerem pary.<br />
+Przykladem moze byc zmywarka ktora zawiera deske oraz duzy karton z przodu - takim przypadku do kamery musi zostac wyslany JOB sprawdzajacy karton a nie deske i wlasnie w wyborze odpowiedniego JOB'a pomoze mniejszy numer pary.<br />
+Jako alternatywa do uzywania priorytetow mozliwe jest zdefiniowanie wszystkich par kodow ANC dla poszczegolnych JOB'ow.
+
+<div class="btn btn-default" id="btnTest">Test</div>
+
+<script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+<script src="~/_ClientAppJS/OTHER/VisualControl/JobItemConfigGrid.js"></script>
+<script type="text/javascript">
+
+    var jobItemConfigGrid;
+
+    $(document).ready(function () {
+        jobItemConfigGrid = new JobItemConfigGrid("#JobItemConfigGrid");
+        jobItemConfigGrid.InitGrid();
+        jobItemConfigGrid.RefreshGrid();
+    });
+
+    $("#btnTest").click(function () {
+        $.get("/OTHER/VisualControl/Tester", function (data) {
+            wnd = new PopupWindow(1000, 400);
+            wnd.Init("ConfigTester", "Testowanie konfiguracji");
+            wnd.Show(data);
+        });
+    });
+
+</script>

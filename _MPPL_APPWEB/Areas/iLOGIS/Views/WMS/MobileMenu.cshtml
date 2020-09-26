@@ -1,0 +1,72 @@
+﻿@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using _MPPL_WEB_START.Areas._APPWEB.Models.Clients;
+@{
+    Layout = null;
+    ViewBag.Title = "Mobile WMS";
+    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+    AppClientApbstract appClient = AppClient.GetClient(ViewBag.ClientName);
+}
+
+
+<div class="h-100 d-flex flex-column" id="iLogisWMSMobileMenu">
+    <div class="row justify-content-center no-gutters">
+        <div class="col-12">
+            <div class="card" style="background-color:#0c2128; color:#569693; font-weight:700px;">
+                <div class="card-body">
+                    <div class="row no-gutters">
+                        <div class="col-8" style="text-align: left">WMS Mobile APP</div>
+                        <div class="col-4" style="text-align: right; color: #77cdf7; padding-right: 5px;">@User.Identity.Name</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h-100 row justify-content-center flex-grow-1 mb-auto no-gutters" style="text-align: center; background-color: #0d647c">
+        <div class="col-12">
+            <div class="row no-gutters position-relative" >
+                @foreach (MDL_BASE.Models.IMenuItem menuItem in MenuiLOGIS.MenuItemMobile.Children)
+                {
+                    if ((menuItem.Name != "Home" && menuItem.Name != "Użytkownicy") && AppMenu.CheckAccess(menuItem, appClient, User))
+                    {
+                        <div class="col-6" style="padding:5px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="#@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea, id = "" })@(menuItem.HashSuffix != null? "#" + menuItem.HashSuffix : "")">
+                                        <div class="confMenuIcon @menuItem.Class1"></div>
+                                        <div class="confMenuText">@menuItem.Name</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+    @*Buttons*@
+    <div class="row justify-content-center no-gutters">
+        <div class="col-4">
+            @using (Html.BeginForm("LogOff", "Account", new { area = "IDENTITY", redirectUrl = "/iLOGIS/WMS/MobileWMS#/iLOGIS/WMS/MobileMenu" }, FormMethod.Post, new { id = "logoutFormMobile", @class = "navbar-right", @style="height: 100%; width:100%;" }))
+            {
+                @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutFormMobile').submit()"
+               class="btn btn-danger btn-block" style="width:100%; height:100%; color: white;">
+                <i class="fas fa-sign-out-alt fa-rotate-180"></i>
+                Wyloguj
+            </a>
+            }
+        </div>
+        <div class="col-8" >
+            <div class="btn" style="width:100%; height:40px; line-height:30px;background-color: #77cdf7;color: #0e2228;font-weight: bold;">
+                iLOGIS
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //$(document).on("click", "#btnSettings", function () {
+    //     window.location.hash = "#/iLOGIS/WMS/MobileSettings";
+    //})
+</script>

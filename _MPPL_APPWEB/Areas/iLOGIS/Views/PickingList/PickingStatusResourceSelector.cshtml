@@ -1,0 +1,37 @@
+﻿@using MDLX_MASTERDATA.Entities;
+@{
+    List<Resource2> resources = ViewBag.Resources;
+}
+
+<style>
+    .sBox {
+        border: 1px solid #244552;
+        background: #18587136;
+    }
+    .sBox :hover {
+        background: rgba(70, 149, 180, 0.21);
+    }
+
+        .sBox .Name {
+            font-size: 18px;
+        }
+</style>
+
+<div class="h-100 d-flex flex-column" id="resources">
+    <div class="row no-gutters">
+    @foreach(Resource2 r in resources)
+    {        
+        <div class="col-4 pl-2 p-2">
+            <a href="@Url.Action("PickingStatus", "PickingList", new { @area = "iLOGIS", @resourceId = r.Id })">
+                <div class="sBox" data-id="@r.Id">
+                    <div class="row no-gutters">
+                        <div class="col-12 Name pt-4 pb-4">
+                            @r.Name
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>       
+    }
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@using GridMvc.Html
+
+@model IEnumerable<MDL_BASE.Models.DEF.Bom>
+
+@{
+    ViewBag.Title = "BOM";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewBag.ShowDefinitionsMenu = true;
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(o => o.AncCode).Titled("ANC").Sortable(true);
+    columns.Add(o => o.AncName).Titled("Nazwa").Sortable(true);
+    columns.Add(o => o.BC).Titled("BC").Sortable(true);
+    columns.Add(o => o.LV).Titled("LV").Sortable(true);
+    columns.Add(o => o.PCS).Titled("PCS").Sortable(true);
+    columns.Add(o => o.PncCode).Titled("PNC").Sortable(true);
+}).WithPaging(100).Selectable(false)

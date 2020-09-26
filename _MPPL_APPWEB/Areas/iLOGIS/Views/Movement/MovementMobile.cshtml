@@ -1,0 +1,281 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Movement";
+    var workstations = ViewBag.WorkstationIds;
+}
+
+<style>
+    #btnGoHome .whName{
+        height: 45px;
+        line-height: 50px;
+    }
+</style>
+
+<div id="iLogisWmsMovementMobile" class="h-100 d-flex flex-column">
+</div>
+
+<script id="MovementMobileTemplate" type="x-tmpl-mustache">
+
+    <ilogis-wms-mobile-pageheader headerTitle="Przesunięcia" icon="fas fa-people-carry">
+    </ilogis-wms-mobile-pageheader>
+    @*Scan Section*@
+    <div class="row no-gutters justify-content-center mb-2 ml-2 mr-2" id="statusIndicatorHeader">
+        <div class="col-12" id="SwapAutoManual">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters justify-content-center border-bottom">
+                        <div class="col-2" id="AutoManualLocationMode" data-mode="{{ModeChangeActive}}" style="font-size: 30px; text-align: center ">
+                            {{ LocationMode }}
+                        </div>
+                        <div class="col-3">
+                            {{^PickIcon}}
+                            <img src="/Content/images/WMS Icons/Pick.png" style="width:48px;height:48px;" id="pickStart" />
+                            {{/PickIcon}}
+                            {{#PickIcon}}
+                            <img src="/Content/images/WMS Icons/Pick_end.png" style="width:48px;height:48px;" id="pickEnd" />
+                            {{/PickIcon}}
+                        </div>
+                        <div class="col-3">
+                            <i class="fas fa-long-arrow-alt-right" style="font-size:50px;"></i>
+                        </div>
+                        <div class="col-4">
+                            {{^DeliverIcon}}
+                            <img src="/Content/images/WMS Icons/deliver.png" style="width:48px;height:48px;" id="deliverStart" />
+                            {{/DeliverIcon}}
+                            {{#DeliverIcon}}
+                            <img src="/Content/images/WMS Icons/deliver_end.png" style="width:48px;height:48px;" id="deliverEnd" />
+                            {{/DeliverIcon}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Barcode First STEP*@
+    {{#ShowBarcodeInput}}
+    <div class="row no-gutters justify-content-center {{MarginBottomScanSection}} ml-2 mr-2">
+        <div class="col-12 mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters justify-content-center mt-2">
+                        <div class="col-12">
+                            <div class="row no-gutters justify-content-center">
+                                <div class="col-12" id="autoModeInput">
+                                    <label class="mb-2">Zeskanuj kod kreskowy lub QR</label>
+                                    <input type="text" id="barcode" class="form-control mb-2" placeholder="Kod kreskowy" inputmode="none" autocomplete="off" />
+                                </div>
+                                <div class="col-12 hidden" id="manualModeInput">
+                                    <label class="mb-2">Wprowadz Kod</label>
+                                    <input type="text" id="itemCode1" class="form-control mb-2" placeholder="Kod ANC" inputmode="text" autocomplete="off" value="{{StockUnit.ItemCode}}" />
+                                    <label class="mb-2">Wprowadz Lokacje Pobierania</label>
+                                    <input type="text" id="locationName1" class="form-control mb-2" placeholder="Lokacja" inputmode="text" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pt-2" id="movementMenuButtons">
+            <div class="row no-gutters">
+                <div class="col-6 pr-2">
+                    <a href="#/iLOGIS/Movement/MovementLocation">
+                        <div class="btn btn-outline-info btnTextWrap">
+                            Przesunięcie Lokacji
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 pl-2">
+                    <a href="#/iLOGIS/Movement/MovementMobileConfirmation">
+                        <div class="btn btn-outline-info btnTextWrap">
+                            Potwierdzanie Zalokalizowania
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/ShowBarcodeInput}}
+
+    @*Information of scanned Product Section*@
+    {{^ShowBarcodeInput}}
+    <div class="row no-gutters justify-content-center mb-2 ml-2 mr-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters">
+                        <fieldset>
+                            <div class="row no-gutters mb-1">
+                                <label class="col-5 col-form-label">Kod art.</label>
+                                <div class="col-7">
+                                    <input type="text" readonly="true" class="form-control" id="ItemCode" value="{{ StockUnit.ItemCode }}" />
+                                </div>
+                            </div>
+                            <div class="row no-gutters mb-1">
+                                <div class="col-5">
+                                    <input type="text" readonly="true" class="form-control" id="ItemCode" value="{{ StockUnit.ItemGroup }}" />
+                                </div>
+                                <div class="col-7">
+                                    <input type="text" readonly="true" class="form-control" id="ItemCode" value="{{ StockUnit.ItemName }}" />
+                                </div>
+                            </div>
+                            <div class="row no-gutters mb-1">
+                                <label class="col-5 col-form-label"> Ilość </label>
+                                <div class="col-7">
+                                    <div class="row no-gutters">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" id="QtyToMove" value="{{ StockUnit.QtyToMove }}" />
+                                        </div>
+                                        <div class="col-3">
+                                            <input type="text" class="form-control" disabled id="UnitOfMeasure" style="text-align: center;" data-UoM="{{ StockUnit.UnitOfMeasure }}" value="{{ StockUnit.UnitOfMeasure | ConvertUoM }}" />
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="btn btn-warning w-100" id="btnChangeUoM" style="position: relative;">
+                                                <i class="fas fa-list"></i>
+                                            </div>
+                                        </div>
+                                        <div style="display: none">
+                                            <div class="col-3">
+                                                <div class="btn btn-warning btnQtyChange" data-val="-1">-</div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="btn btn-success btnQtyChange" data-val="1">+</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters">
+                                <label class="col-5 col-form-label">Nr. Seryjny</label>
+                                <div class="col-7">
+                                    <input type="text" readonly="true" class="form-control" id="SerialNumber" value="{{ StockUnit.SerialNumber }}" />
+                                </div>
+                            </div>
+                            @*Destination Location*@
+                            <div class="row no-gutters form-group" style="margin-bottom:0px;">
+                                <div class="form-group col-5">
+                                    <label class="col-form-label">Magazyn </label>
+                                    <div>
+                                        <input type="text" id="currentWarehouse" readonly="true" class="form-control" data-warehouseid="currentWarehouse" value="{{ StockUnit.WarehouseName }}" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-7">
+                                    <label class="col-form-label">Lokacja Pobierania</label>
+                                    <div>
+                                        <input type="text" id="CurrenLocation" readonly="true" class="form-control" value="{{ StockUnit.WarehouseLocationName }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center mb-auto ml-2 mr-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <fieldset>
+                        <div class="row no-gutters form-group" style="margin-bottom:0px;">
+                            <div class="form-group col-5">
+                                <label class="col-form-label"> Miejsce docelowe </label>
+                                <div class="form-control btn btn-primary" id="destinationWarehouse" data-warehouseId="{{DestinationLocation.WarehouseId}}">
+                                    {{DestinationLocation.WarehouseName}}
+                                </div>
+                            </div>
+                            <div class="form-group col-7">
+                                <label class="col-form-label">Lokacja przeznaczenia</label>
+                                <div>
+                                    <input type="text" id="destinationLocation" class="form-control" 
+                                           style="background-color:#3aa4ffd9" 
+                                           autocomplete="off" inputmode="numeric"
+                                           data-locationid="{{DestinationLocation.Id}}"
+                                           value="{{DestinationLocation.Name}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row no-gutters justify-content-center">
+                        <div class="col-5">
+                            <section id="cbForceGroup" class="hidden">
+                                <input type="checkbox" id="cbForce" class="" title="Wymuś" style="height: 32px; width: 32px;">
+                                <label for="cbForce" class="" style="font-size: 20px; margin-top: 0px; margin-left: 5px; position: absolute;">Wymuś</label>
+                            </section>
+                        </div>
+                        <div class="col-7">
+                            <div id="btnGetLocation" class="btn btn-default">Pobierz lokację</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/ShowBarcodeInput}}
+
+    @*Manage Buttons Section*@
+    <div class="row no-gutters justify-content-center" style="margin-bottom:0px;" id="ManageButtonsContent">
+        <div class="{{ BtnColSize }}">
+            <a href="#/iLOGIS/WMS/MobileMenu"><div class="btn btn-default btnAction" id="closeButton">ZAKOŃCZ</div></a>
+        </div>
+        <div class="{{ BtnColSize }}">
+            <div class="btn btn-danger btnAction" id="clearBarcode">
+                RESETUJ
+            </div>
+        </div>
+        {{#BtnText}}
+        <div class="col-4">
+            <div class="btn btn-success btnTextWrap" id={{ BtnId }}>
+                {{ BtnText }}
+            </div>
+        </div>
+        {{/BtnText}}
+    </div>
+</script>
+<script id="UnitOfMeasureListTemplate" type="x-tmpl-mustache">
+    <div id="UnitOfMeasureSelectorWrapper">
+        <style>
+            .UnitOfMeasureSelector {
+                position: absolute;
+                width: 100px;
+                top: 50px;
+                left: -52px;
+                z-index: 9999;
+                border-radius: 4px;
+                border: 1px solid #224647;
+                background-color: #132b33;
+            }
+
+            .UnitOfMeasureOption {
+                border-bottom: 1px solid #224647;
+                color: white;
+                font-size: 25px;
+            }
+
+                .UnitOfMeasureOption:hover {
+                    color: lawngreen;
+                }
+        </style>
+        <div class="UnitOfMeasureSelector p-2">
+            {{#UnitOfMeasures}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="UnitOfMeasureOption" data-UoM="{{.}}">
+                        {{ ..| ConvertUoM }}
+                    </div>
+                </div>
+            </div>
+            {{/UnitOfMeasures}}
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var movement = new MovementMobile(@Html.Raw(Json.Encode(ViewBag.TemplateBarcode)));
+
+    $(document).ready(function () {
+        movement.Init();
+    });
+</script>
+

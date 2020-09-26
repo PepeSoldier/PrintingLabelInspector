@@ -1,0 +1,62 @@
+﻿@{
+}
+
+
+<section id="rtvHeader" class="">
+    <div class="row headerRow">
+        <div class="col-4 headerLeft">
+            <div class="logoMD clickable" style="background-image: url(@Url.Content("~/Content/Images/logoElectrolux_white.png")) !important"></div>
+        </div>
+        <div class="col-2 headerLeft">
+            <div class="headerMid" id="actualTime"></div>
+        </div>
+        <div class="col-2 headerLeft">
+            <span id="lastUpdate"></span>
+        </div>
+        <div class="col-4 headerRight">
+            <div class="" style="font-size: 40px; float: right;">
+                <span>LINIA: </span><span id="headerTitle">@ViewBag.Line</span>
+            </div>
+        </div>
+    </div>
+    <div class="separator"></div>
+</section>
+
+<div class="row" style="position: relative;">
+    <div class="col-12" style="padding-right: 30px;">
+        <div class="row rowNM" id="orders">
+            @*CONTENT HERE*@
+        </div>
+    </div>
+    <div style="width: 10px; position: absolute; top: 288px; right: 5px;">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <div id="gradient2" class="gradientRYG" style="height: 730px;"></div>
+                <div id="gradient1" class="gradientGYR" style="height: 730px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Areas/PRD/Views/ScheduleMonitor/VIndex.css" rel="stylesheet" />
+<script src="~/Areas/PRD/Views/ScheduleMonitor/VIndex.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        openFullscreen();
+        console.log("Welcome in schedule Monitor");
+        InitScheduleMonitor(
+            @Html.Raw(Json.Encode(ViewBag.Line)),
+            @Html.Raw(Json.Encode(ViewBag.StatusesInternal)),
+            @Html.Raw(Json.Encode(ViewBag.StatusesExternal))
+        );
+        //RefreshScheduleMonitor();
+        Thread(30000);
+
+        var x2 = setInterval(function () {
+            $("#actualTime").text(moment(Date()).format("HH:mm:ss"));
+        }, 1000);
+    });
+
+</script>

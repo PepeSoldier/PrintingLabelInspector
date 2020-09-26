@@ -1,0 +1,229 @@
+﻿@using MDL_ONEPROD.Model.OEEProd;
+@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using _MPPL_WEB_START.Areas._APPWEB.Models.Clients;
+
+@{
+    Layout = null;
+    List<ReasonType> reasonTypes = ViewBag.ReasonTypes;
+    string styles = "";
+    bool isReportOnlineEnabled = (bool)ViewBag.IsReportOnlineEnabled;
+}
+
+@for (int i = 0; i < reasonTypes.Count; i++)
+{
+    styles += ".boxStop_" + reasonTypes[i].Id + "{ background-color:" + reasonTypes[i].Color + ";}";
+}
+
+<style>
+    @styles
+</style>
+<style>
+    .btnShift.active {
+        background-color: #0d98c163;
+    }
+    .prodQtyVal {
+        height: @(ViewBag.ReportOnlinePillHeigh + "px") !important;
+        font-size: @(ViewBag.ReportOnlinePillFontSize + "px") !important;
+    }
+    .prodLogRow .reasonName,
+    .prodLogRow .reasonTypeName
+    {
+        position: relative;
+        top: -32px;
+        left: 0;
+        border: 0;
+        font-size: 16px;
+        color: #c58c8c;
+    }
+    .prodLogRow .ShiftTextUp{
+        padding-top: 0px;
+        line-height: 20px;
+    }
+</style>
+
+<div class="row no-gutters">
+    <div class="col-9">
+        <section id="rightTopButtons" class="row no-gutters">
+            <div class="col-4">
+                <div class="brd btnReportOnline wInfo1Cardbtn WindowBox clickable btnAnm" id="btnProductionLogs" style="">PRODUKCJA</div>
+            </div>
+            @if (isReportOnlineEnabled)
+            {
+                <div class="col-4">
+                    <div class="brd btnReportOnline wInfo1Cardbtn WindowBox clickable btnAnm" id="btnStoppages" style="">POSTOJE</div>
+                </div>
+                <div class="col-4">
+                    <div class="brd btnReportOnline wInfo1Cardbtn WindowBox clickable btnAnm" id="btnReport" style="">RAPORT</div>
+                </div>
+            }
+            else
+            {
+                <div class="col-4">
+                    <div class="brd btnReportOnline wInfo1Cardbtn WindowBox clickable btnAnm" style="color: #617a83;">POSTOJE</div>
+                </div>
+                <div class="col-4">
+                    <div class="brd btnReportOnline wInfo1Cardbtn WindowBox clickable btnAnm" style="color: #617a83;">RAPORT</div>
+                </div>
+            }
+
+        </section>
+        <section id="rightMiddle" class="row no-gutters brd WindowBox" style="height: 800px;">
+            <div class="col-12">
+                @*PRODUCTION LOGS*@
+                <div class="reportContent" id="prodLogRows" style="height:730px;">
+                    <div class="row no-gutters">
+                        <div class="col-12 prodQtyHeader">
+                            <div class="row prodLogHeader no-gutters">
+                                <div class="col-2">Czas</div>
+                                <div class="col-3">Nr zamowienia</div>
+                                <div class="col-3">Kod Artykułu</div>
+                                <div class="col-2 lightCell">Nr seryjny</div>
+                                <div class="col-1">Szt.</div>
+                                <div class="col-1">Status</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters prodLogRow hidden" data-Id="0">
+                        <div class="col-2 TimeStamp lightCell">00:00:00</div>
+                        <div class="col-3 Workorder">1608909001</div>
+                        <div class="col-3 ItemCode">000000000</div>
+                        <div class="col-2 SerialNo lightCell">000000000</div>
+                        <div class="col-1 DeclaredQty">000000000</div>
+                        <div class="col-1 Status"><span class="statusIcon"></span></div>
+                        <div class="offset-2 col-3 reasonTypeName text-truncate"></div>
+                        <div class="col-3 reasonName text-truncate"></div>
+                    </div>
+                    <div class="row no-gutters reportBottomBar">
+                        <div class="col-2">
+                            <div class="prodLogPagging prodlogPage">STR: </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="prodLogPagging" id="prodLogPageIndex">1</div>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-3">
+                            <div class="prodLogPagging btnChangePage" data-Value="-1"><<</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="prodLogPagging btnChangePage" data-Value="1">>></div>
+                        </div>
+                    </div>
+                </div>
+                @*STOPPAGES*@
+                <div class="reportContent hidden" id="stoppageRows" style="height:730px;border: 0px solid red; overflow-y:scroll;">
+                    <div class="row no-gutters">
+                        <div class="col-12 prodQtyHeader">
+                            <div class="row stoppageHeader no-gutters" style="text-align: center;">
+                                <div class="col-1">Typ</div>
+                                <div class="col-2">Data</div>
+                                <div class="col-7">Powód</div>
+                                <div class="col-2">Czas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-gutters stoppageRow hidden" data-Id="0">
+                        <div class="hidden Id">0</div>
+                        <div class="hidden ReasonId">0</div>
+                        <div class="hidden LastUpdate">00:00</div>
+                        <div class="col-1" style="padding: 5px 0 0 5px;"><div class="ReasonTypeId boxStopSM">0</div></div>
+                        <div class="col-2 TimeStamp">00:00</div>
+                        <div class="col-7 ResonName">XXX</div>
+                        <div class="col-2 UsedTime">00:00:00</div>
+                    </div>
+                    <div class="row no-gutters reportBottomBar">
+                        <div class="col-4"></div>
+                        <div class="col-2"></div>
+                        <div class="col-3"></div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
+                @*REPORT SUMMARY*@
+                <div class="reportContent hidden" id="reportSummaryRows">
+                    <div id="reportRows" style="height:734px; border: 0px solid red; overflow-y:scroll;">
+                        <div class="row no-gutters">
+                            <div class="col-12 prodQtyHeader">
+                                <div class="row reoprtSummaryHeader no-gutters" style="text-align: center;">
+                                    <div class="col-4">Opis</div>
+                                    <div class="col-2">Ilość</div>
+                                    <div class="col-2">Ilość Raport</div>
+                                    <div class="col-2">Czas</div>
+                                    <div class="col-1">Typ</div>
+                                    <div class="col-1">Stauts</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters reportRow hidden" data-Id="0">
+                            <div class="hidden ItemId">0</div>
+                            <div class="hidden ReasonId">0</div>
+                            <div class="hidden CycleTime">0</div>
+                            <div class="hidden ProductionDate"></div>
+                            <div class="col-4 Description">-</div>
+                            <div class="col-2 ProdQty"></div>
+                            <div class="col-2 ReportedProdQty"></div>
+                            <div class="col-2 UsedTime"></div>
+                            <div class="col-1 ReasonTypeId boxStopSM"></div>
+                            <div class="col-1 Status"></div>
+                        </div>
+                    </div>
+                    <div class="row no-gutters reportBottomBar">
+                        <div class="col-4 prodLogPagging ">
+                            Brygada:
+                        </div>
+                        <div class="col-4 prodLogPagging " id="brigadeSelect">
+                            <select class="form-control" id="brigadeList" style="width: 100%; height: 100%; border-radius: 0;">
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div class="btn btn-warning prodLogPagging" id="btnSaveReportOnline" style="width: 100%; border-radius: 0;">Zapisz</div>
+                        </div>
+
+                    </div>
+                </div>
+        </section>
+    </div>
+    <div class="col-3" style="padding-left: 15px !important;max-height: 872px;overflow-y: hidden;">
+        <div class="row no-gutters prodInfoBox boxProduction">
+            <div class="col-12 prodInfoHeader">Wyprodukowane szt.</div>
+            <div class="col-12 prodQtyVal"><div id="prodEntryType-10">0</div></div>
+        </div>
+        <div class="row no-gutters prodInfoBox boxScrap">
+            <div class="col-12 prodInfoHeader">Scrap</div>
+            <div class="col-12 prodQtyVal"><div id="prodEntryType-12">0</div></div>
+        </div>
+
+        @if (isReportOnlineEnabled)
+        {
+            <div class="row no-gutters prodInfoBox boxPLC">
+                <div class="col-12 prodInfoHeader">Zliczone przez PLC</div>
+                <div class="col-12 prodQtyVal"><div id="plcCounter">0</div></div>
+            </div>
+
+            for (int i = 0; i < reasonTypes.Count; i++)
+            {
+                <div class="row no-gutters prodInfoBox boxStop boxStop_@(reasonTypes[i].Id)" data-reasonTypeId="@(reasonTypes[i].Id)">
+                    <div class="col-12 prodInfoHeader prodQtyValZero">@(reasonTypes[i].Name)</div>
+                    <div class="col-12 prodQtyVal">
+                        <div id="prodEntryType-@(reasonTypes[i].Id)" class="prodQtyValZero">00:00:00</div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    //var report = {};
+    //let workplaceId = @Html.Raw(Json.Encode(ViewBag.WorkplaceId));
+    //let resourceId = @Html.Raw(Json.Encode(ViewBag.ResourceId));
+
+    //$(document).ready(function () {
+    //    report = new ReportOnline(workplaceId, resourceId);
+    //    report.Init();
+    //    report.GetLabourBrigades();
+    //});
+
+
+
+</script>

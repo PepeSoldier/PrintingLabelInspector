@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .photoFrame {
+        /*border: 1px solid red;*/
+    }
+</style>
+
+@helper RenderD()
+{
+    <div class="row no-gutters dBox">
+        <div class="col-12 code">
+            <div class="dValue photoCodeVal"></div>
+        </div>
+    </div>
+}
+
+<div class="row no-gutters photoFlex" style="height: 230px;">
+    <div class="col-3 photoFrame"><div class="photo" id="prefix-0200010" data-prefixes="0200010">@RenderD()</div></div> @*rating plate*@
+    <div class="col-4 photoFrame"><div class="photo" id="prefix-1400220" data-prefixes="1400220">@RenderD()</div></div> @*naklejka glass care*@
+    <div class="col-5 photoFrame"><div class="photo" id="prefix-0000000" data-prefixes="0000000">@RenderD()</div></div> @*rating place elc*@
+</div>
+<div class="row no-gutters mt-2 photoFlex" style="height: 330px;">
+    <div class="col-7 photoFrame"><div class="photo photoAnimation" id="prefix-0800010" data-prefixes="0800010">@RenderD()</div></div> @*panel*@
+    <div class="col-3 photoFrame"><div class="photo" id="prefix-1400260" data-prefixes="1400260">@RenderD()</div></div> @*nakleja zolta na drzwi*@
+    <div class="col-2 photoFrame"><div class="photo" id="prefix-1610100" data-prefixes="1610100">@RenderD()</div></div> @*podstawa styropianowa*@
+</div>
+
+<div class="row no-gutters mt-2" style="height: 380px;">
+    <div class="col-7">
+        <div class="row no-gutters " style="height: 100%;">
+
+            <div class="col-3 photoFrame"><div class="photo" id="prefix-0500220" data-prefixes="0500220">@RenderD()</div></div>
+            <div class="col-3 photoFrame"><div class="photo" id="prefix-0500260" data-prefixes="0500260">@RenderD()</div></div>
+            <div class="col-3 photoFrame"><div class="photo" id="prefix-0600230" data-prefixes="0600230">@RenderD()</div></div>
+            <div class="col-3 photoFrame"><div class="photo" id="prefix-0500100" data-prefixes="0500100">@RenderD()</div></div>
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="row no-gutters " style="height:50%;">
+            <div class="row no-gutters photoFlex">
+                <div class="col-4 photoFrame"><div class="photo" id="prefix-0100000" data-prefixes="0100000">@RenderD()</div></div>
+                <div class="col-8 photoFrame"><div class="photo" id="prefix-0100120" data-prefixes="0100120">@RenderD()</div></div>
+            </div>
+        </div>
+        <div class="row no-gutters " style="height:50%;">
+            <div class="row no-gutters photoFlex">
+                <div class="col-4 photoFrame"><div class="photo" id="prefix-1100030" data-prefixes="1100030">@RenderD()</div></div>
+                <div class="col-8 photoFrame"><div class="photo" id="prefix-0200110" data-prefixes="0200110">@RenderD()</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+

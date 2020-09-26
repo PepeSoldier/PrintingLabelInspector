@@ -1,0 +1,81 @@
+﻿@import "../../_APPWEB/Layout/APP_variables_defaultSkin.less";
+
+.ActionActivityBox {
+    padding: 3px;
+    border-bottom: 1px solid @dflt_grid_brdColor;
+    border-left: 4px solid @dflt_window_titleBgColor;
+    min-height: 60px;
+    margin-bottom: 2px;
+}
+
+.ActionActivityBox:hover {
+    background-color: @dflt_selectionBgColor;
+}
+
+.ActionActivityHeader {
+    width: 100%;
+    float: left;
+    color: @dflt_window_titleFontColor;
+    font-weight: bold;
+}
+
+.ActionActivityTypeHeader {
+    font-weight: normal;
+    color: gray;
+    padding-left: 10px;
+}
+
+.ActionActivityDescription {
+    width: 100%;
+    float: left;
+    color: @dflt_fontColor;
+    min-height: 30px;
+    padding: 5px;
+}
+
+.ActionActivityLogDescription {
+    text-align: left;
+    padding-left: 15px;
+}
+
+.ActionActivityPhotos, .ActionPhotos {
+    width: 100%;
+    float: left;
+    color: @dflt_fontColor;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.ActionActivityPhotoFrame {
+    display: inline-block;
+    overflow: hidden;
+    max-width: 100px;
+}
+
+.ActionActivityPhoto, .ActionPhoto, .AddActionActivityPhoto {
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin-left: 3px;
+    margin-top: 3px;
+    overflow: hidden;
+    text-align: center;
+    font-size: small;
+}
+
+.ActionActivityPhoto img, .ActionPhoto img {
+    max-width: 100px;
+}
+
+.ActionActivityLogPhotos {
+    min-height: 0 !important;
+}
+
+.AATime {
+    padding-right: 5px;
+}
+
+.pdfExt{
+    width: 85px;
+    height: 85px;
+}

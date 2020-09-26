@@ -1,0 +1,72 @@
+﻿@model MDL_PRD.ViewModel.ResonViewModel
+
+@{
+    Layout = null;
+}
+
+<div id="Reasons1">
+
+</div>
+
+<script type="text/javascript">
+
+    @*var reasons = @Html.Raw(Json.Encode(Model.Resons));
+    var orderId = @Html.Raw(Json.Encode(Model.SelectedOrderId));
+    var reasonSelector = new ReasonSelector("#Reasons1", orderId, reasons);
+
+    $(document).ready(function () {
+        reasonSelector.ShowReasons(0);
+        console.log("rizony ready");
+    });*@
+
+
+</script>
+
+<style>
+    .resonbox {
+        width: 150px;
+        height: 150px;
+        background-color: #d7f4ff;
+        margin-bottom: 5px;
+        margin-right: 5px;
+        float: left;
+        text-align: center;
+        border: 1px solid #d7f4ff;
+        text-shadow: 1px 1px 1px #FFFFFF;
+    }
+
+        .resonbox:hover {
+            border: 1px solid #68fd73;
+        }
+
+    .reason1 {
+        min-height: 120px;
+        width: 100%;
+        vertical-align: middle;
+        font-size: larger;
+        font-weight: bold;
+        padding-top: 10px;
+        background: -moz-linear-gradient(top, rgba(0,0,0,0.25) 0%, rgba(254,254,254,0.5) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0.25)), color-stop(100%, rgba(254,254,254,0.5)));
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0.25) 0%, rgba(254,254,254,0.5) 100%);
+        background: -o-linear-gradient(top, rgba(0,0,0,0.25) 0%, rgba(254,254,254,0.5) 100%);
+        background: -ms-linear-gradient(top, rgba(0,0,0,0.25) 0%, rgba(254,254,254,0.5) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(254,254,254,0.5) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#fefefe', GradientType=0 );
+    }
+
+    .selectReason {
+        min-height: 30px;
+        background: -moz-linear-gradient(top, rgba(226,226,226,0.5) 0%, rgba(219,219,219,0.5) 50%, rgba(209,209,209,0.5) 51%, rgba(254,254,254,0.5) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226,226,226,0.5)), color-stop(50%, rgba(219,219,219,0.5)), color-stop(51%, rgba(209,209,209,0.5)), color-stop(100%, rgba(254,254,254,0.5)));
+        background: -webkit-linear-gradient(top, rgba(226,226,226,0.5) 0%, rgba(219,219,219,0.5) 50%, rgba(209,209,209,0.5) 51%, rgba(254,254,254,0.5) 100%);
+        background: -o-linear-gradient(top, rgba(226,226,226,0.5) 0%, rgba(219,219,219,0.5) 50%, rgba(209,209,209,0.5) 51%, rgba(254,254,254,0.5) 100%);
+        background: -ms-linear-gradient(top, rgba(226,226,226,0.5) 0%, rgba(219,219,219,0.5) 50%, rgba(209,209,209,0.5) 51%, rgba(254,254,254,0.5) 100%);
+        background: linear-gradient(to bottom, rgba(226,226,226,0.5) 0%, rgba(219,219,219,0.5) 50%, rgba(209,209,209,0.5) 51%, rgba(254,254,254,0.5) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+    }
+
+        .reason1:hover, .selectReason:hover {
+            background-color: #68fd73;
+        }
+</style>

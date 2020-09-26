@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .photo{
+        height: 75%;
+    }
+    .photoFrame {
+        /*border: 1px solid red;*/
+        position: relative;
+    }
+
+    .dBox {
+        background-color: deepskyblue;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+        height: 45px;
+        text-shadow: none;
+        position: relative;
+        border: 1px solid #e1e1e1a6;
+        border-top: none;
+    }
+
+    .dTitle {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    .dValue {
+        font-size: 20px;
+        line-height: 32px;
+        font-weight: bold;
+    }
+    .rowSTA_K {
+        height: 207px;
+        /*margin-top: 7px;*/
+    }
+</style>
+
+@helper RenderD(string code, int qty)
+{
+    <div class="row no-gutters dBox">
+        <div class="col-9 code">
+            <div class="dTitle">Anc:</div><div class="dValue">@code</div>
+        </div>
+        <div class="col-3 qty">
+            <div class="dTitle">Szt:</div><div class="dValue">@qty</div>
+        </div>
+    </div>
+}
+
+<div class="row no-gutters photoFlex rowSTA_K" style="">
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+</div>
+
+<div class="row no-gutters photoFlex rowSTA_K" style="">
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+</div>
+
+<div class="row no-gutters photoFlex rowSTA_K" style="">
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+    <div class="col-2p4 photoFrame"><div class="photo" id="prefix-1" data-prefixes=""></div>@RenderD("0", 0)</div>
+</div>

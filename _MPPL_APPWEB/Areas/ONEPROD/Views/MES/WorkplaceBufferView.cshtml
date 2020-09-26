@@ -1,0 +1,193 @@
+﻿@using MDL_ONEPROD.ComponentMes.ViewModels
+@model IList<MDL_ONEPROD.ComponentMes.ViewModels.WorkplaceBufferViewModel>
+
+@{
+    if (ViewBag.Layout == "null")
+    {
+        Layout = null;
+    }
+}
+
+<style type="text/css">
+    .pt10{
+        padding-top:10px;
+    }
+    .pr{
+        padding-right:5px;
+    }
+    .btnDelete{
+        display: none;
+        color: orangered;
+    }
+    .selectedRow .btnDelete{
+        display: block;
+    }
+    .btnModeSwitcher.selected {
+        border-color: aqua;
+        background-image: none;
+    }
+    .btnModeSwitcher.selected:hover {
+        /*background-color: #346274fa;*/
+    }
+    .btnModeSwitcher {
+        height: 60px;
+        line-height: 45px;
+        font-size: 22px;
+    }
+    .bufferHeader{
+        background-color: #1f5e5c;
+        padding: 5px 10px;
+    }
+</style>
+<div class="row no-gutters">
+    <div class="col-12">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <fieldset class="fieldsetProperty formWorkplaceBuffer">
+                    <div class="form-group row reportContent pt10">
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="inputBarcodeField" value="A00196105-000004-102030-005654" style="width: 100%;max-width: 100%;">
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="col-12 btn btn-primary" id="btnParseBarcode">
+                                <span class="fas fa-barcode" style="width:50px;"></span>
+                                <span>Potwierdź</span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12">
+                <fieldset class="fieldsetProperty formWorkplaceBuffer">
+                    <div class="row">
+                        <div class="col-3">Nr Artykułu</div>
+                        <div class="col-4">Ilość</div>
+                        <div class="col-2">Numer Seryjny</div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="ItemCode">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" class="form-control" id="Qty">
+                        </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="btn btn-outline-info btnBufferQty" data-value="-1"><i class="fas fa-angle-down"></i></div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="btn btn-outline-info btnBufferQty" data-value="1"><i class="fas fa-angle-up"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <input type="text" class="form-control" id="SerialNumber">
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="col-12 btn btn-success" id="btnAddItem">
+                                Dodaj
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-9 scanItemGrid" id="bufferItemsHeader" style="max-height: 56px; overflow-y: hidden;">
+        <div class="row no-gutters bufferHeader">
+            <div class="col-2">
+                <span class="ChildCode">KOD ART.</span>
+            </div>
+            <div class="col-2">
+                <span class="ChildName">NAZWA</span>
+            </div>
+            <div class="col-1">
+                <span class="ChildName">QTY BOM</span>
+            </div>
+            <div class="col-2 text-right pr-2 ">
+                <span class="QtyAvailable">ILOŚĆ NA BUFF.</span>
+            </div>
+            <div class="col-2 qtyOrWo">
+                <span class="qtySlash"> / </span><span class="QtyRequested">ILOŚĆ WYMAGANA</span>
+            </div>
+            <div class="col-2">
+                <span class="TimeLoaded">DATA ZAŁADOWANIA</span>
+            </div>
+            <div class="col-1 Status btnDelete">
+                <span class="statusIcon fas fa-times-circle"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+<div class="row no-gutters">
+    <div class="col-9 scanItemGrid" id="bufferItems" style="max-height: 520px; overflow-y: auto;">
+        <div class="row no-gutters bufferItem hidden">
+            <div class="col-2">
+                <span class="ChildCode"></span>
+            </div>
+            <div class="col-2">
+                <div class="ChildName"></div>
+            </div>
+            <div class="col-1">
+                <span class="QtyInBom"></span>
+            </div>
+            <div class="col-2 text-right pr-2 ">
+                <span class="QtyAvailable"></span>
+            </div>
+            <div class="col-2">
+                <div class="qtySlash"> / </div><div class="QtyRequested"></div>
+            </div>
+            <div class="col-2 colSerialNumberAndTime">
+                <div class="TimeLoaded"></div>
+                <div class="SerialNumber"></div>
+            </div>
+            <div class="col-1 Status btnDelete">
+                <span class="statusIcon fas fa-times-circle"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-3 pl-4">
+        <div class="row">
+            <div class="col-12">
+                Wybierz tryb:
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-6">
+                <div class="btn btn-default w-100 btnModeSwitcher" id="btnOrderMode">ZLECENIE</div>
+            </div>
+            <div class="col-6">
+                <div class="btn btn-default w-100 btnModeSwitcher" id="btnWholeBufferMode">WSZYSTKO</div>
+            </div>
+        </div>
+        <div class="row hidden">
+            <div class="col-12">
+                <div id="infoMode0">
+                    Wybrane zlecenie: <span id="wbSelectedWo"></span>, 
+                    PNC: <span id="wbSelectedWoPNC"></span>, 
+                    Sztuk: <span id="wbSelectedWoQty"></span>
+                    <br />
+                    <br />
+                    Artykuł: <span id="wbSelectedItemCode"></span>
+                    Szt. w BOM: <span id="wbBomQty"></span>
+                </div>
+                <div id="infoMode1">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

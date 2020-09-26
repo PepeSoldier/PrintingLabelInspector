@@ -1,0 +1,215 @@
+﻿@using MDLX_CORE.ComponentCore.Entities;
+@model MDL_PRD.ViewModel.PsiFormViewModel
+
+@{
+    ViewBag.Title = "PSI Analiza";
+}
+
+<div id="PSI">
+    <div class="row">
+        <div class="col-12">
+            <div class="formArea">
+                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormAnalyzePSI" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <div class="form-horizontal">
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.TextBoxFor(model => model.SelectedDate, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.Label("Linia", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.SelectedLine, Model.Lines, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.Label("Zmiana", htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.SelectedShift, Model.Shifts, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                <b> </b>
+                            </div>
+                            <div class="formInlineRow">
+                                <div class="btn btn-default" id="FormAnalyzePSISubmit">Odśwież</div>
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                <b> </b>
+                            </div>
+                            <div class="formInlineRow">
+                                <div class="btn btn-default" id="FormAnalyzePSIChooseReason">Wybierz powód</div>
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                <b> </b>
+                            </div>
+                            <div class="formInlineRow">
+                                <div class="btn btn-default" id="FormAnalyzePSIComment">Dodaj Komentarz</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear_div"></div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+            <div id="jsGrid" class="gridJs"></div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+            <div id="jsGrid2" class="gridJs"></div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="Result">
+                <div class="ResultTitle">P1</div>
+                <div class="ResultValue" id="ResultP1"></div>
+            </div>
+            <div class="Result">
+                <div class="ResultTitle">P2</div>
+                <div class="ResultValue" id="ResultP2"></div>
+            </div>
+            <div class="Result">
+                <div class="ResultTitle">P3</div>
+                <div class="ResultValue" id="ResultP3"></div>
+            </div>
+            <div class="Result">
+                <div class="ResultTitle">PSI</div>
+                <div class="ResultValue" id="ResultPSI"></div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="Legend">
+                <div class="LegendSq orderOK"></div>
+                <div class="LegendText">Zgodność</div>
+            </div>
+            <div class="Legend">
+                <div class="LegendSq orderAdded"></div>
+                <div class="LegendText">Dodane zlecenie</div>
+            </div>
+            <div class="Legend">
+                <div class="LegendSq orderDeleted"></div>
+                <div class="LegendText">Usunięte zlecenie</div>
+            </div>
+            <div class="Legend">
+                <div class="LegendSq orderSeqChanged"></div>
+                <div class="LegendText">Zmieniona sekwencja</div>
+            </div>
+            <div class="Legend">
+                <div class="LegendSq orderSeqProd"></div>
+                <div class="LegendText">Prod. niezgodna z sekw.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script src="~/Scripts/moment.js"></script>*@
+<script type="text/javascript">
+
+    var orderId = 0;
+    var analyze = new Analyze();
+    var orders = [];
+    var wnd;
+
+    $(document).ready(function () {
+        InitDatepickers();
+        analyze.Refresh();
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $("#FormAnalyzePSISubmit").click(function () {
+        console.log("Analyze submit");
+        analyze.Refresh();
+    });
+    $("#FormAnalyzePSIChooseReason").click(function () {
+        GetSelectedOrders();
+        ShowReasonWindow();
+    });
+    $("#FormAnalyzePSIComment").click(function () {
+        GetSelectedOrders();
+        ShowReasonCommentWindow();
+    });
+    $(document).on("click", ".reasonCell", function () {
+        orderId = $(this).parents('tr:first').find(".orderId").text();
+        orders = [orderId];
+        $(this).addClass("selectedCell");
+        ShowReasonWindow();
+    });
+    $(document).on("click", ".commentCell", function () {
+        orderId = $(this).parents('tr:first').find(".orderId").text();
+        orders = [orderId];
+        $(this).addClass("selectedCell");
+        ShowReasonCommentWindow();
+    });
+
+    function ShowReasonWindow() {
+        $.get("/PRD/PSI/Reason?id=" + 0, function (data) {
+            wnd = new PopupWindow(800, 300);
+            wnd.Init("reasonWindow", "Wybierz powód");
+            wnd.Show(data);
+            var reasonSelector = new ReasonSelector2("#Reasons1", CallBackFunc);
+            reasonSelector.ShowReasons(0);
+        });
+    }
+    function ShowReasonCommentWindow() {
+        $.post("/PRD/PSI/ReasonComment", { orders: orders }, function (data) {
+            wnd = new PopupWindow(800, 300);
+            wnd.Init("commentWindow", "Dodaj komentarz");
+            wnd.Show(data);
+            //var reasonComment = new ReasonComment("#ReasonComment", CallBackFuncComment);
+        });
+    }
+    function GetSelectedOrders() {
+        orders = [];
+        $(document).find(".selectedCell").removeClass("selectedCell");
+        $(".cbSelectOrder:checked").each(function () {
+            $(this).parents('tr:first').find(".commentCell").addClass("selectedCell");
+            var id = $(this).parents('tr:first').find(".orderId")[0].textContent;
+            orders.push(id);
+        });
+    }
+    function CallBackFunc(selectedReasonId) {
+        orders.forEach(function (orderId1) {
+            SaveReason(orderId1, selectedReasonId);
+        });
+    }
+    function SaveReason(ordId, reasonId) {
+        $.ajax({
+            async: true, global: false, dataType: "json", type: "POST",
+            url: "/PRD/PSI/SaveReason?selectedOrderId=" + ordId + "&selectedReasonId=" + reasonId,
+            //data: { selectedReasonId: reasonId, selectedOrderId: ordId },
+            success: function (data) {
+                $(document).find(".selectedCell").text(data);
+                $(document).find(".selectedCell").attr("title", data);
+                $(document).find(".selectedCell").removeClass("selectedCell");
+                console.log("Zapisano reasonId: " + reasonId + ", orderId: " + ordId);
+            }
+        });
+    }
+</script>

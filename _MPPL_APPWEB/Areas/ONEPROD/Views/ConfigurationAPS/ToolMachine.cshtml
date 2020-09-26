@@ -1,0 +1,102 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ToolMachineViewModel
+
+@{
+    ViewBag.Title = "Narządzie-Maszyny";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        @{
+            ToolMachine tm;
+            //int status = 0;
+            int assigned = 0;
+            int preffered = 0;
+            int placed = 0;
+        }
+        
+        <div style="width: 100%; padding: 15px; background-color: rgba(0,0,0,0.2);">
+            <table class="table table-header-rotated jsgrid-table">
+                <thead>
+                    <tr>
+                        <!-- First column header is not rotated -->
+                        <th></th>
+                        <!-- Following headers are rotated -->
+                        @foreach (Tool t2 in Model.Tools)
+                        {
+                            <th class="rotate"><div><span>@t2.Name</span></div></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ResourceOP m2 in Model.Machines)
+                    {
+                        <tr>
+                            <th class="row-header jsgrid-cell">@m2.Name</th>
+                            @foreach (Tool t1 in Model.Tools)
+                            {
+                                assigned = 0;
+                                preffered = 0;
+                                placed = 0;
+                                tm = Model.ToolMachines.FirstOrDefault(mt => mt.MachineId == m2.Id && mt.ToolId == t1.Id);
+
+                                if (tm != null)
+                                {
+                                    assigned = 1;
+
+                                    if (tm.Placed)
+                                    {
+                                        placed = 1;
+                                    }
+                                    if (tm.Preffered)
+                                    {
+                                        preffered = 1;
+                                    }
+                                }
+
+                                <td class="jsgrid-cell" style="padding: 0 0 2px 0;">
+                                    <div class="tm-status" id="mt-Assigned-@t1.Id-@m2.Id">
+                                        @assigned
+                                    </div>
+
+                                    <div class="tm-status" id="mt-Preffered-@t1.Id-@m2.Id">
+                                        @preffered
+                                    </div>
+                                    <div class="tm-status" id="mt-Placed-@t1.Id-@m2.Id">
+                                        @placed
+                                    </div>
+
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div style="width: 40px; height: 40px; background-color: #499e41;"></div><div>Przypisane</div>
+                <div style="width: 40px; height: 40px; background-color: lightblue;"></div><div>Preferowane</div>
+                <div style="width: 40px; height: 40px; background-color: orange;"></div><div>Włożone</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    Init();
+    InitOnClick();
+
+</script>
+
+

@@ -1,0 +1,43 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionShowViewModel
+@using MDL_AP.Models.ActionPlan
+
+@{
+    Layout = null;
+}
+
+@foreach (ActionModel action in Model.ChildActions)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ChildActionBox">
+                <div class="ChildActionBoxHeader">
+                    <span class="badge">@action.Creator.Initials</span> 
+                    @action.Creator.FullName / @action.DateCreated 
+                </div>
+                <div class="ChildActionBoxDescription">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6">
+                            @action.Title [odpowiedzialny: @((action.Assigned != null) ? action.Assigned.FullName : string.Empty )]
+                        </div>
+                        <div class="col-lg-2 col-md-6">
+                            <img src="~/Content/Images/state@((int)action.State).png" height="25" width="25" />
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div style="float: right;">
+                                @Html.ActionLink("Edytuj", "Edit", new { id = action.Id }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Otwórz", "Show", new { id = action.Id }, new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="clear_div"></div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+    //InitCreateChild();
+</script>

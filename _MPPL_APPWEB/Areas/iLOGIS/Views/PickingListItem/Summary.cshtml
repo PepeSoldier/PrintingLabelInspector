@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "PickingListSummary";
+    Layout = null;
+}
+
+<div class="h-100 d-flex flex-column" id="contentView" data-workorderid="@ViewBag.WorkOrderId" data-pickerid="@ViewBag.PickerId" data-pickinglistid="@ViewBag.PickingListId" data-pickinglistguid="@ViewBag.PickingListGuid">
+
+</div>
+<style>
+    .ItemName {
+        font-size: 12px;
+        height: 35px;
+        overflow: hidden;
+    }
+</style>
+<script id="PickingListSummaViewTemplate" type="x-tmpl-mustache">
+    @*Picker's data*@
+    <div class="row justify-content-center no-gutters pageHeader" style="height:85px">
+        <div class="col-12">
+            PODSUMOWANIE
+        </div>
+        <div class="col-4">
+            Nr. Pickera
+        </div>
+        <div class="col-2">
+            {{PickerId}}
+        </div>
+        <div class="col-4">
+            Nr. zamówienia
+        </div>
+        <div class="col-2">
+            {{WorkOrderId}}
+        </div>
+        <div class="col-4">
+            Wybr. platf.
+        </div>
+        <div class="col-8">
+            {{ConnectedTransporters}}
+        </div>
+    </div>
+    @*Header Grid*@
+    <div class="row justify-content-center border-bottom no-gutters gridHeader" style="height:70px">
+        <div class="col-10">
+            <div class="row no-gutters">
+                <div class="col-6">
+                    Kod Itema
+                </div>
+                <div class="col-4">
+                    Lokalizacja
+                </div>
+                <div class="col-2">
+                    Pobrano
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-6">
+                    Nazwa Itema
+                </div>
+                <div class="col-4">
+                    Ilość
+                </div>
+                <div class="col-2">
+                    Bilans
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            STATUS
+        </div>
+    </div>
+    @*Grid*@
+    <div class="row justify-content-center flex-grow-1 mb-auto no-gutters" style="overflow-y:auto">
+        <div class="col-12" id="OrderRows">
+            {{#SummaryList}}
+            <div class="row no-gutters orderRow">
+
+                <div class="col-10" style="height:100%">
+                    <div class="row no-gutters">
+                        <div class="col-6">{{ItemCode}}</div>
+                        <div class="col-4">{{WarehouseLocationName}}</div>
+                        <div class="col-2">{{QtyPicked}}</div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-6 ItemName">{{ItemName}}</div>
+                        <div class="col-4">{{QtyRequested}}</div>
+                        <div class="col-2">{{Balance}}</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="StatusIcon state{{Status}} {{StateIcon}}"></div>
+                </div>
+
+            </div>
+            {{/SummaryList}}
+        </div>
+    </div>
+    @*Buttons*@
+    <div class="row no-gutters justify-content-center">
+        <div class="col-12">
+            <div class="btn btn-default btn-bottom" id="btnGoToPickingList">
+                WRÓĆ DO PICKING LISTY
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    console.log("Konsol log");
+    var pickingListSummary = new PickingListSummary();
+    $(document).ready(function () {
+        
+        pickingListSummary.Init();
+    });
+
+</script>

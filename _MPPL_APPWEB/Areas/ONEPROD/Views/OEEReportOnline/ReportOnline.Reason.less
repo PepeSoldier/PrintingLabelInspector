@@ -1,0 +1,137 @@
+﻿.OeeReasonWindow.PopupWindow {
+    background-color: rgba(11, 24, 29, 0.95) !important;
+}
+
+#Reasons1 {
+    max-height: 700px;
+    overflow-y: scroll;
+}
+.resonbox {
+    width: 230px;
+    height: 160px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    float: left;
+    text-align: center;
+    border: 1px solid #3d7086;
+}
+
+.resonbox:hover {
+    border: 1px solid #36a06f;
+}
+
+.reason1 {
+    min-height: 110px;
+    width: 100%;
+    overflow: hidden;
+    vertical-align: middle;
+    font-size: larger;
+    font-weight: normal;
+    line-height: 24px;
+    padding: 10px 5px 0 5px;
+    background: -moz-linear-gradient(top, rgb(8, 19, 23) 0%, rgb(41, 71, 82) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgb(8, 19, 23)), color-stop(100%, rgb(41, 71, 82)));
+    background: -webkit-linear-gradient(top, rgb(8, 19, 23) 0%, rgb(41, 71, 82) 100%);
+    background: -o-linear-gradient(top, rgb(8, 19, 23) 0%, rgb(41, 71, 82) 100%);
+    background: -ms-linear-gradient(top, rgb(8, 19, 23) 0%, rgb(41, 71, 82) 100%);
+    background: linear-gradient(to bottom, rgb(8, 19, 23) 0%, rgb(41, 71, 82) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#fefefe', GradientType=0 );
+}
+.reason2 {
+}
+#backBtn {
+    border: 1px solid #577b8a;
+    color: #ffc600c9;
+    width: 85px;
+    height: 85px;
+    font-size: 51px;
+    text-align: center;
+}
+div#backBtn.disabled {
+    color: #8080808a;
+}
+#parentReasonName {
+    border: 1px solid #577b8a;
+    width: 85px;
+    height: 630px;
+    margin-top: 15px;
+    text-align: center;
+}
+#parentReasonNameText {
+    width: 630px;
+    height: 630px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 25px;
+    /*line-height: 78px;*/
+    overflow: hidden;
+    color: #b1c2d2;
+    transform: rotate(-90deg);
+    /* Legacy vendor prefixes that you probably don't need... */
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+    /* IE */
+    -ms-transform: rotate(-90deg);
+    /* Opera */
+    -o-transform: rotate(-90deg);
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.showSubReasons {
+    min-height: 48px;
+    background: #294651;
+    font-size: 32px;
+    text-align: right;
+    padding-right: 16px;
+    color: #548d93;
+}
+.showSubReasons .fas {
+    float: right;
+    padding-top: 20px;
+}
+
+.showSubReasonsText {
+    color: #548d93;
+    padding-left: 90px;
+    font-size: 18px;
+    line-height: 48px;
+    float: left;
+}
+
+.selectReason {
+    min-height: 48px;
+    background: #276369;
+    line-height: 48px;
+}
+
+.reason1:hover, .selectReason:hover {
+    background-color: #36a06f;
+}
+
+#RecentSelectedReasons {
+    position: absolute;
+    bottom: 0;
+}
+
+#RecentSelectedReasons .resonbox {
+    width: 342px;
+    height: 108px;
+    margin-bottom: 2px;
+}
+#RecentSelectedReasons .reason1 {
+    min-height: 100%;
+    padding: 0px;
+}
+#RecentSelectedReasons .reasonParentName {
+    background: #80dcff21;
+    color: #5eb1d2;
+    height: 50px;
+    line-height: 22px;
+}
+#RecentSelectedReasons .reasonName {
+    height: 60px
+}
+
+

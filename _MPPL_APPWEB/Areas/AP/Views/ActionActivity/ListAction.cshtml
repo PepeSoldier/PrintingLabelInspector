@@ -1,0 +1,100 @@
+﻿@using MDL_BASE.Models.Base;
+@using MDL_AP.Models.ActionPlan;
+@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionActivityViewModel
+
+@{
+    Layout = null;
+    string color = "#00ff94";
+}
+
+@foreach (ActionActivity aa in Model.ActionActivities)
+{
+    color = "#00ff94";
+    if (aa.ActivityEnum == ActionActivityTypeEnum.LogActivity)
+    {
+        color = "#ffbb00";
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ActionActivityBox" style="border-left-color: @color">
+                <div class="ActionActivityHeader">
+                    <span class="badge">@aa.Creator.Initials</span>
+                    <span>@aa.Creator.FullName [@aa.DateCreated]</span>
+                    @if (aa.ActivityEnum == ActionActivityTypeEnum.UserActivity && aa.Creator.UserName == User.Identity.Name)
+                    {
+                        <span style="float: right;" activityId="@aa.Id" class="DeleteActivity"><button class="btn btn-xs btn-danger">X</button></span>
+                        <span style="float: right;" activityId="@aa.Id" class="EditAttachmentsAc"><button class="btn btn-xs btn-default">Edytuj</button></span>
+                    }
+                </div>
+                <div class="ActionActivityDescription">
+                    @aa.ActivityDescription
+                </div>
+
+                @if (aa.ActivityEnum == ActionActivityTypeEnum.UserActivity)
+                {
+                    <div class="ActionActivityPhotos">
+                        <div id="ActionActivityPhotos_Photos">
+
+                            @if (aa.Creator.UserName == User.Identity.Name)
+                            {
+                                <div class="AddActionActivityPhoto" id="AddActionActivityPhoto_@aa.Id">
+                                    <label class="btn btn-default" style="height: 100%; width: 100%;">
+                                        <span class="fa fa-camera" style="float: left; height: 50%; width: 100%; font-size: 26px;"></span>
+                                        <span style="float: left; height: 25%; width: 100%;">Dodaj</span>
+                                        <span style="float: left; height: 25%; width: 100%;">zdjęcie...</span>
+                                        <input type="file" id="Upload_1_@aa.Id" class="fileInput" style="display: none;">
+                                    </label>
+                                </div>
+                            }
+                            @foreach (Attachment p in aa.Attachments)
+                            {
+                                if (p.Extension.ToLower() == "jpg")
+                                {
+                                    <div class="ActionActivityPhotoFrame" attachmentId="@p.Id">
+                                        <a href="@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "B." + p.Extension)" data-fancybox="group_@aa.Id">
+                                            <div class="ActionActivityPhoto" style="position:relative">
+                                                <img src='@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "M." + p.Extension)' />
+                                                <a>
+                                                    <div class="deleteAttAc DeleteActivityPhoto" parentId="@p.ParentObjectId" attachmentId="@p.Id" style="position:absolute; top:0px;left:65px; cursor:cell; display:none ">
+                                                        <img src="~/Content/Images/Ic_cancel_48px.svg.png" width="35px;" height="35px;" />
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                                if (p.Extension.ToLower() == "pdf")
+                                {
+                                    <div class="ActionActivityPhotoFrame" attachmentId="@p.Id">
+                                        <a href="@Url.Content("~/Uploads/" + p.Id + "-" + aa.Id + "." + p.Extension)" data-fancybox="group_@aa.Id">
+                                            <div class="ActionActivityPhoto" style="position:relative">
+                                                <div>
+                                                    <img src='@Url.Content("~/Content/Images/pdf.png")' alt="@p.Name" title="@p.Name" class="pdfExt" />
+                                                    <a>
+                                                        <div class="deleteAttAc DeleteActivityPhoto" parentId="@p.ParentObjectId" attachmentId="@p.Id" style="position:absolute; top:0px;left:65px; cursor:cell; display:none ">
+                                                            <img src="~/Content/Images/Ic_cancel_48px.svg.png" width="35px;" height="35px;" />
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <span>@p.ShortN</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    InitFileSelect();
+    InitFancyBox3();
+</script>

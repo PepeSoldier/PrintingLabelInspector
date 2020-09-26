@@ -1,0 +1,299 @@
+﻿
+@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionBrowseViewModel
+@using MDL_AP.Models.ActionPlan
+
+@{
+    ViewBag.Title = "Gantt Chart";
+}
+
+@*Filters*@
+<div class="row" id="GanttFilter">
+    <div class="col-lg-12">
+        <div class="formArea shadow">
+            @using (Html.BeginForm("GetData", "Ganttchart", FormMethod.Post, new { @id = "formFilter"}))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(model => model.FilterObject.AssignedId);
+                @Html.HiddenFor(model => model.FilterObject.CreatorId);
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.CreatorId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.CreatorId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => Model.AreaId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("AreaId", Model.Areas, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                @*<div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => Model.LineId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("LineId", Model.Lines, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.WorkstationId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("WorkstationId", Model.Workstations, "", new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.ShiftCodeId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("ShiftCodeId", Model.ShiftCodes, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.CategoryId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("CategoryId", Model.Categories, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+                @*<div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.PlannedEndDate, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.PlannedDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.EndDate, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    </div>
+                </div>*@
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("DepartmentId", Model.Departments, "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.AssignedId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.AssignedId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.State, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownListFor(model => Model.FilterObject.State, EnumHelper.GetSelectList(typeof(MDL_AP.Models.ActionPlan.ActionStateEnum)), "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.TypeId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @*@Html.DropDownListFor(m => Model.Type, EnumHelper.GetSelectList(typeof(MDL_AP.Models.ActionPlan.ObservationTypeEnum)), "", new { @class = "form-control" })*@
+                        @Html.DropDownList("TypeId", Model.Types, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                @*<div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.Label("Pokaż podakcje", new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.CheckBoxFor(model => model.ShowChildActions, new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        <span></span>
+                    </div>
+                    <div class="formInlineRow">
+                        <div class="col-md-offset-2 col-md-10">
+                            @*<input type="submit" value="Odśwież" class="btn btn-success" />*@
+                            <div id="formFilterSubmit" class="btn btn-default">
+                                    <span>Odśwież</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12" style="min-height: 400px; height: 800px;">
+        <div id="gantt_here" style='width:100%; height:100%;'></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $.ajaxSetup({ cache: false });
+
+    var baseUrl = new BaseUrl().link;
+
+    InitAutocompetes("#FilterObject_Assigned_Id", "#AssignedId");
+    InitAutocompetes("#FilterObject_Creator_Id", "#CreatorId");
+
+    InitGantt(null);
+
+    function InitGantt(tasks)
+    {
+        $(".gantt_here").html('');
+        var convert = gantt.date.date_to_str("%Y-%m-%d");
+        var markerId = gantt.addMarker({
+            start_date: new Date(),
+            css: "today",
+            text: "Now",
+            title: "marker"
+        });
+
+        gantt.getMarker(markerId); //->{css:"today", text:"Now", id:...}
+
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+        gantt.config.scale_unit = "week";
+        gantt.config.date_scale = "%Y-%W";
+        gantt.init("gantt_here");
+
+        gantt.showLightbox = function (id) {
+            return true;
+        }
+        gantt.templates.tooltip_text = function (start, end, task) {
+            return "<b>Task:</b> " + task.text +
+                "<br/><b>Department:</b> " + task.responsibleDept +
+                "<br/><b>Responsible:</b> " + task.responsibleUser +
+                "<br/><b>Start Date:</b> " + convert(task.start_date) +
+                "<br/><b>End Date:</b> " + convert(task.end_date);
+        };
+
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+        gantt.config.drag_lightbox = false;
+        gantt.config.drag_links = false;
+        gantt.config.drag_mode = false;
+        gantt.config.drag_move = false;
+        gantt.config.drag_progress = false;
+        gantt.config.drag_resize = false;
+
+        gantt.init("gantt_here");
+        
+
+        if (tasks != null) {
+            gantt.parse(tasks);
+        }
+        else {
+            gantt.load(baseUrl + "Ganttchart/GetData", "json");
+        }
+    }
+
+    $("#GanttFilter").on("click", "#formFilterSubmit", function (e) {
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: baseUrl + "Ganttchart/GetDataPost",
+            data: $("#formFilter").serialize(),
+            success: function (tasks) {
+                gantt.clearAll();
+                gantt.ca
+                InitGantt(tasks);
+                gantt.refreshData();
+            }
+        });
+    });
+
+    //gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
+    //    var task = gantt.getTask(id);
+    //    if (mode == gantt.config.drag_mode.progress) {
+    //        var pr = Math.floor(task.progress * 100 * 10) / 10;
+    //        gantt.message(task.text + " is now " + pr + "% completed!");
+    //    } else {
+    //        var s = convert(task.start_date);
+    //        var e = convert(task.end_date);
+    //        gantt.message(task.text + " starts at " + s + " and ends at " + e);
+
+    //        //var baseUrl = $('#BaseUrl').attr('href');
+    //        var action = { "Id": id, "StartDate": s, "PlannedEndDate": e };
+
+    //        $.ajax({
+    //            url: baseUrl + "Action/UpdateDates",
+    //            type: "POST",
+    //            dataType: "json",
+    //            data: { "action1": action },
+    //            //success: function (data) {
+    //            //}
+    //        })
+    //    }
+    //});
+    //gantt.attachEvent("onBeforeTaskChanged", function (id, mode, old_event) {
+    //    var task = gantt.getTask(id);
+    //    if (mode == gantt.config.drag_mode.progress) {
+    //        if (task.progress < old_event.progress) {
+    //            gantt.message(task.text + " progress can't be undone!");
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //});
+    //gantt.attachEvent("onBeforeTaskDrag", function (id, mode) {
+    //    var task = gantt.getTask(id);
+    //    var message = task.text + " ";
+
+    //    if (mode == gantt.config.drag_mode.progress) {
+    //        message += "progress is being updated";
+    //    } else {
+    //        message += "is being ";
+    //        if (mode == gantt.config.drag_mode.move)
+    //            message += "moved";
+    //        else if (mode == gantt.config.drag_mode.resize)
+    //            message += "resized";
+    //    }
+
+    //    gantt.message(message);
+    //    return true;
+    //});
+    gantt.attachEvent("onTaskDblClick", function (id, mode) {
+
+        var win = window.open($('#BaseUrl').attr('href') + 'Action/Show/' + id, '_blank');
+        if (win) {
+            win.focus();
+        }
+    });
+
+</script>

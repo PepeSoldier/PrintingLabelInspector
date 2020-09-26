@@ -1,0 +1,17 @@
+﻿.mobile .alert-fixed {
+    width: 300px !important;
+    bottom: 75px;
+}
+
+.alert-fixed {
+    position: fixed;
+    bottom: 5px;
+    right: 25px;
+    width: 400px;
+    z-index: 999999;
+    border-radius: 0px
+}
+
+.alert {
+    margin-bottom: 5px;
+}

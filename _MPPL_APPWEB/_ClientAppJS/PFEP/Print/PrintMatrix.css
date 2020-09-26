@@ -1,0 +1,148 @@
+﻿#printMatrix .customDiv {
+  font-size: 25px;
+  border: dashed 2px;
+}
+#printMatrix .mb-2,
+#printMatrix .my-2 {
+  margin-bottom: 0.5rem !important;
+}
+#printMatrix .bg-primary {
+  background-color: #007bff !important;
+}
+#printMatrix .bg-secondary {
+  background-color: #868e96 !important;
+}
+#printMatrix .rounded {
+  border-radius: 0.25rem !important;
+}
+#printMatrix .mt-3,
+#printMatrix .my-3 {
+  margin-top: 1rem !important;
+}
+#printMatrix .font-weight-bold {
+  font-weight: 700 !important;
+}
+#printMatrix .border-dark {
+  border-color: #343a40 !important;
+}
+#printMatrix .border {
+  border: 1px solid #e9ecef !important;
+}
+#printMatrix .border-0 {
+  border: 0 !important;
+}
+#printMatrix .border-top-0 {
+  border-top: 0 !important;
+}
+#printMatrix .border-right-0 {
+  border-right: 0 !important;
+}
+#printMatrix .border-bottom-0 {
+  border-bottom: 0 !important;
+}
+#printMatrix .border-left-0 {
+  border-left: 0 !important;
+}
+#printMatrix .printCell {
+  padding: 0;
+}
+#printMatrix .tblMatrix th,
+#printMatrix .tblMatrix td {
+  border: 1px solid gray;
+  padding: 4px;
+  vertical-align: bottom;
+}
+#printMatrix div.vertical {
+  margin-left: -30px;
+  margin-top: -65px;
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+}
+#printMatrix .vheader {
+  padding: 2px;
+}
+#printMatrix div.vh {
+  padding: 2px;
+  position: absolute;
+  margin-top: 28px;
+  margin-left: -4px;
+  text-align: center;
+}
+#printMatrix th.vertical {
+  height: 140px;
+  line-height: 14px;
+  padding-bottom: 60px;
+  text-align: left;
+}
+#printMatrix .NoBold {
+  font-weight: 100;
+}
+#printMatrix .darkerbg {
+  background-color: #eeeeee !important;
+}
+#printMatrix .thickerBorder {
+  border-top: 2px solid black !important;
+}
+#printMatrix .ellipsis {
+  max-width: 240px;
+  min-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#printMatrix #headerDiv {
+  position: absolute;
+  background-color: white !important;
+  width: 420px;
+  height: 100px;
+  z-index: 1000;
+  margin: 3px 0px 0 3px;
+  border-bottom: 1px solid grey !important;
+  padding: 3px 0 0 3px;
+}
+#printMatrix .noticeBadge {
+  background: gray !important;
+  color: white;
+  text-align: center;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#printMatrix .defTd {
+  min-width: 45px;
+  text-align: right;
+  vertical-align: bottom;
+  font-size: 8px;
+  padding: 0 3px 0 0 !important;
+}
+#printMatrix .lbBox {
+  /*position: absolute;
+        height: 25px;
+        width: 45px;
+        background: red;
+        margin-left: -4px;
+        margin-top: -4px;
+        font-size: 12px;*/
+  position: absolute;
+  height: 26px;
+  width: 45px;
+  background: #b4b4b4 !important;
+  margin-left: 0;
+  margin-top: -17px;
+  text-align: center;
+  font-size: 12px;
+  z-index: 1900;
+}
+#printMatrix .lbQty {
+  z-index: 1999;
+  position: relative;
+  color: #b4b4b4 !important;
+}

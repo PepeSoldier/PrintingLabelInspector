@@ -1,0 +1,147 @@
+﻿@using MDL_iLOGIS.ComponentWMS.Enums;
+@{
+    Layout = null;
+}
+
+<style>
+    .nasaSkin .WindowContent {
+        padding: 0 5px;
+    }
+    .line-through {
+        text-decoration: line-through;
+    }
+</style>
+
+<div class="h-100 d-flex flex-column" id="PickingListItemManageView">
+
+</div>
+
+<script id="PickingListItemManageTemplate" type="x-tmpl-mustache">
+    @*Picker's data*@
+    <div class="row no-gutters justify-content-center" id="pickersNo" data-pickerId="{{PickerId}}"
+         data-pickingListItemId="{{PickingListItemId}}" data-workorderId="{{WorkOrderId}}" data-pickingListId="{{PickingListId}}">
+        <div class="col-12">
+            <div class="row no-gutters headerRow" style="text-align:center">
+                <div class="col-5 headerValue bigger" id="itemCode">{{PickingListItemCode}}</div>
+                <div class="col-1 headerValue bigger" id="itemCodeVerification" style="background-color: {{BarcodeItemCodeColor}}"></div>
+                <div class="col-5 headerValue bigger" id="locationName">
+                    <span class="textBlue">{{PickingListItemLocationNameFormat}}</span> 
+                </div>
+                <div class="col-1 headerValue bigger" id="locationVerification" style="background-color: {{BarcodeLocationNameColor}}"></div>
+            </div>
+            <div class="row no-gutters headerRow" style="text-align:center">
+                <div class="col-12 headerValue textGrayout">{{PickingListItemName}}</div>
+            </div>
+            <div class="row no-gutters headerRow" style="text-align:center">
+                <div class="col-9 headerValue">
+                    <div class="textGrayout float-left mr-2">Nr ser:</div>
+                    <div class="textLightOrange float-left" id="stockUnitSerialNumber">{{StockUnitSerialNumber}}</div>
+                    <div class="float-left pl-2" id="SerialNumberScanned" style="color: #ff4f4f">{{SerialNumberScanned}}</div>
+                </div>
+                <div class="col-3 headerValue text-right">
+                    {{QtyRequested}} / {{StockUnitCurrentQtyInPackage}}
+                </div>
+            </div>
+            
+            <div class="row no-gutters headerRow border-bottom-0">
+                <div class="col-6 headerTitleSM">Ilość do pobrania</div>
+                <div class="col-6 headerTitleSM">Ilość Pobierana</div>
+            </div>
+            <div class="row no-gutters headerRow">
+                <div class="col-4">
+                    <div class="row no-gutters">
+                        <div class="col-5" style="text-align: center;font-size: 22px;">{{QtyRemainToPick}}</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="row no-gutters">
+                        <div class="" id="unitOfMeasure" data-UoM="{{ConvertUoM}}">{{UnitOfMeasure | ConvertUoM}}</div>
+                    </div>
+                </div>
+                <div class="col-4 pl-1">
+                    <div class="row no-gutters">
+                        <input class="form-control borderRadiousRightRemove {{QtyPickedFocusInput}}" type="text" id="QtyPicked_" readonly="readonly" value="{{QtyRemainToPick}}" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="row no-gutters">
+                        <div class="btn btn-info" id="btnQtyFromBarcode">{{QtyScanned}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters justify-content-center mngRow">
+                <div class="col-6 pr-1">
+                    <div class="btn btn-group-lg btn-warning btn-width" id="btnMinus_">-</div>
+                </div>
+                <div class="col-6 pl-1">
+                    <div class="btn btn-group-lg btn-success btn-width" id="btnPlus_">+</div>
+                </div>
+            </div>
+            
+            {{^isLocationSet}}
+            <div class="row no-gutters justify-content-center w-100" id="buttons">
+                <div class="col-12">
+                    <div class="btn btn-primary btn-sm btnTextWrapFindAutomatically" id="btnFindNewLocation"> ZNAJDŹ AUTOMATYCZNIE </div>
+                </div>
+                
+            </div>
+            {{/isLocationSet}}
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center flex-grow-1 mb-auto">
+        <div class="col-12">
+            @*Barkod na razie niepotrzebny*@
+            <div class="row no-gutters justify-content-center mngRow">
+                <div class="col-10">
+                    <input class="form-control borderRadiousRightRemove {{BarcodeFocusInput}}" type="text" id="Barcode_" autocomplete="off" value="{{Barcode}}" inputmode="none" />
+                </div>
+                <div class="col-2">
+                    <div class="btn btn-danger {{^isBarcodeSet}}hidden{{/isBarcodeSet}}" id="btnClearBarcode" readonly="readonly" style="font-size: 29px;height: 38px;line-height: 35px;"><i class="fas fa-trash"></i></div>
+                    <div class="btn btn-primary {{#isBarcodeSet}}hidden{{/isBarcodeSet}}" id="btnAssignBarcode" readonly="readonly" style="font-size: 29px;height: 38px;line-height: 35px;"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+            <div class="row no-gutters headerRow border-bottom-0">
+                <div class="col-6 headerTitleSM">Platforma</div>
+                <div class="col-6 headerTitleSM">Komentarz</div>
+            </div>
+            <div class="row no-gutters justify-content-center mngRow">
+                <div class="col-6 pr-1">
+                    <input class="form-control" type="text" id="Platform_" value="{{PickingListItemPlatformName}}" autocomplete="off" inputmode="none" />
+                </div>
+                <div class="col-6 pl-1">
+                    <select class="form-control" id="Comment_">
+                        {{#CommentList}}
+                        <option value="{{Value}}">{{Text}}</option>
+                        {{/CommentList}}
+                    </select>
+                </div>
+            </div>
+            
+            {{#IsMaxItemsSet}}
+            <div class="row no-gutters justify-content-center mngrow">
+                <div class="col-12 warningInfo">UWAGA !!! Aby nie przekroczyć maksymalnego ciężaru, możesz jednorazowo zapakować: {{MaximumItemNumbersToPackage}} </div>
+            </div>
+            {{/IsMaxItemsSet}}
+        </div>
+    </div>
+
+    {{#isLocationSet}}
+    <div class="row no-gutters justify-content-center flex-grow-1 mb-auto" style="overflow: hidden;">
+        <div class="col-12" id="kaypad113"></div>
+        <div class="col-12" id="kaypad114"></div>
+    </div>
+    {{/isLocationSet}}
+
+   
+    @*Button Save*@
+    <div class="row no-gutters justify-content-center fixed-bottom w-100" id="buttons">
+        <div class="col-6">
+            <div class="btn btn-default btn-bottom" id="btnBack_"> << WRÓĆ</div>
+        </div>
+        <div class="col-6">
+            <div class="btn btn-success btn-bottom" id="btnSave_">ZAPISZ</div>
+        </div>
+    </div>
+   
+    
+</script>

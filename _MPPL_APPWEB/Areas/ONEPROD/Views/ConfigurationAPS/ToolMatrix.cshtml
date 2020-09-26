@@ -1,0 +1,165 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ToolMatrixViewModel
+
+@{
+    ViewBag.Title = "Matryca Przezbrojeń";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        @{
+            ToolChangeOver tco;
+            int status = 0;
+        }
+
+        <div style="width: 100%;">
+            <table class="table table-header-rotated">
+                <thead>
+                    <tr>
+                        <!-- First column header is not rotated -->
+                        <th></th>
+                        <!-- Following headers are rotated -->
+                        @foreach (Tool t1 in Model.Tools)
+                        {
+                            <th class="rotate"><div><span>@t1.Name</span></div></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Tool t2 in Model.Tools)
+                    {
+                        <tr>
+                            <th class="row-header toolMatrixRowHeader">@t2.Name</th>
+                            @foreach (Tool t3 in Model.Tools2)
+                            {
+                                if (t2.Id == t3.Id)
+                                {
+                                    <td style="background-color: gray">
+                                        <div class="toolMatrixCell" id="mt-@t2.Id-@t3.Id">X</div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @{ tco = Model.ToolChangeOvers.FirstOrDefault(t => (t.Tool1Id == t2.Id && t.Tool2Id == t3.Id) || (t.Tool1Id == t3.Id && t.Tool2Id == t2.Id)); }
+
+                                        @if (tco != null)
+                                        {
+                                            <div class="toolMatrixCell" id="mt-@t2.Id-@t3.Id">@tco.Time</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="toolMatrixCell" id="mt-@t2.Id-@t3.Id" style="color: lightgray;">20</div>
+                                        }
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <style>
+        .toolMatrixCell {
+            margin: -8px -8px -8px -8px;
+            height: 30px;
+            width: 45px;
+            font-size: 12px;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 30px; /* <-- adjust this */
+        }
+        .toolMatrixRowHeader{
+            font-size: 9px;
+            width: 150px !important;
+        }
+        .table-header-rotated {
+            font-size: 9px;
+        }
+        .toolMatrixInput {
+            margin: 0px 0px 0px 0px;
+            padding: 0;
+            width: 45px;
+            height: 30px;
+            text-align: center;
+        }
+        .table-header-rotated div span {
+            padding: 4px 5px;
+            margin-left: 4px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        
+        var element1 = null;
+        var element2 = null;
+        var elementI = null;
+        var Tool1Id = 0;
+        var Tool2Id = 0;
+
+        $(".toolMatrixCell").click(function (){
+            if (element1 != null && element2 != null) {
+                element1.css('background-color', 'transparent');
+                element2.css('background-color', 'transparent');
+                if (elementI != null) {
+                    elementI.html(element2.html());
+                }
+            }
+            elementI = null;
+            element1 = $(this);
+            Tool1Id = $(this).attr("id").split("-")[1];
+            Tool2Id = $(this).attr("id").split("-")[2];
+            
+            if (Tool1Id != Tool2Id) {
+                element2 = $(document).find('[id="mt-' + Tool2Id + '-' + Tool1Id + '"]');
+                element1.css('background-color', 'orange');
+                element2.css('background-color', 'orange');
+            }
+        });
+
+        $(".toolMatrixCell").dblclick(function () {
+            elementI = element1;
+            var input = $(this).find('input');
+            
+            if (!input.is("input"))
+            {                
+                input = '<input type="text" class="form-control toolMatrixInput" id="in-' + Tool1Id + '-' + Tool2Id +'" value="' + $(this).text().replace(/\s/g, "") + '"/>';
+                $(this).html(input);
+                $(this).find('input').select();
+            }
+        });
+
+        $(document).on("keypress", ".toolMatrixInput", function (e){
+            if (e.which == 13)
+            {
+                var time = $(this).val();
+                                
+                $.ajax({
+                    url: BaseUrl + "ConfigurationAPS/ToolMatrixUpdate",
+                    data: '{ Tool1Id: ' + Tool1Id + ', Tool2Id:' + Tool2Id + ', Time: ' + time + '}',
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data < 1){ alert("błąd zapisu!!");}
+                    }
+                });
+                $(element1).html(time).css('color', 'black');
+                $(element2).html(time).css('color', 'black');
+                elementI = null;
+            }
+        });
+
+    </script>
+}
+

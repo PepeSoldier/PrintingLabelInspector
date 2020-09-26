@@ -1,0 +1,25 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+@model int
+@{
+    Layout = null;
+    ViewBag.Title = "Reason";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="resourceTargetGrid"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    var machineId = @Html.Raw(Json.Encode(Model));
+    var grid = new ResourceTarget("#resourceTargetGrid", machineId);
+
+    $(document).ready(function () {
+        grid.InitGrid();
+        grid.RefreshGrid();
+    });
+</script>
+

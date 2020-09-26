@@ -1,0 +1,42 @@
+﻿@model MDL_iLOGIS.ComponentWHDOC.ViewModels.WhDocumentAbstractViewModel
+
+@{
+    Layout = null;
+}
+
+@*@Styles.Render("~/Content/ExternalStyles")*@
+@Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+@Scripts.Render("~/bundles/ExternalScripts")
+
+@Styles.Render("~/Content/AppStyles")
+@Scripts.Render("~/bundles/AppScripts")
+
+@Scripts.Render("~/bundles/modernizr")
+@Styles.Render("~/Content/iLOGIS_Styles")
+@Scripts.Render("~/bundles/iLOGIS_Scripts")
+
+<style>
+    body{
+        padding: 0;
+    }
+</style>
+
+@*<div id="WhDocumentWZ" style="background-color: white; border: 1px solid red; overflow: hidden;">*@
+<div id="WhDocumentWZ" style=" max-width: 1060px; max-height: 680px; background-color: white; border: 1px solid #b8b8b8; overflow: hidden;">
+
+</div>
+
+<script type="text/javascript">
+
+    setTimeout(function(){
+      didWait = true;
+    }, 3000);
+
+    var whDocument = new WhDocument();
+    $(document).ready(function () {
+        var model = @Html.Raw(Json.Encode(Model));
+        console.log("WhDocument Index Loaded");
+        whDocument.Init(model);
+        whDocument.SetQrCode(@Html.Raw(Json.Encode(Model.QrCode)));
+    });
+</script>

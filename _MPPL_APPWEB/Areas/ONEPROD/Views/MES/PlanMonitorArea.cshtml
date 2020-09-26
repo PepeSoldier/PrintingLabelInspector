@@ -1,0 +1,272 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using _MPPL_WEB_START.Areas.ONEPROD.Scheduling.ViewModels
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Scheduling.ViewModels.PlanMonitorAreaViewModel
+@{
+    ViewBag.Title = "Plan Monitor";
+    List<Task> machineTasks;
+}
+
+<div class="row no-print">
+    <div class="col-4">
+        @using (Html.BeginForm("PlanMonitorArea", "Scheduling", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Obszar", new { @class = "control-label" })
+                    @Html.HiddenFor(m => m.DateFrom)
+                    @Html.HiddenFor(m => m.DateTo)
+                </div>
+                <div class="formInlineRow">
+                    @Html.DropDownListFor(m => m.SelectedAreaId, Model.Areas, "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow"></div>
+                <div class="formInlineRow"><input type="submit" class="btn btn-default" value="Odśwież" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-2">
+        <h3 id="RefreshTime"></h3>
+    </div>
+</div>
+<hr />
+
+@{
+    Task t;
+    DateTime LastDate = DateTime.Now.Date.AddYears(-1);
+    int TotalTasks = (Model.Tasks != null) ? Model.Tasks.Count : 0;
+}
+
+@if (Model.MachinesList != null)
+{
+<div class="slider-wrap">
+    <div class="slider" id="slider">
+        <div class="holder">
+            <div class="slide-wrapper">
+                @foreach (Resource2 m in Model.MachinesList)
+                {
+                    <div class="slide">
+                        <div class="planMachine" id="planMachine_@m.Id" data-machineId="@m.Id"
+                             data-dateFrom="@Model.DateFrom.ToString("yyyy-MM-dd HH:mm")"
+                             data-dateTo="@Model.DateTo.ToString("yyyy-MM-dd HH:mm")">
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<style>
+    /*import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100);*/
+
+    .animate {
+        transition: transform 0.3s ease-out;
+    }
+
+    .slider-wrap {
+        width: 100%;
+        min-height: 500px;
+    }
+
+    .slider {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .ms-touch.slider {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        /* Hides the scrollbar. */
+        -ms-scroll-chaining: none;
+        /* Prevents Metro from swiping to the next tab or app. */
+        -ms-scroll-snap-type: mandatory;
+        /* Forces a snap scroll behavior on your images. */
+        -ms-scroll-snap-points-x: snapInterval(0%, 100%);
+        /* Defines the y and x intervals to snap to when scrolling. */
+    }
+
+    .holder {
+        width: 300%;
+        max-height: 700px;
+        height: 100%;
+        overflow-y: hidden;
+    }
+
+    .slide-wrapper {
+        width: 33.333%;
+        height: 100%;
+        float: left;
+        height: 700px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slide {
+        height: 100%;
+        position: relative;
+    }
+
+    .temp {
+        position: absolute;
+        z-index: 1;
+        color: white;
+        font-size: 100px;
+        bottom: 15px;
+        left: 15px;
+        font-family: "Arial";
+        font-weight: 100;
+    }
+
+    .slide img {
+        position: absolute;
+        z-index: 0;
+        transform: translatex(-100px);
+    }
+
+    .slide:before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(transparent, black);
+    }
+
+    .slide div {
+        z-index: 0;
+    }
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#RefreshTime").text(new Date().format('d-m-Y H:i'));
+        slider12();
+        LoadPlanMachines();
+        var x = setInterval(function () {
+            location.reload();
+        }, 60000);
+    });
+
+    function slider12() {
+        if (navigator.msMaxTouchPoints) {
+
+            $('#slider').addClass('ms-touch');
+
+            $('#slider').on('scroll', function () {
+                $('.slide-image').css('transform', 'translate3d(-' + (100 - $(this).scrollLeft() / 6) + 'px,0,0)');
+            });
+
+        } else {
+
+            var slider = {
+
+                el: {
+                    slider: $("#slider"),
+                    holder: $(".holder"),
+                    imgSlide: $(".slide-image")
+                },
+
+                slideWidth: $('#slider').width(),
+                touchstartx: undefined,
+                touchmovex: undefined,
+                movex: undefined,
+                index: 0,
+                longTouch: undefined,
+
+                init: function () {
+                    this.bindUIEvents();
+                },
+
+                bindUIEvents: function () {
+
+                    this.el.holder.on("touchstart", function (event) {
+                        slider.start(event);
+                    });
+
+                    this.el.holder.on("touchmove", function (event) {
+                        slider.move(event);
+                    });
+
+                    this.el.holder.on("touchend", function (event) {
+                        slider.end(event);
+                    });
+
+                },
+
+                start: function (event) {
+                    // Test for flick.
+                    this.longTouch = false;
+                    setTimeout(function () {
+                        window.slider.longTouch = true;
+                    }, 250);
+
+                    // Get the original touch position.
+                    this.touchstartx = event.originalEvent.touches[0].pageX;
+
+                    // The movement gets all janky if there's a transition on the elements.
+                    $('.animate').removeClass('animate');
+                },
+
+                move: function (event) {
+                    // Continuously return touch position.
+                    this.touchmovex = event.originalEvent.touches[0].pageX;
+                    // Calculate distance to translate holder.
+                    this.movex = this.index * this.slideWidth + (this.touchstartx - this.touchmovex);
+                    // Defines the speed the images should move at.
+                    var panx = 100 - this.movex / 6;
+                    if (this.movex < 600) { // Makes the holder stop moving when there is no more content.
+                        this.el.holder.css('transform', 'translate3d(-' + this.movex + 'px,0,0)');
+                    }
+                    if (panx < 100) { // Corrects an edge-case problem where the background image moves without the container moving.
+                        this.el.imgSlide.css('transform', 'translate3d(-' + panx + 'px,0,0)');
+                    }
+                },
+
+                end: function (event) {
+                    // Calculate the distance swiped.
+                    var absMove = Math.abs(this.index * this.slideWidth - this.movex);
+                    // Calculate the index. All other calculations are based on the index.
+                    if (absMove > this.slideWidth / 2 || this.longTouch === false) {
+                        if (this.movex > this.index * this.slideWidth && this.index < 2) {
+                            this.index++;
+                        } else if (this.movex < this.index * this.slideWidth && this.index > 0) {
+                            this.index--;
+                        }
+                    }
+                    // Move and animate the elements.
+                    this.el.holder.addClass('animate').css('transform', 'translate3d(-' + this.index * this.slideWidth + 'px,0,0)');
+                    this.el.imgSlide.addClass('animate').css('transform', 'translate3d(-' + 100 - this.index * 50 + 'px,0,0)');
+
+                }
+
+            };
+            slider.init();
+        }
+    }
+
+    function LoadPlanMachines() {
+        $(".planMachine").each(function () {
+            var el = this;
+
+            $.post("/ONEPROD/Scheduling/PlanMonitor",
+                { SelectedMachineId: 7, DateFrom: "2018-12-20", DateTo: "2019-02-01" },
+                function (data) {
+                    console.log($(el));
+                    $(el).html(data);
+            });
+        });
+    }
+</script>

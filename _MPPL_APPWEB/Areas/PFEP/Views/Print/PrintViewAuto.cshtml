@@ -1,0 +1,41 @@
+﻿@using MDL_PFEP.Models.DEF;
+@using _MPPL_WEB_START.Areas.PFEP.ViewModels;
+@using MDLX_CORE.ComponentCore.Entities;
+
+@model  PrintDefAutoViewModel
+@{
+    Layout = null;
+}
+
+@*@Styles.Render("~/Content/ExternalStyles")*@
+@Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+@Scripts.Render("~/bundles/ExternalScripts")
+
+@Styles.Render("~/Content/AppStyles")
+@Scripts.Render("~/bundles/AppScripts")
+
+@Styles.Render("~/Content/PFEP_Styles")
+@Scripts.Render("~/bundles/PFEP_Scripts")
+
+
+@Scripts.Render("~/bundles/modernizr")
+
+<style>
+    body {
+        font-size: 13px;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+    }
+</style>
+
+@foreach (PrintDefViewModel vm in Model.PrintDefsViewModels)
+{
+    { Html.RenderPartial("PrintMatrix", vm); }
+    <div class="page-break"></div>
+}
+
+<script type="text/javascript" id="runscript">
+    $(document).ready(function () {
+        new PrintMatrix().Start();
+    });
+</script>

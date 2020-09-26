@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Picking List";
+}
+<style>
+    #page-content-wrapper {
+        padding: 0 !important;
+    }
+
+    html, body, #divPickingList {
+        height: 500px;
+    }
+
+    .selectedPlatform {
+        background-color: #28a745 !important;
+        background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%) !important;
+    }
+
+    .alert-fixed {
+        position: fixed;
+        bottom: 5px;
+        right: 25px;
+        width: 300px;
+        z-index: 999999;
+        border-radius: 0;
+    }
+
+    .btn {
+        width: 100%;
+        border-radius: 0;
+    }
+</style>
+
+<div class="row justify-content-center h-100 no-gutters flex-column" id="divDeliveryList">
+
+</div>
+
+
+<script type="text/javascript">
+    var pickingListHelper = new PickingListHelper();
+    //var transporterList = new TransporterList(pickingListHelper);
+    //var pickingList = null;
+    //var pickingListItem = null;
+    //var pickingListLineFeed = null;
+    //var pickingListPlatform = null;
+    //var pickingListItemManage = null;
+    //var defaultTrolley = "";
+    //var platformsObjects = "";
+    //var keypadQtyPicked = new KeyPadDigitDoubleRows("#QtyPicked_", "#kaypad113",".");
+    //var keypadPlatform = new KeyPadDigitDoubleRows("#Platform_", "#kaypad114","P");
+    //var keypadLocation = new KeyPadDigitDoubleRowsWithoutClose("#PlatformPosition_", "#kaypad115", "L");
+
+    $(document).ready(function () {
+        console.log("DeliveryList INDEX. Deprecated?");
+        $("#Loading").html(ShowLoadingSnippet());
+        //openFullscreen();
+        //transporterList.LoadTransporterList();
+    });
+   
+    $(document).on("click", ".PlatformName", function (event) {
+        console.log("Function Click PlatformName");
+        keypadLocation.Init();
+        if ($(this).hasClass("disabled")) {
+            console.log("Click for disabled Platform");
+        } else {
+            PlatformManage(this);
+        }
+    });
+
+    var barcodeScannedData = "A";
+
+
+</script>

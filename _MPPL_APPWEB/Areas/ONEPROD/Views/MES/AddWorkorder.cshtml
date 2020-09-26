@@ -1,0 +1,88 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@model MDL_ONEPROD.Model.Scheduling.Workplace
+
+@{
+    Layout = null;
+    ViewBag.Title = "Dodaj zlecenie";
+}
+
+<style>
+    .ui-autocomplete {
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .ui-menu-item-wrapper{
+        font-size: 24px;
+    }
+    .ui-menu-item-wrapper span{
+        font-size: 16px !important;
+        color: #3fb683 !important;
+    }
+    .ui-widget-content {
+        border: 1px solid #143d3a !important;
+        background: #21464e !important;
+        color: #f0f8ff !important;
+    }
+    #CycleTime{
+        border: 1px solid #134745 !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-5">
+        @*using (Html.BeginForm("AddWorkorder", "MES", FormMethod.Post, new { @class = "form-horizontal", @id = "AddWorkorderForm", role = "form" }))*@
+        @*@Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })*@
+        @Html.Hidden("workplaceId", Model.Id)
+        @Html.Hidden("ItemId", Model.Id)
+        <div class="formInlineRow">
+            @Html.Label("Wybierz artykuł", new { @class = "control-label" })
+            @*@Html.DropDownList("TypeId", (SelectList)@ViewBag.Items, "", new { @class = "form-control form-control-big" })*@
+            @Html.TextBox("ItemCode", null, new { @class = "form-control form-control-big", @autocomplete = "off", @inputmode="none" })
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="formInlineRow">
+            @Html.Label("Czas cyklu", new { @class = "control-label" })
+        </div>
+        <div class="formInlineRow">
+            @Html.TextBox("CycleTime", null, new { @class = "form-control form-control-big", @autocomplete = "off", @disabled = "disabled" })
+        </div>
+    </div>
+    <div class="col-5">
+        <div class="formInlineRow">
+            @Html.Label("Ilość do zrobienia w zamówieniu", new { @class = "control-label" })
+        </div>
+        <div class="formInlineRow">
+            @Html.TextBox("qty", null, new { @class = "form-control form-control-big", @autocomplete = "off", @inputmode="none" })
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-6 offset-6" id="keypad75"></div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-4 offset-8">
+        <div class="btn btn-lg btn-default" id="ConfirmAddWorkorderSubmit"
+             style=" width: 200px; height: 76px; margin-top: 15px; line-height: 55px; font-size: 40px;">
+            Zapisz
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    ItemAutocompleteOEE("#ItemCode", "#ItemId", @Html.Raw(Json.Encode(Model.MachineId)), "#CycleTime");
+    var keypad = new KeyPadWithChars("#ItemCode", "#keypad75");
+    keypad.Init();
+
+    $("#ItemCode").on("click", "", function () {
+        keypad.ChangeOutputField("#ItemCode");
+    });
+    $("#qty").on("click", "", function () {
+        keypad.ChangeOutputField("#qty");
+    });
+
+</script>

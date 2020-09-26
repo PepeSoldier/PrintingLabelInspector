@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Definiowanie Opakowań";
+}
+
+<div style="max-width: 1200px; margin: auto">
+    <div class="row">
+        <div class="col-12">
+            <div id="externalPager"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div id="jsGrid"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    InitJsGridDefaults();
+
+   
+
+    var db = {
+        loadData: function (filter) {
+            var d = $.Deferred();
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "PFEP/Package/GetArray",
+                data: filter,
+                success: function (dataB) {
+                    d.resolve(dataB)
+                },
+            });
+            return d.promise();
+        },
+        insertItem: function (item) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "PFEP/Package/AddOrUpdate",
+                data: item,
+                success: function (data) {
+                    console.log("insert success. " + data);
+                },
+                error: function (data) {
+                    console.log("insert error. " + data );
+                }
+            })
+        },
+        deleteItem: function (item) {
+            console.log("ajax delete");
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/PFEP/Package/Delete",
+                data: item,
+            })
+        },
+        updateItem: function (item) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "PFEP/Package/AddOrUpdate",
+                data: item,
+                success: function (response) {
+                    console.log("update success. " + response.alert);
+                },
+                error: function (response) {
+                    console.log("update error. " + response.alert);
+                }
+            })
+        },
+    }
+    window.db = db;
+    db.list = $.ajax({
+        async: false,
+        type: "GET",
+        url: "PFEP/PackingInstruction/GetUnitOfMeasures",
+    });
+
+    $("#jsGrid").jsGrid({
+        inserting: true,
+        controller: db,
+        pagerContainer: "#externalPager",
+        height: '800px',
+        rowClick: function (args) {
+            if ('@User.IsInRole("Zakupowiec")' == 'True') {
+                var $target = $(args.event.target);
+                return this.editItem($target.closest("tr"));
+            } 
+        },
+
+        fields: [
+            { name: "Id", title: "Numer Id",  width: 200},
+            { name: "Code", title: "Kod Opakowania", type: "text", width: 200 },
+            { name: "Name", title: "Nazwa", type: "text", width: 200 },
+            { name: "UnitPrice", title: "Cena", type: "text", width: 200 },
+            {
+                name: "UnitOfMeasure", type: "select", items: db.list.responseJSON, valueField: "Value",
+                textField: "Text", title: "Jednostka",
+                itemTemplate: function (value){
+                    return db.list.responseJSON.find(x => x.Value === String(value)).Text;
+                },
+                editValue: function () {
+                    return this.editControl.val();
+                },
+                filterTemplate: function () {
+                    var $select = jsGrid.fields.select.prototype.filterTemplate.call(this);
+                    $select.prepend($("<option>").prop("value", "-1").text("").prop("selected", "selected"));
+                    return $select;
+                }
+            },
+            {
+            type: "control",
+            modeSwitchButton: true,
+            editButton: false,
+            }
+        ]
+    });
+
+</script>

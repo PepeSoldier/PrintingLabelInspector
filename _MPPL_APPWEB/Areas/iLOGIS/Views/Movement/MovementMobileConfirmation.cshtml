@@ -1,0 +1,202 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "MovementConfimation";
+    var workstations = ViewBag.WorkstationIds;
+}
+
+<div id="iLogisWmsMovementMobileConfirmation" class="h-100 d-flex flex-column">
+</div>
+<style>
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: red;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: red;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: red;
+    }
+</style>
+<script id="MovementConfirmationTemplate" type="x-tmpl-mustache">
+
+    <ilogis-wms-mobile-pageheader headerTitle="Potwierdzenia Przesunięć" icon="fas fa-check-double">
+    </ilogis-wms-mobile-pageheader>
+    @*Scan Section*@
+    <div class="row no-gutters justify-content-center mb-2 ml-2 mr-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters justify-content-center border-bottom">
+                        <div class="col-3">
+                            {{^QrCodeIcon}}
+                            <img src="/Content/images/WMS Icons/qr-code.png" style="width:48px;height:48px;" />
+                            {{/QrCodeIcon}}
+                            {{#QrCodeIcon}}
+                            <img src="/Content/images/WMS Icons/qr-code_colored.png" style="width:48px;height:48px;" />
+                            {{/QrCodeIcon}}
+                        </div>
+                        <div class="col-3">
+                            <i class="fas fa-long-arrow-alt-right" style="font-size:50px;"></i>
+                        </div>
+                        <div class="col-3">
+                            {{^BoxIcon}}
+                            <img src="/Content/images/WMS Icons/boxes_raw.png" style="width:48px;height:48px;" />
+                            {{/BoxIcon}}
+                            {{#BoxIcon}}
+                            <img src="/Content/images/WMS Icons/boxes.png" style="width:48px;height:48px;" />
+                            {{/BoxIcon}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Barcode First STEP*@
+    {{#ShowBarcodeInput}}
+    <div class="row no-gutters justify-content-center {{MarginBottomScanSection}} ml-2 mr-2">
+        <div class="col-12 mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters justify-content-center mt-2">
+                        <div class="col-12">
+                            <div class="row no-gutters justify-content-center">
+                                <div class="col-12">
+                                    <label class="mb-2">Zeskanuj kod kreskowy lub QR</label>
+                                    <input type="text" id="barcode" class="form-control mb-2" placeholder="Kod kreskowy" inputmode="none" autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pt-2" id="movementMenuButtons">
+            <div class="row no-gutters">
+                <div class="col-6 pr-2">
+                    <a href="#/iLOGIS/Movement/Movement">
+                        <div class="btn btn-outline-info btnTextWrap">
+                            Przesunięcie Towarów
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 pl-2">
+                    <a href="#/iLOGIS/Movement/MovementMobileLocation">
+                        <div class="btn btn-outline-info btnTextWrap">
+                            Przesunięcie Lokacji
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/ShowBarcodeInput}}
+
+    @*Information of scanned Product Section*@
+    {{^ShowBarcodeInput}}
+    <div class="row no-gutters justify-content-center mb-2 ml-2 mr-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row no-gutters pl-2">
+                        <fieldset>
+                            <div class="row no-gutters mb-1">
+                                <label class="col-5 col-form-label">Kod art.</label>
+                                <div class="col-7">
+                                    <input type="text" readonly="true" class="form-control" id="ItemCode" value="{{ StockUnit.ItemCode }}" />
+                                </div>
+                            </div>
+                            <div class="row no-gutters mb-1">
+                                <label class="col-5 col-form-label"> Ilość </label>
+                                <div class="col-7">
+                                    <div class="row no-gutters">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" id="QtyToMove" value="{{ StockUnit.QtyToMove }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters">
+                                <label class="col-5 col-form-label">Nr. Seryjny</label>
+                                <div class="col-7">
+                                    <input type="text" readonly="true" class="form-control" id="SerialNumber" value="{{ StockUnit.SerialNumber }}" />
+                                </div>
+                            </div>
+                            @*Destination Location*@
+                            <div class="row no-gutters form-group" style="margin-bottom:0px;">
+                                <div class="form-group col-5">
+                                    <label class="col-form-label">Magazyn </label>
+                                    <div>
+                                        <input type="text" id="currentWarehouse" readonly="true" class="form-control" data-warehouseid="currentWarehouse" value="{{ StockUnit.WarehouseName }}" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-7">
+                                    <label class="col-form-label">Lokacja</label>
+                                    <div>
+                                        <input type="text" id="CurrenLocation" readonly="true" class="form-control" value="{{ StockUnit.LocationName }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center mb-auto ml-2 mr-2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <fieldset>
+                        <div class="row no-gutters form-group" style="margin-bottom:0px;">
+                            <div class="form-group col-5">
+                                <label class="col-form-label"> Miejsce docelowe </label>
+                                <div class="form-control" id="destinationWarehouse" data-warehouseId="{{DestinationLocation.WarehouseId}}" readonly="true">
+                                    {{DestinationLocation.WarehouseName}}
+                                </div>
+                            </div>
+                            <div class="form-group col-7">
+                                <label class="col-form-label">Lokacja</label>
+                                <div>
+                                    <input type="text" id="destinationLocation" data-locationid="{{DestinationLocation.Id}}" class="form-control" style="background-color:#3aa4ffd9" placeholder="{{DestinationLocation.LocationName}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/ShowBarcodeInput}}
+
+    @*Manage Buttons Section*@
+    <div class="row no-gutters justify-content-center" style="margin-bottom:0px;" id="ManageButtonsContent">
+        <div class="{{ BtnColSize }}">
+            <a href="#/iLOGIS/WMS/MobileMenu"><div class="btn btn-default btnAction" id="closeButton">ZAKOŃCZ</div></a>
+        </div>
+        <div class="{{ BtnColSize }}">
+            <div class="btn btn-danger btnAction" id="clearBarcode">
+                RESETUJ
+            </div>
+        </div>
+        {{#BtnText}}
+        <div class="col-4">
+            <div class="btn btn-success btnTextWrap" id={{ BtnId }}>
+                {{ BtnText }}
+            </div>
+        </div>
+        {{/BtnText}}
+    </div>
+</script>
+
+<script type="text/javascript">
+    var movementConfimration = new MovementMobileConfirmation(@Html.Raw(Json.Encode(ViewBag.TemplateBarcode)));
+
+    $(document).ready(function () {
+        movementConfimration.Init();
+    });
+</script>
+

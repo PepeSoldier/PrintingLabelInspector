@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+    var itemCode = ViewBag.ItemCode;
+    var deliveryId = ViewBag.DeliveryId;
+    var deliveryItemListGroupGuid = ViewBag.DeliveryItemListGroupGuid;
+}
+
+<style>
+    .summaryItemDeleteIcon {
+    font-size: 25px;
+    color: #e86d6b;
+}
+</style>
+
+<div class="h-100 d-flex flex-column">
+
+    <ilogis-wms-mobile-pageheader headerTitle="Podsumowanie Inspekcji Dostawy" icon="fas fa-barcode">
+    </ilogis-wms-mobile-pageheader>
+
+    @*Information about contractor and document number*@
+    <div class="row no-gutters justify-content-center flex-grow-1 mb-1">
+        <div class="col-12">
+            <div class="card" style="border-radius: 0;">
+                <div class="card-body p-1">
+                    <div id="deliveryInspectionInfoHeader"></div>
+                    <div id="deliveryInspectionItemInfoHeader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center">
+        <div class="col-12">
+            <div class="row no-gutters text-center gridHeader">
+                <div class="col-4">Kod</div>
+                <div class="col-4">op x szt</div>
+                <div class="col-2">ilość</div>
+                <div class="col-2">OK?</div>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters justify-content-center flex-grow-1 mb-auto" style="overflow-y: auto;">
+        <div class="col-12">
+            <div class="text-center" id="deliverySummaryItem">
+                @*Kontent view*@
+            </div>
+        </div>
+    </div>
+    @*Manage Buttons*@
+    <div class="row no-gutters justify-content-center mb-0">
+        <div class="col-6">
+            <div class="btn btn-warning btnAction" id="backButton">< WRÓĆ</div>
+        </div>
+        <div class="col-6">
+            <a href="/iLogis/WMS/MobileWMS"><div class="btn btn-default btnAction" id="closeButton">ZAKOŃCZ</div></a>
+        </div>
+    </div>
+</div>
+
+
+<script id="deliveryInspectionItemInfoHeaderTemplate" type="x-tmpl-mustache">
+    <div id="itemInfo">
+        <div class="row no-gutters">
+            <div class="col-2">
+                <div class="infoText infoTextH">ARTK.:</div>
+            </div>
+            <div class="col-4">
+                <div class="infoText" id="itemCode">{{SelectedItemCode}}</div>
+            </div>
+            <div class="col-6">
+                <div class="infoText text-truncate" id="itemName">{{SelectedItemName}}</div>
+            </div>
+        </div>
+    </div>
+    <div id="itemInfo">
+        <div class="row no-gutters">
+            <div class="col-2">
+                <div class="infoText infoTextH">ILOŚĆ:</div>
+            </div>
+            <div class="col-10">
+                <div class="infoText" id="QtyFoundVsDocument">
+                    {{SelectedItemQtyFound}} / {{SelectedItemQtyDocument}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="deliverySummaryItemTemplate" type="x-tmpl-mustache">
+    {{#DeliveryItems}}
+    <div class="deliverySummaryItemRow">
+        <div class="row no-gutters">
+            <div class="col-4">{{ ItemCode }}</div>
+            <div class="col-4">{{ NumberOfPackages }} x {{ QtyInPackage }}</div>
+            <div class="col-2">{{ TotalQtyFound }}</div>
+            <div class="col-2 summaryItemDeleteIcon" data-id="{{Id}}">
+                <i class="fas fa-trash"></i>
+            </div>
+        </div>
+    </div>
+    {{/DeliveryItems}}
+</script>
+
+<script type="text/javascript">
+    var deliveryInspectionSummaryItem = new DeliveryInspectionSummaryItem(@Html.Raw(Json.Encode(itemCode)), @Html.Raw(Json.Encode(deliveryId)),@Html.Raw(Json.Encode(deliveryItemListGroupGuid)));
+
+    $(document).ready(function () {
+        deliveryInspectionSummaryItem.Init();
+    });
+</script>

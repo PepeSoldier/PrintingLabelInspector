@@ -1,0 +1,137 @@
+﻿//---------------------------------MENU------------------------------1
+.menuStyle(@bgLeftMenu) {
+    .bgMenu {
+        background-color: @bgLeftMenu;
+    }
+
+    #sidebar-wrapper-left, .subMenu, #sidebar_menu li a, .sidebar-nav li a, #menuLi a {
+        color: #ffffffaa;
+        background: @bgLeftMenu;
+    }
+}
+//---------------------------------MODuLE-MENU-----------------------2
+#moduleTitleRow {
+    border-bottom: 3px solid #24424c;
+}
+
+#moduleTitle {
+    font-size: 60px;
+    font-weight: 700;
+    margin-right: 25px;
+}
+
+#moduleDescr {
+    font-size: 36px;
+    font-weight: 400;
+    color: #0eeeb9;
+}
+
+.menuCategory {
+    background-color: #24424c !important;
+    width: 40px !important;
+}
+
+.menuCategoryTitle {
+    transform: rotate(-90deg);
+    position: absolute !important;
+    height: 40px !important;
+    width: 170px !important;
+    top: 70px;
+    left: -65px;
+    font-size: 21px;
+    /*border: 1px solid red;*/
+}
+
+//---------------------------------MENU------------------------------3
+#sidebar_menu li a, #menuLi a {
+    display: block;
+    float: left;
+    text-decoration: none;
+    width: 150px;
+    border-top: 1px solid #373737;
+    border-bottom: 1px solid #1A1A1A;
+    -webkit-transition: background .5s;
+    -moz-transition: background .5s;
+    -o-transition: background .5s;
+    -ms-transition: background .5s;
+    transition: background .5s;
+}
+
+#subMenuLi a {
+    display: block;
+    float: left;
+    text-decoration: none;
+    width: 150px;
+    color: #fff !important;
+}
+
+.nasaSkin {
+    .sub_name2, .sub_icon2 {
+        color: #fff !important;
+    }
+}
+
+
+#main_icon
+{
+   float:right;
+   padding-right: 24px;
+   padding-top:16px;
+}
+.menuItem {
+    float: left;
+    width: 90px;
+    max-width: 90px;
+    max-height: 40px;
+    margin-left: -10px;
+    overflow: hidden;
+    display: none;
+}
+.menuLi {
+    min-height: 43px !important;
+    position: relative;
+}
+.menuLi:hover .sub_icon, .menuLi:hover .menuItem {
+    color: #192b34 !important;
+}
+.menuLi:hover{
+    background-color: #77cdf7;
+}
+.subMenu {
+    width: 250px;
+    position: absolute;
+    left: 150px;
+}
+#subSidebar {
+    padding: 0;
+    list-style: none;
+}
+.subMenuLi {
+    text-decoration: none;
+}
+.subMenuLi .sub_name2 {
+    width: 190px;
+    float: left;
+}
+.subMenuLi .sub_icon2 {
+    width: 60px;
+    height: 30px;
+    font-size: 24px;
+    padding-right: 10px;
+    padding-left: -10px;
+    padding-top: 5px;
+    float: left;
+}
+.subMenuTitle {
+    color: white;
+    font-weight: bold;
+    background-color: #ffffff16;
+}
+.sub_icon {
+    position: absolute;
+    left: 85px;
+    width: 60px;
+    padding-right: 22px;
+    padding-top: 8px;
+    font-size: 22px;
+}

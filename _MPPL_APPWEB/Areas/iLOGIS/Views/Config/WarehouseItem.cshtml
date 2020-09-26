@@ -1,0 +1,34 @@
+﻿@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ResourceViewModel
+@{
+    ViewBag.Title = "WarehouseItem";
+}
+
+<div class="row justify-content-center h-100 no-gutters flex-column">
+    <div class="col-12">
+        <div class="h-100 d-flex flex-column">
+            <div class="row no-gutters">
+                @{ Html.RenderAction("Index"); }
+            </div>
+            <div class="row justify-content-center h-100 mh-100 flex-grow-1 mt-2 mb-0 no-gutters" style="overflow: auto;">
+                <div class="col-12" id="warehouseItemGrid">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    
+    <script type="text/javascript">
+        var WarehouseItemGrid = new WarehouseItem("#warehouseItemGrid");
+        $(document).ready(function () {
+            WarehouseItemGrid.InitGrid();
+            WarehouseItemGrid.RefreshGrid();
+            SelectActiveMenuLink(@Html.Raw(Json.Encode(ViewContext.RouteData.Values["action"])));
+        });
+
+    </script>
+}

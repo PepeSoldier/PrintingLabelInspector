@@ -1,0 +1,27 @@
+﻿//-----------------------------SWITCHERS------------------------------
+.switchersStyle(@color_active,@color_disabled, @color_text_hover) {
+    .btn-switcher {
+        overflow: hidden;
+        color: white;
+        border: 0;
+        border-radius: 0px !important;
+        background-color: rgb(51,122,183);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0 );
+    }
+
+    .btn-switcher-active {
+        background-color: @color_active !important;
+    }
+
+    .btn-switcher-disabled {
+        background-color: @color_disabled;
+    }
+
+    a.btn-switcher:hover {
+        color: @color_text_hover;
+    }
+
+    a.btn-switcher:focus {
+        color: @color_text_hover;
+    }
+}

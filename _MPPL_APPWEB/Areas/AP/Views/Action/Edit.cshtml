@@ -1,0 +1,136 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionEditViewModel
+
+@{
+    ViewBag.Title = "Tworzenie/Edycja Akcji";
+}
+
+<div class="Window">
+    <div class="WindowTitle">
+        <div style="float: left;">
+            @Html.ActionLink("<< Wróć", "Show", new { id = Model.NewObject.Id }, new { @class = "btn btn-primary" })
+        </div>
+        <div style="float: right;">
+            @Html.ActionLink("Usuń", "Delete", new { id = Model.NewObject.Id }, new { @class = "btn btn-danger" })
+        </div>
+        <div class="clear_div"></div>
+    </div>
+    <div class="WindowContent">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+
+                @Html.HiddenFor(model => model.NewObject.AssignedId)
+                @Html.HiddenFor(model => model.NewObject.Id)
+                @Html.HiddenFor(model => model.OldDepartmentId)
+                @Html.HiddenFor(model => model.MeetingId)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewObject.Type, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.NewObject.TypeId, Model.Types, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => Model.NewObject.TypeId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Określ miejsce którego dotyczy akcja", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="formInlineGroup ">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(model => model.NewObject.Area, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.NewObject.AreaId, Model.Areas, "", new { @class = "form-control", @onchange = "FillLine()" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(model => model.NewObject.Line, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.NewObject.LineId, Model.Lines, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup ">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(model => model.NewObject.Workstation, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.NewObject.WorkstationId, Model.Workstations, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="formInlineGroup ">
+                            <div class="formInlineRow">
+                                @Html.LabelFor(model => model.NewObject.ShiftCode, new { @class = "control-label" })
+                            </div>
+                            <div class="formInlineRow">
+                                @Html.DropDownListFor(model => model.NewObject.ShiftCodeId, Model.ShiftCodes, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewObject.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.NewObject.Title, new { @class = "form-control", @maxlength = "40" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewObject.Problem, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.NewObject.Problem, 5, 160, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewObject.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.NewObject.CategoryId, Model.Categories, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.NewObject.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.NewObject.DepartmentId, Model.Departments, new { @class = "form-control dropClearAssigner" })
+                    </div>
+                </div>
+     
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewObject.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.NewObject.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control datetimepickerBeg" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewObject.PlannedEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.NewObject.PlannedEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control datetimepickerEnd" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Zapisz" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        InitAutocompetes(".UserTextBox", "#NewObject_AssignedId");
+        InitDatepickers();
+        onChangeDropClearAssigner();
+
+        var baseUrl = new BaseUrl().link;
+
+        function FillLine() {
+            FillComboLineAndWorkst("#NewObject_AreaId", "#NewObject_LineId", "#NewObject_WorkstationId");
+        }
+
+    </script>
+}

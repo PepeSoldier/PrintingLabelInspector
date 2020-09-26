@@ -1,0 +1,35 @@
+﻿
+
+    <div class="ganttchartItem"
+         id="workorder_{{Id}}" workorderid="{{Id}}" data-orderno="{{ClientOrderNo}}" orderno="{{ ClientOrderNo}}" batchnumber="{{ BatchNumber}} "
+         style="width: 100%; {{cssShadow}}"
+         data-toggle="popover" title="{{ItemGroupName}}"
+         data-trigger="hover"
+         data-content="Code${{ItemCode}}%Name${{ItemName}}%Order${{ClientOrderNo}} [{{ClientOrderId}}]%2${{Param1}}%Qty${{Qty_Remain}} / {{Qty_Total}}%Tool${{ToolName}}%StartTime${{StartTime|FormatDotNetDate}}%EndTime${{EndTime|FormatDotNetDate}}%ProdTime${{ProcessingTime}} [s]">
+
+        {{#workorderLabel}}
+        <div class="workorderLabel">
+            <span class="WorkorderCaption">{{ItemGroupName}}</span>
+            <span class="WorkorderCaption">{{ItemCode}}</span>
+        </div>
+        {{/workorderLabel}}
+
+        {{#SpecialCssClass}}
+        <div class="{{SpecialCssClass}}"></div>
+        {{/SpecialCssClass}}
+
+        {{#workorderReady}}
+        <div class="workorderReady" style="width: {{workorderReady}}%;"></div>
+        {{/workorderReady}}
+
+        {{#workorderUsed}}
+        <div class="workorderUsed" style="width: {{workorderUsed}}%;"></div>
+        {{/workorderUsed}}
+
+        {{#isStarted}}
+        <div class="orderUsed" style="width: {{width}}%;"></div>
+        {{/isStarted}}
+
+        <div class="workorderGrnd sgcBlockWorkorderGradient" style="position: absolute;top:0px;left: 0; z-index: 7; height: 100%; width: 100%;"></div>
+        <div class="sgcBlockWorkorderTopStrip" style="background-color: {{ItemColor2}}"></div>
+    </div>

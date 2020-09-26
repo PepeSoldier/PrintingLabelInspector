@@ -1,0 +1,248 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionBrowseViewModel
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Przeglądanie Akcji";
+}
+
+@*Filters*@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="formArea shadow">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(model => model.FilterObject.AssignedId);
+                @Html.HiddenFor(model => model.FilterObject.CreatorId);
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Typ", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("TypeId", Model.Types, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Tworzący", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.CreatorId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.DepartmentId, new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("DepartmentId", Model.Departments, "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.AssignedId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.AssignedId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.State, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownListFor(model => Model.FilterObject.State, EnumHelper.GetSelectList(typeof(MDL_AP.Models.ActionPlan.ActionStateEnum)), "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Typ", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownListFor(m => Model.TypeId, EnumHelper.GetSelectList(typeof(MDL_AP.Models.ActionPlan.ObservationTypeEnum)), "", new { @class = "form-control" })
+                    </div>
+                </div>               
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.LabelFor(model => model.FilterObject.PlannedEndDate, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.PlannedEndDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Data końca", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.EditorFor(model => model.FilterObject.EndDateTo, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.Label("Pokaż podakcje", new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.CheckBoxFor(model => model.FilterObject.ShowChildActions, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup ">
+                    <div class="formInlineRow">
+                        @Html.Label("Tylko Otwarte akcje", new { @class = "control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.CheckBoxFor(model => model.FilterObject.ShowOnlyOpenedActions, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        <span></span>
+                    </div>
+                    <div class="formInlineRow">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Odśwież" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            }
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</div>
+
+
+@{ 
+    string class1 = string.Empty;
+}
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-sm-12 col-md-12 col-lg-9 browseGrid">
+    @Html.Grid(Model.ActionModels).Columns(columns =>
+    {
+
+    columns.Add().Titled("<span class='col-sm-12'>Właściciel</span><span class='col-sm-12'>Data Utworzenia</span>").Encoded(false).Sanitized(false).SetWidth(200).RenderValueAs(u => 
+        @<div class="row">
+        
+            @if((u.State != MDL_AP.Models.ActionPlan.ActionStateEnum.stateAct && u.PlannedEndDate.Date < DateTime.Now.Date))
+            {
+                class1 = "ActionDelayed";
+            }
+            else if((u.State == MDL_AP.Models.ActionPlan.ActionStateEnum.stateAct))
+            {
+                class1 = "ActionFinished";
+            }
+            else
+            {
+                class1 = "ActionNormal";
+            }
+            
+            <div class="col-sm-12">
+                <div style="margin-left: -5px;" class="class1 @class1">
+                    <div class="row upperRow">
+                        <div class="col-sm-12 ActionCreator">@u.Creator.FullName</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 ActionDateCreated">@u.DateCreated.ToShortDateString()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+    columns.Add().Titled("<span class='col-sm-8'>Tytuł</span><span class='col-sm-4'>Typ</span><span class='col-sm-4'>Obszar</span><span class='col-sm-2'>Stan.</span><span class='col-sm-2'>Zmiana</span><span class='col-sm-4'>Kategoria</span>")
+            .Encoded(false).Sanitized(false).SetWidth(400).RenderValueAs(u =>
+    @<div>
+        <div class="row upperRow">
+            
+            <div class="col-sm-8 ActionTitle">@u.Title</div>
+            <div class="col-sm-4 ActionType">@u.Type.Name</div>
+        </div>
+         <div class="row">
+             <div class="col-sm-4 ActionArea">@u.Area.Name</div>
+             <div class="col-sm-2 ActionWorkstation">@u.Workstation.Name</div>
+             <div class="col-sm-2 ActionShiftCode">@u.ShiftCode.Name</div>
+             <div class="col-sm-4 actionCategory">@u.Category.Name</div>
+         </div>
+    </div>
+    );
+
+    columns.Add().Titled("<span class='col-sm-12'>Odpowiedzialny/a</span><span class='col-sm-6'>Termin</span><span class='col-sm-6'>Dział</span>")
+            .Encoded(false).Sanitized(false).SetWidth(200).RenderValueAs(u =>
+    @<div>
+        <div class="row upperRow">
+            <div class="col-sm-12 ActionAssigned">@((u.Assigned != null) ? u.Assigned.FullName : "N/A")</div>
+        </div>
+         <div class="row">
+             <div class="col-sm-6 ActionPlannedEndDate">@u.PlannedEndDate.ToShortDateString()</div>
+             <div class="col-sm-6 ActionDepartment">@(u.Department != null? u.Department.Name : string.Empty)</div>
+         </div>
+    </div>
+    );
+    columns.Add().Titled("Podakcje").Encoded(false).Sanitized(false).SetWidth(60).RenderValueAs(u =>
+    @<div>
+        <div class="row upperRow">
+            <div class="col-sm-12 subactionsCount" id="BrowseAction_@u.Id">
+                @u.SubactionsCount
+            </div>
+        </div>
+    </div>
+    );
+    columns.Add().Titled("Status").Encoded(false).Sanitized(false).SetWidth(80).RenderValueAs(u =>
+    @<div>
+        <div class="row upperRow">
+            <div class="col-sm-12 statePicture">
+                <img src="~/Content/Images/state@((int)u.State).png" />
+            </div>
+        </div>
+    </div>
+    );
+
+    columns.Add().Titled("").Encoded(false).Sanitized(false).SetWidth(80).RenderValueAs(u =>
+    @<div>
+        <div class="row upperRow">
+            <div class="col-sm-12 ActionLink">
+               @Html.ActionLink("Otwórz", "Show", new { id = u.Id })
+            </div>
+        </div>
+    </div>
+    );
+    if (Model.Meeting.Id > 0 && User.Identity.Name == Model.Meeting.Owner.UserName.Trim())
+    {
+       columns.Add().Encoded(false).Sanitized(false).SetWidth(39).RenderValueAs(u =>
+          @<b>
+               @if (Model.ActionModelMeetings.FirstOrDefault(x => x.Id == u.Id) == null)
+               {
+                 <input type="button" value="Dodaj" id="AddToMeeting" class="btn btn-success AddToMeeting" data="@u.Id" data-meeting="@Model.Meeting.Id" />
+               }
+               else
+               {
+                <img src="~/Content/Images/8-2-ok-png-file.png" width="40" height="40" />
+               }
+          </b>);
+    }
+    }).WithPaging(20)
+</div>
+</div>
+
+<script type="text/javascript">
+    InitAutocompetes("#FilterObject_Assigned_Id", "#AssignedId");
+    InitAutocompetes("#FilterObject_Creator_Id", "#CreatorId");
+    InitAddActionToMeeting();
+
+    $(".subactionsCount").click(function () {
+        new ActionBrowse().ShowChildrenActions(this);
+    });
+
+</script>

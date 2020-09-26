@@ -1,0 +1,113 @@
+﻿@model int
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "WZ";
+    var Users = ViewBag.Users;
+    int whDocId = (int)Model;
+}
+
+<style>
+    .card {
+        background-color: #569693 !important;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+    #sigCanvas{
+        zoom: 0.725;
+        -moz-transform: scale(0.7);
+    }
+
+    #WhDocumentWZ {
+        zoom: 0.515;
+        -moz-transform: scale(0.5);
+    }
+
+    #PreviewHeader {
+        height: 73px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        background-color: rgba(0,0,0,0.4);
+        text-align: center;
+    }
+
+    #sidebar-wrapper-left {
+        display: none;
+    }
+
+    #wrapper {
+        padding-left: 0 !important;
+    }
+
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .textBold {
+        
+        font-weight: bold;
+    }
+    .signMainWindow{
+        color: #3e636d;
+    }
+   
+</style>
+
+<div class="row no-gutters">
+    <div class="col-5">
+        <div id="PreviewHeader">
+            <h3 class="textGreen">Podgląd Dokumentu</h3>
+            <span class="textBlue">Kliknij przycisk <span class="textBold">Sign</span> by rozpocząć podpisywanie</span>
+        </div>
+        <div id="whDocView"></div>
+    </div>
+    <div class="col-7" id="sighView">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    let id = @Html.Raw(Json.Encode(whDocId));
+
+    $(document).ready(function () {
+          var ReturnJson = new JsonHelper().GetPostData("/iLogis/WhDoc/Issue",
+            { Id: id });
+        ReturnJson.done(function (jsonModel) {
+
+            if (jsonModel.Status > 0) {
+                new Alert().Show(jsonModel.MessageTypeString, jsonModel.Message);
+            }
+            else {
+                $.get("/iLOGIS/WhDoc/Print/" + id, function (data) {
+                    $("#whDocView").html(data);
+                });
+
+                $.get("/CORE/Sign/Sign/" + id, function (data) {
+                    $("#sighView").html(data);
+                    getSignature();
+                });
+            }
+        });
+    });
+
+     $(document).on("click", "#btnConfirmAndPrint", function () {
+        if (!$(this).hasClass("disabled")) {
+            ConfirmAndPrintHTML($(this).attr("data-id"));
+        }
+    });
+    
+    function ConfirmAndPrintHTML(id) {
+        let html = $("#WhDocumentWZ").html();
+        let jsq = new JsonHelper().GetPostData("/iLogis/WhDoc/SignAndPrint", { id, html });
+        jsq.done(function (jsonModel) {        
+            new Alert().Show(jsonModel.MessageTypeString, jsonModel.Message);
+            CloseSignPopup();
+        });
+    }
+
+</script>
+
+
+
+

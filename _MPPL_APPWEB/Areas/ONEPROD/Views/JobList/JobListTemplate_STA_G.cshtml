@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .photoFrame {
+        /*border: 1px solid red;*/
+        position: relative;
+    }
+    .photo {
+        position: relative;
+    }
+</style>
+
+@helper RenderD()
+{
+    <div class="row no-gutters dBox">
+        <div class="col-9 code">
+            <div class="dValue photoCodeVal"></div>
+        </div>
+        <div class="col-3 qty">
+            <div class="dValue photoQtyVal"></div>
+        </div>
+    </div>
+}
+
+<div class="row no-gutters mt-2 photoFlex" style="height: 470px;">
+    <div class="col-4 photoFrame"><div class="photo photoAnimation" id="prefix-0300150" data-prefixes="0300150">@RenderD()</div></div> @*pompa główna*@
+    <div class="col-4 photoFrame"><div class="photo photoAnimation" id="prefix-0310030" data-prefixes="0310030">@RenderD()</div></div> @*flow contr*@
+    <div class="col-4 photoFrame"><div class="photo photoAnimation" id="prefix-0310020" data-prefixes="0310020,0300220">@RenderD()</div></div> @*pompa odp*@
+</div>
+<div class="row no-gutters mt-2 photoSmW" style="height: 470px;">
+    <div class="col-4 photoFrame"><div class="photo" id="prefix-1100011" data-prefixes="1100011">@RenderD()</div></div> @*filc pod drzwi*@
+<div class="col-4 ">
+    <div class="row no-gutters " style="height: 50%;">
+        <div class="col-12 photoFrame">
+            <div class="photo" id="prefix-0800136" data-prefixes="0800136">
+                <div style="text-align: center; font-size: 110px;color: #0808086e;">SOFTWARE</div>
+                @RenderD()
+              </div>
+            </div> @*anc soft*@
+    </div>
+    <div class="row no-gutters " style="height: 50%;">
+        <div class="col-12 photoFrame"><div class="photo" id="prefix-0100060" data-prefixes="0100060">@RenderD()</div></div> @*filc na wsporn*@
+    </div>
+</div>
+    <div class="col-4 photoFrame"><div class="photo" id="prefix-0100120" data-prefixes="0100120">@RenderD()</div></div> @*filc sandwitch*@
+</div>
+

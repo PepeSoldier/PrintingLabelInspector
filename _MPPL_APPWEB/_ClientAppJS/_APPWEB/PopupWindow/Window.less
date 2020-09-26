@@ -1,0 +1,111 @@
+﻿
+.windowStyle(@bgColor, @brdColor, @titleBgColor, @titleFontColor, @brdDarkColor ) {
+
+    .WindowBox {
+        background-color: @bgColor;
+        border: 1px solid @brdDarkColor;
+    }
+
+    .Window {
+        &:extend(.shadow);
+        margin-bottom: 15px;
+        background-color: @bgColor;
+        border: 1px solid @brdDarkColor;
+    }
+
+    .WindowJs {
+        &:extend(.shadow);
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .PopupWindow {
+        display: flex;
+        position: absolute;
+        top: 200px;
+        left: 200px;
+        margin-right: auto;
+        margin-left: auto;
+        background-color: @bgColor;
+        border: 1px solid #0a6169;
+        max-width: 92% !important;
+        -webkit-box-shadow: 2px 2px 9px 0px rgba(0, 0, 0, 0.17);
+        -moz-box-shadow: 2px 2px 9px 0px rgba(0, 0, 0, 0.17);
+        box-shadow: 2px 2px 9px 0px rgba(0, 0, 0, 0.17);
+    }
+
+    .WindowTitle {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px;
+        overflow: hidden;
+        max-height: 43px;
+        color: @titleBgColor;
+        background-color: @titleFontColor;
+        border-bottom: 1px solid @brdColor;
+    }
+
+    .WindowTitle span {
+        float: left;
+        width: 100%;
+        padding-right: 30px;
+    }
+
+    .WindowTitle .btn {
+        margin-top: -7px;
+    }
+
+    .WindowTitle .btnClose {
+        width: 42px;
+        margin-right: -8px;
+        margin-top: -32px;
+        float: right;
+        position: relative;
+    }
+
+    .WindowContent {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .WindowContentFlexP {
+        position: absolute;
+        top: 44px;
+        bottom: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #overlay-back {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(1,1,1,0.25);
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        z-index: 999;
+        display: none;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /*padding  : 60px;*/
+        margin: 0 auto;
+        z-index: 1000;
+        display: none;
+        padding-left: 80px;
+    }
+
+    #wrapper.active #overlay {
+        padding-left: 150px;
+    }
+}

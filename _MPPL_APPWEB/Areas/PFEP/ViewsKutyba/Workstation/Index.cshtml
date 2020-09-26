@@ -1,0 +1,19 @@
+﻿@using GridMvc.Html
+
+@model IEnumerable<MDL_PFEP.Models.DEF.Workstation>
+
+@{
+    ViewBag.Title = "Stanowisko";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewBag.ShowDefinitionsMenu = true;
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(o => o.Name).Titled("Nazwa stanowiska").Sortable(true).Editable(true);
+    columns.Add(o => o.SortOrder).Titled("Kolejność").Sortable(true).Editable(true);
+    //.RenderValueAs(); .RenderValueAs(o => @<button type="submit">Submit</button>);
+    columns.Add(o => o.Type.Name).Titled("Typ").Sortable(true).Editable(true, "select", (string)ViewBag.ListType).RenderValueAs(o => o.Type.Id.ToString());
+    columns.Add(o => o.Line.Name).Titled("Linia").Sortable(true).Editable(true, "select", (string)ViewBag.ListLine).RenderValueAs(o => o.Line.Id.ToString());
+    columns.Add(o => o.Id).Titled("").EditActionColumn("", Url.Action("Edit", controllerName), Url.Action("Delete", controllerName));
+}).WithPaging(100).Selectable(false)

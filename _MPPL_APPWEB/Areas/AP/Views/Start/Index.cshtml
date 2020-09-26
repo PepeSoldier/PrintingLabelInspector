@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+        <div id="headerjmb-parent">
+            <div id="headerjmb" style="height:200px;">
+                <div style="padding: 15px;">
+                    <div id="DashBoardControlls"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .legendColor {
+        width: 35px;
+        height: 18px;
+        float: left;
+        padding: 0;
+    }
+    .legendDescr {
+        padding: 0 10px;
+    }
+</style>
+
+<div class="row" style="margin-bottom: 15px;">
+    
+    <div class="col-12">
+        <div class="Window">
+            <div class="WindowContent" style="padding: 10px 0 0 0;">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3" id="PieChart0"></div>
+                        <div class="col-sm-6 col-md-3" id="PieChart1"></div>
+                        <div class="col-sm-6 col-md-3" id="PieChart2"></div>
+                        <div class="col-sm-6 col-md-3" id="PieChart3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="text-align: center; padding: 15px 0 5px 0;">
+                            <div style="max-width: 450px; margin: 0 auto; display: none;" id="chartLegend">
+                                <div style="float: left">
+                                    <div class="legendColor" style="background-color: rgb(216,216,216);"></div><span class="legendDescr">Zgłoszenie</span>
+                                </div>
+                                <div style="float: left">
+                                    <div class="legendColor" style="background-color: @MDL_AP.Models.DEF.ColorPCDA.PlanColorHex;"></div><span class="legendDescr">Plan</span>
+                                </div>
+                                <div style="float: left">
+                                    <div class="legendColor" style="background-color: @MDL_AP.Models.DEF.ColorPCDA.DoColorHex;"></div><span class="legendDescr">Do</span>
+                                </div>
+                                <div style="float: left">
+                                    <div class="legendColor" style="background-color: @MDL_AP.Models.DEF.ColorPCDA.CheckColorHex;"></div><span class="legendDescr">Check</span>
+                                </div>
+                                <div style="float: left">
+                                    <div class="legendColor" style="background-color: @MDL_AP.Models.DEF.ColorPCDA.ActColorHex;"></div><span class="legendDescr">Act</span>
+                                </div>
+                                <div class="clear_div"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="Window">
+            <div class="WindowTitle">Aktywności</div>
+            <div class="WindowContent" style="padding:0;">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12" id="ActivityLog">
+                            Loading Activity LOG...
+                        </div>
+                        <div class="col-md-12" id="ActivityLogLoad" style="text-align: center;">
+                            <span id="ActivityLogCurrentRow" style="display:none">0</span>
+                            <span class="fa fa-ellipsis-h"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script type="text/javascript">
+
+    var dashboard;
+    var activityLogRows = 10;
+
+    $(document).ready(function () {
+        dashboard = new Dashboard();
+        dashboard.loadControls("#DashBoardControlls");
+        dashboard.AddChart("#PieChart0", "Wszystkie", 0);
+        dashboard.AddChart("#PieChart1", "Przypisane do mojego działu", 1);
+        dashboard.AddChart("#PieChart2", "Przypisane do mnie", 2);
+        dashboard.AddChart("#PieChart3", "Moje", 3);
+        dashboard.AddActivityLog("#ActivityLog", activityLogRows);
+        Refresh();
+    });
+
+    $(document).on("click", "input[name='TimeFilter'], input[name='PersonalFilter']", function () {
+        Refresh();
+    });
+    $(document).on("click", "#ActivityLogLoad", function () {
+        LoadMoreLogs();
+    });
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > $(document).height() - ($(window).height()) - 50) {
+            LoadMoreLogs();    
+        }
+    });
+
+    function LoadMoreLogs() {
+        var currentRow = +$("#ActivityLogCurrentRow").text();
+        var rows = 5;
+        dashboard.LoadActivityLog(currentRow, rows);
+
+        $("#ActivityLogCurrentRow").text(currentRow + rows);
+    }
+
+    function Refresh() {
+        var timeVal = $('input[name=TimeFilter]:checked').val()
+        var personalVal = $('input[name=PersonalFilter]:checked').val()
+
+        if (!(timeVal >= 0)) {
+            timeVal = 2;
+            personalVal = 2;
+        }
+
+        console.log(timeVal);
+        console.log(personalVal);
+
+        $("#ActivityLogCurrentRow").text(activityLogRows);
+        dashboard.Refresh(timeVal, personalVal);
+    }
+
+</script>

@@ -1,0 +1,316 @@
+﻿@model _MPPL_WEB_START.Areas.PFEP.ViewModels.PrintViewModel
+@using GridMvc.Html
+@using MDLX_CORE.ComponentCore.Entities;
+
+@{
+    ViewBag.Title = "Drukowanie DEF";
+}
+
+<style>
+    #ProductionPlan20 td, #ProductionPlan20 th {
+        padding: 0 5px !important;
+    }
+
+    .routineRadioBtn {
+        float: left;
+        top: 0 !important;
+    }
+
+    .printFormCheck {
+        float: left;
+        width: 100%;
+        max-height: 44px;
+    }
+
+    .printFormCheckTitle {
+        float: left;
+        overflow: hidden;
+        position: absolute;
+        left: 70px;
+        line-height: 40px;
+        max-height: 40px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12 col-md-10 col-lg-9" style="display: block; padding-right: 0px;">
+        <div style="display: inline-block; width: 64%">
+            <div id="ProductionPlanOrder" class="gridJs"></div>
+        </div>
+        <div style="display: inline-block; width: 35%">
+            <div id="ProductionPlan20" class="gridJs"></div>
+        </div>
+    </div>
+    <div class="col-12 col-md-2 col-lg-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="number-spinner" style="position: relative; height: 35px;">
+                    <span class="" style="position:absolute; left: 0;">
+                        <button class="btn btn-default" data-dir="dwn" style="width: 30px; font-size: 24px; padding: 0px 7px; border-radius: 0;">-</button>
+                    </span>
+                    <div class="" style="position:absolute; left: 30px; right: 30px;">
+                        <input type="text" class="form-control text-center dateSpinner datetimepicker" id="RoutineSelectedTime1" value="1" style="border-radius: 0;float: left; ">
+                        <input type="text" class="form-control text-center dateSpinner datetimepicker" id="RoutineSelectedTime2" value="1" style="border-radius: 0;float: left; ">
+                    </div>
+                    <span class="" style="position:absolute; right: 0;">
+                        <button class="btn btn-default" data-dir="up" style="width: 30px; font-size: 24px; padding: 0px 5px; border-radius: 0;">+</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12 col-sm-5" style=" max-width:120px;">
+                <div class="btn btn-default" id="btnRefreshGrid">
+                    <div class="fas fa-sync"></div>
+                    <span>Odśwież</span>
+                </div>
+            </div>
+            <div class="col-12 col-sm-7 ">
+                <div class="btn btn-default" id="btnSelectOrders">
+                    <div class="fas fa-bars"></div>
+                    <span>Zaznacz zlecenia</span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <div style="float: left; font-weight: bold; font-size: 18px; margin-bottom: 8px; line-height: 34px;">DRUKOWANIE</div>
+                @*<div style="float: right; padding: 5px; border-radius: 5px; background-color: #83e0ad; margin-top: -8px;" id="btnModeSwitcher">Manual/Auto</div>*@
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons" style="float: right;">
+                    <label class="btn btn-default" id="optionPrintAuto">
+                        <input type="radio" name="options" id="option1p" autocomplete="off">Auto
+                    </label>
+                    <label class="btn btn-default active" id="optionPrintManual">
+                        <input type="radio" name="options" id="option2p" autocomplete="off" checked>Manual
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="PrintManualMode" class="">
+            <div class="row">
+                <div class="col-12" style="min-height: 200px;">
+                    @foreach (MDL_PFEP.Models.DEF.Routine r in Model.Routines)
+                    {
+                        <div class="printFormCheck">
+                            <input type="radio" class="option-input radio routineRadioBtn" name="example" value="@r.Hours" id="routine_@r.Id" @(r.Id == 1 ? "checked" : "") />
+                            <div class="printFormCheckTitle">@r.ToString()</div>
+                        </div>
+                    }
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                @*<div class="col-12">
+                        @Html.Editor("printer", new { htmlAttributes = new { @class = "form-control", @id = "printer" } })
+                    </div>*@
+                @*<div class="col-3">
+                        <div class="btn btn-info printBtn">
+                            DRUKUJ
+                        </div>
+                    </div>*@
+                <div class="col-12 col-sm-5" style="max-width: 120px;">
+                    <div class="btn btn-info savePDFBtn">
+                        ZAPISZ PDF
+                    </div>
+                </div>
+                <div class="col-12 col-sm-7 ">
+                    <div class="btn btn-info showPDFBtn">
+                        POKAZ PDF
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="PrintAutoMode" class="hidden" style="margin-top:15px;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="formInlineGroup" style="width: 110px;">
+                        <div class="formInlineRow">
+                            @Html.Label("Data", new { @class = "control-label" })
+                        </div>
+                        <div class="formInlineRow">
+                            @Html.TextBox("AutoPrintDate", DateTime.Now.Date.ToString("yyyy-MM-dd"), new { @class = "form-control datepicker" })
+                        </div>
+                    </div>
+                    <div class="formInlineGroup" style="width: 80px;">
+                        <div class="formInlineRow">
+                            @Html.Label("Zmiana", new { @class = "control-label" })
+                        </div>
+                        <div class="formInlineRow">
+                            @*@Html.TextBox("AutoPrintShift", "1", new { @class = "form-control" })*@
+                            @Html.DropDownList("AutoPrintShift", Model.Shifts, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="formInlineGroup" style="width: 90px;">
+                        <div class="formInlineRow">
+                            @Html.Label("Linia", new { @class = "control-label" })
+                        </div>
+                        <div class="formInlineRow">
+                            @*@Html.TextBox("AutoPrintLine", "101", new { @class = "form-control" })*@
+                            @Html.DropDownList("AutoPrintLine", Model.Lines, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="formInlineGroup" style="width: 70px;">
+                        <div class="formInlineRow">
+                        </div>
+                        <div class="formInlineRow">
+                            <div class="btn btn-info" id="btnPrintAuto">Generuj</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <div style="float: left; font-weight: bold; font-size: 18px; margin-bottom: 8px; line-height: 34px;">PRZELICZ PLAN</div>
+                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons" style="float: right;">
+                    <label class="btn btn-default active" id="optionCalcAuto">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked>Auto
+                    </label>
+                    <label class="btn btn-default" id="optionCalcManual">
+                        <input type="radio" name="options" id="option2" autocomplete="off">Manual
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 calcMode" id="calcAuto">
+                <div class="btn btn-default btnRecalculatePlan2d" style="width: 200px;">Przelicz 2 dni</div>
+            </div>
+            <div class="col-12 calcMode hidden" id="calcManual" style="width: 250px; margin-top:5px;">
+                <div style="float:left; max-width:100px;">
+                    @Html.TextBox("CalculationDateTo", DateTime.Now.Date.AddDays(7).ToString("yyyy-MM-dd"), new { @class = "form-control datepicker" })
+                </div>
+                <div class="btn btn-default btnRecalculatePlan7d" style="float:left; margin-left:5px; width: 95px;">Przelicz</div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <div class="btn btn-default" id="btnSynchPFEPPRD" style="width:200px;">Synchronizuj z PFEP PRD</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@foreach (string printerName in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+    {
+        <br /><span>@printerName</span>
+    }*@
+
+@section Scripts{
+    @*<link href="~/_ClientAppJS/PFEP/Print/fancyRadio.css" rel="stylesheet" />*@
+    <script type="text/javascript">
+
+        var defPrint = new DefPrint();
+        var FilterObjectDate = "@(Model.FilterObject.Date)";
+
+        $(document).ready(function () {
+            defPrint.DrawJsGrid();
+            $("#refTime").val(FilterObjectDate);
+            defPrint.UpdateReferenceTime($("#refTime").val());
+            InitAutocompetes();
+            InitDatepickers();
+
+            var checkedRoutine = $(".routineRadioBtn:checked");
+            defPrint.SetSelectedRoutine(checkedRoutine.val(), checkedRoutine.attr("Id").split("_")[1]);
+        });
+        $("#optionPrintManual").on("click", function () {
+            $("#PrintAutoMode").addClass("hidden");
+            $("#PrintManualMode").removeClass("hidden");
+        });
+        $("#optionPrintAuto").on("click", function () {
+            $("#PrintAutoMode").removeClass("hidden");
+            $("#PrintManualMode").addClass("hidden");
+        });
+
+        $("#btnPrintAuto").on("click", function () {
+            var date = $("#AutoPrintDate").val();
+            var shift = $("#AutoPrintShift").val();
+            var lineName = $("#AutoPrintLine").val();
+            window.open("/PFEP/Print/PrintViewAuto?date=" + date + "&shift=" + shift + "&lineName=" + lineName, "Podglad" + new Date());
+        });
+        $("#ProductionPlanOrder").on('keypress', '.jsGridFilter', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                defPrint.RefreshJsGrid();
+            }
+        });
+        $('.printBtn').on("click", function () {
+            defPrint.Print($("#printer").val());
+            $.when(defPrint.RefreshJsGrid()).then(defPrint.IncreaseSpinnerVal());
+
+        });
+        $('.savePDFBtn').on("click", function () {
+            defPrint.SavePDF($("#printer").val());
+            $.when(defPrint.RefreshJsGrid()).then(defPrint.IncreaseSpinnerVal());
+        });
+        $('.showPDFBtn').on("click", function () {
+            $.when(defPrint.ShowPDF($("#printer").val())).then(
+                $.when(defPrint.RefreshJsGrid()).then(
+                    defPrint.IncreaseSpinnerVal()
+                )
+            );
+        });
+
+        $('#btnSynchPFEPPRD').on("click", function () {
+            $.ajax({
+                async: true, global: false, dataType: "json", type: "POST",
+                url: "/PFEP/Print/SynchronizeOldPFEPdb",
+                success: function (alert) {
+                    new Alert().Show(alert.MessageTypeName, alert.Message);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    new Alert().Show("danger", thrownError);
+                }
+            });
+        });
+        $('#btnRefreshGrid').on("click", function () {
+            defPrint.RefreshJsGrid();
+        });
+        $('#btnSelectOrders').on("click", function () {
+            defPrint.SelectRows($('#RoutineSelectedTime1').val(), $('#RoutineSelectedTime2').val());
+        });
+
+
+        $("#optionCalcAuto").on("click", function () {
+            $("#calcAuto").removeClass("hidden");
+            $("#calcManual").addClass("hidden");
+        });
+        $("#optionCalcManual").on("click", function () {
+            $("#calcManual").removeClass("hidden");
+            $("#calcAuto").addClass("hidden");
+        });
+        $('.btnRecalculatePlan2d').on("click", function () {
+            defPrint.RecalculateProdPlan(2);
+            defPrint.RefreshJsGrid();
+        });
+        $('.btnRecalculatePlan7d').on("click", function () {
+            var dateTo = new Date($("#CalculationDateTo").val());
+            var dateNow = new Date();
+            r = parseInt((dateTo - dateNow) / (1000 * 60 * 60 * 24) + 0.999);
+
+            defPrint.RecalculateProdPlan(r);
+            defPrint.RefreshJsGrid();
+        });
+        $('.routineRadioBtn').on("click", function () {
+            defPrint.SetSelectedRoutine($(this).val(), $(this).attr("Id").split("_")[1]);
+            defPrint.RefreshJsGrid();
+        });
+        $(document).on('change', '#refTime', function (e) {
+            defPrint.UpdateReferenceTime($(this).val());
+        });
+        $(document).on('click', '.number-spinner button', function () {
+            if ($(this).attr('data-dir') == 'up') {
+                defPrint.IncreaseSpinnerVal();
+            } else {
+                defPrint.DecreaseSpinnerVal();
+            }
+        });
+    </script>
+}

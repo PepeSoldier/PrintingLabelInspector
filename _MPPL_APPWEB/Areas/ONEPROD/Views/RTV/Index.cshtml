@@ -1,0 +1,121 @@
+﻿@using _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels;
+
+@{
+    ViewBag.Title = "OEE RTV";
+    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+}
+
+
+@*<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>*@
+
+<div id="RTV" class="RTV headerLive" style="min-width: 1800px;">
+    <section id="rtvHeader">
+        <div class="row headerRow">
+            <div class="col-4 headerLeft">
+                <div class="logoMD clickable" style="background-image: url(@Url.Content("~/Content/images/logo" + @ViewBag.ClientName + "_white.png")) !important"></div>
+            </div>
+            <div class="col-2 headerLeft">
+                <div class="headerMid" id="clockHeaderMid"></div>
+            </div>
+            <div class="col-2 headerLeft">
+                <div id="shiftDate" style="font-size: 32px; color: #447c91; margin-top: -1px;"></div>
+            </div>
+            <div class="col-4 headerRight">
+                <div class="" style="font-size: 40px; float: right; margin-top: -8px;" id="headerTitle"></div>
+            </div>
+        </div>
+        <div class="separator"></div>
+    </section>
+    <section id="rtvContent"></section>
+</div>
+
+<script src="~/_ClientAppJS/ExternalLibraries/ChartJS/Chart.js"></script>
+<script type="text/javascript">
+
+    var isUserAllowedForDashboard = @Html.Raw(Json.Encode(ViewBag.IsUserAllowedForDashboard));
+    var rtvs = [];
+
+    $(document).ready(function () {
+        AdjustView();
+        openFullscreen();
+        console.log("RTV Index Ready");
+        StartClock();
+        DecodeLinkAndLoadContent();
+    });
+
+    $(document).on("click", ".goToDetails", function () {
+        var machineId = $(this).attr("data-machineId");
+        window.location.hash = 'machine-' + machineId;
+        DecodeLinkAndLoadContent();
+    });
+    $(document).on("click", ".logoMD", function () {
+        window.location.hash = '';
+        DecodeLinkAndLoadContent();
+    });
+    $(window).on('resize', function () {
+        console.log("resize");
+        AdjustView();
+    });
+    function AdjustView() {
+        var maxWidth = 1900;
+        var width = $(window).width();
+        console.log(width);
+
+        var widthDiff = maxWidth - width;
+        var percentToSubtract = parseInt(widthDiff / 18);
+        var zoom = Math.max(Math.min(100 - percentToSubtract,100),50);
+
+        document.body.style.zoom = zoom + "%";        
+    }
+
+    function DecodeLinkAndLoadContent() {
+        ClearIntervals();
+        var hash = window.location.hash;
+        if (hash == "" || hash == "dashboard") {
+            LoadDashboard();
+        }
+        else {
+            var hashArray = hash.split('-');
+            if (hashArray.length > 1) {
+                var machineId = hashArray[1];
+                if (machineId > 0) {
+                    LoadMachineDetails(machineId);
+                }
+            }
+        }
+    }
+
+    function LoadDashboard() {
+        $("#rtvContent").html("");
+        if (isUserAllowedForDashboard == true) {
+            $.get("/ONEPROD/RTV/Dashboard", function (data) {
+                $("#rtvContent").html(data);
+            });
+        }
+        else {
+            new Alert().Show("danger", "Nie masz uprawnień do tego widoku");
+            //$("#rtvContent").html();
+        }
+        
+    }
+    function LoadMachineDetails(id) {
+        console.log("Load machine " + id + " details");
+        $("#rtvContent").html("");
+        $.get("/ONEPROD/RTV/MachineDetails", {id: id}, function (data) {
+            $("#rtvContent").html(data);
+        });
+    }
+    function ClearIntervals() {
+        for (i = 0; i < rtvs.length; i++) {
+            rtvs[i].StopInterval();
+        }
+        rtvs = [];
+    }
+
+    function StartClock() {
+        var today = new moment(new Date());
+        $("#clockHeaderMid").html(today.format("HH:mm:ss"));
+        var t = setTimeout(StartClock, 1000);
+    }
+
+</script>

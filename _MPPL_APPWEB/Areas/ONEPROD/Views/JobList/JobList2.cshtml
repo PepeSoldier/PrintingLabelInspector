@@ -1,0 +1,231 @@
+﻿@{
+    int port = ViewBag.Port;
+    string workstationIds = ViewBag.WorkstationIds;
+    string templateName = ViewBag.TemplateName;
+    bool dropLayout = Convert.ToBoolean(ViewBag.DropLayout);
+
+    if (dropLayout)
+    {
+        Layout = null;
+    }
+    ViewBag.Skin = "nasaSkin";
+}
+
+<style>
+    .photo {
+        background-position-x: center;
+        background-position-y: center;
+    }
+
+    .header, .header input {
+        background-color: #4c947c !important;
+    }
+
+    .header {
+        height: 52px;
+    }
+
+    .logo {
+        height: 40px !important;
+        width: 140px !important;
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-left: 1px;
+    }
+    .digitalClock {
+        font-size: 40px;
+        margin-top:-15px;
+    }
+    .jobListVisible .joblistColumnLeft {
+        flex: 0 0 40%;
+    }
+
+    .jobListVisible .joblistColumnRight {
+        flex: 0 0 60%;
+    }
+    #barcode {
+        width: 98%;
+        font-size: 25px;
+        margin-top: -9px;
+        border: 1px solid #00bfff;
+        height: 47px;
+        border-radius: 5px;
+        background: none;
+    }
+    #swichScreenMode{
+        right: 15px !important;
+    }
+</style>
+
+
+<div style="display: none;">
+    <div><input class="form-control" id="workstationId" style="width: 150px;" value="@ViewBag.WorkstationIds" /></div>
+    <div><input class="form-control" id="portNo" style="width: 70px;" value="@ViewBag.Port" /></div>
+    <div><input class="form-control" id="templateName" style="width: 100px;" value="@ViewBag.TemplateName" /></div>
+</div>
+
+<div class="row no-gutters" style="margin-top: 2px; height: 40px">
+    <div class="col-2 h-100">
+        <div class="logoMD logo clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectroluxPLV_white.png")) !important"></div>
+    </div>
+    <div class="col-4 digitalClock" style="text-align: center;">
+        <div class="headerMid" id="clockHeaderMid"></div>
+    </div>
+    <div class="col-4">
+        <input class="form-control" id="barcode" value="" />
+    </div>
+    <div class="col-2">
+        <div class="btn btn-lg btn-outline-success" id="btnScan" style="margin-top:-10px;">SKANUJ</div>
+    </div>
+</div>
+
+
+<div class="row no-gutters" style="background-color: #4c947c; padding: 8px 2px; border-bottom: 1px solid #00000044">
+    <div class="col-1" style="font-size: 16px; line-height: 20px; text-align: left;">
+        <span>Zamówienie:</span>
+    </div>
+    <div class="col-3" style="font-size: 20px; line-height: 20px; text-align: center; font-weight: bold;">
+        <span id="workorderNo"></span>
+    </div>
+    <div class="col-1" style="font-size: 16px; line-height: 20px; text-align: center;">
+        <span>PNC:</span>
+    </div>
+    <div class="col-2" style="font-size: 20px; line-height: 20px; text-align: center; font-weight: bold;">
+        <span id="itemCode"></span>
+    </div>
+    <div class="col-5" style="font-size: 20px;line-height: 20px;text-align: center;font-weight: bold;">
+        <span id="itemName"></span>
+    </div>
+</div>
+
+<div class="row no-gutters jobListVisible" id="joblistColumns">
+    <div class="col joblistColumnLeft" style="align-items: flex-start;">
+        <div class="row no-gutters header" style="padding: 0 2px;">
+            <div class="col-3" style="font-size: 16px; text-align: left;">
+                <span>Kod zestawu:</span>
+            </div>
+            <div class="col-6" style="font-size: 28px; text-align: center; font-weight: bold;">
+                <span id="itemCode1700010">119 405 345</span>
+            </div>
+            <div class="col-3" style="font-size: 20px; text-align: center; font-weight: bold; text-align: right; padding-right: 5px; padding-top: 2px;">
+                <div class="btn btn-lg btn-outline-dark" id="btnList">Lista</div>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12" style="align-items: flex-start; margin-left: -2px; padding-top: 5px;" id="photos"></div>
+        </div>
+    </div>
+    <div class="col joblistColumnRight" style="align-items: flex-start;">
+        <div class="row no-gutters header">
+            <div class="col-6" style="font-size: 20px; text-align: center;">
+                <span>Kod kitu</span>
+            </div>
+            <div class="col-6" style="font-size: 28px; text-align: center; font-weight: bold;">
+                <span id="itemCode1500050">111 222 333</span>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12" style="padding-left: 10px;">
+                <div id="jobListItems"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalR/hubs"></script>
+
+
+<script type="text/javascript">
+
+    var _port = @Html.Raw(Json.Encode(port));
+    if (jobList != null) { console.log("Preparing to stop clock"); jobList.StopClock(); }
+    var jobList = new JobList(false);
+
+    $(document).ready(function () {
+        openFullscreen();
+        console.log("Job list view loaded");
+        jobList.StartClock();
+
+        console.log("preparing the hub");
+        jlR = $.connection.jobListHub;
+        jlR.client.broadcastMessage = function (barcode) {
+            console.log("signalR");
+            console.log(barcode);
+
+            if (barcode == "reset") {
+                $("#barcode").val(barcode);
+                location.reload(true);
+            }
+            else {
+                $("#barcode").val(barcode.replace(/\D/g, ''));
+                jobList.GetOptionalPackData("1700010"); //optional_pack
+                jobList.GetKitData("1500050"); //intructions
+            }
+        };
+
+        $.connection.hub.start().done(function () {
+            console.log("Hub is started.");
+            jlR.server.joinWorkstation(_port);
+        });
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000); // Restart connection after 5 seconds.
+        });
+    });
+
+    $("#barcode").on('keyup paste', function () {
+        var text = $(this).val();
+        console.log("bbtext:" + text);
+
+        if (text == "reset") {
+            location.reload(true);
+        }
+        else if (text.length >= 20) {
+            console.log(text);
+            jobList.GetOptionalPackData("1700010"); //optional_pack
+            jobList.GetKitData("1500050"); //intructions
+        }
+        else {
+            clear();
+        }
+    });
+    $("#btnList").on("click", function () {
+        ShowHideList();
+    });
+    $("#btnScan").on("click", function () {
+        console.log("click");
+        $("#barcode").val($("#barcode").val("") + "0");
+        clear();
+        $("#barcode").val("");
+        $("#barcode").focus();
+    });
+    function clear() {
+        console.log("clear");
+        $("#jobListItems").html("");
+        $("#orderDetails").html("");
+        $(".photo").css("background-image", "");
+        $(".photoCodeVal").text("");
+        $(".photoQtyVal").text("");
+        $(".dValue").text("");
+        $("#itemCode1700010").text("");
+        $("#itemCode1500050").text("");
+        $("#workorderNo").text("");
+    }
+
+    function ShowHideList() {
+        if ($("#joblistColumns").hasClass("jobListVisible"))
+        {
+            $("#joblistColumns").removeClass("jobListVisible");
+            $("#joblistColumns").addClass("jobListInvisible");
+        }
+        else {
+            $("#joblistColumns").addClass("jobListVisible");
+            $("#joblistColumns").removeClass("jobListInvisible");
+        }
+    }
+
+</script>

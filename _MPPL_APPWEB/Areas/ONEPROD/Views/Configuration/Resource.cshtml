@@ -1,0 +1,78 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.ResourceViewModel
+@{
+    ViewBag.Title = "CONFIG: Maszyny";
+}
+
+<style>
+    #resourceGrid .zero {
+        color: #173b46;
+    }
+    #resourceGrid input[type=checkbox], input[type=radio] {
+        height: 25px;
+        width: 25px;
+    }
+    .rowType_0 {
+        background-color: #0000001f;
+        color: #2f8e89;
+        font-weight: bold;
+    }
+</style>
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index"); }
+</div>
+
+@*<div class="row" style="margin-top: 15px;">
+    <div class="col-md-12" style="max-width: 1600px;">
+        OEE, APS,
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-md-12" style="max-width: 1600px;">
+        <div id="resourceGrid"></div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/_APPWEB/Common/MyColorPicker.js"></script>
+<script type="text/javascript">
+    //InitEditableGrid();
+    $(document).on("mouseenter", ".tooltip1", function () {
+
+        var text = $($(this)[0]).text();
+        var headers = ["OEE", "Cel A", "Cel P", "Cel Q", "Cel OEE", "Cel S.PL.", "Cel S.NPL", "Cel AWAR", "Cel WYD", "Cel PRZ"];
+        var tooltips = [
+            "czy liczyć OEE dla tej mszyny?",
+            "Cel dla dostępności % wyrażony w jako liczba od 0.00 do 1.00",
+            "Cel dla wydajności % wyrażony w jako liczba od 0.00 do 1.00",
+            "Cel dla jakości % wyrażony w jako liczba od 0.00 do 1.00",
+            "Cel dla OEE % wyrażony w jako liczba od 0.00 do 1.00",
+            "Cel dla postojów planowanych wyrażony w sekundach",
+            "Cel dla postojów nieplanowanych wyrażony w sekundach",
+            "Cel dla awarii wyrażony w sekundach",
+            "Cel dla mikropostojów wyrażony w sekundach",
+            "Cel dla przezbrojeń wyrażony w sekundach",
+        ]
+
+        var index = headers.findIndex(x => x == text);
+        //console.log(tooltips[index]);
+        //$(this).attr('title', tooltips[index]);
+        //$(this).tooltip();
+        $(this).tooltip({
+            content: tooltips[index]
+        });
+    });
+
+    var resourceGrid = new Resource("#resourceGrid");
+    resourceGrid.InitGrid();
+    resourceGrid.RefreshGrid();
+
+    //If you need to hide(or show) a field at runtime, it can be done like the following:
+    //$("#grid").jsGrid("fieldOption", "ClientName", "visible", false);
+
+
+</script>
+
+

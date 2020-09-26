@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .PopupWindow .WindowContent {
+        padding: 0px;
+    }
+</style>
+
+<div class="h-100 d-flex flex-column" id="iLogisWMSWarehouseSelector"></div>
+
+<script id="WarehouseBoxTemplate" type="x-tmpl-mustache">
+    <div style="min-height:100%; position: relative;">
+        <div class="row flex-grow-1 mb-auto no-gutters" id="warehousesContainer" style="overflow-y:scroll;">
+            <div class="col-12">
+                <div class="row no-gutters mb-4" style="padding-bottom: 100px;">
+                    <div class="col-6 p-1 warehouseBox btnGoHome" data-warehouseid="0" style="height: auto;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row no-gutters">
+                                    <div class="col-12 whName pt-2 pb-2"><i class="fas fa-home"></i> DOM</div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 p-1 warehouseBox btnGoUp" data-warehouseid="{{SelectedWarehouseId}}" style="height: auto;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row no-gutters">
+                                    <div class="col-12 whName pt-2 pb-2"><i class="fas fa-level-up-alt"></i> W GÓRĘ</div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-1 pr-1"><div class="pl-1 rounded" style="background: #1d3231;">Magazyn: {{CurrentWarehouseName}}</div></div>
+                    {{#WarehouseBoxList}}
+                    <div class="col-6 p-1 warehouseBox" data-warehouseid="{{Id}}">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters">
+                                    <div class="col-12 whCode">{{Code}}</div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-12 whName">{{Name}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/WarehouseBoxList}}
+                </div>
+            </div>
+        </div>
+        @*Buttons*@
+        @*<div class="row no-gutters mb-2 w-100" id="ScanLocationField" style="position: fixed;bottom: 140px;">
+            <div class="col-5 p-1" s>
+                <div id="btnGoToMainWarehouse" class="btn btn-default" style="line-height: 19px;">DOM</div>
+            </div>
+            <div class="col-7 p-1">
+                <div id="btnGoToParentWarehouse" class="btn btn-default" style="line-height: 19px;">W GÓRĘ</div>
+            </div>
+        </div>*@
+        <div class="row no-gutters" id="ScanLocationField" style="position:absolute; bottom: 70px; background-color: #182e36; width: calc(100% - 2px);">
+            <div class="col-5 p-1" s>
+                @*<label style="line-height: 19px;">Wprowadź lokację:</label>*@
+                <div class="btn btn-default" id="btnNoLocation">Bez Lokacji</div>
+            </div>
+            <div class="col-7 p-1">
+                <input type="text" class="form-control" id="destinationLocationName" value="{{DestinationLocationName}}" placeholder="Wprowadz lokację">
+            </div>
+        </div>
+        <div class="row justify-content-center no-gutters" style="position: absolute;bottom:1px; width: 100%">
+            <div class="col-12">
+                <div class="btn btn-default btn-bottom btnAction" style="width: calc(100% - 2px);" id="selectWarehouseLocation">
+                    WYBIERZ
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

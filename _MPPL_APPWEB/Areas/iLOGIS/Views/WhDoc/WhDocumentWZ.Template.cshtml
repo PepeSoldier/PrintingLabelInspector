@@ -1,0 +1,539 @@
+﻿<style>
+    #WhDocumentWZView {
+        color: black;
+        font-size: 12px;
+    }
+
+    #WhDocumentWZViewFrame {
+        padding: 10px 20px;
+    }
+
+    .itemRow {
+        height: 35px;
+        font-size: 20px;
+    }
+
+    .contractorName {
+        font-size: 20px;
+        line-height: 35px;
+    }
+
+    .contractorAddress {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .height-30 {
+        height: 26px;
+        text-align: center !important;
+        line-height: 26px;
+        font-size: 16px;
+    }
+    .height-40 {
+        height: 40px;
+    }
+
+    .height-20 {
+        height: 20px;
+    }
+
+    .height-85 {
+        height: 70px;
+    }
+
+        .height-85 img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .przeznaczenie-height, .data-wysylki-height, .egz {
+        height: 46px
+    }
+
+    .center-text {
+        text-align: center;
+    }
+
+    .bold-text {
+        font-weight: bold;
+    }
+
+    .div-full-heigth {
+    }
+
+    .border-black {
+        border: 1px solid #b8b8b8;
+    }
+
+    .border-left-black {
+        border-left: 1px solid #b8b8b8;
+    }
+
+    .border-bottom-black {
+        border-bottom: 1px solid #b8b8b8;
+    }
+
+    .div-black {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .div-name {
+        background-color: #cdcdcd;
+        color: #000;
+        font-size: 11px;
+        border-bottom: 0;
+    }
+    .div-grey{
+        background-color:grey;
+    }
+
+    .logoWZ {
+        height: 100px;
+        width: 100%;
+        line-height: 20px;
+        font-weight: bold;
+        font-size: 18px;
+        color: #343434;
+    }
+
+    .logoImgWZ {
+        width: 100%;
+        height: 30px;
+        background-repeat: no-repeat !important;
+        background-size: contain;
+        padding-top: 5px;
+    }
+
+    .logoPlusText {
+        margin-left: 138px;
+        font-size: 21px;
+        font-weight: 600;
+    }
+
+    .logoPlusTextSmall {
+        margin-left: 18px;
+        font-size: 11px;
+    }
+
+    .div-odbiorca {
+        height: 153px;
+    }
+
+    .div-odbiorca-name {
+        height: 80px;
+    }
+
+    .rotate {
+        display: block;
+        margin-left: 36px;
+        margin-top: 44px;
+        transform: rotate(-90deg) translate(-32px, -27px);
+        -webkit-transform: rotate(-90deg) translate(-32px, -27px);
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 1px;
+    }
+
+    .div-odbiorca-pola {
+        height: 40px;
+    }
+
+    .wz {
+        height: 100px;
+    }
+
+    .half-height {
+        height: 50%;
+    }
+    .h-30{
+        height:30px;
+    }
+
+    .margin-left-footer {
+        margin-left: 10px;
+    }
+
+    .margin-left-header {
+        margin-left: 5px;
+    }
+
+    .margin-top-header {
+        margin-top: 5px;
+    }
+
+    .price {
+        text-align: right;
+    }
+
+    .gr {
+        background-color: #cdcdcd !important;
+    }
+
+    .uom {
+        font-size: 12px;
+        line-height: 30px;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<div id="WhDocumentWZView" style="max-width: 1500px;">
+    <div id="WhDocumentWZViewFrame">
+        <form id="formId">
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="row no-gutters">
+                        <div class="logoWZ pl-2 pt-2">
+                            <div class="logoImgWZ" id="logodrk" style="background-image: url(/Content/Images/logoElectroluxWZ.png) !important">
+                                <span class="logoPlusText">Poland Sp. z o.o.</span>
+                            </div>
+                            <span>ul. Karolkowa 30, 01-207 Warszawa</span><br />
+                            <span style="font-size: 15.9px;">REGON 011020824, NIP PL: 5210084388</span><br />
+                            <span class="logoPlusTextSmall">
+                                Oddział w Świdnicy, 58-100, ul. K. Odnowiciela 28
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-6 margin-top-header">
+                            <div class="row no-gutters div-name border-black bold-text">
+                                Nr rejestracyjny ciągnika
+                            </div>
+                            <div class="row no-gutters border-black black">
+                                <div class="col-12 height-30">
+                                    <input type="text" class="h-100 w-100 {{editMode}}" name="TruckPlateNumbers" value="{{TruckPlateNumbers}}">
+                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{TruckPlateNumbers}}</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 margin-top-header">
+                            <div class="margin-left-header">
+                                <div class="row no-gutters div-name border-black bold-text">
+                                    Nr rejestracyjny naczepy
+                                </div>
+                                <div class="row no-gutters border-black">
+                                    <div class="col-12 height-30">
+                                        <input type="text" class="h-100 w-100 {{editMode}}" name="TrailerPlateNumbers" value="{{TrailerPlateNumbers}}">
+                                        <text type="text" class="h-100 w-100 {{viewMode}}">{{TrailerPlateNumbers}}</text>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="margin-left-header">
+                        <div class="row no-gutters position-relative">
+                            <div class="div-black div-odbiorca-name" style="position: absolute; max-width: 20px;">
+                                <span class="rotate">ODBIORCA</span>
+                            </div>
+                            <div class="col-12 no-gutters" style="padding-left:20px;">
+                                <div class="row no-gutters border-black div-odbiorca-pola pl-1 contractorName">
+                                    <input type="text" class="h-100 w-100 {{editMode}}" name="ContractorName" value="{{ContractorName}}">
+                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{ContractorName}}</text>
+                                </div>
+                                <div class="row no-gutters border-black div-odbiorca-pola pl-1 contractorAddress">
+                                    <input type="text" class="h-100 w-100 {{editMode}}" name="ContractorAdress" value="{{ContractorAdress}}">
+                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{ContractorAdress}}</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters margin-top-header">
+                            <div class="col-7">
+                                <div class="row no-gutters div-name border-black bold-text">
+                                    Przeznaczenie
+                                </div>
+                                <div class="row no-gutters border-black">
+                                    <div class="col-12 przeznaczenie-height" style="font-size: 12px; line-height: 15px; overflow: hidden;">
+                                        <input type="text" class="h-100 w-100 {{editMode}}" name="Reason" value="{{Reason}}">
+                                        <text type="text" class="h-100 w-100 {{viewMode}}">{{Reason}}</text>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="margin-left-header">
+                                    <div class="row no-gutters div-name border-black bold-text">
+                                        Data wysyłki
+                                    </div>
+                                    <div class="row no-gutters border-black ">
+                                        <div class="col-12 data-wysylki-height" style="font-size: 20px;line-height: 46px;text-align: center;">
+                                            <input type="text" class="h-100 w-100 datepicker {{editMode}}" name="StampTime" value="{{StampTime |ParseDate}}">
+                                            <text type="text" class="h-100 w-100 {{viewMode}}">{{StampTime |ParseDate}}</text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="margin-left-header">
+                        <div class="row no-gutters">
+                            <div class="col-3 border-black wz div-black ">
+                                <div style="text-align: center; height: 20px; line-height: 42px">
+                                    <font size="7">WZ</font>
+                                </div>
+                                <div style="text-align: center; height: 30px; line-height: 13px; margin-top:10px">
+                                    <span style="font-size: 10px">
+                                        <br />
+                                        W Y D A N I E
+                                        <br />
+                                        MATERIAŁÓW
+                                        <br />
+                                        NA ZEWNĄTRZ
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-9 no-gutters">
+                                <div class="row no-gutters">
+                                    <div class="col-5">
+                                        <div class="margin-left-header">
+                                            <div class="row no-gutters div-name border-black bold-text">
+                                                Data wystaw.
+                                            </div>
+                                            <div class="row no-gutters border-black">
+                                                <div class="col-12 height-30">
+                                                    <input type="text" class="h-100 w-100 {{editMode}}" name="DocumentDate" value="{{DocumentDate |ParseDate}}">
+                                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{DocumentDate |ParseDate}}</text>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="margin-left-header">
+                                            <div class="row no-gutters div-name border-black bold-text">
+                                                Numer bieżący
+                                            </div>
+                                            <div class="row no-gutters border-black">
+                                                <div class="col-12 height-30">
+                                                    <input type="text" class="h-100 w-100 hidden" name="DocumentNumber" value="{{DocumentNumber}}">
+                                                    <text type="text" class="h-100 w-100 {{editMode}}">{{DocumentNumber}}</text>
+                                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{DocumentNumber}}</text>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row egz no-gutters">
+                                    <div class="col-12 margin-top-header">
+                                        <div class="margin-left-header">
+                                            <div class="row no-gutters div-name border-black bold-text">
+                                                Numer i data faktury - specyfikacji
+                                            </div>
+                                            <div class="row no-gutters border-black">
+                                                <div class="col-12 height-30">
+                                                    <input type="text" class="h-100 w-100 {{editMode}}" name="ReferrenceDocument" value="{{ReferrenceDocument}}">
+                                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{ReferrenceDocument}}</text>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-12 margin-top-header">
+                                <div class="row no-gutters div-name border-black bold-text">
+                                    Notatka
+                                </div>
+                                <div class="row no-gutters border-black">
+                                    <div class="col-12 height-30">
+                                        <input type="text" class="h-100 w-100 {{editMode}}" name="Notice" value="{{Notice}}">
+                                        <text type="text" class="h-100 w-100 {{viewMode}}">{{Notice}}</text>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters text-center my-2">
+                <div class="col-2">
+                    <div class="div-black height-40" style="margin-right:1px; background-color: black;">
+                        Kod
+                        <br />
+                        tow.-mater.
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="div-black height-40" style="margin-right:1px;">
+                        Nazwa
+                        <br />
+                        materiału - wyrobu - opakowania
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div style="margin-right: 1px">
+                        <div class="row no-gutters">
+                            <div class="col-12 div-black height-20">
+                                Ilość
+                            </div>
+                        </div>
+                        <div class="row no-gutters height-20" style="height: 19px; margin-top: 1px; font-size: 9px; line-height: 19px;">
+                            <div class="col-7">
+                                <div class="div-black h-100">Wydana</div>
+                            </div>
+                            <div class="col-5">
+                                <div class="div-black h-100" style="margin-left:1px;">j. m.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="row no-gutters">
+                                <div class="col-12 div-black height-20">
+                                    Cena
+                                </div>
+                            </div>
+                            <div class="row no-gutters" style="margin-top: 1px;">
+                                <div class="col-8">
+                                    <div class="border border-dark border-right-0" style="height: 19px;">zł</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border border-dark gr height-20" style="height: 19px;">gr</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters">
+                <div class="col-12 border-black border-bottom-0">
+                    {{#WhDocumentItems}}
+                    <div class="row no-gutters text-center itemRow border-bottom-black">
+                        <div class="col-2 border-left-black h-100" id="itemCodeAutocomplete">
+                            <input type="text" class="h-100 w-100 {{editMode}}" name="ItemCode_{{Position}}" value="{{ItemCode}}">
+                            <text type="text" class="h-100 w-100 {{viewMode}}">{{ItemCode}}</text>
+                        </div>
+
+                        <div class="col-6 border-left-black h-100">
+                            <input type="text" class="h-100 w-100 {{editMode}}" name="ItemName_{{Position}}" value="{{ItemName}}">
+                            <text type="text" class="h-100 w-100 {{viewMode}}">{{ItemName}}</text>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="row no-gutters" style="height: 100%; width: 100%">
+                                <div class="col-7 border-left-black h-100">
+                                    <input type="text" class="h-100 w-100 {{editMode}}" name="IssuedQty_{{Position}}" value="{{IssuedQty}}">
+                                    <text type="text" class="h-100 w-100 {{viewMode}}">{{IssuedQty}}</text>
+                                </div>
+                                <div class="col-5 border-left-black h-100 uom">
+                                    <select class="h-100 {{editMode}} w-100 p-1 selectUnitOfMeasure" id="UnitOfMeasure_{{Position}}" name="UnitOfMeasure_{{Position}}" placeholder="wybierz" data-val="{{UnitOfMeasure}}">
+                                        <option value="1">szt.</option>
+                                        <option value="2">kg</option>
+                                    </select>
+                                    <text type="text" class="h-100 w-100 {{viewMode}} selectUnitOfMeasureText" data-val="{{#IssuedQty}}{{UnitOfMeasure}}{{/IssuedQty}}">{{UnitOfMeasureString}}</text>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="row no-gutters" style="height: 100%; width: 100%">
+                                <div class="col-12">
+                                    <div class="row no-gutters" style="height: 100%; width: 101%">
+                                        <div class="col-8 border-left-black h-100 price">
+                                            <input type="text" class="h-100 w-100 {{editMode}}" name="UnitPrice_{{Position}}" value="{{UnitPrice}}">
+                                            <text type="text" class="h-100 w-100 {{viewMode}}" style="padding-right: 3px;">{{UnitPrice}}</text>
+                                        </div>
+                                        <div class="col-4 border-left-black h-100 gr">
+                                            <input type="text" class="h-100 w-100 {{editMode}} gr" name="UnitPriceChange_{{Position}}" value="{{UnitPriceChange}}">
+                                            <text type="text" class="h-100 w-100 {{viewMode}}">{{UnitPriceChange}}</text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {{/WhDocumentItems}}
+                </div>
+            </div>
+
+
+            <div class="row no-gutters mt-2">
+
+                <div class="col-2">
+                    <div class="row no-gutters div-name border-black">Wystawił</div>
+                    <div class="row no-gutters border-black height-85">
+                        <div class="col-12" style="text-align:center;">
+                            <div class="row mt-1">
+                                <div class="col-12">{{CreatorName}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">{{StampTime|FormatDotNetDateTime}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="margin-left-footer">
+                        <div class="row no-gutters div-name border-black">Zatwierdził</div>
+                        <div class="row no-gutters border-black height-85">
+                            <div class="col-12" style="text-align:center;">
+                                {{#isApproved}}
+                                <div class="row mt-1">
+                                    <div class="col-12">{{ApproverName}}</div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">{{ApproveDate|FormatDotNetDateTime}}</div>
+                                </div>
+                                {{/isApproved}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="margin-left-footer">
+                        <div class="row no-gutters">
+                            <div class="col-12" style="text-align:center;">
+                                <div class="row no-gutters div-name border-black">Wydał</div>
+                                <div class="row no-gutters border-black height-85">
+                                    <div class="col-12" style="text-align:center;">
+                                        {{#IssuerName}}
+                                        <div class="row mt-1">
+                                            <div class="col-12">{{IssuerName}}</div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-12">{{IssueDate|FormatDotNetDateTime}}</div>
+                                        </div>
+                                        {{/IssuerName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="margin-left-footer">
+                        <div class="row no-gutters div-name border-black">Odebrał</div>
+                        <div class="row no-gutters border-black height-85">
+                            <img id="Signature_0" alt="Signature 0" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2" style="text-align: right;">
+                    <div style="float: right; max-width: 102px;max-height: 102px;width: 102px;height: 102px;margin-top: -8px;">
+                        {{{QrCode}}}
+                    </div>
+                </div>
+            </div>
+          </form>
+    </div>
+</div>

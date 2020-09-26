@@ -1,0 +1,292 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.APS.ViewModels.PlanViewModel
+@{
+    ViewBag.Title = "Plan Monitor";
+}
+
+<div class="row no-print">
+    <div class="col-4">
+        @using (Html.BeginForm("PlanMonitor", "MES", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Maszyna", new { @class = "control-label" })
+                    @Html.HiddenFor(m => m.DateFrom)
+                    @Html.HiddenFor(m => m.DateTo)
+                </div>
+                <div class="formInlineRow">
+                    @Html.DropDownListFor(m => m.SelectedMachineId, Model.Machines, "", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow"></div>
+                <div class="formInlineRow">
+                    <input type="submit" class="btn btn-default" value="Odśwież" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-8">
+        <div class="formInlineGroup">
+            <div class="formInlineRow">
+                Wybrane zadanie <span id="selectedWorkorderId" style="color: #3f6ca9;"></span>
+            </div>
+            <div class="formInlineRow">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-6" style="margin-bottom: 5px;">
+                        <div class="btn btn-lg btn-default confirmWorkorderPartially" style="width: 180px;"><span class="glyphicon glyphicon-pencil"></span>Edytuj</div>
+                        <div class="btn btn-lg btn-default confirmWorkorder" style="width: 180px;"><span class="glyphicon glyphicon-ok"></span>Gotowe</div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div style="display:inline-block;" id="actionButtons"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+@{
+    Workorder t;
+    DateTime LastDate = DateTime.Now.Date.AddYears(-1);
+    int TotalWorkorders = (Model.Workorders != null) ? Model.Workorders.Count : 0;
+}
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-6">
+        <section id="planGrid">
+            <div class="planMonitorRow" id="planMonitorRow_header" style="overflow: hidden; background-color: #21464e; color: aliceblue">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-1">
+                        <div class="row">
+                            <div class="col-12" style="font-weight:bold; line-height: 25px;">Data</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="line-height: 25px;">Czas</div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="row">
+                            <div class="col-12" style="font-weight:bold; line-height: 25px;"><p> </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="line-height: 25px;">Linia</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-5" style="font-size: 22px; line-height: 50px;">ANC</div>
+                            <div class="col-7">
+                                <div class="row">
+                                    <div class="col-12" style="line-height: 25px;">Numer zl.</div>
+                                    <div class="col-12" style="line-height: 25px;">Nazwa części</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        PL
+                    </div>
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        RE
+                    </div>
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        --
+                    </div>
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        --
+                    </div>
+                </div>
+            </div>
+            <div style="max-height: 778px; overflow-y: scroll;">
+                @if (Model.SelectedMachine != null)
+                {
+                    for (int i = 0; i < TotalWorkorders - 1; i++)
+                    {
+                        t = Model.Workorders[i];
+
+                        //row with workorder data
+                        if (t.ClientOrder != null && t.Item != null)
+                        {
+                            { Html.RenderPartial("PlanMonitorWorkorder", t); }
+                        }
+                    }
+                }
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-md-12 col-lg-6">
+
+    </div>
+</div>
+
+<style>
+    .planMonitorRow {
+        height: 50px;
+        margin-bottom: 2px;
+        cursor: pointer;
+    }
+    .confirmWorkorderTrolley{
+        margin-right: 5px;
+    }
+    
+</style>
+
+<script type="text/javascript">
+    var wnd = null;
+
+    $(document).on("click", ".confirmWorkorder", function () {
+        var workorderId = $("#selectedWorkorderId").text(); //$(this).attr("workorderId");
+        var pmrow = $(".selectedRow"); //$(this).parents('.planMonitorRow:first');
+
+        $.ajax({
+            url: "/ONEPROD/MES/ConfirmWorkorder",
+            type: 'POST',
+            data: '{workorderId: ' + workorderId + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                console.log("workorder confirmed");
+                $(pmrow).html($(result + " .planMonitorRow").html());
+            }
+        });
+    });
+    $(document).on("click", ".confirmWorkorderPartially", function () {    
+        $.get("/ONEPROD/MES/ConfirmWorkorder/?workorderId=" + $("#selectedWorkorderId").text(), function (data) {
+            wnd = new PopupWindow(850, 200);
+            wnd.Init("windowWorkorderConfirmedQty", 'Wprowadz ilość ' + $("#selectedWorkorderId").text());
+            wnd.Show(data);
+            //wnd.show('Wprowadz ilość ' + $("#selectedWorkorderId").text(), data);
+        });
+    });
+    $(document).on("click", "#ConfirmWorkorderFormSubmit", function () {
+        var _workorderId = $("#workorderId").val();
+        var _qty = $("#qty").val();
+        confirmWorkorderPartialy(_workorderId, _qty);
+    });
+    $(document).on("click", ".confirmWorkorderTrolley", function () {
+        var _workorderId = $("#selectedWorkorderId").text();
+        var _qty = $(this).find(".trolleyQty").text();
+        
+        confirmWorkorderTrolley(_workorderId, _qty);
+    });
+    $(document).on("click", ".planMonitorRow", function () {
+        var _workorderId = $(this).attr("workorderId");
+        var _machineId = $("#SelectedMachineId").val();
+
+        $(".planMonitorRow").removeClass("selectedRow");
+        $(this).addClass("selectedRow");
+        
+
+        SetSelectedWorkorder(_machineId, _workorderId);
+        ShowActionButtons(_workorderId);
+    });
+
+    window.onkeydown = function (event) {
+        let key = event.key.toUpperCase();
+        console.log("keydown: " + key + " (keykode: " + event.keyCode + ")");
+        //console.log(event);
+    }
+    $(document).keypress(function (event) {
+        console.log(event.which);
+        console.log("keypress (keykode: " + event.which + ")");
+        if (event.which == 13) {
+
+        }
+    });
+
+    function SetSelectedWorkorder(machineId, workorderId) {
+
+        $("#selectedWorkorderId").text(workorderId);
+
+        $.ajax({
+            url: "/ONEPROD/MES/SetSelectedWorkorder",
+            type: "POST",
+            data: '{machineId: ' + machineId + ', workorderId: ' + workorderId + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                console.log("selected workorder set");
+            }
+        });
+    }
+    function ShowActionButtons(workorderId) {
+        $("#actionButtons").html("");
+
+        $("#actionButtons").append(
+            '<div class="btn btn-lg btn-default confirmWorkorderTrolley" style="width: 180px;">' +
+            '<span class="glyphicon glyphicon-shopping-cart"></span>' +
+            'Sztuka ' +
+            '<span class= "trolleyQty" > ' + 1 + '</span>' +
+            '</div>'
+        );
+
+        $.ajax({
+            url: "/ONEPROD/WMS/GetQtyPerBox",
+            type: "POST",
+            data: '{workorderId: ' + workorderId + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                //Draw buttons
+                for (i = 0; i < result.length; i++) {
+                    $("#actionButtons").append(
+                        '<div class="btn btn-lg btn-success confirmWorkorderTrolley" style="width: 180px;">' +
+                        '<span class="glyphicon glyphicon-shopping-cart"></span>' +
+                        'Wózek ' +
+                        '<span class= "trolleyQty" > ' + result[i] + '</span>' +
+                        '</div>'
+                    );
+                }
+            },
+            error: function () {
+                //$("#actionButtons").append(
+                //    '<div class="btn btn-default confirmWorkorderTrolley">' +
+                //    '<span class="glyphicon glyphicon-shopping-cart"></span>' +
+                //    'Sztuka ' +
+                //    '<span class= "trolleyQty" > ' + 1 + '</span>' +
+                //    '</div>'
+                //);
+            }
+        });
+    }
+    function confirmWorkorderPartialy(_workorderId, _qty) {
+        var pmrow = $(document).find("#planMonitorRow_" + _workorderId);
+        console.log(_qty);
+        $.ajax({
+            url: "/ONEPROD/MES/ConfirmWorkorder",
+            type: "POST",
+            data: '{workorderId: ' + _workorderId + ', qty: ' + _qty + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $(pmrow).html($(result + " .planMonitorRow").html());
+            }
+        });
+    }
+    function confirmWorkorderTrolley(_workorderId, _qty) {
+        $.ajax({
+            url: "/ONEPROD/MES/ConfirmWorkorderByTrolleyQty",
+            type: "POST",
+            data: '{workorderId: ' + _workorderId + ', qty: ' + _qty + '}', // $("#ConfirmWorkorderForm").serialize(),
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                for (i = 0; i < result.length; i++) {
+                    var test = $.get("/ONEPROD/MES/PlanMonitorWorkorder", { Id: result[i] });
+                    (function (id) {
+                        test.done(function (data2) {
+                            $("#planMonitorRow_" + id).html($(data2 + " .planMonitorRow").html());
+                            if ($("#planMonitorRow_" + id).children(".gradient_ok").length > 0) {
+                                $("#actionButtons").html("");
+                            }
+                        });
+                    })(result[i]);
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,38 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.WorkplaceViewModel
+@{
+    ViewBag.Title = "CONFIG: Stanowiska";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row">
+    <div class="col-lg-12" style="width: 1200px;">
+        <div id="workplacesGrid"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var traceabilityEnabled = @Html.Raw(Json.Encode(ViewBag.TraceabilityEnabled));
+    var reportOnlineEnabled = @Html.Raw(Json.Encode(ViewBag.ReportOnlineEnabled));
+
+    var wnd = null;
+    var Workplace = new WorkplaceGrid("#workplacesGrid");
+    $(document).ready(function () {
+        Workplace.InitGrid(traceabilityEnabled, reportOnlineEnabled);
+        Workplace.RefreshGrid();
+    });
+    $(document).on("click", "#btnWorkplaceAdd", function () {
+        $.get("WorkplaceAdd", function (data) {
+            wnd = new PopupWindow(750, 200);
+            wnd.Init("windowWorkplaceAdd", "Add Workplace");
+            wnd.Show(data);
+        });
+    });
+
+</script>
+

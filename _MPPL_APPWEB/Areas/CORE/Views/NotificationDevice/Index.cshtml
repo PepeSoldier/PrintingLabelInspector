@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Urządzenia Informujące";
+}
+<style>
+    .jsgrid-grid-body {
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+   
+
+</style>
+
+<div class="container mt-2">
+    <div class="row no-gutters">
+        <div class=".col-xs-12">
+            <div class="btn btn-info" id="addNotificationDevice">
+                Dodaj urządzenie
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class=".col-xs-12 ">
+            <div id="grid"></div>
+        </div>
+    </div>
+</div>
+    
+<script src="~/serviceworker.js"></script>
+<script src="~/Areas/CORE/Views/NotificationDevice/NotificationDeviceGrid.js"></script>
+<script type="text/javascript">
+    var notificationDeviceGrid = new NotificationDeviceGrid("#grid");
+    var VapidpublicKey = '@ViewBag.PublicKey';
+    $(document).ready(function () {
+        console.log("Delivery Browse Loaded");
+        notificationDeviceGrid.InitGrid();
+        notificationDeviceGrid.RefreshGrid();
+    });
+
+    $(document).on("click", "#addNotificationDevice", function () {
+        notificationDeviceGrid.AddDevice(VapidpublicKey);
+    });
+
+    function Refresh() {
+        notificationDeviceGrid.RefreshGrid();
+    }
+
+</script>

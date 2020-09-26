@@ -1,0 +1,39 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.ViewModels.Mes.ReportOnlineViewModel
+@using MDL_ONEPROD.ComponentRTV.Models;
+@using MDL_ONEPROD.Model.OEEProd;
+
+@{
+    ViewBag.Title = "Plan Monitor";
+    DateTime LastDate = DateTime.Now.Date.AddYears(-1);
+}
+
+
+<h2>Raport Produkcji:</h2>
+
+@foreach (RTVOEEProductionItem regProd in Model.RegisteredProduction)
+{
+    <div class="reportEntry">
+        <div class="row no-gutters">
+            <div class="col-2 itemTitle">Program: 20</div>
+            <div class="col-3 itemTitle"></div>
+            <div class="col-2">PROD: <span>110</span> szt</div>
+            <div class="col-2"><div class="btn btn-default">SZCZEG.</div></div>
+        </div>
+
+        @foreach (OEEReportProductionData declProd in Model.DeclaredProduction)
+        {
+            <div class="row no-gutters">
+                <div class="col-2 itemTitleDetails">WRAP 60 2mm</div>
+                <div class="col-3 itemTitleDetails">WRAP ASS 60 2mm THG</div>
+                <div class="col-4">SCRAP: <span>5</span> szt</div>
+            </div>
+        }
+    </div>
+}
+
+
+<script type="text/javascript">
+
+
+
+</script>

@@ -1,0 +1,236 @@
+﻿@using _MPPL_WEB_START.Areas.IDENTITY.ViewModels;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using MDL_BASE.Models.IDENTITY;
+
+@model EditViewModel
+@{
+    ViewBag.Title = "Dane Podstawowe";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="formArea">
+
+            <div class="row">
+                @*edit form*@
+                <div class="col-6">
+                    <h3>Edytuj dane użytkownika</h3>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.Label("Nazwa użytkownika", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.UserName, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.UserName, @Disabled = "distabled" } })
+                                @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.UserId)
+                            </div>
+                        </div>
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.User.FirstName, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.FirstName } })
+                                @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.User.LastName, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.LastName } })
+                                @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.Label("Stanowisko", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.Title, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.Title, @Disabled = "Disabled" } })
+                            </div>
+                        </div>
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.Label("Numer telefonu", htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.PhoneNumber } })
+                            </div>
+                        </div>
+                        
+                        @*<div class="row formVerticalRow">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.User.SupervisorUserName, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.User.SupervisorUserName, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.SupervisorUserName, @Disabled = "Disabled" } })
+                </div>
+            </div>*@
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.Email } })
+                                @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row formVerticalRow">
+                            <div class="col-md-3">
+                                <input type="submit" value="Zapisz" class="btn btn-success" />
+                            </div>
+                            <div class="col-md-3">
+                                @Html.ActionLink("Zmień hasło", "ChangePassword", "Manage", new { reason = "", userId = Model.User.Id }, new { @class = "btn btn-primary btn-large" })
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12 p-3">
+                            <div class="btn btn-danger" id="btnDeleteUser" data-userId="@Model.UserId" style="float: right">Usuń Użytkownika</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-3">
+                @*edit roles*@
+                <div class="col-6">
+                    @*nie kazdy moze edytowac role*@
+                    @if (Model.EditUserRoleMode)
+                    {
+                        <h3>Dodaj rolę użytkownikowi</h3>
+
+                        using (Html.BeginForm("RoleAddToUser", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div class="row formVerticalRow">
+                                <div class="col-md-3">
+                                    @Html.LabelFor(model => model.SelectedRoleId, htmlAttributes: new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.SelectedRoleId, (SelectList)Model.Roles, "Wybierz ...", new { @class = "form-control" })
+                                    @Html.HiddenFor(model => model.UserId)
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" value="Dodaj" class="btn btn-success" />
+                                </div>
+                            </div>
+
+                        }
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <ol>
+                                    @foreach (ApplicationRole role in Model.UserRoles)
+                                    {
+                                        <li>
+                                            @role.Name -
+                                            @Html.ActionLink("Delete", "DeleteRoleForUser", new { userId = Model.User.Id, RoleName = role.Name })
+
+
+                                            @if (role.Id != Model.DefaultRoleId)
+                                            {
+                                                @Html.ActionLink("Ustaw jako domyślną", "SetRoleAsDefault", new { userId = Model.User.Id, roleId = role.Id })
+                                            }
+
+                                        </li>
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+
+
+                        if (Model.User.LockoutEndDateUtc > DateTime.Now)
+                        {
+                            <h3>Odblokuj użytkownika</h3>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="btn btn-warning" id="btnUnLockUser" data-userId="@Model.UserId" style="float: right">Odblokuj użytkownika</div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    @if (Model.Subordinates != null)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <ol>
+                                    @foreach (User user in Model.Subordinates)
+                                    {
+                                        <li>
+                                            @user.FullName
+                                        </li>
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <div class="clear_div"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#btnDeleteUser").click(function () {
+        var Id = $(this).attr("data-userId");
+        var item = { Id };
+
+        $.ajax({
+            async: false, type: "POST", dataType: "json",
+            data: { item },
+            url: "/IDENTITY/Account/UserDelete",
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+                location.reload();
+            }
+        });
+    });
+
+    $("#btnUnLockUser").click(function () {
+        var Id = $(this).attr("data-userId");
+
+        $.ajax({
+            async: false, type: "POST", dataType: "json",
+            data: { Id },
+            url: "/IDENTITY/Account/UnLockUser",
+            success: function (data) {
+                location.reload();
+            },
+            error: function () {
+                location.reload();
+            }
+        });
+    });
+
+</script>
+
+
+
+
+

@@ -1,0 +1,260 @@
+﻿@using MDL_iLOGIS.ComponentConfig.Entities;
+@using MDL_iLOGIS;
+@using GridMvc.Html
+
+
+@model _MPPL_WEB_START.Areas.ONEPROD.APS.ViewModels.StockViewModel
+
+@{
+    ViewBag.Title = "Stock";
+}
+
+<style>
+    .stockBox {
+        min-height: 450px;
+        /*background-color: #2f2f2f8c;*/
+        margin-bottom: 30px;
+        padding: 0 5px;
+    }
+
+    .stockBoxSeparator {
+        border-bottom: 1px solid #ffffff14;
+        margin-bottom: 7px;
+    }
+
+    .stockBoxTitle {
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .coverageTime {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #80808085;
+    }
+
+    .coverageTimeWeek {
+        color: #80808022 !important;
+    }
+
+    .coverageTimeDays {
+        color: #80808085 !important;
+    }
+
+    .coverageTimeHours {
+        color: #13a18d !important;
+    }
+
+    .coverageTimeMinutes {
+        color: #b5344d !important;
+    }
+</style>
+
+<div class="row" style="min-height: 400px;">
+
+    <div class="col-3">
+        <div class="stockBox WindowBox">
+            <div class="row">
+                <div class="col-12"><div class="stockBoxTitle">BUFORY</div></div>
+            </div>
+            <div class="row">
+                <div class="col-12"><div class="stockBoxSeparator"></div></div>
+            </div>
+            <div class="row" style="margin: 2px 0;">
+                <div class="col-4" style="padding: 0;">
+                    <div style="height: 18px; padding-left: 5px; overflow: hidden;">
+                        Nazwa buforu
+                    </div>
+                </div>
+                <div class="col-4" style="padding: 0 0 0 5px;">
+                    <div style="height: 18px; padding-left: 5px; overflow: hidden;">
+                        <div class="row rowNM">
+                            <div class="col-6" style="padding: 0 5px;">
+                                Zaj/Suma
+                            </div>
+                            <div class="col-6" style="padding: 0 5px;">
+                                Miejsce [szt]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4" style="padding: 0 0 0 5px;">
+                    Wykorzystanie
+                </div>
+            </div>
+            @foreach (Warehouse box in Model.Boxes)
+            {
+                int percent = Math.Min(100, box.QtyOfSubLocations > 0 ? (int)(100 * box.CurrentUsage / box.QtyOfSubLocations) : 0);
+
+                <div class="row" style="margin: 2px 0;">
+                    <div class="col-4" style="padding: 0;">
+                        <div style="height: 22px; border-left: 5px solid @box.Color; background-color: @(box.Color)44; padding-left: 5px; overflow: hidden;">
+                            @box.Name
+                        </div>
+                    </div>
+                    <div class="col-4" style="padding: 0 0 0 5px;">
+                        <div style="height: 22px; border-bottom: 1px solid @(box.Color)44; padding-left: 5px; overflow: hidden;">
+                            <div class="row rowNM">
+                                <div class="col-6" style="padding: 0 5px;">
+                                    @box.CurrentUsage.ToString("0") / @box.QtyOfSubLocations
+                                </div>
+                                <div class="col-6" style="padding: 0 5px;">
+                                    ~@((box.BoxAvgQty * (box.QtyOfSubLocations - box.CurrentUsage)).ToString("0"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4" style="padding: 0 0 0 5px;">
+                        <div style="width:100%; height: 22px; position: relative; border: 1px solid #ffffff44; text-align: center;">
+                            <div style="position: absolute; z-index: 9999; width: 100%;">@((100 * box.CurrentUsage / box.QtyOfSubLocations).ToString("0.00"))%</div>
+                            <div class="backcolorGray" style="position: absolute; width: @(percent)%; height: 20px;"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    @{ string currentCategory = "";
+        int i = 0;
+    }
+    @while (i < Model.Stock.Count)
+    {
+        if (Model.Stock[i].Item.ItemGroup != null)
+        {
+            currentCategory = Model.Stock[i].Item.ItemGroup.Process.Name.Substring(0, 3);
+
+            <div class="col-3">
+                <div class="stockBox WindowBox">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="stockBoxTitle" style="background-color: @Model.Stock[i].Item.ItemGroup.Color;">
+                                @Model.Stock[i].Item.ItemGroup.Process.Name
+                            </div>
+                        </div>
+                    </div>
+                    @while (i < Model.Stock.Count && currentCategory == Model.Stock[i].Item.ItemGroup.Process.Name.Substring(0, 3))
+                    {
+                        if (i == 0 ||
+                            Model.Stock[i].Item.ItemGroup.ResourceGroupId != Model.Stock[i - 1].Item.ItemGroup.ResourceGroupId ||
+                            Model.Stock[i].Item.ItemGroup.ProcessId != Model.Stock[i - 1].Item.ItemGroup.ProcessId
+                            )
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="stockBoxSeparator"></div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row ancRow" style="margin: 0;">
+                            <div class="col-8" style="padding: 0 5px;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span class="partAnc" data-partId="@Model.Stock[i].ItemId">@Model.Stock[i].Item.Code </span>
+                                        <span>(@Model.Stock[i].Item.ItemGroup.Name)</span>
+                                    </div>
+                                    <div class="col-12" style="color: #0f6586;">@Model.Stock[i].Item.GetName</div>
+                                </div>
+                            </div>
+                            <div class="col-4" style="padding: 0 5px;">
+                                <div style="font-size: 28px;">@Model.Stock[i].Stock</div>
+                                <div class="coverageTime"></div>
+                            </div>
+                        </div>
+                        currentCategory = Model.Stock[i].Item.ItemGroup.Process.Name.Substring(0, 3);
+                        i++;
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+@section Scripts{
+
+    <style>
+        .stockDateBox {
+            max-width: 210px;
+            margin-top: 2px;
+            padding: 5px;
+        }
+
+            .stockDateBox:hover {
+                background-color: rgb(232, 247, 255);
+                border-bottom: 1px solid lightblue;
+            }
+
+        .stockDate {
+            margin-right: 20px;
+        }
+
+        .stockDateBox .glyphicon:hover {
+            background-color: red;
+        }
+
+        .deleteStock {
+            font-size: 18px;
+        }
+
+            .deleteStock:hover {
+                font-size: 22px;
+            }
+    </style>
+
+    <script type="text/javascript">
+
+        var json = new JsonHelper();
+
+        $(document).ready(function () {
+            RefreshCoverage();
+        });
+
+        $(".partAnc").click(function () {
+            RefreshCoverage();
+        });
+
+        function RefreshCoverage() {
+
+            $(".partAnc").each(function () {
+                var el = $(this);
+                var partId = $(this).attr("data-partId");
+
+                var ajax = json.GetPostData("/ONEPROD/WMS/StockMonitorAncCoverage", { partId: partId });
+                ajax.done(function (data) {
+                    var coverageTime = "";
+                    var divClass = "";
+
+                    if (data.coverageMinutes >= 10080) {
+                        coverageTime = "1 t+";
+                        divClass = "coverageTimeWeek";
+                    }
+                    else if (data.coverageMinutes >= 1440) {
+                        coverageTime = parseFloat(data.coverageMinutes / 1440).toFixed(1) + " d";
+                        divClass = "coverageTimeDays";
+                    }
+                    else if (data.coverageMinutes >= 60) {
+                        coverageTime = parseFloat(data.coverageMinutes / 60).toFixed(1) + " h";
+                        divClass = "coverageTimeHours";
+                    }
+                    else {
+                        coverageTime = parseFloat(data.coverageMinutes).toFixed(1) + " min";
+                        divClass = "coverageTimeMinutes";
+                    }
+
+                    var elCT = $($($(el).closest(".ancRow")[0]).find(".coverageTime")[0]);
+                    $(elCT).text(coverageTime);
+                    $(elCT).removeClass();
+                    $(elCT).addClass("coverageTime");
+                    $(elCT).addClass(divClass);
+                });
+            });
+        }
+
+    </script>
+}

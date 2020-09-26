@@ -1,0 +1,162 @@
+﻿@using MDL_PFEP.ComponentLineFeed.Models;
+@using _MPPL_WEB_START.Areas.PFEP.ViewModels;
+@using MDLX_MASTERDATA.Entities;
+@using MDLX_CORE.ComponentCore.Entities;
+
+@model PrintDefViewModel
+@{
+    Layout = null;
+    int iia = 0;
+}
+
+<style>
+    body, table {
+        font-size: 14px;
+    }
+</style>
+
+<div id="printMatrix" class="mt-3" style="width: 1200px; margin-left: 1rem;">
+    @foreach (PrintDataMatrix PrintDataMatrix in Model.PrintDataMatrixes)
+    {
+        if (iia > 0)
+        {
+            <div class="page-break"></div>
+        }
+
+        <div class="printMatrix">
+            @*DOCUMENT HEADER*@
+            <div id="headerDiv">
+                <div class="row">
+                    <div class="col-12"><div style="border-bottom: 1px solid #d4d3d3; color: #bbbbbb; width: 100%;">@Model.PrintDate</div></div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="text-align: center;">
+                        <h5>@Model.Lines</h5> @*<h4>101,103,104</h4>*@
+                    </div>
+                    <div class="col-1" style="text-align: center;">
+                        <h5>@Model.Routine.Split('-')[0]</h5>
+                    </div>
+                    <div class="col-7" style="text-align: center;">
+                        <h4>@Model.DateRange</h4> @*<h4>11:07 - 15:53</h4>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="text-align: center;">
+                        <h5>DEF @Model.Routine.Split('-')[1]</h5>
+                    </div>
+                    <div class="col-8" style="text-align: center;">
+                        <h5>@Model.Routine.Split('-')[2]</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="tblMatrix">
+                        <tr style="border: 1px solid black;">
+                            <th style="border:0;">OPK.</th>
+                            @if (Model.RoutineObj.ShowWorkst)
+                            {
+                                <th style="border: 0; height: 140px;">ST.</th>
+                            }
+                            @if (Model.RoutineObj.ShowLocation)
+                            {
+                                <th style="border:0;">LOKACJA</th>
+                            }
+                            <th style="border:0;">NAZWA</th>
+                            @*<th>SUMA</th>*@
+                            <th style="border:0;">ANC</th>
+                            @*-------kolumny z Orderami--------*@
+                            @if (Model.RoutineObj.ShowOrders)
+                            {
+                                foreach (PrintModel_Order_ANCs ordAncs in PrintDataMatrix.ORDER_Ancs)
+                                {
+                                    <th class="vertical" style="z-index:1100; position:relative;">
+                                        @if (ordAncs.order != null && ordAncs.order.Notice != null && ordAncs.order.Notice.Length > 1)
+                                        {
+                                            <div class="noticeBadge">N</div>
+                                        }
+                                        <div class="vertical">
+                                            <div class="row" style="font-size:12px;"><div class="col-12 vheader NoBold">@ordAncs.order.OrderNumber</div></div>
+                                            <div class="row" style="font-size:18px;"><div class="col-12 vheader"></div>@ordAncs.order.Pnc.Code</div>
+                                        </div>
+                                        <div class="vh">
+                                            <div class="row"><div class="col-12 NoBold" style="font-size: 13px;">@(ordAncs.order.Qty_PlannedOrRemain.ToString() + "szt")</div></div>
+                                            <div class="row"><div class="col-12" style="font-size: 14px;">@ordAncs.order.StartDate.ToString("HH:mm")</div></div>
+                                        </div>
+                                    </th>
+                                }
+                                <th class="vertical" style="z-index:1100; position:relative; width: 70px;">
+                                </th>
+                            }
+
+                        </tr>
+
+                        @*-------wiersze z ANC--------*@
+                        @{
+                            string[] backgrclass = { "", "darkerbg" };
+                            string[] bottomborderclass = { "", "thickerBorder" };
+                            int i = 0;
+                            int j = 0;
+                            string prevWorkSt = string.Empty;
+                        }
+                        @foreach (PrintModel_ANC anc in PrintDataMatrix.Ancs)
+                        {
+                            if (anc.WorkstationName != prevWorkSt)
+                            {
+                                i = 1;
+                            }
+
+                            prevWorkSt = anc.WorkstationName;
+
+                            <tr class="defTr @backgrclass[j % 2] @bottomborderclass[i]">
+
+                                @if (Model.RoutineObj.ShowPackagesCount)
+                                {
+                                    <td class="tdPckg">@(anc.PackagesCount > 0 ? Math.Ceiling(anc.PackagesCount).ToString() : "?")</td>
+                                }
+                                else
+                                {
+                                    <td class="tdPckg">@(anc.PackageQtyPerBox > 0 ? Math.Ceiling(anc.PackageQtyPerBox).ToString() : "?")</td>
+                                }
+                                @if (Model.RoutineObj.ShowWorkst)
+                                {
+                                    <td style="width: 50px">@(@anc.WorkstationName.Length > 3 ? anc.WorkstationName.Substring(0, 3) : anc.WorkstationName)</td>
+                                }
+                                @if (Model.RoutineObj.ShowLocation)
+                                {
+                                    <td>@anc.Location</td>
+                                }
+                                <td class="ellipsis">@anc.Name</td>
+                                <td class="tdItemCode">@anc.Code.Substring(0, 3) @anc.Code.Substring(3, 3) <b>@anc.Code.Substring(6, 3)</b></td>
+
+                                @if (Model.RoutineObj.ShowOrders)
+                                {
+                                    foreach (PrintModel_Order_ANCs ordAncs in PrintDataMatrix.ORDER_Ancs)
+                                    {
+                                        PrintModel_ANC anc2 = ordAncs.Ancs.FirstOrDefault(x => x.Id == anc.Id);
+
+                                        <td class="defTd"><div class="lbQty">@(anc2 != null ? anc2.TotalQty.ToString("0.###") : "-")</div></td>
+                                    }
+                                    <td class="defTd"><div><p></p></div></td>
+                                }
+                            </tr>
+
+                            { j++; i = 0; }
+                        }
+                    </table>
+                </div>
+                <div class="col-12" style="margin-top: 5px;">
+                    @foreach (PrintModel_Order_ANCs ordAncs in PrintDataMatrix.ORDER_Ancs)
+                    {
+                        if (ordAncs.order != null && ordAncs.order.Notice != null && ordAncs.order.Notice.Length > 1)
+                        {
+                            <div style="max-width: 480px;">@ordAncs.order.Pnc.Code (@ordAncs.order.OrderNumber): @ordAncs.order.Notice</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        { iia++; }
+    }
+</div>

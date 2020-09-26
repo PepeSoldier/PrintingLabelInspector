@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "ViewTest";
+}
+
+<h2>Test Jqeury / JS</h2>
+
+<div class="row col-md-12">
+    <div class="row" style="height:80px;">
+        <div class="col-md-12">
+            @Html.TextBox("AutoCompleteTest", null, new { @class = "form-control ClientNameAC", @placeholder = "AutoCompleteTest" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.TextBox("DateTimePickerTest", null, new { @class = "form-control datetimepicker", @placeholder = "datetimepicker" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("DatePickerTest", null, new { @class = "form-control datepicker", @placeholder = "datepicker" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("DatePickerBegTest", null, new { @class = "form-control datetimepickerBeg", @placeholder = "datetimepickerBeg" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("DatePickerEndTest", null, new { @class = "form-control datetimepickerEnd", @placeholder = "datetimepickerEnd" })
+        </div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/MyScripts.js"></script>
+<script src="~/_ClientAppJS/ExternalLibraries/jQuery/jquery.validate-vsdoc.js"></script>
+<script type="text/javascript">
+    InitAutocompetes();
+    InitDatepickers();
+    InitAreaAutocompleteByName(".AreaAC", "#PackinInstructionObject_Area_Name", "#PackinInstructionObject_AreaId");
+
+    $(document).ready(function () {
+        $("#UploadedPhotos").on("click", ".photoMiniDelete", function () {
+            var id = $(this).attr("photoId");
+            var el = $(this).parent()
+            $.ajax({
+                url: baseUrl + "PackingInstruction/DeletePhoto",
+                type: "POST", dataType: "json",
+                data: { photoId: id },
+                success: function () {
+                    console.log("zdjecie usunięte");
+                    $(el).remove();
+                },
+            });
+        });
+    });
+
+    function UploadCallback(data) {
+        $("#UploadedPhotos").append(
+            '<div class="photoMini">' +
+            '<div class="photoMiniDelete" photoId="' + data.Id + '"><span class="fas fa-trash"></span></div>' +
+            '<img src="/Uploads/packinginstr/' + data.Id + '-' + data.ParentObjectId + 'M.' + data.Extension + '" />' +
+            '</div>'
+        );
+    }
+
+
+</script>
+

@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    .correctQty {
+        text-align: center;
+        background-color: #47cc45;
+    }
+    .incorrectQty {
+        text-align: center;
+        background-color: #d9562f;
+    }
+    .table-bordered td, .table-bordered th {
+        border: 1px solid #384b5e !important;
+    }
+    .locButton{
+        margin-top:1px;
+        margin-left:1px;
+    }
+</style>
+<div class="col-12 bg-red">
+    <div class="h-100 d-flex flex-column">
+        @*Flow Description and Icons*@
+        <div class="row no-gutters mt-2 border-bottom">
+            <div class="col-2"></div>
+            <div class="col-8" style="text-align:center">
+                Lokalizowanie Dostawy
+            </div>
+            <div class="col-2" style="text-align:end">
+                <i class="fas fa-barcode"></i>
+            </div>
+        </div>
+        @*Information about contractor and document number*@
+        <div class="row no-gutters justify-content-center flex-grow-1">
+            <div class="col-11 card" style="margin:10px;">
+                <div class="card-header">
+                    Informacje o Produkcie
+                </div>
+                <div class="card-body p-0">
+                    <div class="col-12">
+                        <fieldset>
+                                <div class="form-group">
+                                    <label class="col-12 col-form-label">Kod Produktu</label>
+                                    <div class="col-12 p-0">
+                                        <input type="text" class="form-control" id="itemCode" value="117 890" readonly="true" />
+                                    </div>
+                                </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters justify-content-center flex-grow-1 mb-auto">
+            <div class="col-12">
+                <div id="gridInspectedItems" style="height: 400px;">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Ilość</th>
+                                <th scope="col">Lokalizacja</th>
+                                <th scope="col">Dostarczono</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">50</th>
+                                <td>120-10-12-10</td>
+                                <td class="correctQty"><i class="far fa-check-circle"></i></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">100</th>
+                                <td>140-20-12-10</td>
+                                <td class="correctQty"><i class="far fa-check-circle"></i></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">100</th>
+                                <td>100-23-10-10</td>
+                                <td class="incorrectQty"><i class="fas fa-times-circle"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        @*Manage Buttons*@
+        <div class="row no-gutters justify-content-center" style="margin-bottom:0px;">
+            <div class="col-4">
+                <div class="btn btn-info btn-bottom btnAction" id="btnJumpToSummary">PODSUM.</div>
+            </div>
+            <div class="col-4">
+                <div class="btn btn-success btnAction" id="confirmButton">OK</div>
+            </div>
+            <div class="col-4">
+                <div class="btn btn-secondary btnAction" id="closeButton">ZAKOŃCZ</div>
+            </div>
+        </div>
+    </div>
+</div>

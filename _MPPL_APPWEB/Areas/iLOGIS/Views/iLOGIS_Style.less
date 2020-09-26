@@ -1,0 +1,76 @@
+﻿@page {
+    size: auto;
+}
+
+@import "Delivery/DeliveryInspection";
+@import "DeliveryList/DeliveryList.less";
+@import "DeliveryList/DeliveryListMultiLines.less";
+@import "Movement/Movement.less";
+@import "Movement/MovementMobile.less";
+@import "Movement/MovementMobileLocation.less";
+@import "Warehouse//WarehouseSelector.less";
+@import "WMS/MobileWMS";
+@import "WMS/MobileMenu";
+@import "PickingListItem/Manage.less";
+
+
+#contentView {
+    @import "PickingList/Index.less";
+    @import "PickingList/PickingList.less";
+    @import "PickingList/TransporterList.less";
+    @import "PickingListItem/Summary.less";
+}
+
+.gridHeader {
+    line-height: 17px;
+    text-align: center;
+    color: #7ab1b8;
+    /* background-color: rgb(37, 104, 104); */
+    border-top: 1px solid #115f65;
+    padding-right: 4px;
+    background: #256868;
+    background: -moz-linear-gradient(-45deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+    background: -webkit-linear-gradient(-45deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+    background: linear-gradient(177deg, rgb(40, 107, 115) 0%, rgb(2, 21, 23) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#256868', endColorstr='#081515',GradientType=1 );
+}
+
+.jsgrid-cell.textBold {
+    font-weight: bold;
+}
+.jsgrid-row .jsgrid-cell.textWhiteBold,
+.jsgrid-edit-row .jsgrid-cell.textWhiteBold,
+.jsgrid-alt-row .jsgrid-cell.textWhiteBold {
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    padding: 0 0;
+}
+
+.jsgrid-cell.textBlue, label.textBlue, .textBlue {
+    color: #43a1bd;
+}
+
+.jsgrid-cell.textGreen, label.textGreen, .textGreen {
+    color: #50bd96;
+}
+
+.jsgrid-cell.textDark, label.textDark, .textDark {
+    color: #254854;
+}
+.jsgrid-cell.textPink, label.textPink, .textPink {
+    color: hotpink;
+}
+.jsgrid-cell.textLightOrange, label.textLightOrange, .textLightOrange {
+    color: #c5b597;
+}
+.jsgrid-cell.textGrayout, label.textGrayout, .textGrayout {
+    color: #607c85;
+}
+.textBold{
+    font-weight: bold;
+}
+
+.jsgrid-header-cell{
+    color: white;
+}

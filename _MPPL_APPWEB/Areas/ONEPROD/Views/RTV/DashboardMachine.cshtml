@@ -1,0 +1,84 @@
+﻿@using MDL_ONEPROD.Model.Scheduling;
+@model ResourceOP
+
+@{
+    ResourceOP machine = Model;
+    Layout = null;
+}
+
+<div class="dashboardMachineBox colorInactive" id="machineId_@machine.Id" data-machineId="@machine.Id">
+    <section class="machineHeader">
+        <div style="padding: 7px; border-bottom: 2px solid rgb(34, 42, 53)">
+            <div class="row" style="min-height:25px">
+                <div class="col-9">
+                    <span class="dshMachineTitle">
+                        @machine.Name
+                    </span>
+                </div>
+                <div class="col-3" style="text-align: right; padding: 0 15px; font-size:20px;">
+                    <div>
+                        <i class="fas fa-chart-bar goToDetails clickable" data-machineId="@machine.Id"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="machineData">
+        <div class="row">
+            <div class="col-12">
+                <div class="colDsh" style="width: 25%">
+                    <div id="OeeResult" class="result blockDsh WindowBox  colorInactive" style="height:60px; font-size:36px;">0%</div>
+                </div>
+                <div class="colDsh" style="width: 25%">
+                    <div id="ProducedQty" class="blockDsh WindowBox " style="height:60px; font-size:32px;">0</div>
+                </div>
+                <div class="colDsh" style="width: 25%">
+                    <div id="TargetQty" class="blockDsh WindowBox " style="height:60px; font-size:32px;">0</div>
+                </div>
+                <div class="colDsh" style="width: 25%">
+                    <div id="DeltaQty" class="blockDsh WindowBox " style="height:60px; font-size:32px;">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="colDsh" style="width: 25%; padding: 0 !important;">
+                    <div class="colDsh" style="width: 100%">
+                        <div id="AvailabilityResult" class="result blockDsh WindowBox  colorInactive" style="height:28px;">A: 0%</div>
+                    </div>
+                    <div class="colDsh" style="width: 100%">
+                        <div id="PerformanceResult" class="result blockDsh WindowBox  colorInactive" style="height:28px;">P: 0%</div>
+                    </div>
+                </div>
+                <div class="colDsh" style="width: 50%">
+                    <div id="ProgramName" class="blockDsh WindowBox " style="height:60px;"></div>
+                </div>
+                <div class="colDsh" style="width: 25%; padding: 0 !important;">
+                    <div class="colDsh" style="width: 100%">
+                        <div id="CycleTime" class="blockDsh WindowBox " style="height:28px;">0s</div>
+                    </div>
+                    <div class="colDsh" style="width: 100%">
+                        <div id="CycleTimeAvg" class="blockDsh WindowBox " style="height:28px;">0s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="colDsh" style="width: 25%">
+                    <div id="QualityResult" class="result blockDsh WindowBox  colorInactive" style="height:30px;">Q: 0%</div>
+                </div>
+                <div class="colDsh" style="width: 50%">
+                    <div id="PartCode" class="blockDsh WindowBox " style="height:30px;"></div>
+                </div>
+                <div class="colDsh" style="width: 25%">
+                    <div class="blockDsh WindowBox " style="height:30px; text-align: center;">
+                        <div class="colorInactive" id="Connection" style="height:100%;width:100%;font-size:26px;margin-top:-4px;">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

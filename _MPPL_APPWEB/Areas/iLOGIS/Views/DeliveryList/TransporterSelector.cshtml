@@ -1,0 +1,54 @@
+﻿@using MDL_iLOGIS.ComponentConfig.Entities
+
+@{
+    List<Transporter> trains = ViewBag.Trains;
+}
+
+<style>
+    html, body, #DeliveryList {
+        height: 100%;
+    }
+    #DeliveryList{
+        min-width: 1200px;
+    }
+    #page-content-wrapper{
+        padding: 0 !important;
+    }    
+    .transporterBox {
+        border: 1px solid #244552;
+        background: #18587136;
+    }
+    .transporterBox :hover {
+        background: rgba(70, 149, 180, 0.21);
+    }
+
+        .transporterBox .Name {
+            font-size: 18px;
+        }
+</style>
+    
+<div id="DeliveryList">
+    <div class="row no-gutters h-100" id="table" style="text-align: center; flex-flow: column;">
+        <div class="col-12">
+            <div class="h-100 d-flex flex-column">
+                <div class="row no-gutters">
+                    @for (int i = 0; i < trains.Count; i++)
+                    {
+                        <div class="col-4 pl-2 p-2">
+                            <a href="@Url.Action("DeliveryList", "DeliveryList", new { @area = "iLOGIS", @trainId = trains[i].Id })">
+                                <div class="transporterBox orderRow" data-id="@trains[i].Id">
+                                    <div class="row no-gutters">
+                                        <div class="col-12 Name pt-4 pb-4">
+                                            @trains[i].Name
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

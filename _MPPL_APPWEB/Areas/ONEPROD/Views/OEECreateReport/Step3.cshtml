@@ -1,0 +1,30 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.OeeViewModel
+@{
+    Layout = null;
+}
+
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-12 sectionHeader">
+        <div class="formArea sectionHeaderTitle">DATE DOT. PRODUKCJI</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="formArea">
+            <div id="jsGrid"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var reportId = @Html.Raw(Json.Encode(Model.ReportId));
+    var machineId = @Html.Raw(Json.Encode(Model.MachineId));
+    var areaId = @Html.Raw(Json.Encode(Model.AreaId));
+
+    $(document).ready(function () {
+        var prodDataGrid = new ProductionDataGrid("#jsGrid", reportId, machineId, areaId);
+        prodDataGrid.InitGrid();
+    });
+    
+</script>

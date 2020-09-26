@@ -1,0 +1,123 @@
+﻿
+@{
+    Layout = null;
+
+}
+
+<style>
+    .orderRow {
+        height: 70px !important;
+    }
+    
+    #contentView .orderItemCode, #contentView .QtyPlanned {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    .plStatus {
+        height: 16.66%;
+        border-bottom: 1px solid #10242c;
+        background-color: #486a73;
+        margin-right: 2px;
+    }
+    .fs30{
+        font-size: 30px;
+    }
+    .StartDateStr {
+        font-size: 14px;
+        line-height: 30px;
+    }
+</style>
+
+<div class="h-100 d-flex flex-column" id="contentView" data-transporterId="@ViewBag.TransporterId" data-lastDeliveryListId="@ViewBag.LastDeliveryListId">
+
+</div>
+
+
+<script id="DeliveryListsBoxTemplate" type="x-tmpl-mustache">
+    @*Picker's data*@
+    <div class="row no-gutters justify-content-center pageHeader" style="min-height:23px;max-height:23px;">
+        <div class="col-7" id="transportersNo">
+            {{TransporterName}} ({{TransporterId}})
+        </div>
+        <div class="col-5" id="transporterDedicatedResources">
+            Linie: {{DedicatedResources}}
+        </div>
+    </div>
+    @*Header Grid*@
+    <div class="row no-gutters justify-content-center gridHeader" style="max-height:40px; min-height: 40px;">
+        <div class="col-10">
+            <div class="row no-gutters">
+                <div class="col-6">NR ZAMÓWIENIA</div>
+                <div class="col-4">DATA</div>
+                <div class="col-2">CZAS</div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-6">PNC</div>
+                <div class="col-4">LINIA</div>
+                <div class="col-2">ILOŚĆ</div>
+            </div>
+        </div>
+        <div class="col-2" style="text-align: right;">
+            STATUS
+        </div>
+    </div>
+    @*Grid*@
+    <div class="row no-gutters justify-content-center mb-auto flex-grow-1" style="overflow-y:scroll">
+        @*<div class="col-12" id="Loading">
+            </div>*@
+
+        <div class="col-12" id="OrderRows">
+            {{#List}}
+            <div class="row no-gutters orderRow" data-workorderid="{{WorkorderId}}" data-id="{{Id}}">
+                <div class="col-10">
+                    <div class="row no-gutters orderRowText">
+                        <div class="col-6 WorkOrderNumber">{{WorkorderNumber}}</div>
+                        <div class="col-4 StartDateStr">{{StartDateStr}}</div>
+                        <div class="col-2 StartTimeStr textLightOrange ">{{StartTimeStr}}</div>
+                    </div>
+                    <div class="row no-gutters orderRowText">
+                        <div class="col-6 orderItemCode">{{ItemCode}}</div>
+                        <div class="col-4 resourceName textBlue">{{ResourceName}}</div>
+                        <div class="col-2 QtyPlanned">{{Qty}}</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="row no-gutters">
+                        <div class="col-2">
+                            {{#PickingListStatuses}}
+                            <div class="plStatus state{{.}}"></div>
+                            {{/PickingListStatuses}}
+                        </div>
+                        <div class="col-10 Status">
+                            <div class="StatusIcon state{{Status}} {{StateIcon}}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/List}}
+        </div>
+    </div>
+    @*Buttons*@
+    <div class="row no-gutters justify-content-center" style="margin-bottom:0px;">
+        <div class="{{#HasUserAdminRights}}col-4{{/HasUserAdminRights}}{{^HasUserAdminRights}}col-6{{/HasUserAdminRights}}">
+            <a href="#/iLOGIS/DeliveryListLineFeed/TransporterList"><div class="btn btn-default btn-bottom">WRÓĆ</div></a>
+        </div>
+        {{#HasUserAdminRights}}
+        <div class="col-4">
+            <div class="btn btn-info btn-bottom" id="btnCloseDeliveryList">ZAMKNIJ</div>
+        </div>
+        {{/HasUserAdminRights}}
+        <div class="{{#HasUserAdminRights}}col-4{{/HasUserAdminRights}}{{^HasUserAdminRights}}col-6{{/HasUserAdminRights}}">
+            <div class="btn btn-success btn-bottom" id="btnGoToDeliveryListItems">REALIZUJ</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    var deliveryListLF = new DeliveryListLF(@Html.Raw(Json.Encode(ViewBag.HasUserAdminRights)));
+    $(document).ready(function () {
+        deliveryListLF.Init();
+    });
+
+</script>

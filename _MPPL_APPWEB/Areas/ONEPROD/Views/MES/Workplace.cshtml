@@ -1,0 +1,389 @@
+﻿@using MDL_ONEPROD.Model.Scheduling;
+@using MDLX_MASTERDATA.Entities;
+@using _MPPL_WEB_START.Areas._APPWEB.Models;
+@using Microsoft.AspNet.Identity;
+
+@model MDL_ONEPROD.ComponentMes.ViewModels.WorkplaceViewModel
+@{
+    ViewBag.Title = "Ekran Operatora";
+    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+    DateTime LastDate = DateTime.Now.Date.AddYears(-1);
+    string klasa = Model.Id > 0 ? "" : "hidden";
+}
+
+<style>
+    .brdActive {
+        border: 1px solid limegreen;
+    }
+
+    .btnAnm {
+        position: relative;
+    }
+
+    .topBorder {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border: 2px solid #5db8ff;
+        box-sizing: border-box;
+        /* Currently the original clip needs to be set in the css as otherwise the function does not work in jquery. However, this will not work well with responsiveness if you try to set distinct values at the start.*/
+        clip: rect(0px,0px,0px,0px);
+    }
+
+    .bottomBorder {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border: 2px solid #5db8ff;
+        box-sizing: border-box;
+        clip: rect(0px,0px,0px,0px);
+    }
+</style>
+<style>
+    .itemTitle {
+        font-weight: bold;
+        color: aquamarine;
+        font-size: 20px;
+    }
+
+    .itemTitleDetails {
+    }
+
+    .headerLive .headerMid {
+        font-family: 'DigitalClock';
+        font-size: 45px;
+        padding: 0;
+        margin-top: -9px;
+    }
+</style>
+
+<section id="header" class="headerLive">
+    <div class="row no-gutters headerRow">
+        <div class="col-3 headerLeft">
+            <div class="logoMD clickable" style="background-image: url(@Url.Content("~/Content/images/logo" + @ViewBag.ClientName + "_white.png")) !important"></div>
+        </div>
+        <div class="col-2 headerLeft">
+            <div class="headerMid" id="clockHeaderMid"></div>
+        </div>
+        <div class="col-3 headerLeft">
+            <div class="col-12 shiftDate" style="padding:0 0 0 0 !important;">
+                <div class="row no-gutters">
+                    <div class="col-2">
+                        <div class="brdL brdR clickable btnShift" data-minusHours="-8"
+                             style="text-align: center;font-size: 22px;line-height:45px;">
+                            <
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="brdR clickable" id="labelShift" data-minusHours="0"
+                             style="text-align: center;font-size: 22px;line-height:45px;">
+                            0
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="brdR clickable btnShift" data-minusHours="8"
+                             style="text-align: center;font-size: 22px;line-height:45px;">
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 headerRight">
+            <div class=""
+                 style="height: 45px;
+                        font-size: 22px;
+                        line-height: 45px;
+                        float: right;
+                        border: 1px solid #41565c8c;
+                        border-radius: 5px;
+                        padding: 0 5px;
+                        margin-right: 5px;
+                        margin-top: 2px;"
+                 id="headerTitle">
+                <span id="resourceInfo" data-resourceId="@Model.ResourceId">
+                    @Model.ResourceName/ @Model.Name
+                </span>
+            </div>
+        </div>
+        <div class="col-1 headerLeft">
+            @using (Html.BeginForm("LogOffOneprodMes", "Account", new { area = "", id = Model.Id, ip = Model.ComputerHostName }, FormMethod.Post, new { id = "logoutFormOneprodMes" }))
+            {
+                @Html.AntiForgeryToken()
+                <a href="javascript:document.getElementById('logoutFormOneprodMes').submit()">
+                    <div class="btn btn-default" style="height: 45px; width: 100%;line-height: 30px;font-size: 12px;background: #ffffff0d;">
+                        <div class="row no-gutters">
+                            <div class="col-10">@User.Identity.GetUserName()</div>
+                            <div class="col-2"><i class="fas fa-sign-out-alt" style="font-size: 22px;line-height: 30px;"></i></div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="separator"></div>
+</section>
+
+<div class="row no-gutters @klasa" style="margin-top: 10px;">
+
+    <section id="leftSide-Grid" class="col-6" style="padding-right: 15px;">
+        <section id="leftTopButtons" class="row no-gutters">
+            <div class="col-3" style="padding-right:5px;line-height: 70px;">
+                <div class="brd wInfo1btn WindowBox clickable btnAnm" id="workplaceRefresh" style="">
+                    <i class="fas fa-arrow-alt-circle-down"></i> Odśwież
+                </div>
+            </div>
+            <div class="col-3" style="padding-right:10px;">
+                <div class="brd wInfo1btn WindowBox" style="font-size:22px; padding-top: 5px; background-color: #163744;line-height: 28px;">
+                    <div>Wybrane zadanie: <br /><span id="selectedWorkorderId" style="color: #3f6ca9;">--</span></div>
+                </div>
+            </div>
+
+            <div class="col-3" style="padding-right:5px; line-height: 70px;">
+                <div class="brd wInfo1btn WindowBox clickable confirmWorkorderPartially btnAnm"><i class="fas fa-edit"></i> Edytuj</div>
+            </div>
+            <div class="col-3" style="line-height: 70px;">
+                @*<div class="brd wInfo1btn WindowBox clickable confirmWorkorder btnAnm"><i class="fas fa-check-circle"></i> Gotowe</div>*@
+            </div>
+        </section>
+        <section id="planGrid" class="brd WindowBox mt8" style="height: 800px; position: relative;">
+            <div class="planMonitorRow gridHeader" id="planMonitorRow_header" style="overflow: hidden; background-color: #21464e; color: aliceblue">
+                <div class="row no-gutters" style="margin-bottom: 5px;">
+                    <div class="col-1">
+                        <div class="row">
+                            <div class="col-12" style="font-weight:bold; line-height: 25px;">Data</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="line-height: 25px;">Czas</div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="row">
+                            <div class="col-12" style="font-weight:bold; line-height: 25px;"><p> </p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="line-height: 25px;">Linia</div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">
+                            <div class="col-6" style="font-size: 22px; line-height: 50px;">Nr. Artykułu</div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12" style="line-height: 25px;">Numer zl.</div>
+                                    <div class="col-12" style="line-height: 25px;">Nazwa części</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="row no-gutters">
+                            <div class="col-6" style="font-size: 22px; line-height: 50px;">
+                                PL
+                            </div>
+                            <div class="col-6" style="font-size: 22px; line-height: 50px;">
+                                RE
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        --
+                    </div>
+                    <div class="col-1" style="font-size: 22px; line-height: 50px;">
+                        --
+                    </div>
+                </div>
+            </div>
+            @*WORKORDER GRID*@
+            <div id="workorderGridData" style="max-height: 675px; overflow-y: scroll;">
+
+            </div>
+            <div class="row no-gutters" id="workorderPager">
+                <div class="col-2">
+                    <div class="prodLogPagging prodlogPage">STR: </div>
+                </div>
+                <div class="col-2">
+                    <div class="prodLogPagging" id="workorderPageIndex">1</div>
+                </div>
+                <div class="col-2">
+                    <div class="prodLogPagging btnChangeWorkorderPage" data-Value="0"><<<</div>
+                </div>
+                <div class="col-3">
+                    <div class="prodLogPagging btnChangeWorkorderPage" data-Value="-1"><<</div>
+                </div>
+                <div class="col-3">
+                    <div class="prodLogPagging btnChangeWorkorderPage" data-Value="1">>></div>
+                </div>
+            </div>
+        </section>
+        <section id="bottomButtons" class="row no-gutters">
+            <div class="col-3" style="padding-right: 15px;">
+                <div id="btnPrintTestLabel" class="brd wInfo1 WindowBox clickable btnAnm"
+                     style="font-size: 36px; margin-top: 15px; color: #517e92;">
+                    <div class="row no-gutters">
+                        <div class="col-4" style="line-height: 104px;">
+                            <span class="statusIcon fas fa-print"></span>
+                        </div>
+                        <div class="col-8" style="font-size: 22px; padding-top: 20px;">
+                            WYDRUK<br />TEST
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3" style="padding-right: 15px;">
+                <div id="btnShowWorkplaceBuffer" class="brd wInfo1 WindowBox clickable btnAnm hidden"
+                     style="font-size: 36px; margin-top: 15px; color: #36c56f;">
+                    <div class="row no-gutters">
+                        <div class="col-4" style="line-height: 104px;">
+                            <span class="statusIcon fas fa-barcode"></span>
+                        </div>
+                        <div class="col-8" style="font-size: 22px; padding-top: 20px;">
+                            SKAN<br />CZĘŚCI
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3" style="padding-right: 15px;">
+                <div id="btnAddWorkOrder" class="brd wInfo1 WindowBox clickable btnAnm"
+                     style="font-size: 36px; margin-top: 15px; color: #5cafa6;">
+                    <div class="row no-gutters">
+                        <div class="col-4" style="line-height: 104px;">
+                            <span class="statusIcon fas fa-plus-circle"></span>
+                        </div>
+                        <div class="col-8" style="font-size: 22px; padding-top: 20px;">
+                            DODAJ<br />ZLECENIE
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div id="btnScrap" class="brd wInfo1 WindowBox clickable btnAnm"
+                     style="font-size: 36px; margin-top: 15px; line-height: 104px; color: #c94f4f;">
+                    <div class="row no-gutters">
+                        <div class="col-4"><span class="statusIcon fas fa-times-circle"></span></div>
+                        <div class="col-8">@AppClient.appClient.SettingsONEPROD.Translate_SCRAP</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section id="rightSide" class="col-6">
+        <div id="rightMiddle">
+            @*@if (1 == 1)
+                {
+                    Html.RenderAction("Index", "OEEReportOnline", new { resourceId = Model.ResourceId, workplaceId = Model.Id });
+                }
+                else
+                {*@
+            <div class="row no-gutters">
+                <div class="col-9">
+                    <section id="rightTopButtons" class="row no-gutters"></section>
+                    <section id="rightMiddle" class="row no-gutters brd WindowBox" style="height: 874px;"></section>
+                </div>
+                <div class="col-3" style="padding-left: 15px !important;">
+                </div>
+            </div>
+            @*}*@
+        </div>
+        <section id="rightBottom" class="row no-gutters" style="margin-top: 15px;">
+            <div class="col-4" style="padding-right: 15px; overflow: hidden;">
+                <div class="brd wInfo1 WindowBox clickable confirmWorkorderTrolley btnAnm" id="btn1Piece">
+                    <div class="row">
+                        <div class="col-4">
+                            <div style="font-size: 82px; height: 120px; margin-top: -15px;">
+                                <i class="fas fa-print" style="font-size: 60px;"></i>
+                            </div>
+                            <div style="font-size: 24px;">DRUKUJ</div>
+                        </div>
+                        <div class="col-8" style="font-size: 42px; line-height: 104px; overflow: hidden;">
+                            <span class="trolleyQty" id="trolleyQty">0</span><span> SZT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5" style="overflow: hidden;">
+                <div class="brd wInfo1 WindowBox btnAnm">
+                    <div class="row no-gutters">
+                        <div class="col-12" style="font-size: 32px; line-height: 52px;" id="actionButtons"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3" id="trolley" style="overflow: hidden; padding-left: 15px; display: none;">
+                <div class="brd wInfo1 WindowBox btnAnm">
+                    <div class="row no-gutters">
+                        <div class="col-12" style="font-size: 32px; line-height: 52px;">
+                            <span id="trolleyName" data-trolleyId="0"></span>
+                            <span><i class="fas fa-dolly-flatbed"></i></span>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-12" style="font-size: 32px; line-height: 52px;">
+                            <span id="trolleyInfo"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalR/hubs"></script>
+<script src="~/Areas/iLOGIS/Views/StockUnit/StockLocationDetailsGrid.js"></script>
+<script type="text/javascript">
+
+    var mesWorkplace = {};
+    $(document).ready(function () {
+        openFullscreen();
+        StartClock();
+        let workplaceId = @Html.Raw(Json.Encode(Model.Id));
+        mesWorkplace = new MesWorkplace(workplaceId, @Html.Raw(Json.Encode(Model)));
+        mesWorkplace.Init();
+        $("#btnProductionLogs").click();
+    });
+
+    function StartClock() {
+        var today = new moment(new Date());
+        $("#clockHeaderMid").html(today.format("HH:mm:ss"));
+        var t = setTimeout(StartClock, 1000);
+    }
+</script>
+
+<script id="TrolleyNumberTemplate" type="x-tmpl-mustache">
+    <style>
+        .jsgrid-table {
+            table-layout: unset;
+        }
+    </style>
+    <div class="row no-gutters">
+        <div class="col-12">
+            <div class="formTrolley">
+                <div class="row no-gutters pt10">
+                    <div class="col-12">
+                        Zeskanuj kod 2D z wózka
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="trolleyBarcode" value="" style="width: 100%; max-width: 100%;">
+                    </div>
+                    <div class="col-4 pl-2">
+                        <button type="submit" class="col-12 btn btn-success" id="btnAttachTrolley">PODŁĄCZ</button>
+                    </div>
+                </div>
+
+                <div class="row no-gutters mt-4">
+                    <div class="col-8">
+                        <div id="gridtrolleyitems"></div>
+                    </div>
+                    <div class="col-4 pl-2">
+                        <div style="height: 200px;"></div>
+                        <button type="submit" class="col-12 btn btn-warning" id="btnDetachTrolley">ODŁĄCZ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

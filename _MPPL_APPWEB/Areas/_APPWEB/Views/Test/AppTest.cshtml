@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "AppTest";
+}
+
+<h2>AppTest</h2>
+<h3>@ViewBag.Message</h3>
+
+<btn class="btn btn-default" id="AlertTest">Alert Test</btn>
+<btn class="btn btn-default" id="WindowTest">Window Test</btn>
+
+
+@section scripts{
+<script type="text/javascript">
+
+    $(document).on("click", "#AlertTest", function() {
+        console.log("test alertu");
+        $.get("Test/AlertTest", function (data) {
+            console.log("data: " + data);
+            new Alert().GetAlerts("K");
+        });
+    });
+    $(document).on("click", "#WindowTest", function () {
+        console.log("test okna");
+
+        $.get("Home/Contact", function (data) {
+            var wnd = new PopupWindow(600, 400);
+            wnd.Init("testWindow", "Okno Testowe");
+            wnd.Show(data);
+        });
+    });    
+
+</script>    
+}
+
+
+

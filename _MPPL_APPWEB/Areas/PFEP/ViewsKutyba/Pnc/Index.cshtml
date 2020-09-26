@@ -1,0 +1,17 @@
+﻿@using GridMvc.Html
+
+@model IEnumerable<MDL_BASE.Models.DEF.Pnc>
+
+@{
+    ViewBag.Title = "PNC";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewBag.ShowDefinitionsMenu = true;
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(o => o.Code).Titled("Kod").Sortable(true);
+    columns.Add(o => o.Name).Titled("Nazwa").Sortable(true);
+    columns.Add(o => o.Type.Name).Titled("Typ").Sortable(true).Editable(true, "select", (string)ViewBag.ListType).RenderValueAs(o => o.Type.Id.ToString());
+    columns.Add(o => o.Id).Titled("").EditActionColumn("", Url.Action("Edit", controllerName), "", false);
+}).WithPaging(100).Selectable(false)

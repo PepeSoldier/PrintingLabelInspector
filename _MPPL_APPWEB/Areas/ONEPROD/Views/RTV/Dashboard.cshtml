@@ -1,0 +1,71 @@
+﻿@using _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels;
+@using MDL_ONEPROD.Model.Scheduling;
+@model List<DashBoardViewModel>
+
+@{
+    Layout = null;
+    ViewBag.Title = "OEE RTV";
+    int maxMachines = 5; //Model.Max(x => x.MachineList.Count);
+    ResourceOP fakeMachine = new ResourceOP { Id = 0, Name = "" };
+}
+
+<div id="rtvDashboard">
+    @foreach (DashBoardViewModel vm in Model)
+    {
+        if (vm.MachineList.Count > 0 && vm.Area.Id != 21 && vm.Area.Id != 22)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div style="padding: 40px 0;">@vm.Area.Name</div>
+                    <div id="@vm.Area.Id"></div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                @for (int i = 0; i < maxMachines; i++)
+                {
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2p4 pl-1 pr-1" style="text-align: center;">
+                        @{var machine = (i < vm.MachineList.Count) ? vm.MachineList[i] : fakeMachine; }
+                        @if (machine != null && machine.Id != 13 && machine.Id != 15)
+                        {
+                            Html.RenderPartial("DashboardMachine", machine);
+                        }
+                        else
+                        {
+                            <div class="dashboardMachineBox disabled" id="0" data-machineId="0"></div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+<script type="text/javascript">
+   
+
+    $(document).ready(function () {
+        rtvs.length = 0;
+        rtvs = [];
+        console.log("RTV Dashboard Ready");
+        $("#headerTitle").text("DASHBOARD");
+
+        if (isUserAllowedForDashboard == true) {
+            $(".dashboardMachineBox").each(function () {
+                var id = $(this).attr("id");
+                var machineId = $(this).attr("data-machineId");
+
+                if (machineId > 0) {
+                    rtv = null;
+                    rtv = new RTV(machineId, "#" + id, 0, true);
+                    rtv.Init();
+                    rtvs.push(rtv);
+                }
+            });
+        }
+        else {
+            new Alert().Show("danger", "Nie masz uprawnień do tego widoku");
+        }
+
+        console.log(rtvs);
+    });
+</script>

@@ -1,0 +1,180 @@
+﻿#pckgInstrContainer {
+  font-size: 12px;
+  padding-top: 18px;
+  padding-left: 18px;
+  margin-top: -66px;
+  /*margin-bottom: 10px;*/
+  min-width: 850px;
+  max-width: 900px;
+  min-height: 200px;
+}
+#pckgInstrContainer {
+  /*ul > li::before {
+        content: " ";
+        margin-left: -45px;
+    }*/
+}
+#pckgInstrContainer .brd1 {
+  border: 1px solid black;
+}
+#pckgInstrContainer .brdt1 {
+  border-top: 1px solid black;
+}
+#pckgInstrContainer .brdr1 {
+  border-right: 1px solid black;
+}
+#pckgInstrContainer .brdb1 {
+  border-bottom: 1px solid black;
+}
+#pckgInstrContainer .brdl1 {
+  border-left: 1px solid black;
+}
+#pckgInstrContainer .fntlg {
+  font-size: 18px;
+}
+#pckgInstrContainer .smallText {
+  font-size: 10px;
+  padding: 3px;
+}
+#pckgInstrContainer .bigText {
+  font-size: 18px;
+  padding: 3px;
+}
+#pckgInstrContainer #EDiv {
+  text-align: center;
+  text-anchor: middle;
+  font-size: 18px;
+  border: 5px solid red;
+  padding: 3px;
+}
+#pckgInstrContainer .centerDiv {
+  padding: 4px;
+  text-align: center;
+  height: 50px;
+  line-height: 42px;
+}
+#pckgInstrContainer span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 14px;
+}
+#pckgInstrContainer .centerHighDiv {
+  padding: 4px;
+  height: 66px;
+  line-height: 58px;
+  text-align: center;
+}
+#pckgInstrContainer .heightSpan {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 16px;
+  font-size: 16px;
+}
+#pckgInstrContainer .centerLowDiv {
+  padding: 2px;
+  text-align: center;
+  min-height: 23px;
+}
+#pckgInstrContainer .verticalText {
+  text-align: left !important;
+  text-anchor: start !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  padding-top: 9.5px !important;
+  padding-bottom: 9.5px !important;
+  font-size: 10px;
+}
+#pckgInstrContainer .verticalHeading {
+  text-anchor: middle;
+  text-align: left;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 18px;
+}
+#pckgInstrContainer .textRight {
+  text-align: right !important;
+}
+#pckgInstrContainer .itemDiv {
+  padding-bottom: 3px;
+  padding-top: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0px !important;
+}
+#pckgInstrContainer .itemHiglighted {
+  background-color: #b8fff8;
+}
+#pckgInstrContainer .highlighted {
+  background-color: lightblue;
+}
+#pckgInstrContainer .specialHighlighted {
+  background-color: #8fc79a;
+}
+#pckgInstrContainer #rotate {
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  /* FF3.5+ */
+  -o-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  /* Opera 10.5 */
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  /* Saf3.1+, Chrome */
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+#pckgInstrContainer .instPhoto {
+  max-height: 240px;
+  max-width: 420px;
+}
+#pckgInstrContainer #rotDiv {
+  font-size: 18px;
+}
+#pckgInstrContainer ul {
+  list-style: none;
+  margin: 0;
+}
+#pckgInstrContainer .onelineheight {
+  height: 25px;
+}
+#pckgInstrContainer #listDiv {
+  min-height: 125px;
+}
+#pckgInstrContainer .yellowColor {
+  background-color: yellow;
+}
+#pckgInstrContainer .btnPacingIntrAction {
+  margin: 5px;
+  width: 160px;
+}
+#pckgInstrContainer .btnPacingIntrAction .fas {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#pckgInstrContainer #selectedInstr {
+  width: 65px;
+  padding: 5px;
+  font-size: 18px;
+  color: #548140;
+}
+#pckgInstrContainer #externalPager {
+  display: inline-block;
+}
+#pckgInstrContainer #externalPager .dickens {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+#pckgInstrContainer #externalPager .jsgrid-pager-current-page {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+#pckgInstrContainer #externalPager span:hover:not(.jsgrid-pager-current-page) {
+  background-color: #ddd;
+}

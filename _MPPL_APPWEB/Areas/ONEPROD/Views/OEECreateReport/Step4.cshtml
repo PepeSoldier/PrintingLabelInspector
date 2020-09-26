@@ -1,0 +1,68 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.OeeViewModel
+@{
+    Layout = null;
+}
+
+    <div class="row">
+        @for (int i = 0; i < Model.ReasonTypes.Count; i++)
+        {
+            <div id="col_Grid_@Model.ReasonTypes[i].Id" class="col-12 col-md-12 col-lg-12 col-xl-6 hidden">
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-12 sectionHeader">
+                        <div class="formArea sectionHeaderTitle">@Model.ReasonTypes[i].Name</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="formArea">
+                            <div style="margin-top:8px;">
+                                <div id="jsGridStop_@Model.ReasonTypes[i].Id">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script src="~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopGrid.js"></script>
+<script type="text/javascript">
+
+    var reportId = @Html.Raw(Json.Encode(Model.ReportId));
+    var machineId = @Html.Raw(Json.Encode(Model.MachineId));
+    var reasonTypes = @Html.Raw(Json.Encode(Model.ReasonTypes));
+
+    var grids = [];
+
+    $(document).ready(function () {
+
+        for (var i = 0; i < reasonTypes.length; i++) {
+
+            if (reasonTypes[i].Id == 5) {
+                let grid = new StopGrid2("#jsGridStop_" + reasonTypes[i].Id, reportId, machineId, shiftHour, reasonTypes[i].Id);
+                grid.InitGrid();
+            }
+            else {
+                let grid = new StopGrid("#jsGridStop_" + reasonTypes[i].Id, reportId, machineId, shiftHour, reasonTypes[i].Id);
+                grid.InitGrid();
+                //grids.push({ reasonTypeId: reasonTypes[i].Id, grid: grid });
+            }
+        }
+
+        //var gridUnplannedChangeOver = new StopUnplannedChangeOverGrid("#jsGridUnplannedChangeOver", reportId, machineId, shiftHour);
+        //var gridBreakdown = new StopBreakdownGrid("#jsGridBreakdown", reportId, machineId, shiftHour);
+        //var gridPlanned = new StopPlannedGrid("#jsGridStopOver", reportId, machineId, shiftHour);
+        //var gridUnplanned = new StopUnplannedGrid("#jsGridUnPlannedStopOver", reportId, machineId, shiftHour);
+        //var gridPerformance = new StopPerformanceGrid("#jsGridPerformance", reportId, machineId, shiftHour);
+
+        //gridUnplannedChangeOver.InitGrid();
+        //gridBreakdown.InitGrid();
+        //gridPlanned.InitGrid();
+        //gridUnplanned.InitGrid();
+        //gridPerformance.InitGrid();
+
+        InitDatepickers();
+    });
+
+    //var gridPlannedChangeOver = new StopChangeOverGrid("#jsGridPlannedChangeOver", reportId, machineId, shiftHour);
+</script>

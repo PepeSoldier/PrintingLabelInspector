@@ -1,0 +1,390 @@
+﻿/*@import "APP_variables_defaultSkin.less";*/
+@import "Layout/App_askins.less";
+@import "Common/HeaderLive.less";
+@import "Configuration/ConfigurationMenu.less";
+/*@import "App_defaultskin.less";*/
+
+@font-face {
+    font-family: DigitalClock;
+    src: url(/Content/fonts/digital-7.ttf);
+}
+
+//----------------------------APP-GENERAL---------------------------
+
+@page {
+    size: auto
+}
+
+html,body{
+    height: 100%;
+}
+
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    border-width: 0 0 1px;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.navbar-right {
+    float: right !important;
+}
+.hidden {
+    display: none !important;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+.clearBothDiv, .clear_div {
+    clear: both;
+}
+
+.shadow, .grid-mvc {
+    -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.17);
+    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.17);
+}
+.colNP{
+    padding: 0;
+}
+colP05{
+    padding: 0 5px !important;
+}
+colP15 {
+    padding: 0 15px !important;
+}
+.rowNM {
+    margin: 0;
+}
+.col {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+button.btnGridMultiCheckBox {
+    width: 36px;
+    height: 20px;
+    padding: 0px;
+    line-height: 16px;
+}
+
+//------------------------------PRINT--------------------------------
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+    .movePrintContentToLeft {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+}
+
+//------------------------------------------------------------------
+.colorSelector {
+    width: 26px;
+    height: 26px;
+    background: rgb(128,128,128);
+    padding: 1px;
+    float: left;
+}
+
+.colorSelector div {
+    width: 24px;
+    height: 24px;
+}
+
+//---------------------------DEFAULT-STYLES---------------------------
+.defaultSkin {
+    #logodflt {
+        display: normal;
+    }
+
+    #logodrk {
+        display: none;
+    }
+}
+
+//-----------------------OVERRWITES-DEFAULT-STYLES--------------------
+.darkSkin {
+    #logodflt {
+        display: none;
+    }
+
+    #logodrk {
+        display: normal;
+    }
+
+    hr {
+        border-top-color: #333 !important;
+    }
+
+    .form-control, input, select, .dropdown-menu {
+        color: #dedede;
+        background-color: #2d2d2d;
+        border: 1px solid #545454;
+    }
+
+    .btn-default {
+        text-shadow: none;
+        color: white;
+        background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+        background-image: linear-gradient(to bottom,#929292 0,#404040 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        background-repeat: repeat-x;
+        border-color: #656565;
+    }
+
+    .btn-default:hover {
+        color: white;
+        background-color: #3e3e3e;
+        border-color: #838383;
+    }
+
+    .btn-default.active, .btn-default:active {
+        color: white;
+        background-color: #303030;
+        border-color: #838383;
+    }
+    //--------------------CO TO JEST?
+    .account-wall {
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .login-title {
+        color: #555;
+    }
+}
+
+.nasaSkin {
+    #logodflt {
+        display: none;
+    }
+
+    #logodrk {
+        display: normal;
+    }
+
+    hr {
+        border-top-color: rgba(255, 255, 255, 0.06) !important;
+    }
+
+    .form-control, input, select, .dropdown-menu {
+        color: aliceblue;
+        background-color: #21464e;
+        border: 1px solid #386f6b;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(56, 111, 107, 0.45);
+    }
+
+    .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+        background-color: #162c30 !important;
+        background-image: none !important;
+    }
+
+    .dropdown-header, .dropdown-menu > li > a {
+        color: unset !important;
+    }
+
+    #weekPickerWraper {
+        background: #21464e !important;
+        border: 1px solid rgb(23, 96, 91) !important;
+    }
+    //-----------------------------buttons-override-colors
+    .btn-default {
+        text-shadow: none;
+        color: white;
+        background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+        background-image: linear-gradient(to bottom,#364a52 0,#0a1b21 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        background-repeat: repeat-x;
+        border-color: #1b3038;
+    }
+
+    .btn-default:hover {
+        color: white;
+        background-color: #16282f;
+        border-color: #21464e;
+    }
+
+    .btn-default.active, .btn-default:active {
+        color: white;
+        background-color: #16282f;
+        border-color: #21464e;
+    }
+
+    .btn-info {
+        background-image: -webkit-linear-gradient(top,#5ab2dc 0,#0c7096 100%);
+        background-image: -o-linear-gradient(top,#5ab2dc 0,#0c7096 100%);
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#5ab2dc),to(#0c7096));
+        background-image: linear-gradient(to bottom,#5ab2dc 0,#0c7096 100%);
+        background-repeat: repeat-x;
+        border-color: #25748c;
+    }
+    .btn-info:focus, .btn-info:hover {
+        background-color: #0e7198;
+    }
+
+    //--------------------CO TO JEST?
+    .account-wall {
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .login-title {
+        color: #555;
+    }
+}
+
+/*---------------------LOADING SNIPPET---------------------------*/
+#loading {
+    margin: 50px;
+    text-align: center;
+}
+
+.bokeh {
+    border: 0.01em solid rgba(150, 150, 150, 0.1);
+    border-radius: 50%;
+    font-size: 100px;
+    height: 1em;
+    list-style: outside none none;
+    margin: 0 auto;
+    position: relative;
+    top: 35%;
+    width: 1em;
+    z-index: 2147483647;
+}
+
+.bokeh li {
+    border-radius: 50%;
+    height: 0.2em;
+    position: absolute;
+    width: 0.2em;
+}
+
+.bokeh li:nth-child(1) {
+    animation: 1.13s linear 0s normal none infinite running rota, 3.67s ease-in-out 0s alternate none infinite running opa;
+    background: #00c176 none repeat scroll 0 0;
+    left: 50%;
+    margin: 0 0 0 -0.1em;
+    top: 0;
+    transform-origin: 50% 250% 0;
+}
+
+.bokeh li:nth-child(2) {
+    animation: 1.86s linear 0s normal none infinite running rota, 4.29s ease-in-out 0s alternate none infinite running opa;
+    background: #ff003c none repeat scroll 0 0;
+    margin: -0.1em 0 0;
+    right: 0;
+    top: 50%;
+    transform-origin: -150% 50% 0;
+}
+
+.bokeh li:nth-child(3) {
+    animation: 1.45s linear 0s normal none infinite running rota, 5.12s ease-in-out 0s alternate none infinite running opa;
+    background: #fabe28 none repeat scroll 0 0;
+    bottom: 0;
+    left: 50%;
+    margin: 0 0 0 -0.1em;
+    transform-origin: 50% -150% 0;
+}
+
+.bokeh li:nth-child(4) {
+    animation: 1.72s linear 0s normal none infinite running rota, 5.25s ease-in-out 0s alternate none infinite running opa;
+    background: #88c100 none repeat scroll 0 0;
+    margin: -0.1em 0 0;
+    top: 50%;
+    transform-origin: 250% 50% 0;
+}
+
+@keyframes opa {
+    12% {
+        opacity: 0.8;
+    }
+
+    19.5% {
+        opacity: 0.88;
+    }
+
+    37.2% {
+        opacity: 0.64;
+    }
+
+    40.5% {
+        opacity: 0.52;
+    }
+
+    52.7% {
+        opacity: 0.69;
+    }
+
+    60.2% {
+        opacity: 0.6;
+    }
+
+    66.6% {
+        opacity: 0.52;
+    }
+
+    70% {
+        opacity: 0.63;
+    }
+
+    79.9% {
+        opacity: 0.6;
+    }
+
+    84.2% {
+        opacity: 0.75;
+    }
+
+    91% {
+        opacity: 0.87;
+    }
+}
+
+@keyframes rota {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#keypad{
+    width: 330px;
+}
+.keypad-key, .keypad-key-delete {
+    width: 100px;
+    height: 80px;
+    float: right;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center;
+    margin-top: 7px;
+    margin-left: 7px;
+    border: 1px solid #316375;
+}

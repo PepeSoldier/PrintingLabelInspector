@@ -1,0 +1,32 @@
+﻿@model string 
+
+@{
+    HtmlString html = new HtmlString(Model);
+    Layout = null;
+}
+
+@*@Styles.Render("~/Content/ExternalStyles")*@
+@Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+@Scripts.Render("~/bundles/ExternalScripts")
+
+@Styles.Render("~/Content/AppStyles")
+@Scripts.Render("~/bundles/AppScripts")
+
+@Scripts.Render("~/bundles/modernizr")
+@Styles.Render("~/Content/iLOGIS_Styles")
+@Scripts.Render("~/bundles/iLOGIS_Scripts")
+
+<style>
+    body{
+        padding-top: 10px;
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+</style>
+
+@*<div id="WhDocumentWZ" style="background-color: white; border: 1px solid red; overflow: hidden;">*@
+<div id="WhDocumentWZ" style=" max-width: 1060px; max-height: 680px; background-color: white; border: 0px solid #b8b8b8; overflow: hidden;">
+    @html
+</div>
+

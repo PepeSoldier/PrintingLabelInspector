@@ -1,0 +1,296 @@
+﻿@using MDLX_MASTERDATA.Entities;
+@using MDL_ONEPROD.Model.Scheduling;
+@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.OeeViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .ui-autocomplete {
+        max-height: 310px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+
+    .headerBOX {
+        height: 30px;
+        width: 100%;
+        vertical-align: bottom;
+        line-height: 30px;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+        border: 1px solid rgba(128,128,128,0.6);
+        overflow: hidden;
+    }
+
+        .headerBOX span {
+            align-self: flex-end;
+            padding-left: 5px;
+        }
+
+    .headerBoxGradient {
+        background: rgba(0,0,0,0.1);
+        background: -moz-linear-gradient(top, rgba(0,0,0,0.1) 0%, rgba(143,143,143,0.34) 50%, rgba(0,0,0,0.17) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0.1)), color-stop(50%, rgba(143,143,143,0.34)), color-stop(100%, rgba(0,0,0,0.17)));
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0.1) 0%, rgba(143,143,143,0.34) 50%, rgba(0,0,0,0.17) 100%);
+        background: -o-linear-gradient(top, rgba(0,0,0,0.1) 0%, rgba(143,143,143,0.34) 50%, rgba(0,0,0,0.17) 100%);
+        background: -ms-linear-gradient(top, rgba(0,0,0,0.1) 0%, rgba(143,143,143,0.34) 50%, rgba(0,0,0,0.17) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(143,143,143,0.34) 50%, rgba(0,0,0,0.17) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+    }
+
+    .headerBOXdone {
+        background-color: #27fc00 !important;
+    }
+
+    .headerBoxCol {
+        padding-left: 0;
+        padding-right: 0;
+        background-color: #acc5a7;
+    }
+
+    .sectionHeader {
+        height: 33px;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: left;
+        vertical-align: central;
+    }
+
+    .sectionHeaderTitle {
+        display: inline-block;
+        padding: 2px 5px 0px 5px !important;
+        vertical-align: bottom;
+        border-bottom: 1px solid #b7b7b7;
+        color: #98ab94;
+    }
+
+
+
+    .formAreaElements {
+        /*padding: 10px;*/
+        /*height: 120px;*/
+    }
+
+    .jsgrid-grid-header,
+    .jsgrid-grid-body {
+        overflow: auto;
+    }
+
+    .jsgrid-header-row > .jsgrid-header-cell {
+        border: 0px;
+        background-color: #D6DCE4;
+    }
+
+    .jsgrid-cell {
+        border: 1px solid #D8D8D8;
+    }
+
+    .reportAbsDiv {
+        position: absolute;
+        width: 100%;
+        margin: auto;
+    }
+
+    #ReportContent {
+        top: 35px;
+        bottom: 55px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .noLeftBorder {
+        border-left: 0 !important;
+    }
+</style>
+
+
+<div style="position:relative; top: 0px; height: 100%; min-height: 400px;">
+    @*STEP INDICATOR*@
+    <div class="row reportAbsDiv" style="height:30px; top: 0px;">
+        <div class="col-3 headerBoxCol">
+            <div id="StepHeader1" class="headerBOX headerBoxGradient">
+                <span>KROK 1 - NAGŁÓWEK RAPORTU</span>
+            </div>
+        </div>
+        <div class="col-3 headerBoxCol">
+            <div id="StepHeader2" class="headerBOX headerBoxGradient noLeftBorder">
+                <span>KROK 2 - DEFINIOWANIE PRACOWNIKÓW</span>
+            </div>
+        </div>
+        <div class="col-3 headerBoxCol">
+            <div id="StepHeader3" class="headerBOX headerBoxGradient noLeftBorder">
+                <span>KROK 3 - DATE DOT. PRODUKCJI</span>
+            </div>
+        </div>
+        <div class="col-3 headerBoxCol">
+            <div id="StepHeader4" class="headerBOX headerBoxGradient noLeftBorder">
+                <span>KROK 4 - DANE DOT. POSTOJÓW</span>
+            </div>
+        </div>
+    </div>
+
+    @*STEPS FORMS*@
+    <div class="reportAbsDiv" id="ReportContent">
+        <div id="ReportStep1"></div>
+        <div id="ReportStep2"></div>
+        <div id="ReportStep3"></div>
+        <div id="ReportStep4"></div>
+    </div>
+
+    @*BOTTOM BUTTONS*@
+    <div class="row reportAbsDiv formArea" style="bottom: 0; height: 50px;">
+        <div class="col-12">
+            <div style="margin: auto; text-align: center;">
+                <a class="btn btn-default" id="btnPrev">
+                    <span class="icon fas fa-caret-left glyphicon-edit"></span>
+                    <span class="caption">WSTECZ</span>
+                </a>
+                <a class="btn btn-default" id="btnNext">
+                    <span class="caption">DALEJ</span>
+                    <span class="icon fas fa-caret-right glyphicon-edit"></span>
+                </a>
+                @*<a class="btn btn-default" id="btnGoToReport" style="display: none;">
+                    <span class="caption">Zakończ i Pokaż Raport</span>
+                    <span class="icon fas fa-folder-open glyphicon-edit"></span>
+                </a>*@
+                <a class="btn btn-default" id="btnGoToReport" style="display: none;">
+                    <span class="caption">Zakończ</span>
+                    <span class="icon fas fa-arrow-alt-circle-right glyphicon-edit"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var step = 1;
+    var reportId = @Html.Raw(Json.Encode(Model.OeeReport.Id));
+    var machineId = @Html.Raw(Json.Encode(Model.OeeReport.MachineId));
+    var reportDate = @Html.Raw(Json.Encode(Model.OeeReport.ReportDate.ToString("yyyy-MM-dd")));
+    var reportShift = @Html.Raw(Json.Encode(Model.OeeReport.Shift));
+    var shiftHour = "06:00";
+
+    var headerStepIndicator = new HeaderStepIndicator();
+
+    $(document).ready(function () {
+        RefreshView();
+    });
+
+    $(document).on("click", "#btnPrev", function () {
+        console.log("click prev");
+        step = step - 1;
+        RefreshView();
+    });
+    $(document).on("click", "#btnNext", function () {
+        console.log("click next");
+        step = step + 1;
+        if (step == 2) { machineId = SaveReport(); }
+        RefreshView();
+    });
+    $(document).on("click", "#btnGoToReport", function () {
+        console.log("click next finish");
+        step = step + 1;
+        RefreshView();
+    });
+
+    function RefreshView() {
+        switch (step) {
+            case 0:
+                loadStep1();
+                break;
+            case 1:
+                loadStep1();
+                break;
+            case 2:
+                loadStep2();
+                break
+            case 3:
+                loadStep3();
+                break
+            case 4:
+                loadStep4();
+                break
+            case 5:
+                verifyReport();
+                break;
+        }
+    }
+
+    function loadStep1() {
+        console.log(reportId);
+        $("#btnGoToReport").hide();
+        $("#btnNext").show();
+        $("#ReportStep1").html(ShowLoadingSnippet());
+        $.get("/ONEPROD/OEECreateReport/Step1", {reportId}, function (data) {
+            $("#ReportStep1").html(data);
+        });
+        step = 1;
+        headerStepIndicator.Refresh(step);
+    }
+    function loadStep2() {
+        console.log(reportId);
+        console.log("machineId");
+        console.log(machineId);
+        $("#btnGoToReport").hide();
+        $("#btnNext").show();
+        if (reportId > 0 && machineId > 0) {
+            $("#ReportStep1").html(ShowLoadingSnippet());
+            $.get("/ONEPROD/OEECreateReport/Step2", { reportId, machineId }, function (data) {
+                $("#ReportStep1").html(data);
+            });
+            step = 2;
+            headerStepIndicator.Refresh(step);
+        }
+        else {
+            if (machineId == 0) {
+                alert("Prawdopodobnie nie wybrano maszyny w kroku 1. Proszę o weryfikację.");
+            }
+            step = 1;
+        }
+    }
+    function loadStep3() {
+        console.log(reportId);
+        $("#btnGoToReport").hide();
+        $("#btnNext").show();
+        $("#ReportStep1").html(ShowLoadingSnippet());
+        $.get("/ONEPROD/OEECreateReport/Step3", { reportId, machineId }, function (data) {
+            $("#ReportStep1").html(data);
+        });
+        step = 3;
+        headerStepIndicator.Refresh(step);
+    }
+    function loadStep4() {
+        $("#btnGoToReport").show();
+        $("#btnNext").hide();
+        console.log(reportId);
+        $("#ReportStep1").html(ShowLoadingSnippet());
+        $.get("/ONEPROD/OEECreateReport/Step4", { reportId, machineId }, function (data) {
+            $("#ReportStep1").html(data);
+        });
+        step = 4;
+        headerStepIndicator.Refresh(step);
+    }
+    function verifyReport() {
+        $.ajax({
+            async: false, type: "POST", dataType: "json", data: { reportId: reportId },
+            url: "/ONEPROD/OEECreateReport/VerifyReport",
+            success: function (data) {
+                if (data.MicroStopsAuto > 0) {
+                    alert("Podczas weryfikacji raportu wykryto niezgodność na: " + (data.MicroStopsAuto / 60).toFixed(2) + " min. Różnica została wyrównana przez dodanie automatycznego mikropostoju.");
+                    loadStep4();
+                }
+                else {
+                    alert("Tworzenie raportu zostało ukończone");
+                    console.log("go to browse");
+                    location.href = "/ONEPROD/OEE#machinedetails#form-MachineId=" + machineId+"&modeSwitcher=3&SelectedDate="+reportDate+"&SelectedShift="+reportShift;
+                }
+            }
+        });
+    }
+
+</script>
+

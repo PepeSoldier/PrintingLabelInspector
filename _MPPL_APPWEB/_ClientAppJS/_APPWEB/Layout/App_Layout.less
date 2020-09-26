@@ -1,0 +1,62 @@
+﻿//------------------------LAYOUT------------------------1
+.layoutStyle(@bgBody, @colorBody, @colorLink, @bgImage) {
+
+    color: @colorBody;
+    background-color: @bgBody;
+    background-image: @bgImage;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*background-color: @color_background;*/
+    padding-top: 50px;
+    padding-bottom: 20px;
+    -webkit-print-color-adjust: exact;
+
+    /*a {
+        color: @colorLink;
+    }*/
+}
+
+.col-2p4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+@media (min-width: 992px) {
+    .col-lg-2p4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+
+@media screen and (max-height: 680px) and (min-height: 0px) {
+    #sidebar-wrapper-left {
+        display: none;
+    }
+
+    #wrapper {
+        padding-left: 0 !important;
+    }
+
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #page-content-wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .currentPageName {
+        display: none;
+    }
+
+    #refreshAll {
+        right: 118px !important;
+    }
+}

@@ -1,0 +1,139 @@
+﻿#PSI .gridJs td,
+#PSI .gridJs th {
+  overflow: hidden;
+}
+#PSI .Result {
+  height: 52px;
+  float: left;
+  margin: 3px;
+}
+#PSI .ResultTitle {
+  height: 52px;
+  float: left;
+  background-color: #7d7d7d;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 18px;
+  line-height: 52px;
+}
+#PSI .ResultValue {
+  height: 52px;
+  float: left;
+  background-color: #b2b2b2;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 2px;
+  font-size: 26px;
+  line-height: 52px;
+}
+#PSI .Legend {
+  height: 40px;
+  width: 180px;
+  float: left;
+}
+#PSI .LegendSq {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+#PSI .LegendText {
+  height: 40px;
+  width: 110px;
+  float: left;
+  margin-left: 5px;
+}
+#PSI .orderOK {
+  background-color: limegreen !important;
+}
+#PSI .orderDeleted {
+  background-color: orangered !important;
+}
+#PSI .orderAdded {
+  background-color: yellow !important;
+}
+#PSI .orderSeqChanged {
+  background-color: orange !important;
+}
+#PSI .orderSeqProd {
+  background-color: lightpink !important;
+}
+#PSI .cbSelectOrder {
+  margin: 0 !important;
+  width: 30px;
+  height: 30px;
+}
+#PSI .cbCell {
+  padding: 0 !important;
+}
+#PSI .reasonCell {
+  width: 50%;
+  height: 20px;
+  padding-right: 5px;
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#PSI .reasonCell:hover {
+  background-color: #00ffff;
+}
+#PSI .commentCell {
+  width: 50%;
+  height: 20px;
+  font-style: italic;
+  color: steelblue;
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#PSI .commentCell:hover {
+  background-color: #00ffff;
+}
+#PrdSchedule .highlight td {
+  background-color: #bfe4ff !important;
+}
+#PrdSchedule .rowSeqChanged {
+  background-color: rgba(254, 249, 0, 0.14);
+}
+#PrdSchedule .seqChanged {
+  color: red;
+  font-weight: bold;
+}
+#PrdSchedule .dragCell {
+  color: #c7c7c7;
+}
+#PrdSchedule .drag-handler {
+  cursor: move !important;
+}
+#PrdSchedule .snapshotLi {
+  border-bottom: 1px solid #e8e8e8;
+  height: 28px;
+}
+#PrdSchedule .snapshotLi .fas {
+  padding: 5px;
+  font-size: 18px;
+}
+#PrdSchedule .snapshotLi .fa-eye:hover {
+  color: #0094ff;
+}
+#PrdSchedule .snapshotLi .fa-trash-alt:hover {
+  color: #ff0000;
+}
+#PrdSchedule .btn .fas {
+  margin: 0 5px 0 0;
+  font-size: 18px;
+}
+#PrdSchedule #selectedOrderInfo input,
+#PrdSchedule #selectedOrderInfo div {
+  display: inline-block;
+}
+#PrdSchedule .sortable-ghost {
+  border: 1px solid red;
+}
+#PrdSchedule .sortable-chosen {
+  border: 1px solid green;
+}
+#PrdSchedule .sortable-drag {
+  border: 1px solid orange;
+}

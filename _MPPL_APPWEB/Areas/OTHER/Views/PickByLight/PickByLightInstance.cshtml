@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "PickByLightInstance";
+}
+
+<style>
+    
+</style>
+
+<h2>Visual Control Config</h2>
+<div id="JobItemConfigGrid"></div>
+
+<div class="btn btn-default" id="btnTest">Test</div>
+
+<script src="~/Areas/OTHER/Views/PickByLight/PickByLightInstance.js"></script>
+<script type="text/javascript">
+
+    var pickByLightInstance;
+
+    $(document).ready(function () {
+        pickByLightInstance = new PickByLightInstance();
+
+    });
+
+    $("#btnTest").click(function () {
+        //$.get("/OTHER/VisualControl/Tester", function (data) {
+        //    wnd = new PopupWindow(1000, 400);
+        //    wnd.Init("ConfigTester", "Testowanie konfiguracji");
+        //    wnd.Show(data);
+        //});
+    });
+
+</script>

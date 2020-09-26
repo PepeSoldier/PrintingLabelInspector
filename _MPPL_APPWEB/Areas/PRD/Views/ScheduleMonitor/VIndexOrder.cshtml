@@ -1,0 +1,163 @@
+﻿@model int
+@{
+    string[] statusesInternal = ViewBag.StatusesInternal;
+    string[] statusesExternal = ViewBag.StatusesExternal;
+
+    statusesExternal = statusesExternal.Length == 1 && statusesExternal[0] == "" ? new string[] { } : statusesExternal;
+
+    int[] columns = new int[] { 12, 12, 6, 4, 3, 2, 2, 1, 1, 1, 1, 1 };
+
+    int statusesCount = statusesInternal.Length + statusesExternal.Length;
+    int col = statusesCount > 12? 1 : columns[statusesCount];
+    Layout = null;
+}
+
+@if (Model == 4)
+{
+
+    <div class="orderBox" style="height: 32px; margin-bottom: 8px;">
+        <div class="row rowNM brdb1">
+            <div class="col-6">
+                <div class="row">
+                    <div class="colNP brdt1" style="width: 75%;">
+                        @*DATA, GODZINA, ORDER, PNC*@
+                        <div class="row rowNM" style="height: 30px; max-height: 30px;">
+                            <div class="colNP col-4 brdr1 brd2">
+                                <div class="row rowNM">
+                                    <div class="colNP col-12 brd2">
+                                        <div class="boxBlock brd1 fntSM boxHeader" style="width: 100%;">GODZ.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="colNP col-8 brdr1 brd2">
+                                <div class="row rowNM">
+                                    <div class="colNP col-12 brd2" style="background-color: #ffffff0a;">
+                                        <div class="boxBlock brd1 fntSM boxHeader">PNC</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*ILOŚCI*@
+                    <div class="colNP brd3" style="width: 25%;">
+                        <div class="row rowNM" style="margin-top: 0px;">
+                            <div class="colNP col-12 brdr1">
+                                <div class="boxQtyHeader">ILOŚĆ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*STATUSY*@
+            <div class="col-4" style="height: 30px;">
+                <div class="row">
+                    <div class="col-12 colNP" style="margin-left:-1px; border-left: 2px solid rgba(0, 0, 0, 0.07);">
+                        <div class="row rowNM">
+                            @for (int i = 0; i < statusesInternal.Length; i++)
+                            {
+                                <div class="col-@col colNP">
+                                    <div class="boxStatusTitle">@statusesInternal[i]</div>
+                                </div>
+                            }
+                            @for (int i = 0; i < statusesExternal.Length; i++)
+                            {
+                                <div class="col-@col colNP">
+                                    <div class="boxStatusTitle">@statusesExternal[i]</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2" style="height: 30px;">
+                <div class="row">
+                    <div class="col-12 colNP" style="margin-left:-1px; border-left: 2px solid rgba(0, 0, 0, 0.07);">
+                        <div class="boxQtyHeader">BRAKI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="orderBox">
+    <div class="row rowNM brdb1">
+        <div class="col-6">
+            <div class="row">
+                <div class="colNP brdt1" style="width: 75%;">
+                    @*DATA, GODZINA, ORDER, PNC*@
+                    <div class="row rowNM" style="height: 52px; max-height: 52px;">
+                        <div class="colNP col-4 brdr1 brd2">
+                            <div class="row rowNM">
+                                <div class="colNP col-12 brd2">
+                                    <div class="boxBlock brd1 boxHour" style="width: 100%;">00:@(Model)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="colNP col-8 brdr1 brd2">
+                            <div class="row rowNM">
+                                <div class="colNP col-12 brd2">
+                                    <div class="boxBlock brd1 boxPNC">911 000 0@(Model.ToString())</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*ILOŚCI*@
+                <div class="colNP brdt1 brd3" style="width: 25%;">
+                    <div class="row rowNM">
+                        <div class="colNP col-12 brdr1">
+                            <div class="boxQty" id="QtyPlanned">00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*STATUSY*@
+        <div class="col-4" style="height: 52px;">
+            <div class="row">
+                <div class="col-12 colNP brdt1" style="margin-left:-1px; border-left: 2px solid rgba(0, 0, 0, 0.07);">
+                    <div class="row rowNM">
+
+                        @for (int i = 0; i < statusesInternal.Length; i++)
+                        {
+                            <div class="col-@col colNP">
+                                <div class="boxState boxStatus1" id="state@(statusesInternal[i])" style="height: 53px;">
+                                </div>
+                            </div>
+                        }
+
+                        @for (int i = 0; i < statusesExternal.Length; i++)
+                        {
+                            <div class="col-@col colNP">
+                                <div class="boxState boxStatus1" id="state@(statusesExternal[i])" style="height: 53px;">
+                                    <span class="StatusInfoExtra"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2" style="height: 30px;">
+            <div class="row">
+                <div class="col-12 colNP brdt1 boxState missInfo" style="margin-left:-1px; border-left: 2px solid rgba(0, 0, 0, 0.07);">
+                    <div class="row no-gutters">
+                        <div class="col-9"><div class="missItemCode"></div></div>
+                        <div class="col-3"><div class="missQty"></div></div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-12"><div class="missItemName"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

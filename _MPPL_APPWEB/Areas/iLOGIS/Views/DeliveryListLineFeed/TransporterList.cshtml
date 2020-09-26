@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Line Feeders List";
+    Layout = null;
+}
+<div class="h-100 d-flex flex-column" id="contentView">
+
+</div>
+
+<script id="PickerBoxTemplate" type="x-tmpl-mustache">
+    <ilogis-wms-mobile-pageheader headerTitle="Wybierz Dowożącego" icon="fas fa-truck-pickup">
+    </ilogis-wms-mobile-pageheader>
+    @*GRID*@
+    <div class="row no-gutters justify-content-center mt-2">
+        <div class="col-12">
+            <div class="row no-gutters mb-2" id="OrderRows" style="overflow-y:auto; padding-bottom: 65px;">
+                {{#PickerList}}
+                <div class="col-6 p-1">
+                    <div class="pickerBox orderRow" data-id="{{Id}}">
+                        <div class="row no-gutters">
+                            <div class="col-12 Name">{{Name}}</div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-12 ConnTransp">{{ConnectedTransporters}}</div>
+                        </div>
+                    </div>
+                </div>
+                {{/PickerList}}
+            </div>
+        </div>
+    </div>
+    @*Buttons*@
+    <div class="row no-gutters justify-content-center fixed-bottom w-100">
+        <div class="col-6">
+            <a href="#/iLOGIS/WMS/MobileMenu">
+                <div class="btn btn-default btnAction text-center">
+                    ZAKOŃCZ
+                </div>
+            </a>
+        </div>
+        <div class="col-6">
+            <div class="btn btn-primary btnAction text-center" id="btnGoToDeliveryListLF">
+                WYBIERZ
+            </div>
+        </div>
+    </div>
+
+</script>
+<script type="text/javascript">
+    console.log("Transporters LF 0");
+    //var pickingListHelper = new PickingListHelper();
+    var transporterList = new TransporterList("lineFeedList");
+    $(document).ready(function () {
+        //openFullscreen();
+        console.log("Transporters LF");
+        transporterList.InitLF();
+    });
+
+</script>
+
+

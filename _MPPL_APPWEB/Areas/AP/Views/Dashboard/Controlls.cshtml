@@ -1,0 +1,30 @@
+﻿@model _MPPL_WEB_START.Areas.AP.ViewModel.ActionDashBoardFilterViewModel
+@{
+    Layout = null;
+}
+
+
+<div class="row fcbx">
+    <div class="col-sm-6">
+        <h2>Filtr czasowy</h2>
+        <input type="radio" name="TimeFilter" id="rb1" value="0" />
+        <label for="rb1">Wszystko</label>
+        <input type="radio" name="TimeFilter" id="rb2" value="1" />
+        <label for="rb2">Ostatni miesiąc</label>
+        <input type="radio" name="TimeFilter" id="rb3" value="2" checked />
+        <label for="rb3">Ten Tydzień</label>
+        <input type="radio" name="TimeFilter" id="rb4" value="3" />
+        <label for="rb4">Dzisiaj</label>
+    </div>
+    <div class="col-sm-6">
+        <h2>Filtr personalny</h2>
+        <input type="radio" name="PersonalFilter" id="cb4" value="0" />
+        <label for="cb4">Wszystkie</label>
+        <input type="radio" name="PersonalFilter" id="cb3" value="1" checked />
+        <label for="cb3">Przypisane do mojego działu</label>
+        <input type="radio" name="PersonalFilter" id="cb2" value="2" />
+        <label for="cb2">Przypisane do mnie</label>
+        <input type="radio" name="PersonalFilter" id="cb1" value="3" />
+        <label for="cb1">Moje akcje</label>
+    </div>
+</div>

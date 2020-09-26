@@ -1,0 +1,106 @@
+﻿@model  _MPPL_WEB_START.Areas.AP.ViewModel.Def.IDefManageComboViewModel
+@using GridMvc.Html
+@using _MPPL_WEB_START.Areas.AP.ViewModel.Def
+@{
+    ViewBag.Title = Model.Titled;
+    string defId = Convert.ToString(Url.RequestContext.RouteData.Values["id"]);
+}
+
+@Html.Partial("_DefMenuPartial")
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="formArea">
+
+            @using (Html.BeginForm("DefManageCombo", "Def", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Podaj nazwe", "Nazwa", new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.TextBox("Name", "", new { @class = "form-control" })
+                        @Html.Hidden("id", defId)
+                    </div>
+                </div>
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                        @Html.Label("Wybierz wartość", "Obszar", new { @class = "col-md-2 control-label" })
+                    </div>
+                    <div class="formInlineRow">
+                        @Html.DropDownList("SelectedComboId", (SelectList)Model.ComboObjectsList, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="formInlineGroup">
+                    <div class="formInlineRow">
+                    </div>
+                    <div class="formInlineRow">
+                        <input type="submit" value="Dodaj" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+
+            <div class="clear_div"></div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+@Html.Grid(Model.ObjectList).Columns(columns =>
+{
+
+    columns.Add().Encoded(false).Sanitized(false).Css("hidden").RenderValueAs(
+        @<span>
+            @Html.Label("typeId", defId, new { @class = "display-mode" })
+            @Html.TextBox("typeId", defId, new { @class = "edit-mode" })
+        </span>);
+    columns.Add(dd => dd.Name).Titled("Nazwa").SetWidth(300).Editable(true); ;
+
+    columns.Add().Titled("Obszar").Encoded(false).Sanitized(false).SetWidth(280).RenderValueAs(dd =>
+        @<span>
+            @{ 
+                IEnumerable<SelectListItem> sl = new SelectList(Model.ComboObjectsList, "Value", "Text", dd.AreaId);
+            }
+            @Html.Label("SelectedComboId", (sl.FirstOrDefault(x=>x.Selected == true) != null? sl.FirstOrDefault(x => x.Selected == true).Text : "" ), new { @class = "display-mode" })
+            
+            <select class="form-control edit-mode" id="SelectedComboId" name="SelectedComboId" style="display: none;">
+                @foreach (SelectListItem sli in Model.ComboObjectsList)
+                {
+                <option value="@sli.Value" @(sli.Selected ? "selected" : string.Empty) >@sli.Text</option>
+                }
+            </select>
+        </span>
+    );
+    columns.Add(u => u.Id).Titled("").EditActionColumn("", Url.Action("EditDefManageCombo", "Def"), Url.Action("DeleteDefManage", "Def", new { id = defId }));
+
+}).WithPaging(50)
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $(document).ready(function () {
+
+                var url = window.location.pathname;
+                var id = url.substring(url.lastIndexOf('/') + 1);
+
+                //if (id == 1)
+                //    $('#aCostType').addClass("btn-switcher-active");
+                //else if(id == 2)
+                //    $('#aCurrency').addClass("btn-switcher-active");
+                //else if (id == 5)
+                //    $('#aVehicleType').addClass("btn-switcher-active");
+            });
+        });
+                
+    </script>
+}
+

@@ -1,0 +1,55 @@
+﻿@using GridMvc.Html
+
+@{
+    ViewBag.Title = "PFEP Change Log";
+    Layout = null;
+}
+
+<style>
+    .cellOldVal{
+        background: #ff525233 !important;
+        color: #dc9191;
+    }
+    .cellNewVal{
+        background-color: #83ff834a !important;
+        color: #b1e6b1;
+    }
+    .cellArrow{
+        background: #4cbdff59 !important;
+        color: #3fbeda;
+    }
+</style>
+
+<div class="row justify-content-center h-100 no-gutters flex-column">
+    <div class="col-12">
+        <div class="h-100 d-flex flex-column">
+            <div class="row no-gutters">
+                @*@{ Html.RenderAction("Index", "Config", new { area = "iLOGIS" }); }*@
+            </div>
+            <div class="row justify-content-center h-100 mh-100 flex-grow-1 mt-2 mb-0 no-gutters" style="overflow: auto;">
+                <div class="col-12" id="changeLogGrid">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+
+<script type="text/javascript">
+    var parameters = {};
+    parameters.ObjectId = @Html.Raw(Json.Encode(ViewBag.ObjectId));
+    parameters.ObjectDescription = @Html.Raw(Json.Encode(ViewBag.ObjectDescription));
+    parameters.ParentObjectId = @Html.Raw(Json.Encode(ViewBag.ParentObjectId));
+    parameters.ParentObjectDescription = @Html.Raw(Json.Encode(ViewBag.ParentObjectDescription));
+    parameters.Mode = @Html.Raw(Json.Encode(ViewBag.Mode));
+
+    var gridCL = new ChangeLogGrid("#changeLogGrid", parameters);
+    $(document).ready(function () {
+        gridCL.InitGrid();
+        gridCL.RefreshGrid();
+        SelectActiveMenuLink(@Html.Raw(Json.Encode(ViewContext.RouteData.Values["action"])));
+    });
+
+</script>

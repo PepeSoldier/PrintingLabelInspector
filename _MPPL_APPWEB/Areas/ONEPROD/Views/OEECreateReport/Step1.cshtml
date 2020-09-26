@@ -1,0 +1,172 @@
+﻿@using MDLX_MASTERDATA.Entities;
+@using MDL_ONEPROD.Model.Scheduling;
+@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.OeeViewModel
+@{
+    Layout = null;
+}
+
+<div class="row" style="margin-top:15px;">
+    <div class="col-12 sectionHeader">
+        <div class="formArea sectionHeaderTitle">NAGŁÓWEK RAPORTU</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "formReportStageOne" }))
+        {
+        <div class="formArea">
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>MASZYNA</label>
+                </div>
+                <div class="formInlineRow">
+                    @HtmlMppl.DropDownCategory("OeeReport.MachineId", Model.Machines, "Id", "Name", "Area.Name", (int)(Model.OeeReport.MachineId ?? 1))
+                    @*@Html.TextBoxFor(model => model.OeeReport.Machine.Name, new { @class = "form-control MachineAutoComplete" })
+                @Html.Hidden("OeeReport.MachineId")*@
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>DATA</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.TextBoxFor(model => model.OeeReport.ReportDate, new { @class = "form-control datepicker workingHours", @Value = Model.OeeReport.ReportDate.ToString("yyyy-MM-dd") })
+                    @Html.HiddenFor(model => model.OeeReport.Id)
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>ZMIANA</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.EnumDropDownListFor(model => model.OeeReport.Shift, "--wybierz zmianę--", new { @class = "form-control workingHours", @value = Model.OeeReport.Shift })
+                </div>
+            </div>
+
+            <div class="formInlineGroup" style="width: 260px;">
+                <div class="formInlineRow">
+                    <label>OKRES</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.TextBox("SelectedShiftTime", "", new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <label>BRYGADA</label>
+                </div>
+                <div class="formInlineRow">
+                    @Html.DropDownListFor(model => model.OeeReport.LabourBrigadeId, Model.LabourBrigades, new { @class = "form-control" })
+                </div>
+            </div>
+
+            @if (Model.ReportId > 0)
+            {
+            <div class="formInlineGroup" style="float: right;">
+                <div class="formInlineRow">
+                    <label></label>
+                </div>
+                <div class="formInlineRow">
+                    <div class="btn btn-danger" id="btnDeleteReport" data-reportId="@Model.ReportId">Usuń Raport</div>
+                </div>
+            </div>
+            }
+
+            <div style="clear: both;"></div>
+        </div>
+        }
+    </div>
+</div>
+<div class="row hidden" id="reportExists" style="margin-top: 15px;">
+    <div class="col-12 ">
+        <div class="formArea">
+            <span style="color: #bb0000; font-size: 18px;">
+                Raport dla wybranej maszyny, daty i zmiany już istnieje! Twój raport nie został zaktualizowany.
+                <br />Możesz zmienić parametry raportu, lub przejść do edycji istniejącego raportu.
+            </span>
+            <hr />
+            <button class="btn btn-primary" id="stayHere">
+                Chcę tu zostać i zmienić parametry
+            </button>
+            <a class="btn btn-primary" id="hrefGoToExistingReport" href="">
+                Chcę przejść do istniejącego raportu
+            </a>
+        </div>
+    </div>
+</div>
+<script src="~/_ClientAppJS/ExternalLibraries/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript">
+
+    var reportId = @Html.Raw(Json.Encode(Model.ReportId));
+    var machineId = @Html.Raw(Json.Encode(Model.MachineId));
+
+    var whp = new WorkingHoursPreview("#OeeReport_ReportDate", "#OeeReport_Shift");
+
+    $(document).ready(function () {
+        console.log("step1 wczytany");
+        whp.RefreshHours("#SelectedShiftTime");
+        shiftHour = whp.GetShiftStartHour();
+        InitMachineAutocompleteByName(".MachineAutoComplete", "#OeeReport_Machine_Name", "#OeeReport_MachineId");
+        InitDatepickers();
+        $('#OeeReport_MachineId').selectpicker('refresh');
+    });
+
+    $(document).on("change", ".workingHours", function () {
+        console.log("wrkh change");
+        whp.RefreshHours("#SelectedShiftTime");
+        shiftHour = whp.GetShiftStartHour();
+    });
+
+    $("#stayHere").click(function () {
+        $("#reportExists").addClass("hidden");
+    });
+
+    $("#btnDeleteReport").off("click");
+    $("#btnDeleteReport").on("click", function () {
+        
+        var reportId = $(this).attr("data-reportId");
+        var reportDate = $("#OeeReport_ReportDate").val();
+        var reportShift = $("#OeeReport_Shift").val();
+        var machineId = $("#OeeReport_MachineId").val();
+
+        $.ajax({
+            async: false, type: "POST", dataType: "json",
+            data: { reportId, reportDate, reportShift, machineId },
+            url: "/ONEPROD/OEECreateReport/DeleteReport",
+            success: function (data) {
+                //location.reload();
+            },
+            error: function () {
+                //location.reload();
+            }
+        });
+    });
+
+    function SaveReport() {
+        console.log("save form step1");
+        var data = $("#formReportStageOne").serialize();
+        var machineId = 0;
+        console.log(data);
+        $.ajax({
+            async: false, type: "POST", dataType: "json", data: data,
+            url: "/ONEPROD/OEECreateReport/SaveReport",
+            success: function (data) {
+                if (data.existingReportId > 0) {
+                    $("#reportExists").removeClass("hidden");
+                    $("#hrefGoToExistingReport").attr("href", "/ONEPROD/OEECreateReport/Index/" + data.existingReportId);
+                }
+                else if (data.reportMachineId > 0) {
+                    console.log("Udało się zapisać raport");
+                }
+                machineId = data.reportMachineId;
+            }
+        });
+
+        console.log("machineId return");
+        console.log(machineId);
+        return machineId;
+    }
+</script>

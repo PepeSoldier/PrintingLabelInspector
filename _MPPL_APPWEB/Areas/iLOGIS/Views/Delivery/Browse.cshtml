@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Delivery Browse";
+}
+<style>
+    .jsgrid-grid-body {
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+<div class="row no-gutters mb-2">
+    <div class="col-12">
+        <div class="formArea shadow">
+            <form id="formId">
+                <fieldset>
+                    <div class="form-group row no-gutters">
+                        <div class="col-2 pr-2">
+                            <input type="text" class="form-control" placeholder="Dostawca" name="supplierName">
+                        </div>
+                        <div class="col-2 pr-2">
+                            <input type="text" class="form-control" placeholder="Nr. dokumentu" name="documentNumber">
+                        </div>
+                        <div class="col-2 pr-2">
+                            <input type="text" class="form-control datepicker" placeholder="Data dokumentu" name="documentDate">
+                        </div>
+                        <div class="col-2 pr-2">
+                            <input type="text" class="form-control datepicker" placeholder="Data wprowadzenia" name="stampTime">
+                        </div>
+                        <div class="col-2 pr-2">
+                            <input type="text" class="form-control tbItemCode" placeholder="Kod produktu" name="itemCode">
+                        </div>
+                        <div class="col-1 ml-4">
+                            <div class="btn btn-info form-control" id="searchButton">
+                                Szukaj
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row no-gutters">
+    <div class="col-12">
+        <div id="grid"></div>
+    </div>
+</div>
+<script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+<script type="text/javascript">
+    var deliveryGrid = new DeliveryGrid("#grid");
+
+    $(document).ready(function () {
+        console.log("Delivery Browse Loaded");
+        deliveryGrid.InitGrid();
+        deliveryGrid.RefreshGrid();
+        ItemAutcomplete("", ".tbItemCode");
+    });
+
+    $(document).on("click", "#searchButton", function () {
+        Refreshgrid();
+    });
+
+    $(document).on('keydown', "#formId", (event) => { if (event.which === 13) { Refreshgrid(); return true; } });
+
+    function Refreshgrid() {
+        console.log("Refreshgrid");
+        var formData = convertFormToArray($("#formId")[0]);
+        deliveryGrid.RefreshGrid(formData);
+    }
+
+    //function RefreshDeliveryItemGrid(deliveryId) {
+    //    var deliveryID = { "DeliveryId": deliveryId };
+    //    console.log(deliveryID);
+    //    deliveryItemGrid.RefreshGrid(deliveryID);
+    //}
+
+
+</script>

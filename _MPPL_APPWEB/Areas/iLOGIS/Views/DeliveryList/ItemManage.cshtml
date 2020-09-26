@@ -1,0 +1,286 @@
+﻿@{
+    Layout = null;
+    int itemWMSId = ViewBag.ItemWMSId;
+    int workstationId = ViewBag.WorkstationId;
+    int trainId = ViewBag.TrainId;
+}
+
+<style>
+
+    #wrkstName {
+        font-size: 60px;
+        text-align: center;
+        background-color: #123846;
+    }
+    .arrowCentered {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        align-items: center;
+        font-size: 100px;
+        color: #19262a;
+    }
+    #itemCode {
+        padding-left: 10px;
+        font-size: 40px;
+    }
+    #itemName {
+        padding-left: 10px;
+        font-size: 26px;
+        color: #5b7782;
+    }
+    .woQtyDetails {
+        font-size: 60px;
+        text-align: center;
+        height: 58px;
+        line-height: 52px;
+    }
+   .woQtyDetailsSmall {
+        font-size: 30px;
+    }
+    .btnAddSubstract {
+        width: 100%;
+        height: 100px;
+        font-size: 90px;
+        line-height: 65px;
+    }
+    .label {
+        color: #256570;
+        text-align: center;
+    }
+    .editQtyLabel {
+        font-size: 18px;
+        text-align: center;
+    }
+    .editQtyVal{
+        font-size: 45px;
+        text-align:center;
+    }
+    .brdbtm {
+        border-bottom: 1px solid #123846;
+    }
+    .brdlft {
+        border-left: 1px solid #123846;
+    }
+    .qtyOK {
+        color: #00ff51;
+    }
+   
+</style>
+
+<div class="row no-gutters" id="confirmWindow">
+    <div class="col-1 arrowCentered" id="prevItemRow">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="col-10">
+        <div class="row no-gutters">
+            <div class="hidden">
+                <div id="itemId"></div>
+                <div id="wrkstId"></div>
+            </div>
+            <div class="col-4 label" style="text-align: left;">Stanowisko</div>
+            <div class="col-7 label" style="text-align: left;">Komponent</div>
+            <div class="col-1 label" style="text-align: left;">Wyzeruj</div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-4" id="wrkstName">0</div>
+            <div class="col-8">
+                <div class="row no-gutters">
+                    <div class="col-10" id="itemCode">000000000</div>
+                    <div class="col-2" id="btnClearStock">
+                        <div style="font-size: 38px; text-align: center; margin-left: 19px; border-radius: 8px; border:1px solid #978080; color: #e6cece;">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12" id="itemName">ITEM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden" style="text-align:center;">
+            <div class="row no-gutters pt-3">
+                <div class="col-3 label">Zapotrzebowanie</div>
+                <div class="col-6 label">Dostarczono</div>
+                <div class="col-3 label">Użyto</div>
+            </div>
+            <div class="row no-gutters" style="border-bottom: 1px solid #123846;">
+                <div class="col-3 " id="qtyRequested">0</div>
+                <div class="col-6 " id="qtyDelivered">0</div>
+                <div class="col-3 " id="qtyUsed">0</div>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-3 label">Opak. na stanow.</div>
+            <div class="col-6 label">Sztuk na stanow.</div>
+            <div class="col-3 label">Pokrycie prod.</div>
+        </div>
+        <div class="row brdbtm pb-2">
+            <div class="col-3 woQtyDetails" id="boxWorkstation">0.0</div>
+            <div class="col-6 woQtyDetails" id="qtyWorkstation" data-itemId="" data-wrkstId="">0</div>
+            <div class="col-3 woQtyDetails" id="timeCoveredWorkstation">0</div>
+        </div>
+
+        <div class="row no-gutters mt-2 pb-2 brdbtm">
+            <div class="col-3 " id="b1">
+                <div id="btnMinus" class="btn btn-lg btn-danger btnAddSubstract">-</div>
+            </div>
+            <div class="col-3 " id="b2A">
+                <div class="row no-gutters">
+                    <div class="col-12 label editQtyLabel">
+                        OPAK
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12 editQtyVal">
+                        <span id="delBoxes"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 " id="b2B">
+                <div class="row no-gutters">
+                    <div class="col-12 label editQtyLabel">
+                        SZT
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12 editQtyVal">
+                        <span id="delQty"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 " id="b3">
+                <div id="btnPlus" class="btn btn-lg btn-success btnAddSubstract">+</div>
+            </div>
+        </div>
+
+
+        <div class="row no-gutters mt-4" style="text-align:center;">
+            <div class="col-9">
+                <div class="row no-gutters">
+                    <div class="col-4 ">
+                        <div class="row no-gutters">
+                            <div class="col-12 label">Szt/Opak:</div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <span id="qtyPerPackage" style="font-size: 42px" class="woQtyDetails">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 brdlft">
+                        <div class="row no-gutters">
+                            <div class="col-12 label">Szt. do dost:</div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <span id="qtyToBeDelivered" style="font-size: 42px" class="woQtyDetails">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 brdlft">
+                        <div class="row no-gutters">
+                            <div class="col-12 label">Opak. do dost:</div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <span id="packagesToBeDelivered" style="font-size: 21px" class="woQtyDetails">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="width: 100%;height: 75px;font-size: 38px;" id="btnSave" class="btn btn-lg btn-primary">
+                    <i class="fas fa-thumbs-up"></i>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-1 arrowCentered" id="nextItemRow">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        console.log("hello. Confirming delivery item");
+        dl.ItemManage().SetItemWMSId(@Html.Raw(Json.Encode(itemWMSId)));
+        dl.ItemManage().SetWorkstationId(@Html.Raw(Json.Encode(workstationId)));
+        dl.ItemManage().SetQtyPerPackage(1);
+        dl.ItemManage().SetDeliveredCounter(0);
+        dl.ItemManage().GetItemDetails()
+        Swipe();
+    });
+
+    function Swipe() {
+        var elW = document.getElementById("confirmWindow");
+        var hammer = new Hammer(elW);
+        
+        hammer.get('swipe').set({
+            direction: Hammer.DIRECTION_ALL,
+        });
+
+        hammer.on("swipeleft", function (event) {
+            dl.ItemManage().ChangeItemRow(1);
+        });
+        hammer.on("swiperight", function (event) {
+            dl.ItemManage().ChangeItemRow(-1);
+        });
+        hammer.on("swipeup", function (event) {
+            dl.ItemManage().GetCurrentWindow().Close();
+        });
+    }
+
+    $("#qtyWorkstation").click(function () {
+        let qty = parseInt($(this).text());
+        let itemWMSId = parseInt($(this).closest(".WindowContent").find("#itemId").text());
+        let wrkstId = parseInt($(this).closest(".WindowContent").find("#wrkstId").text());
+
+        dl.ItemManage().ShowPopup_ItemManageInventory(itemWMSId, wrkstId, qty);
+    });
+    $(".editQtyVal").click(function () {
+        let itemWMSId = parseInt($(this).closest(".WindowContent").find("#itemId").text());
+        let wrkstId = parseInt($(this).closest(".WindowContent").find("#wrkstId").text());
+        let wrkstQty = parseInt($(this).closest(".WindowContent").find("#qtyWorkstation").text());
+
+        dl.ItemManage().ShowPopup_ItemManageManualQty(itemWMSId, wrkstId, wrkstQty);
+    });
+
+    $(document).off('click', "#btnMinus");
+    $(document).on("click", "#btnMinus", function () { dl.ItemManage().ChangeQty(-1); });
+    $(document).off('click', "#btnPlus");
+    $(document).on("click", "#btnPlus", function () { dl.ItemManage().ChangeQty(1); });
+    $(document).off('click', "#prevItemRow");
+    $(document).on("click", "#prevItemRow", function () { dl.ItemManage().ChangeItemRow(-1); });
+    $(document).off('click', "#nextItemRow");
+    $(document).on("click", "#nextItemRow", function () { dl.ItemManage().ChangeItemRow(1); });
+    $(document).off('click', "#btnSave");
+    $(document).on("click", "#btnSave", function () { dl.ItemManage().Save(); });
+
+    $(document).off('click', "#btnClear");
+    $(document).on("click", "#btnClear", function () {
+        $("#inventoryQty").val("");
+    });
+    $(document).off('click', "#btnConfirmInventory");
+    $(document).on("click", "#btnConfirmInventory", function () {
+        dl.ItemManage().ConfirmInventory();
+    });
+    $(document).off('click', "#btnConfirmDelivery");
+    $(document).on("click", "#btnConfirmDelivery", function () {
+        dl.ItemManage().ConfirmDelivery();
+    });
+    $(document).off('click', "#btnClearStock");
+    $(document).on("click", "#btnClearStock", function () {
+        dl.ItemManage().ClearStock();
+    });
+    
+</script>

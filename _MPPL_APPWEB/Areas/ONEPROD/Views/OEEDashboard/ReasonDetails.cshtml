@@ -1,0 +1,408 @@
+﻿@model _MPPL_WEB_START.Areas.ONEPROD.OEE.ViewModels.DashBoardViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Reason Details";
+}
+
+<style>
+    .chartTitle {
+        width: 100%;
+        padding: 15px 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+
+@*CHART*@
+<section id="SecondRow" class="SectionBox" style="margin-top: 15px;">
+    <div class="row mt15">
+        @*OEE CHART*@
+        <div class="col-12">
+            <div class="shadow WindowBox">
+                <div class="chartTitle">Analiza Wybranego Powodu</div>
+                <div style="height:550px; width: 100%;" id="chartReason" class="chart"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-12" style="min-height: 50px;"></div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnBrowse").removeClass("hidden");
+        $("#btnDashboard").removeClass("hidden");
+        $("#btnMachineDetails").removeClass("hidden");
+        $("#btnReasonDetails").addClass("hidden");
+        RefreshChart();
+    });
+    
+    function RefreshReasonSelector() {
+        $("#ReasonId").empty();
+        $('#ReasonId').append($('<option>', {
+            value: -1,
+            text: 'Loading...'
+        }));
+        
+        chartJson = new JsonHelper().GetPostData("/ONEPROD/OEECreateReport/ReasonsByEntryTypeAndMachineIdGetList", filters);
+        chartJson.done(function (reasons) {
+            $("#ReasonId").empty();
+            $('#ReasonId').append($('<option>', {
+                value: -1,
+                text: ''
+            }));
+            if (reasons.length > 0) {
+                for (i = 0; i < reasons.length; i++)
+                {
+                    $('#ReasonId').append($('<option>', {
+                        value: reasons[i].Id,
+                        text: reasons[i].Name
+                    }));
+                }
+            }
+        });
+    }
+
+    function RefreshChart() {
+        var Id = "chartReason";
+        var jsonLink = "";
+        var chartOptions = {};
+        
+        jsonLink = "/ONEPROD/OEEDashboard/GetChartReasonAnalysis";
+        chartOptions = groupOptions;
+
+        chartJson = new JsonHelper().GetPostData(jsonLink, filters);
+        chartJson.done(function (chartData) {
+            if (chartData != null && chartData != 0 && chartData.labels.length > 0) {
+                RefreshChartByEntryType(chartData, "#" + Id, Id + "Canvas", chartOptions);
+            }
+            else {
+                $("#" + Id).html("");
+                $("#" + Id).empty();
+            }
+        });
+    }
+    function RefreshChartByEntryType(data, elementSelector, canvasId, options) {
+
+        $(elementSelector).html("");
+        $(elementSelector).empty();
+        $(elementSelector).append('<canvas id="' + canvasId + '" style="height:500px; width: 100%;" ></canvas>');
+
+        var testArray = CreateCommentSummary(data);
+        if (testArray.length > 0) {
+            $(elementSelector + "Comment").tooltip({ title: testArray.toString() });
+        }
+        else {
+            $(elementSelector + "Comment").hide();
+        }
+
+        AssignLabelsToDataSet(data);
+        Change0toNull(data);
+
+        if (data.datasets[0].data.length < 2) {
+
+            for (i = 0; i < data.datasets.length; i++) {
+                if (data.datasets[i].label == "Cel")
+                    ExtendDataset(data.datasets[i], true);
+                else
+                    ExtendDataset(data.datasets[i], false);
+            }
+
+            data.labels[1] = data.labels[0];
+            data.labels[0] = "";
+            data.labels[2] = "";
+        }
+
+        var myChart = new Chart($("#" + canvasId), {
+            title: data.title,
+            type: 'bar',
+            responsive: true,
+            maintainAspectRatio: true,
+            data: {
+                labels: data.labels,
+                datasets: data.datasets,
+            },
+            options: options,
+            plugins: [{
+                beforeInit: function (chart) {
+                    chart.data.labels.forEach(function (e, i, a) {
+                        if (!Array.isArray(e) && a.length < 15) {
+                            e = e.replace(' ', '\n');
+                            e = e.replace(' ', '\n');
+                            e = e.replace(' ', '\n');
+                            e = e.replace(' ', '\n');
+                            if (/\n/.test(e)) {
+                                a[i] = e.split(/\n/)
+                            }
+                        }
+                    })
+                }
+            }]
+        });
+
+        return myChart;
+        //ShowCustomLegend(elementSelector + "Legend", myChart);
+    }
+
+    function Change0toNull(data) {
+        for (i = 0; i < data.datasets.length; i++) {
+
+            if (data.datasets[i].label == "Komentarze") {
+                data.datasets[i].data.forEach(function (item, j, arr) {
+                    if (arr[j] < 0) {
+                        arr[j] = null;
+                    }
+                });
+            }
+            else if (data.datasets[i].label != "Cel") {
+                data.datasets[i].data.forEach(function (item, j, arr) {
+                    if (arr[j] == 0) {
+                        arr[j] = null;
+                    }
+                });
+            }
+        }
+    }
+    function AssignLabelsToDataSet(data) {
+        for (i = 0; i < data.datasets.length; i++) {
+
+            if (data.datasets[i].datalabels == "LabelsLine") {
+                data.datasets[i].datalabels = LabelsLine;
+            }
+            if (data.datasets[i].datalabels == "LabelsLineRound") {
+                data.datasets[i].datalabels = LabelsLineRound;
+            }
+            if (data.datasets[i].datalabels == "LabelsBar") {
+                data.datasets[i].datalabels = LabelsBar;
+            }
+            if (data.datasets[i].datalabels == "LabelsNone") {
+                data.datasets[i].datalabels = LabelsNone;
+            }
+            if (data.datasets[i].datalabels == "LabelsComments") {
+                data.datasets[i].datalabels = LabelsComments;
+            }
+        }
+    }
+    function CreateCommentSummary(data) {
+        var arrayComment = [];
+        for (i = 0; i < data.datasets.length; i++) {
+            for (j = 0; j < data.datasets[i].comments.length; j++) {
+                if (data.datasets[i].comments[j] != null && (data.datasets[i].comments[j]).length > 1) {
+
+                    var comment = data.datasets[i].comments[j];
+
+                    arrayComment.push(
+                        data.labels[j] + "-" +
+                        data.datasets[i].label + " (" +
+                        data.datasets[i].data[j] + " min): " +
+                        comment
+                    );
+                }
+            }
+        }
+        return arrayComment;
+    }
+    function shadeColor2(color, percent) {
+        var f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+        return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+    }
+
+    var groupOptions = {
+        scales: {
+            xAxes: [{ stacked: true }],
+            yAxes: [
+                { ticks: { beginAtZero: true, }, position: 'left', },
+            ],
+
+        },
+        legend: { display: false },
+        tooltips: {
+            mode: 'nearest',
+            intersect: false,
+            callbacks: {
+                title: function (tooltipItems, data) {
+                    if (data.datasets[tooltipItems[0].datasetIndex].label == "Komentarze") {
+                        return "Komentarze:"
+                    }
+                    else {
+                        var d = data.labels[tooltipItems[0].index];
+                        var title = Array.isArray(d) ? d.join(" ").replace('\n', ' ') : d.replace('\n', ' ');
+                        return title;
+                    }
+                },
+                label: function (tooltipItem, data) {
+                    console.log("label");
+                    const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+                    if (value === 0) {
+                        return null;
+                    }
+
+                    if (data.datasets[tooltipItem.datasetIndex].label == "Komentarze") {
+                        var arr = data.datasets[tooltipItem.datasetIndex].comments[tooltipItem.index].split('\n');
+                        arr = arr.filter(x => x != "");
+                        console.log("komentarze");
+                        console.log(arr);
+                        return arr;
+                    }
+                    else {
+                        return (data.datasets[tooltipItem.datasetIndex].label).replace('\n', ' ') + ": " +
+                            tooltipItem.yLabel.toFixed(2).replace('.00', '') +
+                            data.datasets[tooltipItem.datasetIndex].displayUnit;
+                    }
+                },
+                labelColor: function (tooltipItem, chart) {
+
+                    console.log("labelColor");
+                    var color = "";
+
+                    if (chart.config.data.datasets[tooltipItem.datasetIndex].label == "Komentarze") {
+                        var arr = chart.config.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index].split('\n');
+                        arr = arr.filter(x => x != "");
+                        color = arr;
+                        color = "red";
+                    }
+                    else {
+                        color = chart.config.data.datasets[tooltipItem.datasetIndex].backgroundColor[tooltipItem.index];
+                    }
+                    console.log("colors");
+                    console.log(color);
+
+                    return {
+                        borderColor: color,
+                        backgroundColor: color
+                    }
+                },
+                footer: function (tooltipItems, data) {
+                    //console.log("this._chart.tooltip._options.callbacks.label");
+                    //console.log(this._chart.tooltip._options.callbacks.label);
+
+                    console.log("footer");
+                    this._chart.tooltip._options.callbacks.labelColor(tooltipItems[0], this._chart);
+                    return "";
+                }
+            }
+        },
+    }
+    var LabelsLine = {
+        anchor: 'center',
+        align: 'center',
+        padding: 3,
+        borderRadius: 8,
+        color: '#FFFFFF',
+        backgroundColor: function (context) {
+            return context.dataset.borderColor[0];
+        },
+        display: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            return value > 0;
+        },
+        font: {
+            weight: 'bold', size: 9
+        },
+        formatter: function (value, context) {
+            return value.toFixed(1).replace('.0', '')
+        }
+    };
+    var LabelsLineRound = {
+        anchor: 'center',
+        align: 'center',
+        padding: 3,
+        borderRadius: 8,
+        color: function (context) { return context.dataset.fontColor; },
+        backgroundColor: function (context) {
+            return context.dataset.pointBackgroundColor;
+        },
+        display: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            return value > 0;
+        },
+        font: function (context) {
+            return {
+                weight: 'bold',
+                size: context.dataset.fontSize
+            }
+        },
+        formatter: Math.round
+    };
+    var LabelsBar = {
+        anchor: 'center',
+        align: 'center',
+        color: function (context) {
+            var colorLb = context.dataset.borderColor[Math.min(context.dataIndex, context.dataset.borderColor.length - 1)];
+            colorLb = shadeColor2(colorLb, -0.30);
+            return colorLb;
+        },
+        display: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            var max = 1; //context.chart.config.data.datasets
+            var sum = 0;
+            var imax = context.chart.config.data.datasets.length;
+            var jmax = context.chart.config.data.datasets[0].data.length;
+            var height = context.chart.height;
+
+            var j = 0;
+            while (j < jmax) {
+                sum = 0;
+                for (i = 1; i < imax; i++) {
+                    localValue = parseInt(context.chart.config.data.datasets[i].data[j]);
+                    if (localValue > 0) {
+                        sum += localValue;
+                    }
+                }
+                max = sum > max ? sum : max;
+                sum = Math.max.apply(Math, context.chart.config.data.datasets[0].data); //sprawdz.czy cel wyższy
+                max = sum > max ? sum : max;
+                j++;
+            }
+
+            var percent = (max > 0 ? value / max : 0);
+            var h_px = percent * height;
+            if (h_px >= 20) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        font: {
+            weight: 'bold', size: 12
+        },
+        formatter: Math.round,
+        padding: {
+            top: 10,
+            bottom: 10
+        }
+    };
+    var LabelsComments = {
+        anchor: 'center',
+        align: 'center',
+        padding: 3,
+        borderRadius: 8,
+        color: function (context) { return context.dataset.fontColor; },
+        backgroundColor: function (context) {
+            return "red";
+        },
+        display: function (context) {
+            var value = context.dataset.data[context.dataIndex];
+            console.log(value);
+            return value >= 0;
+        },
+        font: {
+            weight: 'bold', size: 12
+        },
+        formatter: function (value, context) {
+            return "k";
+        },
+    };
+    var LabelsNone = {
+        display: false
+    };
+   
+</script>
+
+

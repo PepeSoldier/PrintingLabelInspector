@@ -1,0 +1,98 @@
+﻿@model MDL_iLOGIS.ComponentWMS.ViewModels.DeliveryViewModel
+
+@{
+    ViewBag.Title = "Delivery Edit";
+}
+    <style>
+        #deliveryTitle {
+            font-size: 40px;
+            font-weight: 500;
+        }
+        .jsgrid-grid-body {
+            overflow-x: auto;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+</style>
+
+
+<div class="row no-gutters">
+    <div class="col-12">
+        <div id="deliveryItemGrid"></div>
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+
+<script type="text/javascript">
+
+    var vm = @Html.Raw(Json.Encode(Model));
+    @*var supplierId = @Html.Raw(Json.Encode(Model.SupplierId));
+    var deliveryId = @Html.Raw(Json.Encode(Model.Id));
+    var buyers = @Html.Raw(Json.Encode(ViewBag.Buyers));
+    let addresses = @Html.Raw(Json.Encode(ViewBag.Addresses));*@
+
+    console.log(vm);
+    var deliveryItemGrid = new DeliveryItemGrid("#deliveryItemGrid");
+    $(document).ready(function () {
+        deliveryItemGrid.InitGrid();
+        deliveryItemGrid.RefreshGrid({ "DeliveryId" : vm.DeliveryId });
+        //InitAutocompleteByContractor("#SupplierId","data-ContractorId");
+    });
+
+    //$(document).on("click", "#btnDeliverySave", function (e) {
+    //    console.log("Click BTN Delivery Save");
+    //    e.preventDefault();
+    //    var vm = $('#deliveryForm').serialize();
+    //    vm += "&SupplierId=" + $("#SupplierId").attr("data-ContractorId");
+    //    vm += "&DocumentNumber=" + $("#DocumentNumber").val();
+    //    vm += "&DocumentDate=" + $("#DocumentDate").val();
+
+    //    $.ajax({
+    //        method: 'POST',dataType: "json", url: '/iLogis/Delivery/Edit',
+    //        data: vm,
+    //        success: function(data){
+    //            var supplierId = data.SupplierId;
+    //            var deliveryId = data.Id;
+    //            var deliveryItemGrid = new DeliveryItemGrid("#deliveryItemsGrid", supplierId, deliveryId);
+    //            deliveryItemGrid.InitGrid();
+    //            deliveryItemGrid.RefreshGrid();
+
+    //        },
+    //        error: function(xhr, desc, err){
+    //            console.log(err);
+    //        }
+    //    });
+    //});
+
+
+
+    //function InitAutocompleteByContractor(elementSelector,selectorForValue) {
+    //    $(elementSelector).autocomplete({
+    //        source: function (request, response) {
+    //            $.ajax({
+    //                url: "/Masterdata/Contractor/Autocomplete",
+    //                type: "POST",
+    //                dataType: "json",
+    //                data: { Prefix: request.term },
+    //                success: function (data) {
+    //                    response($.map(data, function (item) {
+    //                        return {
+    //                            label: item.Name,
+    //                            contractorId : item.Id
+    //                        };
+    //                    }))
+    //                },
+    //            })
+    //        },
+    //        select: function (event, ui) {
+    //            console.log("ui:");
+    //            console.log(ui);
+    //            $(this).val(ui.item.label);
+    //            $(this).attr(selectorForValue,ui.item.contractorId);
+    //            return false;
+    //        },
+    //    })
+    //}
+
+</script>

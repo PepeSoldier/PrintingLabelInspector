@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+
+@*@Styles.Render("~/Content/ExternalStyles")*@
+@Styles.Render("~/_ClientAppJS/ExternalLibraries/ExternalStylesBundle")
+@Scripts.Render("~/bundles/ExternalScripts")
+
+@Styles.Render("~/Content/AppStyles")
+@Scripts.Render("~/bundles/AppScripts")
+
+@Styles.Render("~/Content/PFEP_Styles")
+@Scripts.Render("~/bundles/PFEP_Scripts")
+
+
+@Scripts.Render("~/bundles/modernizr")
+
+<style>
+    body {
+        font-size: 13px;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+    }
+</style>
+
+<div class="hidden">
+    <div id="routine">@ViewBag.Routine</div>
+    <div id="orders">@ViewBag.Orders</div>
+</div>
+
+<div id="printView">
+    proszę czekać...
+</div>
+
+<script type="text/javascript" id="runscript">
+    $(document).ready(function () {
+        loadData();
+    });
+
+    function loadData() {
+        console.log("ajax...");
+        var tab = $("#orders").text().split(',');
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/PFEP/Print/ViewPDF",
+            data: { routine: $("#routine").text(), printerName: "", ProdOrders: tab },
+            success: function (data) {
+                console.log("success");
+                $("#printView").html(data);
+                new PrintMatrix().Start();
+            },
+            error: function () {
+                console.log("error");
+                $("#printView").html("Nie udało się załadować strony. Spróbuj ponownie...");
+            }
+        });
+    }
+
+</script>

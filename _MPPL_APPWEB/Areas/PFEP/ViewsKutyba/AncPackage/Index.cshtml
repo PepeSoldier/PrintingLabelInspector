@@ -1,0 +1,25 @@
+﻿@using GridMvc.Html
+
+@model IEnumerable<MDL_PFEP.Models.PFEP.AncPackage>
+
+@{
+    ViewBag.Title = "Opakowanie z ANC";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(o => o.Anc.Code).Titled("ANC").Sortable(true).Editable(true, "select", (string)ViewBag.ListAnc).RenderValueAs(o => o.Anc.Id.ToString());
+    columns.Add(o => o.Anc.Name).Titled("Nazwa ANC").Sortable(true);
+    columns.Add(o => o.Package.Name).Titled("Opakowanie").Sortable(true).Editable(true, "select", (string)ViewBag.ListPackage).RenderValueAs(o => o.Package.Id.ToString());
+    columns.Add(o => o.Returnable).Titled("Zwrotne").Sortable(true).Editable(true, "checkbox");
+    columns.Add(o => o.Quantity).Titled("Ilość w opakowaniu").Sortable(true).Editable(true);
+    columns.Add(o => o.Width).Titled("Długość (w) [mm]").Sortable(true).Editable(true);
+    columns.Add(o => o.Depth).Titled("Szerokość (d) [mm]").Sortable(true).Editable(true);
+    columns.Add(o => o.Height).Titled("Wysokość (h) [mm]").Sortable(true).Editable(true);
+    columns.Add(o => o.Weight).Titled("Waga opakowania brutto [kg]").Sortable(true).Editable(true);
+    columns.Add(o => o.NetWeight).Titled("Waga opakowania netto [kg]").Sortable(true).Editable(true);
+    columns.Add(o => o.NumberOfBoxesOnPallet).Titled("Liczba opakowań na palecie").Sortable(true).Editable(true);
+    columns.Add(o => o.Stackable).Titled("Piętrowanie").Sortable(true).Editable(true, "checkbox");
+    columns.Add(o => o.Id).Titled("").EditActionColumn("", Url.Action("Edit", controllerName), Url.Action("Delete", controllerName));
+}).WithPaging(100).Selectable(false)

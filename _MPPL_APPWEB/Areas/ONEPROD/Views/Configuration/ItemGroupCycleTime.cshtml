@@ -1,0 +1,37 @@
+﻿@using MDL_ONEPROD.Model.Scheduling
+@using GridMvc.Html
+@model _MPPL_WEB_START.Areas.ONEPROD.Base.ViewModels.CycleTimeViewModel
+
+@{
+    ViewBag.Title = "Cycle Time";
+    Layout = null;
+}
+
+<div id="ItemGroupCT" data-val="@Model.SelectedItemGroupId" data-area="@Model.areaId">
+
+    <h3>Kategoria: @Model.SelectedItemGroupName [id: @Model.SelectedItemGroupId]</h3>
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-12" style="width: 800px;">
+            <div id="ItemGroupCycleTimePopup"></div>
+        </div>
+    </div>
+    <hr />
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var AreaId = $("#ItemGroupCT").attr("data-area");
+        var ItemGroupId = $("#ItemGroupCT").attr("data-val");
+        var ItemGroupCycleTimePopups = new ItemGroupCycleTimePopup("#ItemGroupCycleTimePopup", AreaId);
+
+        ItemGroupCycleTimePopups.InitGrid();
+        ItemGroupCycleTimePopups.RefreshGrid(ItemGroupId);
+    });
+    
+</script>
+
+

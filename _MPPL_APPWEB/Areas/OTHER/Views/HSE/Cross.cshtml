@@ -1,0 +1,470 @@
+﻿
+@{ int r = 0;
+    int c = 0;
+    int counter = 0;
+    int day = 1;
+    int month = 1;
+    int year = DateTime.Now.Year;
+    int yearStart = DateTime.Now.Year; 
+    DateTime date = new DateTime(year, 1, 1);
+    List<int> excluded = new List<int> { 0, 1, 5, 6, 7, 8, 12, 13, 14, 15, 19, 20, 35, 36, 40, 41, 42, 43, 47, 48, 49, 50, 54, 55 };
+}
+
+<style>
+    .CrossBig {
+        width: 1040px;
+    }
+
+    .CrossSmall {
+        height: 218px;
+        width: 255px;
+        padding: 8px 8px;
+        background-color: #389ec23b;
+    }
+    .CrossSmallLastYear {
+        background-color: #7eb8cd3b;
+        color: #d0d0d0;
+    }
+
+    .CrossCell {
+        height: 23px;
+        width: 33px;
+        margin: 1px;
+        position: relative;
+        text-align: center;
+        background-color: #496a76;
+    }
+
+    .CrossMonthIndicator {
+        position: absolute;
+        top: 21px;
+        left: 5px;
+        padding: 10px 0 0 10px;
+        width: 60px;
+        text-align: center;
+        font-size: 34px;
+    }
+    .CrossYearIndicator {
+        position: absolute;
+        top: 6px;
+        left: 5px;
+        padding: 10px 0 0 10px;
+        width: 60px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .noBorder {
+        border: none;
+        background: none;
+    }
+
+    .InfoSmall {
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    .InfoBig {
+        font-size: 120px;
+        font-weight: bold;
+        line-height: 150px;
+        background-color: #389ec23b;
+        text-align: center;
+    }
+
+    .state-0 {
+        
+    }
+    .CrossSmallLastYear .state-0 {
+    }
+
+    .state-1 {
+        background-color: green;
+    }
+    .CrossSmallLastYear .state-1 {
+        background-color: #5e9f5e;
+    }
+
+    .state-8 {
+        background-color: red;
+    }
+    .CrossSmallLastYear .state-8 {
+        background-color: #ff6b6b;
+    }
+
+    .state-4 {
+        background-color: yellow;
+        color: black;
+    }
+    .CrossSmallLastYear .state-4 {
+        background-color: #f1f199;
+        color: #828282;
+    }
+
+    .state-2 {
+        background-color: dodgerblue;
+    }
+    .CrossSmallLastYear .state-2 {
+        background-color: #64a2df;
+    }
+
+    .state-16 {
+        background-color: white;
+        color: black;
+    }
+
+    #infoText {
+        font-size: 39px;
+        height: 100px;
+        width: 300px;
+        line-height: 100px;
+        font-weight: bold;
+        text-align: center;
+        border: 3px solid #389ec23b;
+        overflow: hidden;
+        position: relative;
+    }
+    #scroll-text {
+        position: absolute;
+        white-space: nowrap;
+    }
+
+</style>
+
+<div id="RTV" class="RTV headerLive" style="">
+    <section id="rtvHeader">
+        <div class="row headerRow">
+            <div class="col-5 headerLeft">
+                <div class="logoMD clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectrolux_white.png")) !important"></div>
+            </div>
+            <div class="col-2 headerLeft" style="color: #84a1ac;">
+                <div class="headerMid" id="clockHeaderMid"></div>
+            </div>
+            <div class="col-5 headerLeft" style="color: #84a1ac; text-align: right; font-size: 29px; padding-right: 15px;">
+                <span id="shiftDate"></span>
+            </div>
+        </div>
+        <div class="separator"></div>
+    </section>
+    <section id="rtvContent"></section>
+</div>
+
+@*kostka 7 x 8 (komórka: 14.25% x 12.5%) *@
+
+<div class="row">
+    <div class="col-12" style="font-size: 35px; font-weight: bold; padding: 0 0 5px 0; text-align: center;">
+        <div>KRZYŻ BEZPIECZEŃSTWA FABRYKI ZA OSTATNIE 12 MIESIĘCY</div>
+    </div>
+    <div class="col-12" style="font-size: 35px; padding: 0 0 10px 0; text-align: center; color: #496a76">
+        SAFETY CROSS OF THE FACTORY FOR LAST 12 MONTHS
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-6 col-xl-7">
+        <div class="row no-gutters CrossBig" style="padding: 20px 0 20px 20px;">
+            @for (int i = 0; i < 16; i++)
+            {
+            <div class="col-3">
+                @if (i != 0 && i != 3 && i != 12 && i != 15)
+                {
+                    { day = 1;
+                        counter = 0;
+                        year = date.Month > DateTime.Now.Month ? yearStart - 1 : yearStart;
+                    }
+
+                    <div class="CrossSmall @(year<yearStart? "CrossSmallLastYear" : "")">
+                        <div class="CrossMonthIndicator">
+                            @month
+                        </div>
+                        <div class="CrossYearIndicator">
+                            @year
+                        </div>
+
+                        @for (r = 0; r < 8; r++)
+                        {
+                            <div class="row no-gutters" data-row="@r">
+                                @for (c = 0; c < 7; c++)
+                                {
+                                    if (excluded.Contains(counter))
+                                    {
+                                        <div class="col CrossCell noBorder" data-col="@c"></div>
+                                    }
+                                    else
+                                    {
+                                        if (date.Month == month)
+                                        {
+                                            <div class="col CrossCell CrossCellClickable"
+                                                 data-col="@c"
+                                                 data-state="0"
+                                                 data-day="@day"
+                                                 data-month="@month"
+                                                 data-year="@year"
+                                                 data-date="@(year.ToString())-@(month.ToString("00"))-@(day.ToString("00"))">
+                                                @day
+                                            </div>
+                                            { date = date.AddDays(1); }
+                                        }
+                                        else
+                                        {
+                                            <div class="col CrossCell CrossCellClickable"></div>
+                                        }
+                                        { day++; }
+                                    }
+
+                                    { counter++; }
+                                }
+                            </div>
+                        }
+                    </div>
+                    { month++; }
+                }
+                else if (i == 0)
+                {
+                    //LEGEND
+                    <div class="CrossSmall noBorder">
+                        <div class="row no-gutters" style="margin-top: 5px;">
+                            <div class="col-12" style="padding-left: 25px;">
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-2" style="width: 30px; height: 30px; background-color: green;"></div>
+                                    <div class="col-10" style="">BEZ WYPADKU</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-2" style="width: 30px; height: 30px; background-color: dodgerblue;"></div>
+                                    <div class="col-10" style="">DZIEŃ WOLNY</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-2" style="width: 30px; height: 30px; background-color: yellow;"></div>
+                                    <div class="col-10" style="">FIRST AID</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-2" style="width: 30px; height: 30px; background-color: red;"></div>
+                                    <div class="col-10" style="">WYPADEK</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-2" style="width: 30px; height: 30px; background-color: white;"></div>
+                                    <div class="col-10" style="">DZIŚ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (i == 3)
+                {
+                    <div class="CrossSmall noBorder">
+                        <div class="row no-gutters" style="margin-top: 5px;">
+                            <div class="col-12" style="padding-left: 25px;">
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-12" style="width: 30px; height: 30px; line-height: 30px; background-color: #870a0a; text-align: center; color: white; font-size:16px;">
+                                        TELEFONY ALARMOWE
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-9" style="width: 30px; height: 30px;">POLICJA</div>
+                                    <div class="col-3" style="">997</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-9" style="width: 30px; height: 30px;">STRAŻ POŻARNA</div>
+                                    <div class="col-3" style="">998</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-9" style="width: 30px; height: 30px;">POG.RATUNKOWE</div>
+                                    <div class="col-3" style="">999</div>
+                                </div>
+                                <div class="row" style="margin-bottom: 8px;">
+                                    <div class="col-9" style="width: 30px; height: 30px;">NR ALARMOWY</div>
+                                    <div class="col-3" style="">112</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="CrossSmall noBorder"></div>
+                }
+            </div>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12 col-xl-5">
+
+        <div class="row" style="text-align: center;">
+            <div class="col-12" style="color: #0eff0e; font-size: 37px;"><b>NASZ CEL: ZERO WYPADKÓW PRZY PRACY</b></div>
+            <div class="col-12" style="color: #0eff0e; font-size: 30px;">OUR GOAL: ZERO ACCIDENTS AT WORK</div>
+        </div>
+        <div class="row d-none d-xl-block" style="text-align: center;">
+            <div class="col-12" style="height: 46px"></div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-6">
+                <div class="InfoSmall" style="height:73px; width: 100%">
+                    <div>ILOŚĆ DNI BEZ WYPADKU</div>
+                    <div style="font-size: 16px;color: #77adc1; margin-top: -5px;">Number of days without accident</div>
+                </div>
+                <div id="NumberDays" class="InfoBig" style="height:150px; width: 100%">
+                    0
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="InfoSmall" style="height:73px; width: 100%">
+                    <div>REKORD DNI BEZ WYPADKU</div>
+                    <div style="font-size: 16px;color: #77adc1; margin-top: -5px;">Record number of days without accident</div>
+                </div>
+                <div id="RecordNumberDays" class="InfoBig" style="height:150px; width: 100%">
+                    0
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters" style="margin-top: 15px;">
+            <div id="infoText" class="col-12" style="">
+                @*<div id="scrollText">ZGŁASZAJ ROZPOZNANE ZAGROŻENIA</div>*@
+                @*<marquee direction="left" id="scrollText"></marquee>*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="font-size: 40px; font-weight: bold; padding: 35px 0 15px 0; text-align: center;">
+                <img height="330" src="~/Content/images/safety-first.png" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        moment.locale('pl')
+        openFullscreen();
+        StartClock();
+        StartRefreshing();
+    })
+
+    $(".CrossCellClickable").on("click", function () {
+        console.log("klik");
+        var el = $(this);
+        var date = $(this).attr("data-date");
+        var state = parseInt($(this).attr("data-state"));
+        $(el).removeClass("state-" + state);
+
+        state = state < 2 ? state + 1 : state + state;
+        state = state > 8 ? 0 : state;
+
+        console.log(date);
+
+        $.ajax({
+            async: true, type: "POST", data: { date, state },
+            url: "/OTHER/HSE/UpdateData",
+            success: function (safetyCross) {
+                $(el).attr("data-state", safetyCross.State);
+                $(el).addClass("state-" + safetyCross.State);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajaxError: ");
+                console.log(thrownError);
+            }
+        });
+    })
+
+    function GetCounters() {
+        $.ajax({
+            async: true, type: "POST",
+            url: "/OTHER/HSE/GetCounters",
+            success: function (data) {
+                $("#RecordNumberDays").text(data.RecordNumberOfDaysWithoutAccident);
+                $("#NumberDays").text(data.NumberOfDaysWithoutAccident);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajaxError: ");
+                console.log(thrownError);
+            }
+        });
+    }
+    function GetData() {
+        $.ajax({
+            async: true, type: "POST",
+            url: "/OTHER/HSE/GetData",
+            success: function (list) {
+                for (i = 0; i < list.length; i++) {
+                    //console.log(moment(list[i].Date).format("YYYY-MM-DD"));
+                    $("[data-date=" + moment(list[i].Date).format("YYYY-MM-DD") + "]")
+                        .attr("data-state", list[i].State)
+                        .addClass("state-" + list[i].State);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajaxError: ");
+                console.log(thrownError);
+            }
+        });
+
+        var today = moment(new Date()).format("YYYY-MM-DD")
+        $("[data-date=" + today + "]")
+            .addClass("state-16");
+    }
+    function GetText() {
+        var json = new JsonHelper();
+        var text = json.GetData("/OTHER/HSE/InfoTextGet", {});
+        text.done(function (data) {
+            //console.log(data);
+            if ($("#scrollText").text() != data) {
+                $("#infoText").html('<marquee direction="left" scrolldelay="50" scrollamount="12" id="scrollText">' + data + '</marquee>');
+            }
+            //else {
+            //    console.log("info text the same");
+            //}
+            //Marquee1();
+        });
+    }
+
+    var rCntr = 0;
+    function StartRefreshing() {
+        GetData();
+        GetCounters();
+        GetText();
+
+        rCntr++;
+        if (rCntr >= 240) {
+            location.reload();
+            rCntr = 0;
+        }
+        var cc = setTimeout(StartRefreshing, 60000);
+    }
+    function StartClock() {
+        var today = new moment(new Date());
+        $("#clockHeaderMid").html(today.format("HH:mm:ss"));
+        $("#shiftDate").html(today.format("DD MMM YYYY"));
+        var t = setTimeout(StartClock, 1000);
+    }
+
+    $("#infoText").click(function () {
+        $.get("/OTHER/HSE/InfoTextEditor", function (data) {
+            wnd = new PopupWindow(1000, 600);
+            wnd.Init("InfoTextEditor", "Edycja wyświetlanej informacji");
+            wnd.Show(data);
+        });
+    });
+
+    var scrollWidth = 50;
+    function Marquee1 () {
+        //$("#infoText").bind('marquee', function () {
+        //    console.log("Marquee");
+        //    var boxWidth = 200; //$(this).width;
+        //    var textWidth = 1000; //$("#scrollText", $(this)).width();
+        //    if (textWidth > boxWidth) {
+        //        var animSpeed = textWidth - boxWidth * 20; // 50 pix per sec
+        //        $(this)
+        //            .animate({ scrollLeft: textWidth - scrollWidth }, animSpeed)
+        //            .animate({ scrollLeft: 0 }, animSpeed, function () {
+        //                $(this).trigger(marquee);
+        //            });
+        //    }
+        //}).trigger('marquee');
+    };
+
+
+</script>
+

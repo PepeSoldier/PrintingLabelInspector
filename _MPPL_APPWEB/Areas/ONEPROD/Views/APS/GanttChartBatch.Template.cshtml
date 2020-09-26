@@ -1,0 +1,17 @@
+﻿
+
+    <div class="ganttchartBatch"
+         batchNumber="{{BatchNumber}}"
+         style="left:{{MarginLeft}}px; width:{{Width}}px;">
+        <div class="sgcBlockBatchLabel badge badge-success" style="background-color:{{Color}};z-index:1010;">{{BatchNumber}}</div>
+        {{#ItemId}}
+        <div class="sgcBlockBatchLabel2" style="left:{{SetupTime}}px; z-index:1009;">
+            <span class="WorkorderCaption">{{ItemGroupName}}</span>
+            <span class="WorkorderCaption">{{ItemCode}} - {{Qty}} szt.</span>
+        </div>
+        {{#Workorders}}
+        <oneprod-aps-ganttchart-item data='{{..|JSON.stringify}}' data-datefrom='{{BatchStartDate}}' data-zoom='{{zoom}}'>
+        </oneprod-aps-ganttchart-item>
+        {{/Workorders}}
+        {{/ItemId}}
+    </div>

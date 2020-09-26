@@ -1,0 +1,35 @@
+﻿#PrdSchedule .highlight td {
+  background-color: #bfe4ff !important;
+}
+#PrdSchedule .seqChanged {
+  color: red;
+  font-weight: bold;
+}
+#PrdSchedule .dragCell {
+  color: #c7c7c7;
+}
+#PrdSchedule .drag-handler {
+  cursor: move !important;
+}
+#PrdSchedule .snapshotLi {
+  border-bottom: 1px solid #e8e8e8;
+  height: 28px;
+}
+#PrdSchedule .snapshotLi .fas {
+  padding: 5px;
+  font-size: 18px;
+}
+#PrdSchedule .snapshotLi .fa-eye:hover {
+  color: #0094ff;
+}
+#PrdSchedule .snapshotLi .fa-trash-alt:hover {
+  color: #ff0000;
+}
+#PrdSchedule .btn .fas {
+  margin: 0 5px 0 0;
+  font-size: 18px;
+}
+#PrdSchedule #selectedOrderInfo input,
+#PrdSchedule #selectedOrderInfo div {
+  display: inline-block;
+}

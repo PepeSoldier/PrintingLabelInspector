@@ -1,0 +1,202 @@
+﻿//-----------------------------------------JSGRID-CHANGE-----------------------------------------------1
+
+.gridCommonStyle(@grid_bgColor, @grid_brdColor, @selectionBgColor, @selectionFontColor) {
+    .highlight td {
+        /*background-color: @highlight !important;*/
+        background-color: @selectionBgColor;
+        border-color: lighten(@selectionBgColor, 3%);
+        color: @selectionFontColor;
+    }
+
+    .grid-mvc, .jsgrid-grid-body {
+        background-color: @grid_bgColor;
+    }
+
+    .grid-mvc {
+        border: 1px solid @grid_brdColor;
+    }
+
+    .formArea .grid-mvc, .formArea .jsgrid-grid-body {
+        background-color: fade(@grid_bgColor, 100%) !important;
+    }
+}
+
+.gridStyle(@selectionBgColor, @selectionFontColor, @orange, @green, @bgHeader, @bgHeader2, @cell1, @cell2) {
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: rgba(0,0,0,0.1) !important;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        border-top: 1px solid #333a3e;
+    }
+
+    .table-hover > tbody > tr:hover {
+        background-color: @selectionBgColor;
+        color: @selectionFontColor;
+    }
+
+    .jsgrid-selected-row > .jsgrid-cell {
+        background: @selectionBgColor;
+        border-color: @selectionBgColor;
+        color: @selectionFontColor;
+    }
+
+    .jsgrid-nodata-row > .jsgrid-cell, .grid-empty-text > td {
+        background-color: rgba(128,128,128,0.1) !important;
+    }
+
+    .jsgrid-edit-row > .jsgrid-cell {
+        background: @orange;
+    }
+
+    .jsgrid-grid-header {
+        background: none;
+    }
+
+    .jsgrid-header-row .jsgrid-header-sort {
+        background: @cell1; //#2c2c2c;
+    }
+
+    .jsgrid-header-row > .jsgrid-header-cell {
+        background: @bgHeader; //#4e4e4e;
+        border: 1px solid darken(@bgHeader,5%) !important;
+        /*background: -moz-linear-gradient(top, rgba(59, 96, 109,1) 0%, rgba(22, 45, 52,0) 60%);
+        background: -webkit-linear-gradient(top, rgba(59, 96, 109,1) 0%,rgba(22, 45, 52,0) 60%);*/
+        background: linear-gradient(to bottom, @bgHeader2 25%, @bgHeader 75%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b606d', endColorstr='#162d34',GradientType=0 );
+    }
+
+    .jsgrid-filter-row > .jsgrid-cell {
+        background: @bgHeader; //#2c2c2c;
+        border-bottom: 0 !important;
+    }
+
+    .jsgrid-insert-row > .jsgrid-cell {
+        background: @green;
+    }
+
+    .jsgrid-edit-row > .jsgrid-cell, .jsgrid-filter-row > .jsgrid-cell, .jsgrid-grid-body, .jsgrid-grid-header, .jsgrid-header-row > .jsgrid-header-cell, .jsgrid-insert-row > .jsgrid-cell {
+        border: 1px solid @cell2; //#2d2d2d;
+    }
+
+    .jsgrid-cell {
+        border: 1px solid @cell2; //#2d2d2d;
+    }
+
+    .jsgrid-pager-container {
+        background: @bgHeader;
+        padding-left: 5px;
+    }
+
+    .jsgrid-pager-page,
+    .jsgrid-pager-nav-button {
+        padding: 6px;
+        /*background: #7474741f;*/
+        margin: 0px 3px;
+        min-width: 17px !important;
+    }
+
+    .jsgrid-pager-nav-button {
+        background: #00abff12;
+    }
+
+    span.jsgrid-pager-page.jsgrid-pager-current-page {
+        border: 1px solid mediumspringgreen;
+        background-color: green;
+    }
+}
+//-----------------------------------------JSGRID-CHANGE-----------------------------------------------2
+.jsgrid {
+    font-size: 0.875rem;
+}
+.jsgrid:focus {
+    outline: none;
+}
+.jsgrid-edit-row .jsgrid-cell,
+.jsgrid-filter-row .jsgrid-cell,
+.jsgrid-insert-row .jsgrid-cell,
+.jsgrid-cell-withinput {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+}
+.jsgrid-cell input[type="checkbox"] {
+    height: 19px;
+    width: 19px;
+}
+.jsgrid-edit-row input[type="checkbox"] {
+    height: 19px;
+    width: 19px;
+}
+.jsgrid .jsgrid-button {
+    /*background-image: url('images/gridbtn.png') !important;*/
+    /*background-image: none !important;*/
+    margin: -1px 0 -5px 0 !important;
+    background-size: 100% !important;
+    min-height: 25px !important;
+    min-width: 25px !important;
+}
+
+.jsgrid-delete-button {
+    background-image: url('../../../Content/images/trash.png') !important;
+    background-position-y: top !important;
+}
+
+.jsgrid-insert-mode-button {
+    background-image: url('../../../Content/images/icon_add.png') !important;
+    background-position-y: top !important;
+    /*height: 35px !important;
+    width: 35px !important;*/
+}
+
+.jsgrid-edit-button {
+    background-image: url('../../../Content/images/icon_edit.png') !important;
+    background-position-y: top !important;
+}
+
+.jsgrid-update-button {
+    background-image: url('../../../Content/images/icon_save.png') !important;
+    background-position-y: top !important;
+}
+
+.jsgrid-cancel-edit-button {
+    background-image: url('../../../Content/images/icon_refuse.svg') !important;
+    background-position-y: top !important;
+}
+
+.jsgrid-insert-button {
+    background-image: url('../../../Content/images/icon_btnadd.png') !important;
+    background-position-y: top !important;
+    width: 70px !important;
+    height: 45px !important;
+}
+
+.jsgrid-search-button {
+    background-position: 0 -305px;
+}
+.jsgrid-search-mode-button {
+    background-position: 0 -258px;
+}
+.jsgrid-export-button {
+    background-image: url('../../../Content/images/icon_csv.png') !important;
+    background-position-y: top !important;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.table td, .table th, .grid-cell {
+    padding: 7px;
+}
+
+.selectedCell {
+    z-index: 999;
+    //background-color: #a9d9ea;
+    -webkit-box-shadow: inset 0px 0px 4px 0px rgba(0,255,168,1);
+    -moz-box-shadow: inset 0px 0px 4px 0px rgba(0,255,168,1);
+    box-shadow: inset 0px 0px 4px 0px rgba(0,255,168,1);
+    /*-webkit-box-shadow: 0px 0px 5px 5px red !important;
+    -moz-box-shadow: 0px 0px 5px 5px red !important;
+    box-shadow: 0px 0px 5px 5px red !important;*/
+}
