@@ -1,26 +1,4 @@
-﻿using _MPPL_WEB_START.App_Start;
-using _MPPL_WEB_START.Areas.ONEPROD.Controllers;
-using _MPPL_WEB_START.Migrations;
-using _MPPL_WEB_START.Models;
-using Autofac;
-using Autofac.Core.Lifetime;
-using Autofac.Integration.Mvc;
-using MDL_AP.Interfaces;
-using MDL_BASE.Interfaces;
-using MDL_BASE.Models.IDENTITY;
-using MDL_ONEPROD.ComponentRTV._Interfaces;
-using MDL_ONEPROD.Interface;
-using MDL_PFEP.Interface;
-//using MDL_PRD.Interface;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataProtection;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using XLIB_COMMON.Model;
-
+﻿
 namespace _MPPL_WEB_START
 {
     //public partial class Startup

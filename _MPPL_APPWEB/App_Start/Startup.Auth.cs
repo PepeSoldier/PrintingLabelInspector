@@ -1,13 +1,9 @@
 ﻿using _MPPL_WEB_START.App_Start;
-using _MPPL_WEB_START.Areas.ONEPROD.Controllers;
-using _MPPL_WEB_START.Migrations;
 using Autofac;
 using Autofac.Integration.Mvc;
 using MDL_BASE;
 using MDL_BASE.Interfaces;
 using MDL_BASE.Models.IDENTITY;
-using XLIB_COMMON.Repo.IDENTITY;
-using MDL_ONEPROD.Interface;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

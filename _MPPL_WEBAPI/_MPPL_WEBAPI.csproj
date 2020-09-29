@@ -270,10 +270,6 @@
       <Project>{7759B657-A830-4EE1-8412-97971B2441A2}</Project>
       <Name>MDLX_CORE</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MDL_ONEPROD\MDL_ONEPROD.csproj">
-      <Project>{A8FB4F45-566C-4BD8-815A-3F8BF493B45E}</Project>
-      <Name>MDL_ONEPROD</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XLIB_COMMON\XLIB_COMMON\XLIB_COMMON.csproj">
       <Project>{A0B99E24-F08F-454C-B322-9AF2EA87A295}</Project>
       <Name>XLIB_COMMON</Name>

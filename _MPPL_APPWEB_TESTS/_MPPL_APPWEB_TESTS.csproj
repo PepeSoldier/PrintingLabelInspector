@@ -219,10 +219,6 @@
     <Folder Include="Printings\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APP_AP\MDL_AP.csproj">
-      <Project>{c8b1f33d-4d09-4a2c-91a6-817e5c54cf32}</Project>
-      <Name>MDL_AP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MDLX_CORE\MDLX_CORE.csproj">
       <Project>{7759b657-a830-4ee1-8412-97971b2441a2}</Project>
       <Name>MDLX_CORE</Name>
@@ -230,26 +226,6 @@
     <ProjectReference Include="..\MDLX_MASTERDATA\MDLX_MASTERDATA.csproj">
       <Project>{16ad63f8-0d1b-48cc-9681-3dadd497e72f}</Project>
       <Name>MDLX_MASTERDATA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_iLOGIS\MDL_iLOGIS.csproj">
-      <Project>{3f323248-fee7-4618-bdda-ac19d49125d4}</Project>
-      <Name>MDL_iLOGIS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_ONEPROD\MDL_ONEPROD.csproj">
-      <Project>{a8fb4f45-566c-4bd8-815a-3f8bf493b45e}</Project>
-      <Name>MDL_ONEPROD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_OTHER\MDL_OTHER.csproj">
-      <Project>{83490a64-9814-4e0e-bb1b-e49a1fbcff5b}</Project>
-      <Name>MDL_OTHER</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_PFEP\MDL_PFEP.csproj">
-      <Project>{8ac13d7d-9f90-4ef0-ab39-61eb679893d0}</Project>
-      <Name>MDL_PFEP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_PRD2\MDL_PRD2.csproj">
-      <Project>{dade3ccc-9aec-4a76-a47e-2cb5ff3c0166}</Project>
-      <Name>MDL_PRD2</Name>
     </ProjectReference>
     <ProjectReference Include="..\XLIB_COMMON\XLIB_COMMON\XLIB_COMMON.csproj">
       <Project>{a0b99e24-f08f-454c-b322-9af2ea87a295}</Project>

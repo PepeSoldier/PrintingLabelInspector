@@ -221,18 +221,6 @@
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.2.1\lib\net461\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
-    </Reference>
-    <Reference Include="SdkApi.Core, Version=2.15.2634.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zebra.Printer.SDK.2.15.2634\lib\net471\SdkApi.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SdkApi.Desktop, Version=2.15.2634.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zebra.Printer.SDK.2.15.2634\lib\net471\SdkApi.Desktop.dll</HintPath>
-    </Reference>
-    <Reference Include="SdkApi.Desktop.Usb, Version=2.15.2634.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zebra.Printer.SDK.2.15.2634\lib\net471\SdkApi.Desktop.Usb.dll</HintPath>
-    </Reference>
     <Reference Include="SharpSnmpLib, Version=10.0.9.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
       <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.9\lib\net452\SharpSnmpLib.dll</HintPath>
     </Reference>
@@ -462,9 +450,6 @@
       <HintPath>..\packages\WebPush.1.0.10\lib\netstandard1.1\WebPush.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="ZebraPrinterSdk, Version=2.15.2634.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Zebra.Printer.SDK.2.15.2634\lib\net471\ZebraPrinterSdk.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Logger2FileSingleton.cs" />
@@ -477,27 +462,8 @@
     <Compile Include="Areas\IDENTITY\ExcludeFilterAttribute.cs" />
     <Compile Include="Areas\IDENTITY\ExcludeFilterProvider.cs" />
     <Compile Include="Areas\IDENTITY\PasswordExpiredAttribute.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\ApiController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\DeliveryListLineFeedController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\WhDocController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\DeliveryController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\PickingListItemController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\StockUnitController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\WarehouseController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\WarehouseLocationController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\MovementController.cs" />
     <Compile Include="Areas\CORE\Controllers\NotificationDeviceController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\BOMController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\QualityController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\MESController.WIP.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ElectrPLV.cs" />
-    <Compile Include="Areas\ONEPROD\Models\JobLabelCheckHub.cs" />
-    <Compile Include="Areas\ONEPROD\Models\WorkplaceHub.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ProductionLogDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\ResourceGroupViewModel.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="Areas\iLOGIS\ViewModels\HomeViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\Models\JobListMultiPageHub.cs" />
     <Compile Include="App_Start\DecimalModelBinder.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -505,138 +471,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.DI.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionActivityLogViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionActivityViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionBrowsenewViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionBrowseViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionDashBoardViewModely.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionEditViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\ActionShowViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\Def\DefComboViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\Def\DefViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\Def\IDefManageViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\MeetingViewModel.cs" />
-    <Compile Include="Areas\AP\ViewModels\Photo\TakePhotoViewModel.cs" />
     <Compile Include="Areas\CORE\COREAreaRegistration.cs" />
     <Compile Include="Areas\IDENTITY\ViewModels\AccountViewModels.cs" />
     <Compile Include="Areas\IDENTITY\ViewModels\EditViewModel.cs" />
     <Compile Include="Areas\IDENTITY\ViewModels\ManageViewModels.cs" />
     <Compile Include="Areas\IDENTITY\ViewModels\UserGridViewModel.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\ConfigController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\DeliveryListController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\HomeController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\PickingListController.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\WMSController.cs" />
-    <Compile Include="Areas\iLOGIS\iLOGISAreaRegistration.cs" />
-    <Compile Include="Areas\iLOGIS\Controllers\PFEPController.cs" />
-    <Compile Include="Areas\iLOGIS\ViewModels\PickingList\ApiLocationViewModel.cs" />
-    <Compile Include="Areas\iLOGIS\ViewModels\WorkstationItemViewModel.cs" />
-    <Compile Include="Areas\iLOGIS\ViewModels\PFEPDataViewModel.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\AreaController.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\WorkstationController.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\ContractorController.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\ItemController.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\ResourceController.cs" />
-    <Compile Include="Areas\MASTERDATA\Controllers\DepartmentController.cs" />
-    <Compile Include="Areas\MASTERDATA\MASTERDATAAreaRegistration.cs" />
-    <Compile Include="Areas\MASTERDATA\ViewModels\ItemGridViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationAPSController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ClientOrderController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationOEEController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationMESController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationENERGYController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationWMSController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\DataExchangeController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\EnergyController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\JobListController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\OEEReportOnlineController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\WMSController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\MESController.Traceability.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\RTVController.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartEnergyConsumptionPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartEnergyOEEReport.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartOfReasonTypesCumulatedDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartOfReasonTypesDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartByEntryTypetDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartByEntryTypeCumulatedDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartOEEDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartOfReasonTypesParetoDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartParetoScrapAncDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartParetoScrapProcessDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartByEntryTypeParetoDataPreparer.cs" />
-    <Compile Include="Areas\ONEPROD\Models\ChartRTV.cs" />
-    <Compile Include="Areas\ONEPROD\Models\JobListHub.cs" />
     <Compile Include="App_Start\JobScheduler.cs" />
-    <Compile Include="Areas\ONEPROD\Models\OEEEnergyReport.cs" />
-    <Compile Include="Areas\ONEPROD\Models\OEEResultToColor.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\ClientOrderViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\ResourceViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\WorkorderBatchViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\WorkorderViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ResourceGroupViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\BoxPartCategoryViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\BoxViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ReasonGridViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\OEEBrowseController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\OEECreateReportController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\OEEDashboardController.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\OEE\BrowseReportsViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\OEE\DashBoardViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\OEE\OEEDataViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\OEE\ReasonViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\RTV\RTVChartMinutesViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\RTV\RTVViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\RTV\RTVMachineDetailsViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\CalendarHourViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\CalendarViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ChangeOverViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\CycleTimeViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ResourceViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ItemGroupToolViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ItemGroupViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ItemViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ToolMachineViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ToolMatrixViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\ToolViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\Configuration\WorkplaceViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\OEEController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\BaseController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\ConfigurationController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\HomeController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\MESController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\APSController.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\OEE\OeeViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ONEPRODAreaRegistration.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\CalculationViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\GantChartViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\PlanViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\ProdLineViewModel.cs" />
-    <Compile Include="Areas\ONEPROD\ViewModels\APS\StockViewModel.cs" />
-    <Compile Include="Areas\OTHER\Controllers\HSEController.cs" />
-    <Compile Include="Areas\OTHER\Controllers\PickByLightController.cs" />
-    <Compile Include="Areas\OTHER\Controllers\TestController.cs" />
-    <Compile Include="Areas\OTHER\Controllers\VisualControlController.cs" />
-    <Compile Include="Areas\OTHER\OTHERAreaRegistration.cs" />
-    <Compile Include="Areas\OTHER\ViewModels\AccCrossViewModel.cs" />
-    <Compile Include="Areas\PFEP\Controllers\AreaController.cs" />
-    <Compile Include="Areas\PFEP\Controllers\CalculationController.cs" />
-    <Compile Include="Areas\PFEP\Models\Mailer_PFEP.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\AncBrowseViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\AncEditViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\AncWorkstationViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\CalculationViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\CorrectionViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\HourRangeViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PackageViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PackingInstructionBrowseViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PackingInstructionViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PrintDefAutoViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PrintDefViewModel.cs" />
-    <Compile Include="Areas\PFEP\ViewModels\PrintViewModel.cs" />
-    <Compile Include="Areas\PRD\Controllers\HomeController.cs" />
-    <Compile Include="Areas\PRD\Controllers\ScheduleMonitorController.cs" />
-    <Compile Include="Areas\PRD\ViewModels\ScheduleMonitorOrderViewModel.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppClient.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppMenu_OTHER.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppMenu_PRD.cs" />
@@ -666,581 +506,14 @@
     <Compile Include="Areas\_APPWEB\ViewModels\JsonModel.cs" />
     <Compile Include="Areas\_APPWEB\ViewModels\ReasonSelectorItem.cs" />
     <Compile Include="Areas\_APPWEB\_APPWEBAreaRegistration.cs" />
-    <Compile Include="Areas\AP\ACTPLAreaRegistration.cs" />
-    <Compile Include="Areas\AP\Controllers\ActionActivityController.cs" />
-    <Compile Include="Areas\AP\Controllers\ActionController.cs" />
-    <Compile Include="Areas\AP\Controllers\AttachmentController.cs" />
-    <Compile Include="Areas\AP\Controllers\AttachmentOldController.cs" />
-    <Compile Include="Areas\AP\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\AP\Controllers\DefController.cs" />
-    <Compile Include="Areas\AP\Controllers\GanttchartController.cs" />
-    <Compile Include="Areas\AP\Controllers\StartController.cs" />
-    <Compile Include="Areas\AP\Controllers\MeetingController.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppVersion.cs" />
     <Compile Include="Areas\_APPWEB\Models\IdApi.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\AncController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\AncPackageController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\AncTypeController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\AncWorkstationController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\BomController.cs" />
-    <Compile Include="Areas\PFEP\Controllers\HomeController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\LineController.cs" />
-    <Compile Include="Areas\PFEP\Controllers\PackageController.cs" />
-    <Compile Include="Areas\PFEP\Controllers\PackagingInstructionController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\PncController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\PncTypeController.cs" />
-    <Compile Include="Areas\PFEP\Controllers\PrintController.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\Results1Controller.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\Results2Controller.cs" />
-    <Compile Include="Areas\PFEP\ControllersKutyba\WorkstationController.cs" />
-    <Compile Include="Areas\PFEP\PFEPAreaRegistration.cs" />
-    <Compile Include="Areas\PRD\Controllers\PSIController.cs" />
-    <Compile Include="Areas\PRD\Controllers\ScheduleController.cs" />
-    <Compile Include="Areas\PRD\Controllers\SubAssController.cs" />
-    <Compile Include="Areas\PRD\PRDAreaRegistration.cs" />
     <Compile Include="Migrations\DbContextAPP_PackingLabel.cs" />
-    <Compile Include="Migrations\DbContextFake.cs" />
     <Compile Include="Migrations\DbContextAPP_.cs" />
-    <Compile Include="Migrations\DbContextAPP_ElectroluxPLS.cs" />
-    <Compile Include="Migrations\DbContextAPP_WRP.cs" />
-    <Compile Include="Migrations\DevK\201906161607522_1K.cs" />
-    <Compile Include="Migrations\DevK\201906161607522_1K.Designer.cs">
-      <DependentUpon>201906161607522_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201906172029241_2K.cs" />
-    <Compile Include="Migrations\DevK\201906172029241_2K.Designer.cs">
-      <DependentUpon>201906172029241_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201906301240425_3K.cs" />
-    <Compile Include="Migrations\DevK\201906301240425_3K.Designer.cs">
-      <DependentUpon>201906301240425_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907161844148_4K.cs" />
-    <Compile Include="Migrations\DevK\201907161844148_4K.Designer.cs">
-      <DependentUpon>201907161844148_4K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907211139379_5K.cs" />
-    <Compile Include="Migrations\DevK\201907211139379_5K.Designer.cs">
-      <DependentUpon>201907211139379_5K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907272012129_6K.cs" />
-    <Compile Include="Migrations\DevK\201907272012129_6K.Designer.cs">
-      <DependentUpon>201907272012129_6K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907280804410_7K.cs" />
-    <Compile Include="Migrations\DevK\201907280804410_7K.Designer.cs">
-      <DependentUpon>201907280804410_7K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907281416189_8K.cs" />
-    <Compile Include="Migrations\DevK\201907281416189_8K.Designer.cs">
-      <DependentUpon>201907281416189_8K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201907281916463_9K.cs" />
-    <Compile Include="Migrations\DevK\201907281916463_9K.Designer.cs">
-      <DependentUpon>201907281916463_9K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201909141052233_10K.cs" />
-    <Compile Include="Migrations\DevK\201909141052233_10K.Designer.cs">
-      <DependentUpon>201909141052233_10K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201909141211517_11K.cs" />
-    <Compile Include="Migrations\DevK\201909141211517_11K.Designer.cs">
-      <DependentUpon>201909141211517_11K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201909141328549_12K.cs" />
-    <Compile Include="Migrations\DevK\201909141328549_12K.Designer.cs">
-      <DependentUpon>201909141328549_12K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201910301836567_13K.cs" />
-    <Compile Include="Migrations\DevK\201910301836567_13K.Designer.cs">
-      <DependentUpon>201910301836567_13K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201910302216533_14K.cs" />
-    <Compile Include="Migrations\DevK\201910302216533_14K.Designer.cs">
-      <DependentUpon>201910302216533_14K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201911090833484_15K.cs" />
-    <Compile Include="Migrations\DevK\201911090833484_15K.Designer.cs">
-      <DependentUpon>201911090833484_15K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201911131315328_16K.cs" />
-    <Compile Include="Migrations\DevK\201911131315328_16K.Designer.cs">
-      <DependentUpon>201911131315328_16K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201911182030040_17K.cs" />
-    <Compile Include="Migrations\DevK\201911182030040_17K.Designer.cs">
-      <DependentUpon>201911182030040_17K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201912071315476_18K.cs" />
-    <Compile Include="Migrations\DevK\201912071315476_18K.Designer.cs">
-      <DependentUpon>201912071315476_18K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201912071324091_19K.cs" />
-    <Compile Include="Migrations\DevK\201912071324091_19K.Designer.cs">
-      <DependentUpon>201912071324091_19K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201912071410085_20K.cs" />
-    <Compile Include="Migrations\DevK\201912071410085_20K.Designer.cs">
-      <DependentUpon>201912071410085_20K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\202001061724250_23K.cs" />
-    <Compile Include="Migrations\DevK\202001061724250_23K.Designer.cs">
-      <DependentUpon>202001061724250_23K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\202002241503020_24K.cs" />
-    <Compile Include="Migrations\DevK\202002241503020_24K.Designer.cs">
-      <DependentUpon>202002241503020_24K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\202003170932580_25K.cs" />
-    <Compile Include="Migrations\DevK\202003170932580_25K.Designer.cs">
-      <DependentUpon>202003170932580_25K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\202006081057367_26K.cs" />
-    <Compile Include="Migrations\DevK\202006081057367_26K.Designer.cs">
-      <DependentUpon>202006081057367_26K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\201912090709557_1P.cs" />
-    <Compile Include="Migrations\DevP\201912090709557_1P.Designer.cs">
-      <DependentUpon>201912090709557_1P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\201912090720527_2P.cs" />
-    <Compile Include="Migrations\DevP\201912090720527_2P.Designer.cs">
-      <DependentUpon>201912090720527_2P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\201912090725144_3P.cs" />
-    <Compile Include="Migrations\DevP\201912090725144_3P.Designer.cs">
-      <DependentUpon>201912090725144_3P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\201912090726428_4P.cs" />
-    <Compile Include="Migrations\DevP\201912090726428_4P.Designer.cs">
-      <DependentUpon>201912090726428_4P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\201912090730249_5P.cs" />
-    <Compile Include="Migrations\DevP\201912090730249_5P.Designer.cs">
-      <DependentUpon>201912090730249_5P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201912091518160_21K.cs" />
-    <Compile Include="Migrations\DevK\201912091518160_21K.Designer.cs">
-      <DependentUpon>201912091518160_21K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevK\201912091552195_22K.cs" />
-    <Compile Include="Migrations\DevK\201912091552195_22K.Designer.cs">
-      <DependentUpon>201912091552195_22K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202001041000261_6P.cs" />
-    <Compile Include="Migrations\DevP\202001041000261_6P.Designer.cs">
-      <DependentUpon>202001041000261_6P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202001290559025_7P.cs" />
-    <Compile Include="Migrations\DevP\202001290559025_7P.Designer.cs">
-      <DependentUpon>202001290559025_7P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202001290737568_8P.cs" />
-    <Compile Include="Migrations\DevP\202001290737568_8P.Designer.cs">
-      <DependentUpon>202001290737568_8P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202002241713058_9P.cs" />
-    <Compile Include="Migrations\DevP\202002241713058_9P.Designer.cs">
-      <DependentUpon>202002241713058_9P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202002241720203_10P.cs" />
-    <Compile Include="Migrations\DevP\202002241720203_10P.Designer.cs">
-      <DependentUpon>202002241720203_10P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202002250835519_11P.cs" />
-    <Compile Include="Migrations\DevP\202002250835519_11P.Designer.cs">
-      <DependentUpon>202002250835519_11P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202002251138381_13P.cs" />
-    <Compile Include="Migrations\DevP\202002251138381_13P.Designer.cs">
-      <DependentUpon>202002251138381_13P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202003090750016_14P.cs" />
-    <Compile Include="Migrations\DevP\202003090750016_14P.Designer.cs">
-      <DependentUpon>202003090750016_14P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202003090810506_15P.cs" />
-    <Compile Include="Migrations\DevP\202003090810506_15P.Designer.cs">
-      <DependentUpon>202003090810506_15P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004050733109_16P.cs" />
-    <Compile Include="Migrations\DevP\202004050733109_16P.Designer.cs">
-      <DependentUpon>202004050733109_16P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004071414549_17P.cs" />
-    <Compile Include="Migrations\DevP\202004071414549_17P.Designer.cs">
-      <DependentUpon>202004071414549_17P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004071502468_18P.cs" />
-    <Compile Include="Migrations\DevP\202004071502468_18P.Designer.cs">
-      <DependentUpon>202004071502468_18P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004141257288_19P.cs" />
-    <Compile Include="Migrations\DevP\202004141257288_19P.Designer.cs">
-      <DependentUpon>202004141257288_19P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004270919274_20P.cs" />
-    <Compile Include="Migrations\DevP\202004270919274_20P.Designer.cs">
-      <DependentUpon>202004270919274_20P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202004291015584_21P.cs" />
-    <Compile Include="Migrations\DevP\202004291015584_21P.Designer.cs">
-      <DependentUpon>202004291015584_21P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202005220900048_22P.cs" />
-    <Compile Include="Migrations\DevP\202005220900048_22P.Designer.cs">
-      <DependentUpon>202005220900048_22P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006081056457_23P.cs" />
-    <Compile Include="Migrations\DevP\202006081056457_23P.Designer.cs">
-      <DependentUpon>202006081056457_23P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006161505176_24P.cs" />
-    <Compile Include="Migrations\DevP\202006161505176_24P.Designer.cs">
-      <DependentUpon>202006161505176_24P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006170824358_25P.cs" />
-    <Compile Include="Migrations\DevP\202006170824358_25P.Designer.cs">
-      <DependentUpon>202006170824358_25P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006170828358_26P.cs" />
-    <Compile Include="Migrations\DevP\202006170828358_26P.Designer.cs">
-      <DependentUpon>202006170828358_26P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006171252434_27P.cs" />
-    <Compile Include="Migrations\DevP\202006171252434_27P.Designer.cs">
-      <DependentUpon>202006171252434_27P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202006251527312_28P.cs" />
-    <Compile Include="Migrations\DevP\202006251527312_28P.designer.cs">
-      <DependentUpon>202006251527312_28P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202007030734398_29P.cs" />
-    <Compile Include="Migrations\DevP\202007030734398_29P.designer.cs">
-      <DependentUpon>202007030734398_29P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202007030916472_30P.cs" />
-    <Compile Include="Migrations\DevP\202007030916472_30P.designer.cs">
-      <DependentUpon>202007030916472_30P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202007080851306_31P.cs" />
-    <Compile Include="Migrations\DevP\202007080851306_31P.designer.cs">
-      <DependentUpon>202007080851306_31P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202008060850506_32P.cs" />
-    <Compile Include="Migrations\DevP\202008060850506_32P.designer.cs">
-      <DependentUpon>202008060850506_32P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202008170948426_33P.cs" />
-    <Compile Include="Migrations\DevP\202008170948426_33P.designer.cs">
-      <DependentUpon>202008170948426_33P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202008221009503_34P.cs" />
-    <Compile Include="Migrations\DevP\202008221009503_34P.designer.cs">
-      <DependentUpon>202008221009503_34P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DevP\202009261021233_35P.cs" />
-    <Compile Include="Migrations\DevP\202009261021233_35P.designer.cs">
-      <DependentUpon>202009261021233_35P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\201904242036100_1K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\201904242036100_1K.Designer.cs">
-      <DependentUpon>201904242036100_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\201904242053532_2K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\201904242053532_2K.Designer.cs">
-      <DependentUpon>201904242053532_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\201904242124038_3K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\201904242124038_3K.Designer.cs">
-      <DependentUpon>201904242124038_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\201905201441578_4K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\201905201441578_4K.Designer.cs">
-      <DependentUpon>201905201441578_4K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\201905252022024_5K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\201905252022024_5K.Designer.cs">
-      <DependentUpon>201905252022024_5K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202004281535356_6K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202004281535356_6K.Designer.cs">
-      <DependentUpon>202004281535356_6K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202004291226038_7K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202004291226038_7K.Designer.cs">
-      <DependentUpon>202004291226038_7K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202004291356032_8K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202004291356032_8K.Designer.cs">
-      <DependentUpon>202004291356032_8K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202004301010278_9K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202004301010278_9K.Designer.cs">
-      <DependentUpon>202004301010278_9K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202005021523582_10K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202005021523582_10K.Designer.cs">
-      <DependentUpon>202005021523582_10K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202005031939171_11K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202005031939171_11K.Designer.cs">
-      <DependentUpon>202005031939171_11K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202005181205318_12K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202005181205318_12K.Designer.cs">
-      <DependentUpon>202005181205318_12K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202006201505499_13K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202006201505499_13K.Designer.cs">
-      <DependentUpon>202006201505499_13K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202006201900093_14K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202006201900093_14K.Designer.cs">
-      <DependentUpon>202006201900093_14K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007042239598_15K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007042239598_15K.designer.cs">
-      <DependentUpon>202007042239598_15K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007090941576_16K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007090941576_16K.designer.cs">
-      <DependentUpon>202007090941576_16K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007191550237_17K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007191550237_17K.designer.cs">
-      <DependentUpon>202007191550237_17K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007231536459_18K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007231536459_18K.designer.cs">
-      <DependentUpon>202007231536459_18K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007241301125_19K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007241301125_19K.designer.cs">
-      <DependentUpon>202007241301125_19K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007241338255_20K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007241338255_20K.designer.cs">
-      <DependentUpon>202007241338255_20K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007250412463_21KP.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007250412463_21KP.designer.cs">
-      <DependentUpon>202007250412463_21KP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007271755335_22P.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007271755335_22P.designer.cs">
-      <DependentUpon>202007271755335_22P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202007281938579_23K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202007281938579_23K.designer.cs">
-      <DependentUpon>202007281938579_23K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202008040510516_24KP.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202008040510516_24KP.designer.cs">
-      <DependentUpon>202008040510516_24KP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202008051215527_25K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202008051215527_25K.designer.cs">
-      <DependentUpon>202008051215527_25K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202008130521387_26P.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202008130521387_26P.designer.cs">
-      <DependentUpon>202008130521387_26P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202008310649000_27K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202008310649000_27K.designer.cs">
-      <DependentUpon>202008310649000_27K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202009011828539_28P.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202009011828539_28P.designer.cs">
-      <DependentUpon>202009011828539_28P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\202009100748463_29K.cs" />
-    <Compile Include="Migrations\ElectroluxPLB\202009100748463_29K.designer.cs">
-      <DependentUpon>202009100748463_29K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLB\Configuration.cs" />
-    <Compile Include="Migrations\DbContextAPP_ElectroluxPLB.cs" />
-    <Compile Include="Migrations\Eldisy2\201903161928109_1K.cs" />
-    <Compile Include="Migrations\Eldisy2\201903161928109_1K.Designer.cs">
-      <DependentUpon>201903161928109_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy2\201903171204020_2K.cs" />
-    <Compile Include="Migrations\Eldisy2\201903171204020_2K.Designer.cs">
-      <DependentUpon>201903171204020_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy2\201903171947523_3K.cs" />
-    <Compile Include="Migrations\Eldisy2\201903171947523_3K.Designer.cs">
-      <DependentUpon>201903171947523_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy2\201903172012399_4K.cs" />
-    <Compile Include="Migrations\Eldisy2\201903172012399_4K.Designer.cs">
-      <DependentUpon>201903172012399_4K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy2\Configuration.cs" />
     <Compile Include="Migrations\Configuration_.cs" />
-    <Compile Include="Migrations\DbContextAPP_Grandhome.cs" />
     <Compile Include="Migrations\DbContextAPP_Dev.cs" />
     <Compile Include="Migrations\DevK\Configuration.cs" />
     <Compile Include="Migrations\DevP\Configuration.cs" />
-    <Compile Include="Migrations\Eldisy\201804100805473_1K.cs" />
-    <Compile Include="Migrations\Eldisy\201804100805473_1K.Designer.cs">
-      <DependentUpon>201804100805473_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201804100807395_2K.cs" />
-    <Compile Include="Migrations\Eldisy\201804100807395_2K.Designer.cs">
-      <DependentUpon>201804100807395_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201804121753069_3K.cs" />
-    <Compile Include="Migrations\Eldisy\201804121753069_3K.Designer.cs">
-      <DependentUpon>201804121753069_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201804200339384_4P.cs" />
-    <Compile Include="Migrations\Eldisy\201804200339384_4P.Designer.cs">
-      <DependentUpon>201804200339384_4P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201804232032423_5P.cs" />
-    <Compile Include="Migrations\Eldisy\201804232032423_5P.Designer.cs">
-      <DependentUpon>201804232032423_5P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201804232036265_6P.cs" />
-    <Compile Include="Migrations\Eldisy\201804232036265_6P.Designer.cs">
-      <DependentUpon>201804232036265_6P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805141509597_7P.cs" />
-    <Compile Include="Migrations\Eldisy\201805141509597_7P.Designer.cs">
-      <DependentUpon>201805141509597_7P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805151913215_8K.cs" />
-    <Compile Include="Migrations\Eldisy\201805151913215_8K.Designer.cs">
-      <DependentUpon>201805151913215_8K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805200849508_8P.cs" />
-    <Compile Include="Migrations\Eldisy\201805200849508_8P.Designer.cs">
-      <DependentUpon>201805200849508_8P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805200930118_9P.cs" />
-    <Compile Include="Migrations\Eldisy\201805200930118_9P.Designer.cs">
-      <DependentUpon>201805200930118_9P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805200936560_10P.cs" />
-    <Compile Include="Migrations\Eldisy\201805200936560_10P.Designer.cs">
-      <DependentUpon>201805200936560_10P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805212109574_11P.cs" />
-    <Compile Include="Migrations\Eldisy\201805212109574_11P.Designer.cs">
-      <DependentUpon>201805212109574_11P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805241653571_12P.cs" />
-    <Compile Include="Migrations\Eldisy\201805241653571_12P.Designer.cs">
-      <DependentUpon>201805241653571_12P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805241751370_13P.cs" />
-    <Compile Include="Migrations\Eldisy\201805241751370_13P.Designer.cs">
-      <DependentUpon>201805241751370_13P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805241826459_14P.cs" />
-    <Compile Include="Migrations\Eldisy\201805241826459_14P.Designer.cs">
-      <DependentUpon>201805241826459_14P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805250338521_15P.cs" />
-    <Compile Include="Migrations\Eldisy\201805250338521_15P.Designer.cs">
-      <DependentUpon>201805250338521_15P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201805250438303_16P.cs" />
-    <Compile Include="Migrations\Eldisy\201805250438303_16P.Designer.cs">
-      <DependentUpon>201805250438303_16P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806010731066_17P.cs" />
-    <Compile Include="Migrations\Eldisy\201806010731066_17P.Designer.cs">
-      <DependentUpon>201806010731066_17P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806010849202_18P.cs" />
-    <Compile Include="Migrations\Eldisy\201806010849202_18P.Designer.cs">
-      <DependentUpon>201806010849202_18P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806051949220_19P.cs" />
-    <Compile Include="Migrations\Eldisy\201806051949220_19P.Designer.cs">
-      <DependentUpon>201806051949220_19P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806110515028_20P.cs" />
-    <Compile Include="Migrations\Eldisy\201806110515028_20P.Designer.cs">
-      <DependentUpon>201806110515028_20P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806111118305_22P.cs" />
-    <Compile Include="Migrations\Eldisy\201806111118305_22P.Designer.cs">
-      <DependentUpon>201806111118305_22P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806180536557_23P.cs" />
-    <Compile Include="Migrations\Eldisy\201806180536557_23P.Designer.cs">
-      <DependentUpon>201806180536557_23P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806200817052_24P.cs" />
-    <Compile Include="Migrations\Eldisy\201806200817052_24P.Designer.cs">
-      <DependentUpon>201806200817052_24P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201806270536329_25P.cs" />
-    <Compile Include="Migrations\Eldisy\201806270536329_25P.Designer.cs">
-      <DependentUpon>201806270536329_25P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807041038003_26P.cs" />
-    <Compile Include="Migrations\Eldisy\201807041038003_26P.Designer.cs">
-      <DependentUpon>201807041038003_26P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807041652073_27P.cs" />
-    <Compile Include="Migrations\Eldisy\201807041652073_27P.Designer.cs">
-      <DependentUpon>201807041652073_27P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807050023348_28P.cs" />
-    <Compile Include="Migrations\Eldisy\201807050023348_28P.Designer.cs">
-      <DependentUpon>201807050023348_28P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807050203348_29P.cs" />
-    <Compile Include="Migrations\Eldisy\201807050203348_29P.Designer.cs">
-      <DependentUpon>201807050203348_29P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807090506017_30P.cs" />
-    <Compile Include="Migrations\Eldisy\201807090506017_30P.Designer.cs">
-      <DependentUpon>201807090506017_30P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807121759597_31P.cs" />
-    <Compile Include="Migrations\Eldisy\201807121759597_31P.Designer.cs">
-      <DependentUpon>201807121759597_31P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\201807132327064_32P.cs" />
-    <Compile Include="Migrations\Eldisy\201807132327064_32P.Designer.cs">
-      <DependentUpon>201807132327064_32P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Eldisy\Configuration.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202006271437512_1K.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202006271437512_1K.designer.cs">
-      <DependentUpon>202006271437512_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202007222013432_2K.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202007222013432_2K.designer.cs">
-      <DependentUpon>202007222013432_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202008181730482_3P.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202008181730482_3P.designer.cs">
-      <DependentUpon>202008181730482_3P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202008190325567_4P.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202008190325567_4P.designer.cs">
-      <DependentUpon>202008190325567_4P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202008190335081_5P.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202008190335081_5P.designer.cs">
-      <DependentUpon>202008190335081_5P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202009211058442_6P.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202009211058442_6P.designer.cs">
-      <DependentUpon>202009211058442_6P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\202009211555213_7P.cs" />
-    <Compile Include="Migrations\ElectroluxPLS\202009211555213_7P.designer.cs">
-      <DependentUpon>202009211555213_7P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLS\Configuration.cs" />
     <Compile Include="Migrations\ElectroluxPLV\202004051011027_150K.cs" />
     <Compile Include="Migrations\ElectroluxPLV\202004051011027_150K.Designer.cs">
       <DependentUpon>202004051011027_150K.cs</DependentUpon>
@@ -1305,38 +578,7 @@
     <Compile Include="Migrations\ElectroluxPLV\202009162145402_165K.designer.cs">
       <DependentUpon>202009162145402_165K.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141933075_1K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141933075_1K.Designer.cs">
-      <DependentUpon>201907141933075_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141938213_2K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141938213_2K.Designer.cs">
-      <DependentUpon>201907141938213_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141953516_3K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907141953516_3K.Designer.cs">
-      <DependentUpon>201907141953516_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907171900262_4K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV_Staging\201907171900262_4K.Designer.cs">
-      <DependentUpon>201907171900262_4K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV_Staging\Configuration.cs" />
     <Compile Include="Migrations\ElectroluxPLV\Configuration.cs" />
-    <Compile Include="Migrations\DbContextAPP_Eldisy.cs" />
-    <Compile Include="Migrations\Grandhome\201911061503354_1K.cs" />
-    <Compile Include="Migrations\Grandhome\201911061503354_1K.Designer.cs">
-      <DependentUpon>201911061503354_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Grandhome\201911061634136_2K.cs" />
-    <Compile Include="Migrations\Grandhome\201911061634136_2K.Designer.cs">
-      <DependentUpon>201911061634136_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Grandhome\202009151145408_3K.cs" />
-    <Compile Include="Migrations\Grandhome\202009151145408_3K.designer.cs">
-      <DependentUpon>202009151145408_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Grandhome\Configuration.cs" />
     <Compile Include="Areas\_APPWEB\Models\AreaRegistrationMPPL.cs" />
     <Compile Include="Areas\_APPWEB\Models\LicenceManager.cs" />
     <Compile Include="Areas\_APPWEB\Models\Mailer_AP.cs" />
@@ -1366,83 +608,6 @@
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PackingLabel\Configuration.cs" />
-    <Compile Include="Migrations\WRP\201909281910197_1K.cs" />
-    <Compile Include="Migrations\WRP\201909281910197_1K.Designer.cs">
-      <DependentUpon>201909281910197_1K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201910071200051_2K.cs" />
-    <Compile Include="Migrations\WRP\201910071200051_2K.Designer.cs">
-      <DependentUpon>201910071200051_2K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201910111843398_3K.cs" />
-    <Compile Include="Migrations\WRP\201910111843398_3K.Designer.cs">
-      <DependentUpon>201910111843398_3K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201911130849078_4K.cs" />
-    <Compile Include="Migrations\WRP\201911130849078_4K.Designer.cs">
-      <DependentUpon>201911130849078_4K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201911191209160_5K.cs" />
-    <Compile Include="Migrations\WRP\201911191209160_5K.Designer.cs">
-      <DependentUpon>201911191209160_5K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201912011252306_6K.cs" />
-    <Compile Include="Migrations\WRP\201912011252306_6K.Designer.cs">
-      <DependentUpon>201912011252306_6K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201912011834106_7K.cs" />
-    <Compile Include="Migrations\WRP\201912011834106_7K.Designer.cs">
-      <DependentUpon>201912011834106_7K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\201912121015249_8K.cs" />
-    <Compile Include="Migrations\WRP\201912121015249_8K.Designer.cs">
-      <DependentUpon>201912121015249_8K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202003171307076_9K.cs" />
-    <Compile Include="Migrations\WRP\202003171307076_9K.Designer.cs">
-      <DependentUpon>202003171307076_9K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202005111134250_10K.cs" />
-    <Compile Include="Migrations\WRP\202005111134250_10K.Designer.cs">
-      <DependentUpon>202005111134250_10K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202006211556521_11K.cs" />
-    <Compile Include="Migrations\WRP\202006211556521_11K.Designer.cs">
-      <DependentUpon>202006211556521_11K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202006211653434_12K.cs" />
-    <Compile Include="Migrations\WRP\202006211653434_12K.Designer.cs">
-      <DependentUpon>202006211653434_12K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202006211715527_13K.cs" />
-    <Compile Include="Migrations\WRP\202006211715527_13K.Designer.cs">
-      <DependentUpon>202006211715527_13K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202007070953097_14K.cs" />
-    <Compile Include="Migrations\WRP\202007070953097_14K.designer.cs">
-      <DependentUpon>202007070953097_14K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202007071147136_15K.cs" />
-    <Compile Include="Migrations\WRP\202007071147136_15K.designer.cs">
-      <DependentUpon>202007071147136_15K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202007071159315_16K.cs" />
-    <Compile Include="Migrations\WRP\202007071159315_16K.designer.cs">
-      <DependentUpon>202007071159315_16K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202007091907026_17K.cs" />
-    <Compile Include="Migrations\WRP\202007091907026_17K.designer.cs">
-      <DependentUpon>202007091907026_17K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202008130757364_18P.cs" />
-    <Compile Include="Migrations\WRP\202008130757364_18P.designer.cs">
-      <DependentUpon>202008130757364_18P.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\202009142013563_19K.cs" />
-    <Compile Include="Migrations\WRP\202009142013563_19K.designer.cs">
-      <DependentUpon>202009142013563_19K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\WRP\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1467,117 +632,15 @@
     <Content Include="Areas\CORE\Views\NotificationDevice\NotificationDeviceGrid.js" />
     <Content Include="Areas\CORE\Views\Printer\PrinterGrid.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\AutomaticRulePackageGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemWMSAutocomplete.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemWMSCopySettings.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocationType.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocationSort.js" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\ItemManage.js" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryListMultiLines.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryAdministratorInspection.js" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\TransporterSelector.cshtml" />
     <Content Include="Areas\CORE\Views\Sign\Sign.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\PrintLabels.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\TransporterList.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Lockout.cshtml" />
-    <None Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.less" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionBlindCheck.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionLocalization.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionPackingMethod.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItemLocate.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItem.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummary.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryItemGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\Edit.js" />
-    <Content Include="Areas\iLOGIS\Views\iLOGIS_Script.bundle.js" />
-    <Content Include="Areas\iLOGIS\Views\iLOGIS_Script.js" />
-    <Content Include="Areas\iLOGIS\Views\iLOGIS_Style.css">
-      <DependentUpon>iLOGIS_Style.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\iLOGIS\Views\iLOGIS_Style.min.css">
-      <DependentUpon>iLOGIS_Style.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\DeliveryListLF.js" />
-    <Content Include="Areas\iLOGIS\Views\Movement\Movement.js" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\ChangeLogGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\TrainDashboard.js" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\TrainRoute.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\Index.css">
-      <DependentUpon>Index.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\iLOGIS\Views\PickingList\Index.min.css">
-      <DependentUpon>Index.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\iLOGIS\Views\PickingList\PickingList.less" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryListMultiLines.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryListMultiLines.less" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocationSort.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\ChangeLog.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\RegisterOperator.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\TrainRoute.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\TrainDashboard.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemWMSCopySettings.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\AutomaticRulePackage.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\Browse.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\Edit.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummary.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionLocalization.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionBlindCheck.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocationType.cshtml" />
     <Content Include="Areas\CORE\Views\_ViewStart.cshtml" />
     <Content Include="Areas\CORE\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CORE\Views\Printer\Index.cshtml" />
     <Content Include="Areas\CORE\Views\Printer\Printer.cshtml" />
     <Content Include="Areas\CORE\Views\Home\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryAdministratorInspection.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Movement\Movement.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Movement\Movement.less" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionInfoHeader.Template.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItem.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionPackingMethod.Template.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItemLocate.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\DeliveryListLF.cshtml" />
-    <None Include="Areas\iLOGIS\Views\PickingList\Index.less" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\DeliveryListItemsLF.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\_PickingListShared.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Summary.js" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\StockMobile.js" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\Stock.js" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\StockLocationDetailsGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\StockWarehouseDetailsGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\IndexSignMobile.js" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\ContractorWithDeliveryItemsAutocomplete.js" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\BrowseMobile.js" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\WhDocument.js" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\WhDocumentGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\TranslateStatus.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileWMS.less" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobileConfirmation.js" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobileLocation.less" />
-    <Content Include="Areas\iLOGIS\Views\Warehouse\WarehouseSelector.less" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileMenu.less" />
-    <None Include="Areas\iLOGIS\Views\Movement\MovementMobile.less" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobileLocation.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\DashboardMissingPicking.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\DashboardLinePicking.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\DashboardLastDeliveries.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\DashboardWhOccupation.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\PageHeaderComponent.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\BackButtonComponent.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileMenu.js" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobile.js" />
-    <Content Include="Areas\iLOGIS\Views\Movement\History.js" />
-    <Content Include="Areas\iLOGIS\Views\Warehouse\WarehouseSelector.js" />
-    <Content Include="Areas\iLOGIS\Views\WMS\TransporterLog.js" />
     <Content Include="Areas\CORE\Views\NotificationDevice\CreateNotificationDevice.js" />
-    <Content Include="Areas\ONEPROD\Views\Quality\JobLabelCheck.js" />
-    <Content Include="Areas\ONEPROD\Views\Quality\ItemMeasurement.js" />
-    <Content Include="Areas\ONEPROD\Views\Quality\ItemParameter.js" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndex.css" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndex.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -1695,127 +758,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="serviceworker.js" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartResourceRow.js" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartBatch.js" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartTimer.js" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartItem.js" />
-    <Content Include="Areas\ONEPROD\Views\BOM\BOM.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyCost.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyMeter.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyDetails.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationOEE\ResourceTarget.js" />
-    <Content Include="Areas\ONEPROD\Views\Energy\EnergyDetails.js" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobList.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Manage.less" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Summary.less" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\TransporterList.less" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationOEE\ResourceTarget.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\TransporterLog.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\DeliveryListItemsLF.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyMeter.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyCost.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyConsumption.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationENERGY\EnergyDetails.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Energy\EnergyDetails.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\Stock.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobile.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Warehouse\WarehouseSelector.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileWMS.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileMenu.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\StockGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Movement\History.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\BackButtonComponent.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\PageHeaderComponent.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\BOM\BOM.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChart.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartItem.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartTimer.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartItem.Template.ChangeOver.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartItem.Template.ClientOrder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartBatch.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartResourceRow.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartResourceRow.Style.less" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartBatch.Style.less" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartTimer.Style.less" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChartItem.Style.less" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListMultiPage.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobList2.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\StockMobile.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobileLocation.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Movement\MovementMobileConfirmation.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\Browse.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\IndexMobile.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\WhDocumentWZ.Template.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\Print.cshtml" />
     <Content Include="Areas\CORE\Views\NotificationDevice\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\PickingStatus.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\PickingStatusResourceSelector.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WMS\MobileSettings.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\StockUnit\ImportFromExcelView.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\PrintHTML.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\BrowseMobile.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\IndexSignMobile.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\WhDoc\IndexMobileSecurity.cshtml" />
-    <None Include="Areas\ONEPROD\Views\JobList\JobList.less" />
-    <Content Include="Areas\ONEPROD\Views\MES\WIP.js" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceBuffer.js" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceWorkorder.js" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceTraceability.js" />
-    <Content Include="Areas\ONEPROD\Views\MES\TraceabilityTreant.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\OEEDataGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\ComparedResults.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\OEEData.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_10x.47.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\AddWorkorder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ChangeDeclarationDate.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\StopSplit.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\StopSplit.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\StopSplit.less" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\MoveStops.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceBufferView.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\TraceabilityTreant.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceBufferView_OLD.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceWorkorder.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceTraceability.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceBuffer.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\Workplace.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_STA_O.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_STA_I.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\MobileBarcode.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_STA_K.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_STA_G.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobList3.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceBufferViewMobile.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WIP.cshtml" />
-    <None Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.Reason.less" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\MachineDetails.js" />
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Scripts.es5.js">
-      <DependentUpon>ONEPROD_Scripts.js</DependentUpon>
-    </Content>
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Scripts.es5.min.js">
-      <DependentUpon>ONEPROD_Scripts.es5.js</DependentUpon>
-    </Content>
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Scripts.js" />
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Style.css">
-      <DependentUpon>ONEPROD_Style.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Style.min.css">
-      <DependentUpon>ONEPROD_Style.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstanceElement.js" />
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstance.js" />
-    <Content Include="Areas\PRD\Views\PRD_style.css">
-      <DependentUpon>PRD_style.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\PRD_style.min.css">
-      <DependentUpon>PRD_style.css</DependentUpon>
-    </Content>
     <Content Include="webpack.config.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -1825,12 +768,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.Reason.Template.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Shared\_Layout.Template.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Quality\ItemParameter.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Quality\ItemMeasurement.cshtml" />
-    <Content Include="Areas\OTHER\Views\Test\RebitTest.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Quality\PrintingLabelInspector.cshtml" />
     <None Include="Properties\PublishProfiles\Publish_Electrolux_PLS %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Grandhome %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_WRP %28local%29.pubxml" />
@@ -1867,99 +805,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="_ClientAppJS\AP\AP_Style.css">
-      <DependentUpon>AP_Style.less</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\AP\AP_Style.min.css">
-      <DependentUpon>AP_Style.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\Index.cshtml" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\IndexOrder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\RTV\MachineDetails.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step3.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\RTV\Dashboard.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\RTV\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\RTV\DashboardMachine.cshtml" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\IndexOrderLite.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\Workplace.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceWorkorder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\ReasonDetails.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\Traceability.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEE\SendEmailWithReport.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\Reports.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\Report.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ClientOrder\Index.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\Contractor\Contractor.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\WorkplaceSelector.cshtml" />
     <Content Include="Areas\CORE\Views\web.config" />
-    <Content Include="Areas\MASTERDATA\Views\web.config" />
-    <Content Include="Areas\iLOGIS\Views\web.config" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndex.cshtml" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndexOrder.cshtml" />
-    <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndexOrderLite.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\Index.cshtml" />
-    <Content Include="Areas\OTHER\Views\web.config" />
-    <Content Include="Areas\OTHER\Views\HSE\Cross.cshtml" />
-    <Content Include="Areas\OTHER\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\OTHER\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\OTHER\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobList.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryList.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\OTHER\Views\VisualControl\Config.cshtml" />
-    <Content Include="Areas\OTHER\Views\VisualControl\Tester.cshtml" />
-    <Content Include="Areas\OTHER\Views\HSE\InfoTextEditor.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemWMS.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\Package.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\PackageItem.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\PackageItemGroup.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\Warehouse.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseItem.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocation.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\WorkstationItem.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\Workstation\Workstation.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\Item\Item.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\Data.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\Item.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\AutomaticRule.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\ItemManage.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Config\Transporter.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\PickingList.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\PickingListItem.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_10x.49.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_PAK.SP3.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_PAK.SP4.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate5.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate6.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate7.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate8.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\TransporterList.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\Home\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\ItemManageInventory.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\ItemManageManualQty.cshtml" />
-    <Content Include="Areas\OTHER\Views\Test\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\Index.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Summary.cshtml" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Manage.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEE\CompareResults.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.Reason.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReasonComment.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\JobList\JobListTemplate_PAK.SP1.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.less" />
-    <Content Include="Areas\OTHER\Views\PickByLight\Config.cshtml" />
-    <Content Include="Areas\OTHER\Views\PickByLight\Config.less" />
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstance.cshtml" />
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstanceElement.cshtml" />
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstance.less" />
-    <Content Include="Areas\OTHER\Views\PickByLight\PickByLightInstanceElement.less" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ChangeDeclarationDate.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ChangeDeclarationDate.less" />
     <None Include="Properties\PublishProfiles\Publish_Eldisy %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Eldisy %28Piotrek Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Eldisy %28Server VDSAD02%29.pubxml" />
@@ -3599,16 +2445,6 @@
     <Content Include="_ClientAppJS\ExternalLibraries\font-awesome5\webfonts\fa-solid-900.woff" />
     <Content Include="_ClientAppJS\ExternalLibraries\font-awesome5\webfonts\fa-solid-900.woff2" />
     <Content Include="_ClientAppJS\ExternalLibraries\hammer.min.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\AutomaticRuleGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\Transporter.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\PackageAutocomplete.js" />
-    <Content Include="Areas\iLOGIS\Views\PFEP\DataGrid.js" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryList.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\PickingList.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\Manage.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingList\TransporterList.js" />
-    <Content Include="Areas\iLOGIS\Views\PickingListItem\PickingListItem.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\html2canvas\html2canvas.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\Treant\jquery.easing.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\Treant\jquery.min.js" />
@@ -3616,19 +2452,6 @@
     <Content Include="_ClientAppJS\ExternalLibraries\Treant\perfect-scrollbar.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\Treant\raphael.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\Treant\Treant.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\ItemGrid.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\WorkstationAutocomplete.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\WorkstationGrid.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\ResourceGrid.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\ItemAutocomplete.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\Package.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\PackageItem.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\PackageItemGroupPopup.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\Warehouse.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseItem.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocation.js" />
-    <Content Include="Areas\iLOGIS\Views\Config\ItemWMS.js" />
-    <Content Include="_ClientAppJS\MASTERDATA\ContractorGrid.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-grid.min.css" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap.bundle.min.js" />
@@ -3663,115 +2486,13 @@
     <Content Include="_ClientAppJS\ExternalLibraries\font-awesome5\scss\solid.scss" />
     <Content Include="_ClientAppJS\ExternalLibraries\font-awesome5\scss\v4-shims.scss" />
     <Content Include="_ClientAppJS\ExternalLibraries\font-awesome5\scss\_shims.scss" />
-    <Content Include="Areas\iLOGIS\Views\Config\WorkstationItem.js" />
-    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryList.less" />
-    <Content Include="Areas\iLOGIS\Views\iLOGIS_Style.less" />
     <None Include="_ClientAppJS\_APPWEB\Configuration\ConfigurationMenu.less" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootbox.min.js" />
-    <Content Include="Areas\ONEPROD\Views\ClientOrder\ClientOrderGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationWMS\BoxItemGroupPopup.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupCycleTimePopup.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Process.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupToolPopup.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationOEE\ReasonGrid.js" />
-    <None Include="Areas\ONEPROD\Views\ConfigurationAPS\ToolMachine.less" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\ToolMachine.js" />
-    <None Include="Areas\ONEPROD\Views\Home\HomeMenu.less" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\OEEResultsHorizontalBar.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step1.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step2.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEE\Index.cshtml" />
-    <None Include="Areas\ONEPROD\Views\OEEBrowse\OeeBrowse.less" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step2_EmployeeAutocomplete.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step3_ItemAutocompleteOEE.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Index_HeaderStepIndicator.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopUnplannedChangeOver.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\MachineDetails_OEEGauges.js" />
-    <Content Include="Areas\ONEPROD\Views\Home\WeekPicker.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\OeeBrowseGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_ReasonsManager.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopChangeOver.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopPlannedGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopPerformance.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopUnplannedGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_StopBreakdownGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step2_OperatorsGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step3_ProductionDataGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Step4_Stop_GridHelper.js" />
-    <Content Include="Areas\ONEPROD\Views\Home\WorkingHoursPreview.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\Dashboard.js" />
-    <None Include="Areas\ONEPROD\Views\RTV\MachineDetails.less" />
-    <None Include="Areas\ONEPROD\Views\RTV\Dashboard.less" />
-    <Content Include="Areas\ONEPROD\Views\MES\TraceabilityGrid.js" />
-    <Content Include="Areas\ONEPROD\Views\OEEReportOnline\ReportOnline.ReasonSelector.js" />
-    <Content Include="Areas\ONEPROD\Views\RTV\MachineDetails.js" />
-    <None Include="Areas\ONEPROD\Views\APS\GanttChart.Style.Skins.less" />
-    <None Include="Areas\ONEPROD\Views\MES\Workplace.less" />
-    <Content Include="Areas\ONEPROD\Views\MES\Workplace.js" />
-    <Content Include="_ClientAppJS\OTHER\VisualControl\JobItemConfigGrid.js" />
-    <Content Include="_ClientAppJS\PFEP\PackingInstruction\Show.css">
-      <DependentUpon>Show.less</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\PackingInstruction\Show.min.css">
-      <DependentUpon>Show.css</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\PFEP_Style.css">
-      <DependentUpon>PFEP_Style.less</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\PFEP_Style.min.css">
-      <DependentUpon>PFEP_Style.css</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\Print\Print.css">
-      <DependentUpon>Print.less</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\Print\Print.min.css">
-      <DependentUpon>Print.css</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\Print\PrintMatrix.css">
-      <DependentUpon>PrintMatrix.less</DependentUpon>
-    </Content>
-    <Content Include="_ClientAppJS\PFEP\Print\PrintMatrix.min.css">
-      <DependentUpon>PrintMatrix.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\PSI\psi.css">
-      <DependentUpon>psi.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\PSI\psi.min.css">
-      <DependentUpon>psi.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\Schedule\Schedule.css">
-      <DependentUpon>Schedule.less</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\Schedule\Schedule.min.css">
-      <DependentUpon>Schedule.css</DependentUpon>
-    </Content>
-    <Content Include="Areas\PRD\Views\Schedule\StautsGrid.js" />
     <Content Include="_ClientAppJS\_APPWEB\Alert\alert2.mp3" />
     <Content Include="_ClientAppJS\_APPWEB\Alert\alert3.wav" />
     <Content Include="_ClientAppJS\_APPWEB\Alert\alert4.wav" />
     <Content Include="_ClientAppJS\_APPWEB\Alert\alert_err1.wav" />
-    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
-    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
-    <Content Include="Rotativa\wkhtmltoimage.exe" />
-    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Areas\_APPWEB\Views\Test\ViewTest.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Shared\_Grid.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Shared\_GridPager.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Shared\Error.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Web.config" />
-    <Content Include="Areas\ONEPROD\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Print\PrintViewAuto.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEE\ChartTest.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationOEE\Reason.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEBrowse\IndexDetails.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\MachineDetails.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\IndexMachine.cshtml" />
     <Content Include="_ClientAppJS\_APPWEB\App.css">
       <DependentUpon>App.less</DependentUpon>
     </Content>
@@ -3847,25 +2568,6 @@
     <Content Include="_ClientAppJS\ExternalLibraries\colorPicker\js\eye.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\colorPicker\js\layout.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\colorPicker\js\utils.js" />
-    <Content Include="Areas\ONEPROD\Views\Home\CircleProgressbar.css" />
-    <Content Include="Areas\ONEPROD\Views\Home\CircleProgressbar.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationMES\Workplace.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ResourceGroup.js" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationWMS\Box.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Resource.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Item.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroup.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupCycleTime.js" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupTool_old.js" />
-    <Content Include="Areas\ONEPROD\Views\APS\Calculation.js" />
-    <None Include="Areas\ONEPROD\Views\APS\GanttChart.Style.less" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChart.js" />
-    <Content Include="_ClientAppJS\PFEP\Print\PrintMatrix.js" />
-    <Content Include="Areas\PRD\Views\PSI\Analyze.js" />
-    <Content Include="Areas\PRD\Views\PRD_style.less" />
-    <Content Include="Areas\PRD\Views\PSI\psi.less" />
-    <Content Include="Areas\PRD\Views\Schedule\Schedule.less" />
-    <Content Include="_ClientAppJS\PFEP\Print\PrintMatrix.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="_ClientAppJS\_APPWEB\Alert\Alert.css" />
@@ -3873,38 +2575,6 @@
     <Content Include="_ClientAppJS\_APPWEB\Alert\alert.mp3" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Layout.less" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Form.less" />
-    <Content Include="Areas\AP\Views\ActionActivity\AddForm.cshtml" />
-    <Content Include="Areas\AP\Views\ActionActivity\List.cshtml" />
-    <Content Include="Areas\AP\Views\ActionActivity\ListAction.cshtml" />
-    <Content Include="Areas\AP\Views\ActionActivity\ListMeeting.cshtml" />
-    <Content Include="Areas\AP\Views\Action\Browse.cshtml" />
-    <Content Include="Areas\AP\Views\Action\BrowseGrid.cshtml" />
-    <Content Include="Areas\AP\Views\Action\Browsenew.cshtml" />
-    <Content Include="Areas\AP\Views\Action\CyclicMeeting.cshtml" />
-    <Content Include="Areas\AP\Views\Action\Edit.cshtml" />
-    <Content Include="Areas\AP\Views\Action\MainChartView.cshtml" />
-    <Content Include="Areas\AP\Views\Action\Show.cshtml" />
-    <Content Include="Areas\AP\Views\Action\ShowActionDetails.cshtml" />
-    <Content Include="Areas\AP\Views\Action\ShowChildrenActions.cshtml" />
-    <Content Include="Areas\AP\Views\Dashboard\ActivitiesLog.cshtml" />
-    <Content Include="Areas\AP\Views\Dashboard\Controlls.cshtml" />
-    <Content Include="Areas\AP\Views\Dashboard\PieChart.cshtml" />
-    <Content Include="Areas\AP\Views\Def\DefManage.cshtml" />
-    <Content Include="Areas\AP\Views\Def\DefManageCombo.cshtml" />
-    <Content Include="Areas\AP\Views\Ganttchart\Show.cshtml" />
-    <Content Include="Areas\AP\Views\Start\Index.cshtml" />
-    <Content Include="Areas\AP\Views\Start\Unavailable.cshtml" />
-    <Content Include="Areas\AP\Views\Meeting\Browse.cshtml" />
-    <Content Include="Areas\AP\Views\Meeting\Edit.cshtml" />
-    <Content Include="Areas\AP\Views\Meeting\Show.cshtml" />
-    <Content Include="Areas\AP\Views\Observation\Browse.cshtml" />
-    <Content Include="Areas\AP\Views\Observation\Edit.cshtml" />
-    <Content Include="Areas\AP\Views\Observation\Show.cshtml" />
-    <Content Include="Areas\AP\Views\Photo\TakeAPhoto.cshtml" />
-    <Content Include="Areas\AP\Views\Shared\Lockout.cshtml" />
-    <Content Include="Areas\AP\Views\Shared\_DefMenuPartial.cshtml" />
-    <Content Include="Areas\AP\Views\web.config" />
-    <Content Include="Areas\AP\Views\_ViewStart.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Browse.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Edit.cshtml" />
@@ -3928,93 +2598,15 @@
     <Content Include="Areas\IDENTITY\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Areas\IDENTITY\Views\web.config" />
     <Content Include="Areas\IDENTITY\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\AP\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\PRD\Views\web.config" />
-    <Content Include="Areas\PRD\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\PRD\Views\PSI\Analyze.cshtml" />
-    <Content Include="Areas\PRD\Views\PSI\Reason.cshtml" />
-    <Content Include="Areas\PFEP\Views\web.config" />
-    <Content Include="Areas\PFEP\ViewsKutyba\AncPackage\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\AncType\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\AncWorkstation\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Anc\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Bom\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Home\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Line\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Package\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\PncType\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Pnc\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Print\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Print\Print.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Results1\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Results2\Index.cshtml" />
-    <Content Include="Areas\PFEP\ViewsKutyba\Workstation\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\PRD\Views\Shared\_LayoutMenu.cshtml" />
-    <Content Include="Areas\PRD\Views\PSI\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\PFEP\Views\Print\PrintView.cshtml" />
-    <Content Include="Areas\PFEP\Views\Print\PrintMatrix.cshtml" />
-    <Content Include="Areas\PRD\Views\SubAss\Index.cshtml" />
-    <Content Include="Areas\PRD\Views\PSI\Results.cshtml" />
-    <Content Include="Areas\PFEP\Views\PackingInstruction\Browse.cshtml" />
-    <Content Include="Areas\PFEP\Views\PackingInstruction\Edit.cshtml" />
-    <Content Include="Areas\PFEP\Views\PackingInstruction\Show.cshtml" />
-    <Content Include="Areas\PRD\Views\PSI\ReasonComment.cshtml" />
-    <Content Include="Areas\PRD\Views\Schedule\Index.cshtml" />
     <Content Include="Areas\_APPWEB\Views\web.config" />
-    <Content Include="Areas\PRD\Views\Home\Index.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Shared\Menu1.cshtml" />
-    <Content Include="Areas\PFEP\Views\Area\Index.cshtml" />
-    <Content Include="Areas\PFEP\Views\Area\EldisyIndex.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\Resource\ResourceType.cshtml" />
-    <Content Include="Areas\MASTERDATA\Views\Resource\Resource.cshtml" />
-    <Content Include="Areas\PFEP\Views\Calculation\Index.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Test\GridTest.cshtml" />
-    <Content Include="Areas\PFEP\Views\PackingInstruction\AddCorrection.cshtml" />
-    <Content Include="Areas\PFEP\Views\PackingInstruction\Print.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ResourceGroup.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\AreaaDD.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationWMS\Box.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationWMS\BoxItemGroup.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\ChangeOver.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\CycleTime.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Resource.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Item.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroup.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupAdd.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\ItemGroupCycleTime.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Configuration\Process.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\ItemGroupTool.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\Tool.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\ToolMachine.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationAPS\ToolMatrix.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\Home\Index.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\Calculation.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\Calendar.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\CalendarHour.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\ConfirmWorkorder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\GanttChart.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\APS\Plan.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\PlanMonitor.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\PlanMonitorArea.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\MES\PlanMonitorWorkorder.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\WMS\Stock.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\WMS\StockMonitor.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\_ViewStart.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\PFEP\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\PRD\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\AP\Views\Shared\_LayoutHeadIncludes.cshtml" />
-    <Content Include="Areas\ONEPROD\Views\ConfigurationMES\Workplace.cshtml" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Photos.less" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Switchers.less" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Grid.less" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_Scrollbar.less" />
     <Content Include="_ClientAppJS\_APPWEB\Layout\App_askins.less" />
-    <Content Include="Areas\ONEPROD\Views\OEECreateReport\Index_CreateReport.less" />
-    <Content Include="Areas\ONEPROD\Views\OEEDashboard\Dashboard.less" />
     <None Include="_ClientAppJS\_APPWEB\App.less" />
     <Content Include="_ClientAppJS\_APPWEB\App.js" />
     <Content Include="_ClientAppJS\_APPWEB\Common\GridHelper.es5.js">
@@ -4046,13 +2638,6 @@
     <None Include="Web.Eldisy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="_ClientAppJS\AP\AP_Style.less" />
-    <Content Include="_ClientAppJS\AP\ActionActivity\ActionActivity.js" />
-    <None Include="_ClientAppJS\AP\Action\browse.less" />
-    <Content Include="_ClientAppJS\AP\Action\Browse.js" />
-    <None Include="_ClientAppJS\AP\Action\browsecheckbox.less" />
-    <Content Include="_ClientAppJS\AP\Action\Show.js" />
-    <Content Include="_ClientAppJS\AP\Dashboard\dashboard.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-checkbox.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-checkbox.min.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-theme.css" />
@@ -4229,15 +2814,6 @@
     <Content Include="_ClientAppJS\ExternalLibraries\respond.matchmedia.addListener.min.js" />
     <Content Include="_ClientAppJS\ExternalLibraries\respond.min.js" />
     <Content Include="_ClientAppJS\MyScripts.js" />
-    <Content Include="_ClientAppJS\PFEP\PackingInstruction\Show.less" />
-    <Content Include="Areas\ONEPROD\Views\ONEPROD_Style.less" />
-    <Content Include="Areas\ONEPROD\Views\Home\App_skin_dark.less" />
-    <Content Include="Areas\ONEPROD\Views\Home\App_skin_default.less" />
-    <None Include="_ClientAppJS\PFEP\PFEP_Style.less" />
-    <None Include="_ClientAppJS\PFEP\Print\Print.less" />
-    <Content Include="_ClientAppJS\PFEP\Print\Print.js" />
-    <Content Include="Areas\PRD\Views\PSI\ReasonSelector.js" />
-    <Content Include="Areas\PRD\Views\Schedule\ScheduleGrid.js" />
     <Content Include="_ClientAppJS\_APPWEB\PopupWindow\Window.min.css">
       <DependentUpon>Window.css</DependentUpon>
     </Content>
@@ -4278,8 +2854,6 @@
     <Content Include="Areas\_APPWEB\Views\Test\AppTest.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Shared\_GridPager.cshtml" />
     <Content Include="Areas\_APPWEB\Views\Shared\_Grid.cshtml" />
-    <Content Include="_ClientAppJS\AP\ActionActivity\ActionActivity.less" />
-    <Content Include="_ClientAppJS\AP\Action\Show.less" />
     <Content Include="_ClientAppJS\ExternalLibraries\fancybox-master\.gitignore" />
     <Content Include="_ClientAppJS\ExternalLibraries\fancybox-master\bower.json" />
     <Content Include="_ClientAppJS\ExternalLibraries\fancybox-master\package.json" />
@@ -4331,22 +2905,10 @@
     <Content Include="_ClientApp\App\Notification\notification-alert.component.css" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\AP\Models\" />
-    <Folder Include="Areas\AP\Views\Attachment\" />
-    <Folder Include="Areas\AP\Views\Base\" />
     <Folder Include="Areas\CORE\Models\" />
     <Folder Include="Areas\CORE\Views\Common\" />
     <Folder Include="Areas\IDENTITY\Models\" />
     <Folder Include="Areas\IDENTITY\Views\Shared\" />
-    <Folder Include="Areas\iLOGIS\Models\" />
-    <Folder Include="Areas\iLOGIS\Views\Api\" />
-    <Folder Include="Areas\MASTERDATA\Models\" />
-    <Folder Include="Areas\MASTERDATA\Views\Department\" />
-    <Folder Include="Areas\MASTERDATA\Views\Shared\" />
-    <Folder Include="Areas\ONEPROD\ViewModels\Mes\" />
-    <Folder Include="Areas\ONEPROD\Views\DataExchange\" />
-    <Folder Include="Areas\OTHER\Models\" />
-    <Folder Include="Areas\PRD\Models\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
@@ -4370,405 +2932,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\DevK\201906161607522_1K.resx">
-      <DependentUpon>201906161607522_1K.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201906172029241_2K.resx">
-      <DependentUpon>201906172029241_2K.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201906301240425_3K.resx">
-      <DependentUpon>201906301240425_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907161844148_4K.resx">
-      <DependentUpon>201907161844148_4K.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907211139379_5K.resx">
-      <DependentUpon>201907211139379_5K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907272012129_6K.resx">
-      <DependentUpon>201907272012129_6K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907280804410_7K.resx">
-      <DependentUpon>201907280804410_7K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907281416189_8K.resx">
-      <DependentUpon>201907281416189_8K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201907281916463_9K.resx">
-      <DependentUpon>201907281916463_9K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201909141052233_10K.resx">
-      <DependentUpon>201909141052233_10K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201909141211517_11K.resx">
-      <DependentUpon>201909141211517_11K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201909141328549_12K.resx">
-      <DependentUpon>201909141328549_12K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201910301836567_13K.resx">
-      <DependentUpon>201910301836567_13K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201910302216533_14K.resx">
-      <DependentUpon>201910302216533_14K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201911090833484_15K.resx">
-      <DependentUpon>201911090833484_15K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201911131315328_16K.resx">
-      <DependentUpon>201911131315328_16K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201911182030040_17K.resx">
-      <DependentUpon>201911182030040_17K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201912071315476_18K.resx">
-      <DependentUpon>201912071315476_18K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201912071324091_19K.resx">
-      <DependentUpon>201912071324091_19K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201912071410085_20K.resx">
-      <DependentUpon>201912071410085_20K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\202001061724250_23K.resx">
-      <DependentUpon>202001061724250_23K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\202002241503020_24K.resx">
-      <DependentUpon>202002241503020_24K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\202003170932580_25K.resx">
-      <DependentUpon>202003170932580_25K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\202006081057367_26K.resx">
-      <DependentUpon>202006081057367_26K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\201912090709557_1P.resx">
-      <DependentUpon>201912090709557_1P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\201912090720527_2P.resx">
-      <DependentUpon>201912090720527_2P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\201912090725144_3P.resx">
-      <DependentUpon>201912090725144_3P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\201912090726428_4P.resx">
-      <DependentUpon>201912090726428_4P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\201912090730249_5P.resx">
-      <DependentUpon>201912090730249_5P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201912091518160_21K.resx">
-      <DependentUpon>201912091518160_21K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevK\201912091552195_22K.resx">
-      <DependentUpon>201912091552195_22K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202001041000261_6P.resx">
-      <DependentUpon>202001041000261_6P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202001290559025_7P.resx">
-      <DependentUpon>202001290559025_7P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202001290737568_8P.resx">
-      <DependentUpon>202001290737568_8P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202002241713058_9P.resx">
-      <DependentUpon>202002241713058_9P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202002241720203_10P.resx">
-      <DependentUpon>202002241720203_10P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202002250835519_11P.resx">
-      <DependentUpon>202002250835519_11P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202002251138381_13P.resx">
-      <DependentUpon>202002251138381_13P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202003090750016_14P.resx">
-      <DependentUpon>202003090750016_14P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202003090810506_15P.resx">
-      <DependentUpon>202003090810506_15P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004050733109_16P.resx">
-      <DependentUpon>202004050733109_16P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004071414549_17P.resx">
-      <DependentUpon>202004071414549_17P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004071502468_18P.resx">
-      <DependentUpon>202004071502468_18P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004141257288_19P.resx">
-      <DependentUpon>202004141257288_19P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004270919274_20P.resx">
-      <DependentUpon>202004270919274_20P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202004291015584_21P.resx">
-      <DependentUpon>202004291015584_21P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202005220900048_22P.resx">
-      <DependentUpon>202005220900048_22P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006081056457_23P.resx">
-      <DependentUpon>202006081056457_23P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006161505176_24P.resx">
-      <DependentUpon>202006161505176_24P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006170824358_25P.resx">
-      <DependentUpon>202006170824358_25P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006170828358_26P.resx">
-      <DependentUpon>202006170828358_26P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006171252434_27P.resx">
-      <DependentUpon>202006171252434_27P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202006251527312_28P.resx">
-      <DependentUpon>202006251527312_28P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202007030734398_29P.resx">
-      <DependentUpon>202007030734398_29P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202007030916472_30P.resx">
-      <DependentUpon>202007030916472_30P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202007080851306_31P.resx">
-      <DependentUpon>202007080851306_31P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202008060850506_32P.resx">
-      <DependentUpon>202008060850506_32P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202008170948426_33P.resx">
-      <DependentUpon>202008170948426_33P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202008221009503_34P.resx">
-      <DependentUpon>202008221009503_34P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\DevP\202009261021233_35P.resx">
-      <DependentUpon>202009261021233_35P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy2\201903161928109_1K.resx">
-      <DependentUpon>201903161928109_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy2\201903171204020_2K.resx">
-      <DependentUpon>201903171204020_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy2\201903171947523_3K.resx">
-      <DependentUpon>201903171947523_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy2\201903172012399_4K.resx">
-      <DependentUpon>201903172012399_4K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804100805473_1K.resx">
-      <DependentUpon>201804100805473_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804100807395_2K.resx">
-      <DependentUpon>201804100807395_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804121753069_3K.resx">
-      <DependentUpon>201804121753069_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804200339384_4P.resx">
-      <DependentUpon>201804200339384_4P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804232032423_5P.resx">
-      <DependentUpon>201804232032423_5P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201804232036265_6P.resx">
-      <DependentUpon>201804232036265_6P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805141509597_7P.resx">
-      <DependentUpon>201805141509597_7P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805151913215_8K.resx">
-      <DependentUpon>201805151913215_8K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805200849508_8P.resx">
-      <DependentUpon>201805200849508_8P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805200930118_9P.resx">
-      <DependentUpon>201805200930118_9P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805200936560_10P.resx">
-      <DependentUpon>201805200936560_10P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805212109574_11P.resx">
-      <DependentUpon>201805212109574_11P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805241653571_12P.resx">
-      <DependentUpon>201805241653571_12P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805241751370_13P.resx">
-      <DependentUpon>201805241751370_13P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805241826459_14P.resx">
-      <DependentUpon>201805241826459_14P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805250338521_15P.resx">
-      <DependentUpon>201805250338521_15P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201805250438303_16P.resx">
-      <DependentUpon>201805250438303_16P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806010731066_17P.resx">
-      <DependentUpon>201806010731066_17P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806010849202_18P.resx">
-      <DependentUpon>201806010849202_18P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806051949220_19P.resx">
-      <DependentUpon>201806051949220_19P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806110515028_20P.resx">
-      <DependentUpon>201806110515028_20P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806111118305_22P.resx">
-      <DependentUpon>201806111118305_22P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806180536557_23P.resx">
-      <DependentUpon>201806180536557_23P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806200817052_24P.resx">
-      <DependentUpon>201806200817052_24P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201806270536329_25P.resx">
-      <DependentUpon>201806270536329_25P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807041038003_26P.resx">
-      <DependentUpon>201807041038003_26P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807041652073_27P.resx">
-      <DependentUpon>201807041652073_27P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807050023348_28P.resx">
-      <DependentUpon>201807050023348_28P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807050203348_29P.resx">
-      <DependentUpon>201807050203348_29P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807090506017_30P.resx">
-      <DependentUpon>201807090506017_30P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807121759597_31P.resx">
-      <DependentUpon>201807121759597_31P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Eldisy\201807132327064_32P.resx">
-      <DependentUpon>201807132327064_32P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\201904242036100_1K.resx">
-      <DependentUpon>201904242036100_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\201904242053532_2K.resx">
-      <DependentUpon>201904242053532_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\201904242124038_3K.resx">
-      <DependentUpon>201904242124038_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\201905201441578_4K.resx">
-      <DependentUpon>201905201441578_4K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\201905252022024_5K.resx">
-      <DependentUpon>201905252022024_5K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202004281535356_6K.resx">
-      <DependentUpon>202004281535356_6K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202004291226038_7K.resx">
-      <DependentUpon>202004291226038_7K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202004291356032_8K.resx">
-      <DependentUpon>202004291356032_8K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202004301010278_9K.resx">
-      <DependentUpon>202004301010278_9K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202005021523582_10K.resx">
-      <DependentUpon>202005021523582_10K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202005031939171_11K.resx">
-      <DependentUpon>202005031939171_11K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202005181205318_12K.resx">
-      <DependentUpon>202005181205318_12K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202006201505499_13K.resx">
-      <DependentUpon>202006201505499_13K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202006201900093_14K.resx">
-      <DependentUpon>202006201900093_14K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007042239598_15K.resx">
-      <DependentUpon>202007042239598_15K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007090941576_16K.resx">
-      <DependentUpon>202007090941576_16K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007191550237_17K.resx">
-      <DependentUpon>202007191550237_17K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007231536459_18K.resx">
-      <DependentUpon>202007231536459_18K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007241301125_19K.resx">
-      <DependentUpon>202007241301125_19K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007241338255_20K.resx">
-      <DependentUpon>202007241338255_20K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007250412463_21KP.resx">
-      <DependentUpon>202007250412463_21KP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007271755335_22P.resx">
-      <DependentUpon>202007271755335_22P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202007281938579_23K.resx">
-      <DependentUpon>202007281938579_23K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202008040510516_24KP.resx">
-      <DependentUpon>202008040510516_24KP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202008051215527_25K.resx">
-      <DependentUpon>202008051215527_25K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202008130521387_26P.resx">
-      <DependentUpon>202008130521387_26P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202008310649000_27K.resx">
-      <DependentUpon>202008310649000_27K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202009011828539_28P.resx">
-      <DependentUpon>202009011828539_28P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLB\202009100748463_29K.resx">
-      <DependentUpon>202009100748463_29K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202006271437512_1K.resx">
-      <DependentUpon>202006271437512_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202007222013432_2K.resx">
-      <DependentUpon>202007222013432_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202008181730482_3P.resx">
-      <DependentUpon>202008181730482_3P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202008190325567_4P.resx">
-      <DependentUpon>202008190325567_4P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202008190335081_5P.resx">
-      <DependentUpon>202008190335081_5P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202009211058442_6P.resx">
-      <DependentUpon>202009211058442_6P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLS\202009211555213_7P.resx">
-      <DependentUpon>202009211555213_7P.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\ElectroluxPLV\202004051011027_150K.resx">
       <DependentUpon>202004051011027_150K.cs</DependentUpon>
     </EmbeddedResource>
@@ -4817,27 +2980,6 @@
     <EmbeddedResource Include="Migrations\ElectroluxPLV\202009162145402_165K.resx">
       <DependentUpon>202009162145402_165K.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV_Staging\201907141933075_1K.resx">
-      <DependentUpon>201907141933075_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV_Staging\201907141938213_2K.resx">
-      <DependentUpon>201907141938213_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV_Staging\201907141953516_3K.resx">
-      <DependentUpon>201907141953516_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV_Staging\201907171900262_4K.resx">
-      <DependentUpon>201907171900262_4K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Grandhome\201911061503354_1K.resx">
-      <DependentUpon>201911061503354_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Grandhome\201911061634136_2K.resx">
-      <DependentUpon>201911061634136_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Grandhome\202009151145408_3K.resx">
-      <DependentUpon>202009151145408_3K.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009281528156_1P.resx">
       <DependentUpon>202009281528156_1P.cs</DependentUpon>
     </EmbeddedResource>
@@ -4846,63 +2988,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009290750560_3P.resx">
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201909281910197_1K.resx">
-      <DependentUpon>201909281910197_1K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201910071200051_2K.resx">
-      <DependentUpon>201910071200051_2K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201910111843398_3K.resx">
-      <DependentUpon>201910111843398_3K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201911130849078_4K.resx">
-      <DependentUpon>201911130849078_4K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201911191209160_5K.resx">
-      <DependentUpon>201911191209160_5K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201912011252306_6K.resx">
-      <DependentUpon>201912011252306_6K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201912011834106_7K.resx">
-      <DependentUpon>201912011834106_7K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\201912121015249_8K.resx">
-      <DependentUpon>201912121015249_8K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202003171307076_9K.resx">
-      <DependentUpon>202003171307076_9K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202005111134250_10K.resx">
-      <DependentUpon>202005111134250_10K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202006211556521_11K.resx">
-      <DependentUpon>202006211556521_11K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202006211653434_12K.resx">
-      <DependentUpon>202006211653434_12K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202006211715527_13K.resx">
-      <DependentUpon>202006211715527_13K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202007070953097_14K.resx">
-      <DependentUpon>202007070953097_14K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202007071147136_15K.resx">
-      <DependentUpon>202007071147136_15K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202007071159315_16K.resx">
-      <DependentUpon>202007071159315_16K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202007091907026_17K.resx">
-      <DependentUpon>202007091907026_17K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202008130757364_18P.resx">
-      <DependentUpon>202008130757364_18P.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\WRP\202009142013563_19K.resx">
-      <DependentUpon>202009142013563_19K.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -4913,10 +2998,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APP_AP\MDL_AP.csproj">
-      <Project>{C8B1F33D-4D09-4A2C-91A6-817E5C54CF32}</Project>
-      <Name>MDL_AP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MDLX_CORE\MDLX_CORE.csproj">
       <Project>{7759B657-A830-4EE1-8412-97971B2441A2}</Project>
       <Name>MDLX_CORE</Name>
@@ -4925,41 +3006,13 @@
       <Project>{16AD63F8-0D1B-48CC-9681-3DADD497E72F}</Project>
       <Name>MDLX_MASTERDATA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MDL_ONEPROD\MDL_ONEPROD.csproj">
-      <Project>{A8FB4F45-566C-4BD8-815A-3F8BF493B45E}</Project>
-      <Name>MDL_ONEPROD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_OTHER\MDL_OTHER.csproj">
-      <Project>{83490A64-9814-4E0E-BB1B-E49A1FBCFF5B}</Project>
-      <Name>MDL_OTHER</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_PFEP\MDL_PFEP.csproj">
-      <Project>{8AC13D7D-9F90-4EF0-AB39-61EB679893D0}</Project>
-      <Name>MDL_PFEP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_PRD2\MDL_PRD2.csproj">
-      <Project>{DADE3CCC-9AEC-4A76-A47E-2CB5FF3C0166}</Project>
-      <Name>MDL_PRD2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MDL_iLOGIS\MDL_iLOGIS.csproj">
-      <Project>{3F323248-FEE7-4618-BDDA-AC19D49125D4}</Project>
-      <Name>MDL_iLOGIS</Name>
+    <ProjectReference Include="..\MDL_LABELINSP\MDL_LABELINSP.csproj">
+      <Project>{edbbe06e-17cd-42ba-8981-94ea96819d44}</Project>
+      <Name>MDL_LABELINSP</Name>
     </ProjectReference>
     <ProjectReference Include="..\XLIB_COMMON\XLIB_COMMON\XLIB_COMMON.csproj">
       <Project>{A0B99E24-F08F-454C-B322-9AF2EA87A295}</Project>
       <Name>XLIB_COMMON</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XLIB_GridMvc\XLIB_GridMvc.csproj">
-      <Project>{742ca5dd-16db-464a-a267-a1f4e422733b}</Project>
-      <Name>XLIB_GridMvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XLIB_PDFtoPrinter\PDFtoPrinter\XLIB_PDFtoPrinter.csproj">
-      <Project>{638E5F2C-1F42-4B1A-A6AC-53DA1E3F5953}</Project>
-      <Name>XLIB_PDFtoPrinter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XLIB_RawPrint\XLIB_RawPrint.csproj">
-      <Project>{54BF59A6-E98D-41EA-8020-A2F5BED4FED5}</Project>
-      <Name>XLIB_RawPrint</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -5044,7 +3097,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PDFtoPrinter.1.2.0\build\PDFtoPrinter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PDFtoPrinter.1.2.0\build\PDFtoPrinter.targets'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
@@ -5058,7 +3110,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.WindowsServer.2.14.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.WindowsServer.2.14.0\build\Microsoft.ApplicationInsights.WindowsServer.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.Web.2.14.0\build\Microsoft.ApplicationInsights.Web.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.Web.2.14.0\build\Microsoft.ApplicationInsights.Web.targets'))" />
   </Target>
-  <Import Project="..\packages\PDFtoPrinter.1.2.0\build\PDFtoPrinter.targets" Condition="Exists('..\packages\PDFtoPrinter.1.2.0\build\PDFtoPrinter.targets')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets" Condition="Exists('..\packages\HarfBuzzSharp.2.6.1.4\build\net462\HarfBuzzSharp.targets')" />

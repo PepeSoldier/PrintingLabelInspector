@@ -1,5 +1,4 @@
-﻿using _MPPL_WEB_START.Areas.iLOGIS.ViewModels;
-using MDL_BASE.Models.IDENTITY;
+﻿using MDL_BASE.Models.IDENTITY;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +18,9 @@ namespace _MPPL_WEB_START.Areas.CORE.Controllers
         [Authorize(Roles = DefRoles.ADMIN)]
         public ActionResult Index(int id = 0)
         {
-            HomeViewModel hvm = new HomeViewModel();
-            hvm.Id = 1;
-            return View(hvm);
+            //HomeViewModel hvm = new HomeViewModel();
+            //hvm.Id = 1;
+            return View(); //hvm);
         }
     }
 }
