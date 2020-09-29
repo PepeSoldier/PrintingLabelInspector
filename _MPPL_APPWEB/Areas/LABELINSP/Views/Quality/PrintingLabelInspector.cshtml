@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Skin = "nasaSkin";
+    ViewBag.Title = "PrintingLabelInspector";
+}
+
+<style>
+    .logo {
+        height: 80px !important;
+        width: 280px !important;
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-left: 1px;
+    }
+
+    .header, .header input {
+        background-color: powderblue !important;
+    }
+
+    .header {
+        height: 135px;
+    }
+
+    .digitalClock {
+        font-family: 'DigitalClock';
+        font-size: 80px;
+        padding: 0;
+        margin-top: -30px;
+    }
+
+    .card-body{
+        background-color:cadetblue;
+        padding:5px;
+    }
+
+    .testResultHeader {
+        color: aquamarine;
+    }
+
+    .testResultsCard {
+        background-color: #2e94a4;
+    }
+
+    .testResultFalse {
+        background-color: #ff5d7c;
+    }
+
+    .testResultPositive {
+        background-color: #10ad5e;
+    }
+
+    .barcodeDetails {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .barcodeDescription {
+        font-size: 28px;
+    }
+
+    .labelType{
+        border:1px solid white;
+    }
+</style>
+
+<div class="row no-gutters" style="margin-top: 2px; height: 66px">
+    <div class="col-2 h-100">
+        <div class="logoMD logo clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectroluxPLV_white.png")) !important"></div>
+    </div>
+    <div class="col-4 digitalClock" style="text-align: center;">
+        <div class="headerMid" id="clockHeaderMid"></div>
+    </div>
+    <div class="col-4" style="width: 100%; font-size: 50px; margin-top: -18px; background: none;" id="barcode">
+    </div>
+    <div class="col-2">
+    </div>
+</div>
+<div class="row" style="height:4px; background-color:white">
+
+</div>
+<div class="row jobListInvisible mt-1" id="joblistColumns">
+    <div class="col-12" style="align-items: flex-start;">
+        <div class="row no-gutters">
+            <div class="col-4 p-1" id="frontPhoto"></div>
+            <div class="col-2">
+                <div class="row no-gutters">
+                    <div class="col-12 p-1" id="sidePhoto" style="max-width:375px;"></div>
+                </div>
+                <div class="row no-gutters p-1 mt-1">
+                    <div class="col-12" id="rearPhoto" style="max-width:375px;"></div>
+                </div>
+            </div>
+            <div class="col-5 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group row mb-0">
+                            <label class="col-sm-4 col-form-label barcodeDescription">Zamówienie: </label>
+                            <div class="col-sm-8 barcodeDetails" id="workorderNo"></div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <label class="col-sm-4 col-form-label barcodeDescription">Pnc: </label>
+                            <div class="col-sm-8 barcodeDetails" id="itemCode"></div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <label class="col-sm-4 col-form-label barcodeDescription ">Nazwa: </label>
+                            <div class="col-sm-8 barcodeDetails" id="itemName"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1" id="testView">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="testPackingLabelTemplate" type="x-tmpl-mustache">
+    <div class="card-body testResultsCard">
+        <div class="form-group row testResultHeader">
+            <div class="col-sm-3 col-form-label font-weight-bold">Nazwa testu</div>
+            <div class="col-sm-2 col-form-label font-weight-bold text-center">FRONT</div>
+            <div class="col-sm-2 col-form-label font-weight-bold text-center">REAR</div>
+            <div class="col-sm-2 col-form-label font-weight-bold text-center">SIDE</div>
+            <div class="col-sm-3 col-form-label ">Oczekiw. Wart.</div>
+        </div>
+        {{#Test}}
+    <div class="form-group row">
+        <div class="col-sm-3 col-form-label">{{TestName}}</div>
+        {{#FrontResult}}
+        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{FrontExpectedValue}}</div>
+        {{/FrontResult}}
+        {{^FrontResult}}
+        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+        {{/FrontResult}}
+        {{#SideResult}}
+        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{SideExpectedValue}}</div>
+        {{/SideResult}}
+        {{^SideResult}}
+        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+        {{/SideResult}}
+        {{#RearResult}}
+        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{RearExpectedValue}}</div>
+        {{/RearResult}}
+        {{^RearResult}}
+        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+        {{/RearResult}}
+        <div class="col-sm-2 col-form-label ">{{ExpectedValue}}</div>
+    </div>
+        {{/Test}}
+            </div>
+</script>
+
+
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalR/hubs"></script>
+
+<script type="text/javascript">
+
+    if (jobLabelCheck != null) { console.log("Preparing to stop clock"); jobLabelCheck.StopClock(); }
+    var jobLabelCheck = new JobLabelCheck(false);
+
+    $(document).ready(function () {
+        openFullscreen();
+        jobLabelCheck.StartClock();
+        console.log("preparing the hub");
+        jlR = $.connection.jobLabelCheckHub;
+        jlR.client.broadcastMessage = function (barcode) {
+            console.log(barcode);
+            if (barcode == "reset") {
+                $("#barcode").text(barcode);
+                location.reload(true);
+            }
+            else if (barcode != "99999999999999999999") {
+                $("#barcode").text(barcode);
+                if (barcode.length > 10) {
+                    let serialNumberIndexStart = barcode.length - 9;
+                    let serialNumberIndexEnd = serialNumberIndexStart + 8;
+                    let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
+                    jobLabelCheck.LoadDataBySerialNumber(serialNumer);
+                } else {
+                    console.log("zbyt krótki barkod");
+                }
+
+            }
+        };
+
+        $.connection.hub.start().done(function () {
+            console.log("Hub is started.");
+        });
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000); // Restart connection after 5 seconds.
+        });
+
+    });
+</script>
+

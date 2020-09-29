@@ -1,4 +1,9 @@
 ﻿using _MPPL_WEB_START.Areas.CORE.ViewModels;
+using _MPPL_WEB_START.Areas.ONEPROD.Models;
+using MDL_BASE.Interfaces;
+using MDL_CORE.ComponentCore.ViewModel;
+using MDLX_CORE.ComponentCore.UnitOfWorks;
+using Microsoft.AspNet.SignalR;
 using System.Web.Mvc;
 using XLIB_COMMON.Model;
 
@@ -6,28 +11,13 @@ namespace _MPPL_WEB_START.Areas.CORE.Controllers
 {
     public class CommonController : Controller
     {
-        public CommonController()
+        private readonly UnitOfWorkCore uow;
+        private readonly IDbContextCore db;
+        public CommonController(IDbContextCore db)
         {
+            this.db = db;
             ViewBag.Skin = "nasaSkin";
-        }
-
-        public JsonResult ParseBarcode(string barcode, string template)
-        {
-            BarcodeParsedViewModel vm = new BarcodeParsedViewModel();
-
-            BarcodeManager barcodeParser = new BarcodeManager();
-            barcodeParser.Parse(barcode, template);
-
-            vm.ItemCode = barcodeParser.ItemCode;
-            vm.Location = barcodeParser.Location;
-            vm.Qty = barcodeParser.Qty;
-            vm.SerialNumber = barcodeParser.SerialNumber;
-            vm.StockUnitId = barcodeParser.StockUnitId;
-            vm.ErrorText = barcodeParser.Error ? "Wykryto błąd." : "";
-            vm.ErrorText += barcodeParser.ErrorUnexpectedQtyChar ? "Wykryto nieprawidłowy znak w obszarze ilości." : "";
-            vm.ErrorText += barcodeParser.ErrorWrongLength ? "Wykryto nieoczekiwaną długość kodu." : "";
-
-            return Json(vm);
+            uow = new UnitOfWorkCore(db);
         }
     }
 }

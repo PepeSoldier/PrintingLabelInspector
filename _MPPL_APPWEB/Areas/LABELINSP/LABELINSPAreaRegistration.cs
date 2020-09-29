@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.CORE
+namespace _MPPL_WEB_START.Areas.LABELINSP
 {
     public class LABELINSPAreaRegistration : AreaRegistration 
     {

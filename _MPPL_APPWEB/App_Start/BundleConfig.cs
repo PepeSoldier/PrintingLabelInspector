@@ -62,6 +62,7 @@ namespace _MPPL_WEB_START
 
             bundles.Add(new ScriptBundle("~/bundles/LABELINSP_Scripts")
                 .IncludeDirectory("~/Areas/LABELINSP/Views/", "*.js", true)
+                .IncludeDirectory("~/Areas/LABELINSP/Views/Quality", "*.js", true)
             );
         }
         private static void EXTERNAL_Scripts_AND_Styles(BundleCollection bundles)
