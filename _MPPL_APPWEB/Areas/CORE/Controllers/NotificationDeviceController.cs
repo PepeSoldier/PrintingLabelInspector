@@ -90,7 +90,7 @@ namespace _MPPL_WEB_START.Areas.CORE.Controllers
             string CurrentUser = User.Identity.GetUserId();
             if(userId == CurrentUser)
             {
-                NotificationDevice device = uow.NotificationDeviceRepo.GetByUserIdAndPushEndpoint(userId, pushEndpoint);
+                NotificationDevice device = null; // uow.NotificationDeviceRepo.GetByUserIdAndPushEndpoint(userId, pushEndpoint);
 
                 var pushSubscription = new PushSubscription(device.PushEndpoint, device.PushP256DH, device.PushAuth);
                 var vapidDetails = new VapidDetails(NotificationManager.VapidSubject, NotificationManager.PublicKey, NotificationManager.PrivateKey);

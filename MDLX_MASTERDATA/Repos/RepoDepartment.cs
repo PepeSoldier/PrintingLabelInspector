@@ -16,36 +16,29 @@ namespace MDLX_MASTERDATA.Repos
             this.db = db;
         }
 
-        public override Department GetById(int id)
-        {
-            return db.Departments.FirstOrDefault(d => d.Id == id);
-        }
-        public override IQueryable<Department> GetList()
-        {
-            return db.Departments.Where(x => x.Deleted == false).OrderBy(x => x.Name);
-        }
-        public Department GetByName(string name)
-        {
-            return db.Departments.FirstOrDefault(d => d.Name == name);
-        }
-        public int AddIfNotExists(string name)
-        {
-            Department dpt = GetByName(name);
-
-            if (dpt == null)
-            {
-                dpt = new Department { Name = name, Deleted = false };
-                AddOrUpdate(dpt);
-            }
-
-            return dpt.Id;
-        }
-
-        //public List<User> GetManagers(int departmentId)
+        //public override Department GetById(int id)
         //{
-        //    //string roleId = db.Roles.FirstOrDefault(r => r.Name == DefRoles.Manager).Id;
-        //    //return db.Users.Where(u => u.DepartmentId == departmentId && u.Roles.Select(y => y.RoleId).Contains(roleId)).ToList();
-        //    return new List<User>();
+        //    return db.Departments.FirstOrDefault(d => d.Id == id);
+        //}
+        //public override IQueryable<Department> GetList()
+        //{
+        //    return db.Departments.Where(x => x.Deleted == false).OrderBy(x => x.Name);
+        //}
+        //public Department GetByName(string name)
+        //{
+        //    return db.Departments.FirstOrDefault(d => d.Name == name);
+        //}
+        //public int AddIfNotExists(string name)
+        //{
+        //    Department dpt = GetByName(name);
+
+        //    if (dpt == null)
+        //    {
+        //        dpt = new Department { Name = name, Deleted = false };
+        //        AddOrUpdate(dpt);
+        //    }
+
+        //    return dpt.Id;
         //}
     }
 }

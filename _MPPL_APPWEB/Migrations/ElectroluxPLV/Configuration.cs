@@ -10,7 +10,7 @@ namespace _MPPL_WEB_START.Migrations.ElectroluxPLV
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<_MPPL_WEB_START.Migrations.DbContextAPP_ElectroluxPLV_Prod>
+    internal sealed class Configuration : DbMigrationsConfiguration<_MPPL_WEB_START.Migrations.DbContextAPP_ElectroluxPLV>
     {
         public Configuration()
         {
@@ -22,7 +22,7 @@ namespace _MPPL_WEB_START.Migrations.ElectroluxPLV
             //Update-Database -ConfigurationTypeName _MPPL_WEB_START.Migrations.ElectroluxPLV.Configuration
         }
 
-        protected override void Seed(_MPPL_WEB_START.Migrations.DbContextAPP_ElectroluxPLV_Prod context)
+        protected override void Seed(_MPPL_WEB_START.Migrations.DbContextAPP_ElectroluxPLV context)
         {
             //  This method will be called after migrating to the latest version.
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -30,7 +30,7 @@ namespace _MPPL_WEB_START.Migrations.ElectroluxPLV
 
 
             //CnfigurationHelper.SeedDataNewRoles(context);
-            CnfigurationHelper.AddAccountAdminRoleAndAssignToAdmin(context);
+            //CnfigurationHelper.AddAccountAdminRoleAndAssignToAdmin(context);
             //UserRepo _userManager = new UserRepo(new ApplicationUserStore<User>(context), context);
             //RoleRepo _roleManager = new RoleRepo(new ApplicationRoleStore(context), context);
             //RoleRepo _roleManager = new RoleRepo(new RoleStore<IdentityRole>(context), context);

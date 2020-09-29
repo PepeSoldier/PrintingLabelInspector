@@ -14,13 +14,8 @@ namespace _MPPL_WEB_START.Areas._APPWEB.Models
         {
             switch (clientName)
             {
-                case "ElectroluxPLB": appClient = new AppClientElectroluxPLB(); break;
-                case "ElectroluxPLS": appClient = new AppClientElectroluxPLS(); break;
                 case "ElectroluxPLV": appClient = new AppClientElectroluxPLV(); break;
-                case "Eldisy": appClient = new AppClientEldisy(); break;
-                case "Eldisy2": appClient = new AppClientEldisy2(); break;
-                case "Grandhome": appClient = new AppClientGrandhome(); break;
-                case "WRP": appClient = new AppClientWRP(); break;
+                case "PackingLabel": appClient = new AppClientElectroluxPLV(); break;
                 case "Dev": appClient = new AppClientDev(); break;
                 case "DevK": appClient = new AppClientDev(); break;
                 case "DevP": appClient = new AppClientDev(); break;

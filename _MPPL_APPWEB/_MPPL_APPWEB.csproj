@@ -19,7 +19,7 @@
     <AssemblyName>_MPPL_WEB_START</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44336</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -477,31 +477,20 @@
     <Compile Include="Areas\IDENTITY\ViewModels\ManageViewModels.cs" />
     <Compile Include="Areas\IDENTITY\ViewModels\UserGridViewModel.cs" />
     <Compile Include="App_Start\JobScheduler.cs" />
+    <Compile Include="Areas\LABELINSP\LABELINSPAreaRegistration.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppClient.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_OTHER.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_PRD.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_PFEP.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_AP.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppMenu_CORE.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_ILOGIS.cs" />
-    <Compile Include="Areas\_APPWEB\Models\AppMenu_ONEPROD.cs" />
     <Compile Include="Areas\_APPWEB\Models\AutocompleteViewModel.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Clients\AppClientElectroluxPLS.cs" />
     <Compile Include="Areas\_APPWEB\Models\Clients\AppClient_Abstract.cs" />
     <Compile Include="Areas\_APPWEB\Models\Clients\AppClientUnknown.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Clients\AppClientWRP.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Clients\AppClientGrandHome.cs" />
     <Compile Include="Areas\_APPWEB\Models\Clients\AppClientDev.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Clients\AppClientEldisy.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Clients\AppClientElectroluxPLB.cs" />
     <Compile Include="Areas\_APPWEB\Models\Clients\AppClientElectroluxPLV.cs" />
     <Compile Include="Areas\_APPWEB\Models\ColorHelper.cs" />
     <Compile Include="Areas\_APPWEB\Models\ExcelExportModel.cs" />
     <Compile Include="Areas\_APPWEB\Models\GridSelectListDataModel.cs" />
     <Compile Include="Areas\_APPWEB\Models\MailerONEPROD.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppMenu.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Settings\SettingsILOGIS.cs" />
-    <Compile Include="Areas\_APPWEB\Models\Settings\SettingsONEPROD.cs" />
+    <Compile Include="Areas\_APPWEB\Models\Settings\SettingsLABELINSP.cs" />
     <Compile Include="Areas\_APPWEB\ViewModels\ChartViewModel.cs" />
     <Compile Include="Areas\_APPWEB\ViewModels\JsonModel.cs" />
     <Compile Include="Areas\_APPWEB\ViewModels\ReasonSelectorItem.cs" />
@@ -514,76 +503,11 @@
     <Compile Include="Migrations\DbContextAPP_Dev.cs" />
     <Compile Include="Migrations\DevK\Configuration.cs" />
     <Compile Include="Migrations\DevP\Configuration.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004051011027_150K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004051011027_150K.Designer.cs">
-      <DependentUpon>202004051011027_150K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004051537150_151K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004051537150_151K.Designer.cs">
-      <DependentUpon>202004051537150_151K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004101212123_152K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004101212123_152K.Designer.cs">
-      <DependentUpon>202004101212123_152K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004111712077_153K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004111712077_153K.Designer.cs">
-      <DependentUpon>202004111712077_153K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004160809269_154K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004160809269_154K.Designer.cs">
-      <DependentUpon>202004160809269_154K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004191214129_155K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004191214129_155K.Designer.cs">
-      <DependentUpon>202004191214129_155K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004230938269_156K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004230938269_156K.Designer.cs">
-      <DependentUpon>202004230938269_156K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202004251654314_157K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202004251654314_157K.Designer.cs">
-      <DependentUpon>202004251654314_157K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202005070904159_158K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202005070904159_158K.Designer.cs">
-      <DependentUpon>202005070904159_158K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202005201145160_159K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202005201145160_159K.Designer.cs">
-      <DependentUpon>202005201145160_159K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202005212014045_160K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202005212014045_160K.Designer.cs">
-      <DependentUpon>202005212014045_160K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202006061050544_161K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202006061050544_161K.Designer.cs">
-      <DependentUpon>202006061050544_161K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202006231025594_162K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202006231025594_162K.Designer.cs">
-      <DependentUpon>202006231025594_162K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202007111137429_163K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202007111137429_163K.designer.cs">
-      <DependentUpon>202007111137429_163K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202008250852599_164K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202008250852599_164K.designer.cs">
-      <DependentUpon>202008250852599_164K.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ElectroluxPLV\202009162145402_165K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202009162145402_165K.designer.cs">
-      <DependentUpon>202009162145402_165K.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\ElectroluxPLV\Configuration.cs" />
     <Compile Include="Areas\_APPWEB\Models\AreaRegistrationMPPL.cs" />
     <Compile Include="Areas\_APPWEB\Models\LicenceManager.cs" />
     <Compile Include="Areas\_APPWEB\Models\Mailer_AP.cs" />
     <Compile Include="Areas\_APPWEB\Models\MailHelper.cs" />
-    <Compile Include="Areas\_APPWEB\Models\ToDo.cs" />
     <Compile Include="Areas\_APPWEB\Controllers\BaseController.cs" />
     <Compile Include="Areas\IDENTITY\Controllers\AccountController.cs" />
     <Compile Include="Areas\IDENTITY\Controllers\ManageController.cs" />
@@ -641,6 +565,12 @@
     <Content Include="Areas\CORE\Views\Printer\Printer.cshtml" />
     <Content Include="Areas\CORE\Views\Home\Index.cshtml" />
     <Content Include="Areas\CORE\Views\NotificationDevice\CreateNotificationDevice.js" />
+    <Content Include="Areas\LABELINSP\Views\LABELINSP_Style.css">
+      <DependentUpon>LABELINSP_Style.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\LABELINSP\Views\LABELINSP_Style.min.css">
+      <DependentUpon>LABELINSP_Style.css</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -769,6 +699,11 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Areas\_APPWEB\Views\Shared\_Layout.Template.cshtml" />
+    <Content Include="Areas\LABELINSP\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\LABELINSP\Views\web.config" />
+    <Content Include="Areas\LABELINSP\Views\Shared\_LayoutHeadIncludes.cshtml" />
+    <Content Include="Areas\LABELINSP\Views\Shared\_LayoutMenu.cshtml" />
+    <Content Include="Areas\LABELINSP\Views\LABELINSP_Style.less" />
     <None Include="Properties\PublishProfiles\Publish_Electrolux_PLS %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Grandhome %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_WRP %28local%29.pubxml" />
@@ -2909,6 +2844,8 @@
     <Folder Include="Areas\CORE\Views\Common\" />
     <Folder Include="Areas\IDENTITY\Models\" />
     <Folder Include="Areas\IDENTITY\Views\Shared\" />
+    <Folder Include="Areas\LABELINSP\Controllers\" />
+    <Folder Include="Areas\LABELINSP\Models\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
@@ -2932,54 +2869,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004051011027_150K.resx">
-      <DependentUpon>202004051011027_150K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004051537150_151K.resx">
-      <DependentUpon>202004051537150_151K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004101212123_152K.resx">
-      <DependentUpon>202004101212123_152K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004111712077_153K.resx">
-      <DependentUpon>202004111712077_153K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004160809269_154K.resx">
-      <DependentUpon>202004160809269_154K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004191214129_155K.resx">
-      <DependentUpon>202004191214129_155K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004230938269_156K.resx">
-      <DependentUpon>202004230938269_156K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202004251654314_157K.resx">
-      <DependentUpon>202004251654314_157K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202005070904159_158K.resx">
-      <DependentUpon>202005070904159_158K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202005201145160_159K.resx">
-      <DependentUpon>202005201145160_159K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202005212014045_160K.resx">
-      <DependentUpon>202005212014045_160K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202006061050544_161K.resx">
-      <DependentUpon>202006061050544_161K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202006231025594_162K.resx">
-      <DependentUpon>202006231025594_162K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202007111137429_163K.resx">
-      <DependentUpon>202007111137429_163K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202008250852599_164K.resx">
-      <DependentUpon>202008250852599_164K.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202009162145402_165K.resx">
-      <DependentUpon>202009162145402_165K.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009281528156_1P.resx">
       <DependentUpon>202009281528156_1P.cs</DependentUpon>
     </EmbeddedResource>
@@ -3083,7 +2972,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49962</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/_MPPL_APPWEB</IISUrl>
+          <IISUrl>http://localhost:49966/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

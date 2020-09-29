@@ -12,14 +12,9 @@ namespace _MPPL_WEB_START.Areas._APPWEB.Models.Clients
             ac = new MenuAccessCode[] { MenuAccessCode.FULL_ACCESS };
         }
         
-        public override void Configure_ONEPROD()
+        public override void Configure_LABELINSP()
         {
-            SettingsONEPROD.ReportOnlineAllowedMachinesIDs = new int[] { 0 };
-            SettingsONEPROD.ReportOnlinePillHeigh = 50;
-            SettingsONEPROD.ReportOnlinePillFontSize = 40;
-            SettingsONEPROD.MesWorkplaceVerifyIP = false;
-            SettingsONEPROD.MediaEnabled = true;
-            SettingsONEPROD.TraceabilityEnabled = true;
+            SettingsLABELINSP.Test = true;   
         }
     }
 }
