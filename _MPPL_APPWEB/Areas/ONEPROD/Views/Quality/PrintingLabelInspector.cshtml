@@ -76,37 +76,43 @@
 <script src="~/signalR/hubs"></script>
 
 <script type="text/javascript">
-    debugger;
-    @*var _port = @Html.Raw(Json.Encode(port));*@
-    if (jobList != null) { console.log("Preparing to stop clock"); jobList.StopClock(); }
-    var jobList = new JobList(false);
+
+    if (jobLabelCheck != null) { console.log("Preparing to stop clock"); jobLabelCheck.StopClock(); }
+    var jobLabelCheck = new JobLabelCheck(false);
 
     $(document).ready(function () {
         openFullscreen();
         console.log("Job list view loaded");
-        jobList.StartClock();
+        jobLabelCheck.StartClock();
 
         console.log("preparing the hub");
-        jlR = $.connection.jobListHub;
+        jlR = $.connection.jobLabelCheckHub;
         jlR.client.broadcastMessage = function (barcode) {
-            debugger;
-            console.log("signalR");
             console.log(barcode);
-
             if (barcode == "reset") {
                 $("#barcode").val(barcode);
                 location.reload(true);
             }
             else if (barcode != "99999999999999999999") {
-                $("#barcode").val(barcode.replace(/\D/g, ''));
-                jobList.GetItemsByPrefixes();
+                //$("#barcode").val(barcode.replace(/\D/g, ''));
+                $("#barcode").val(barcode);
+                if (barcode.length > 10) {
+                    let serialNumberIndexStart = barcode.length - 9;
+                    let serialNumberIndexEnd = serialNumberIndexStart + 8;
+                    let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
+                    console.log(serialNumer);
+                    //jobLabelCheck.GetItemsByPrefixes();
+                } else {
+                    console.log("zbyt krótki barkod");
+                }
+                
             }
         };
 
         $.connection.hub.start().done(function () {
             console.log("Hub is started.");
             //jlR.server.joinWorkstation(_port);
-            jobList.GetItemsByPrefixes();
+            //jobLabelCheck.GetItemsByPrefixes();
         });
         $.connection.hub.disconnected(function () {
             setTimeout(function () {
@@ -117,7 +123,6 @@
     });
 
     $("#barcode").on('change keypress paste input', function () {
-        debugger;
         var text = $(this).val();
 
         if (text == "reset") {
@@ -125,7 +130,7 @@
         }
         else if (text.length == 20) {
             console.log(text);
-            jobList.GetItemsByPrefixes();
+            //jobLabelCheck.GetItemsByPrefixes();
         }
     });
 

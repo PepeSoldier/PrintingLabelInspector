@@ -98,6 +98,7 @@ namespace _MPPL_WEB_START
                 case "Dev": DevInjections(); break;
                 case "DevK": DevInjections(); break;
                 case "DevP": DevInjections(); break;
+                case "PackingLabel": PackingLabelInjections(); break;
                 case "ElectroluxPLB": ElectroluxPLBInjections(); break;
                 case "ElectroluxPLS": ElectroluxPLSInjections(); break;
                 case "ElectroluxPLV": ElectroluxPLVInjections(); break;
@@ -124,6 +125,19 @@ namespace _MPPL_WEB_START
             builder.RegisterType<DbContextAPP_ElectroluxPLS>().As<IDbContextCore>();
             builder.RegisterType<DbContextAPP_ElectroluxPLS>().As<IDbContextMasterData>();
             builder.RegisterType<DbContextAPP_ElectroluxPLS>().As<IDbContextiLOGIS>();
+        }
+
+        private void PackingLabelInjections()
+        {
+            dbContextParameter = new ResolvedParameter(
+                (pi, ctx) => pi.ParameterType == typeof(DbContext),
+                (pi, ctx) => ctx.Resolve< DbContextAPP_PackingLabel> ()
+            );
+
+            builder.RegisterType<DbContextAPP_PackingLabel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextCore>();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextMasterData>();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextOneprodQuality>();
         }
 
         private void DevInjections()

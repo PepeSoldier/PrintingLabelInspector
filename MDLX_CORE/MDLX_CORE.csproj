@@ -214,18 +214,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentCore\Entities\BomWorkorder.cs" />
+    <Compile Include="ComponentCore\Entities\PackingLabelTest.cs" />
+    <Compile Include="ComponentCore\Entities\PackingLabel.cs" />
     <Compile Include="ComponentCore\Entities\NotificationDevice.cs" />
     <Compile Include="ComponentCore\Entities\Printer.cs" />
     <Compile Include="ComponentCore\Entities\JobList.cs" />
     <Compile Include="ComponentCore\Entities\JsonUpdateGridModel.cs" />
     <Compile Include="ComponentCore\Entities\ProductionOrder.cs" />
     <Compile Include="ComponentCore\Entities\SystemVariables.cs" />
+    <Compile Include="ComponentCore\Enums\EnumLabelType.cs" />
     <Compile Include="ComponentCore\Enums\EnumVariableType.cs" />
     <Compile Include="ComponentCore\Enums\InstructionVersion.cs" />
     <Compile Include="ComponentCore\Models\DefSystemVariables.cs" />
     <Compile Include="ComponentCore\Models\NotificationManager.cs" />
     <Compile Include="ComponentCore\Models\SerialNumberManager.cs" />
     <Compile Include="ComponentCore\Models\VapidKey.cs" />
+    <Compile Include="ComponentCore\Repos\PackingLabelTestRepo.cs" />
+    <Compile Include="ComponentCore\Repos\PackingLabelRepo.cs" />
     <Compile Include="ComponentCore\Repos\NotificationDeviceRepo.cs" />
     <Compile Include="ComponentCore\Repos\PrinterRepo.cs" />
     <Compile Include="ComponentCore\Repos\ProductionOrderRepo.cs" />

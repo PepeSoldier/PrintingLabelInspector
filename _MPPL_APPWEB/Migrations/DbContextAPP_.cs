@@ -81,6 +81,8 @@ namespace _MPPL_WEB_START.Migrations
         public virtual DbSet<Workstation> Workstations { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<LabourBrigade> LabourBrigades { get; set; }
+        public virtual DbSet<MDL_CORE.ComponentCore.Entities.PackingLabel> PackingLabels { get; set; }
+        public virtual DbSet<PackingLabelTest> PackingLabelTests { get; set; }
 
         //CORE
         public virtual DbSet<Attachment> Attachments { get; set; }

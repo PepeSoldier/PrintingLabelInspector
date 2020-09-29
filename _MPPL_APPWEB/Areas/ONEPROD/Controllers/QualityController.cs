@@ -16,7 +16,7 @@ using System.Web.Mvc;
 
 namespace _MPPL_WEB_START.Areas.ONEPROD.Controllers
 {
-    [System.Web.Mvc.Authorize(Roles = DefRoles.ONEPROD_MES_OPERATOR)]
+    //[System.Web.Mvc.Authorize(Roles = DefRoles.ONEPROD_MES_OPERATOR)]
     public partial class QualityController : BaseController
     {
         private readonly IDbContextOneprodQuality db;

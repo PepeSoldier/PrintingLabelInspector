@@ -98,7 +98,7 @@ namespace _MPPL_WEB_START
                 //"~/Areas/ONEPROD/Views/JobList/JobList.js",
                 "~/Areas/ONEPROD/Views/Home/WorkingHoursPreview.js",
                 "~/Areas/ONEPROD/Views/Home/WeekPicker.js",
-
+                "~/Areas/ONEPROD/Views/Quality/JobLabelCheck.js",
                 "~/Areas/ONEPROD/Views/BOM/BOM.js",
 
                 //"~/Areas/ONEPROD/Views/MES/Workplace.js",

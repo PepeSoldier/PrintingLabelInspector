@@ -17,9 +17,12 @@ namespace MDL_BASE.Interfaces
         IDbSet<UserRole> UserRoles { get; set; }
 
         //MasterData
+        DbSet<PackingLabelTest> PackingLabelTests { get; set; }
+        DbSet<PackingLabel> PackingLabels { get; set; }
 
         //BASE
         DbSet<ProductionOrder> ProductionOrders { get; set; }
+        
 
         DbSet<Bom> Boms { get; set; }
         DbSet<BomWorkorder> BomWorkorders { get; set; }

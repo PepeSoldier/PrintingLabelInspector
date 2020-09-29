@@ -698,9 +698,9 @@
     <Compile Include="Areas\PRD\Controllers\ScheduleController.cs" />
     <Compile Include="Areas\PRD\Controllers\SubAssController.cs" />
     <Compile Include="Areas\PRD\PRDAreaRegistration.cs" />
+    <Compile Include="Migrations\DbContextAPP_PackingLabel.cs" />
     <Compile Include="Migrations\DbContextFake.cs" />
     <Compile Include="Migrations\DbContextAPP_.cs" />
-    <Compile Include="Migrations\DbContextAPP_Dev_Test.cs" />
     <Compile Include="Migrations\DbContextAPP_ElectroluxPLS.cs" />
     <Compile Include="Migrations\DbContextAPP_WRP.cs" />
     <Compile Include="Migrations\DevK\201906161607522_1K.cs" />
@@ -1353,6 +1353,19 @@
     </Compile>
     <Compile Include="Migrations\DbContextAPP_ElectroluxPLV.cs" />
     <Compile Include="Areas\_APPWEB\Models\Mailers.cs" />
+    <Compile Include="Migrations\PackingLabel\202009281528156_1P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009281528156_1P.designer.cs">
+      <DependentUpon>202009281528156_1P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\202009281605530_2P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009281605530_2P.designer.cs">
+      <DependentUpon>202009281605530_2P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\202009290750560_3P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009290750560_3P.designer.cs">
+      <DependentUpon>202009290750560_3P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\Configuration.cs" />
     <Compile Include="Migrations\WRP\201909281910197_1K.cs" />
     <Compile Include="Migrations\WRP\201909281910197_1K.Designer.cs">
       <DependentUpon>201909281910197_1K.cs</DependentUpon>
@@ -1560,6 +1573,7 @@
     <Content Include="Areas\iLOGIS\Views\Warehouse\WarehouseSelector.js" />
     <Content Include="Areas\iLOGIS\Views\WMS\TransporterLog.js" />
     <Content Include="Areas\CORE\Views\NotificationDevice\CreateNotificationDevice.js" />
+    <Content Include="Areas\ONEPROD\Views\Quality\JobLabelCheck.js" />
     <Content Include="Areas\ONEPROD\Views\Quality\ItemMeasurement.js" />
     <Content Include="Areas\ONEPROD\Views\Quality\ItemParameter.js" />
     <Content Include="Areas\PRD\Views\ScheduleMonitor\VIndex.css" />
@@ -4823,6 +4837,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\Grandhome\202009151145408_3K.resx">
       <DependentUpon>202009151145408_3K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202009281528156_1P.resx">
+      <DependentUpon>202009281528156_1P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202009281605530_2P.resx">
+      <DependentUpon>202009281605530_2P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202009290750560_3P.resx">
+      <DependentUpon>202009290750560_3P.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\WRP\201909281910197_1K.resx">
       <DependentUpon>201909281910197_1K.cs</DependentUpon>
