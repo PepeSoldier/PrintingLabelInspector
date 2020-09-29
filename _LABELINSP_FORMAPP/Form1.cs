@@ -49,16 +49,15 @@ namespace _LABELINSP_FORMAPP
 
         private void ProcessLoadedImage(int command = 0)
         {
-            image = new Image<Bgr, byte>(@"C:\Temp\" + tbImageName.Text);
-            Process(image, command);
+            Process(@"C:\Temp\" + tbImageName.Text, command);
         }
         private void ProcessCapturedImage(Bitmap image)
         {
-            ProcessLive(image.ToImage<Bgr, byte>());
+            ProcessLive(image);
         }
-        private void Process(Image<Bgr, byte> image, int command = 0) 
+        private void Process(string imagePath, int command = 0) 
         {
-            ip.SetImage(image);
+            ip.SetImage(imagePath);
 
             string expectedB = "2409110790362103412345";
             string expectedS = "30385789215529";
@@ -73,13 +72,14 @@ namespace _LABELINSP_FORMAPP
                 case 4: ip.ReadIKEAProductCode(expectedP); break;
                 default:
                     ip.BarcodeDetectReadAddFrame_Big(expectedB);
-                    ip.BarcodeDetectReadAddFrame_Small(expectedS);
-                    ip.ReadModelName(expectedN);
-                    ip.ReadIKEAProductCode(expectedP);
+                    //ip.BarcodeDetectReadAddFrame_Small(expectedS);
+                    //ip.ReadModelName(expectedN);
+                    //ip.ReadIKEAProductCode(expectedP);
                     break;
             }
 
-            ip.FinalPreviewImage.ToBitmap().Save(@"C:\Temp\IKEA\detection.jpg");
+            ip.SaveFinalPreviewImage(@"C:\Temp\IKEA\detection.jpg");
+            
             DisplayProcessedImages(ip);
             richTextBox1.Text = "";
             richTextBox1.Text += ip.BarcodeBig + System.Environment.NewLine;
@@ -87,7 +87,7 @@ namespace _LABELINSP_FORMAPP
             richTextBox1.Text += ip.ProductName + System.Environment.NewLine;
             richTextBox1.Text += ip.IkeaProductCode + System.Environment.NewLine;
         }
-        private void ProcessLive(Image<Bgr, byte> image)
+        private void ProcessLive(Bitmap image)
         {
             ip.SetImage(image);
 

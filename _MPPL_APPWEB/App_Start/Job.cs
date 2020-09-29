@@ -29,9 +29,18 @@ namespace _MPPL_WEB_START.App_Start
         {
             List<string> tcpL = JsonSerializer.Deserialize<List<string>>(Properties.Settings.Default.TCPListeners);
 
-            //Tcp2Web tcp2Web = new Tcp2Web("", "");
-            //tcp2Web.RegisterAndRunTCPListener("", "");
-            //tcp2Web.RegisterAndRunTCPListener("", "");
+            Tcp2Web tcp2Web = new Tcp2Web("http://localhost:49966", "/LABELINSP/Quality/TCPBarcodeReceived");
+
+            foreach(string tcp in tcpL)
+            {
+                if (tcp.Contains(":"))
+                {
+                    string ip = tcp.Split(':')[0];
+                    string port = tcp.Split(':')[1];
+
+                    tcp2Web.RegisterAndRunTCPListener(ip, port);
+                }
+            }
 
             return null;
         }

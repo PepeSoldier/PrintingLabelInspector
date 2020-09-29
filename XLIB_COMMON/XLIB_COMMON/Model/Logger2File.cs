@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMPLEA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace XLIB_COMMON.Model
     {
         static string LogFilePath = XLIB_COMMON.Properties.Settings.Default.LogFilePath;
 
-        private Logger2FileSingleton() : base("MPPL_LOG", LogFilePath, AppDomain.CurrentDomain.BaseDirectory)
+        private Logger2FileSingleton() : base("LABELINSP_LOG", LogFilePath, AppDomain.CurrentDomain.BaseDirectory)
         {
         }
 
@@ -25,7 +26,10 @@ namespace XLIB_COMMON.Model
                     lock (syncRoot)
                     {
                         if (instance == null)
+                        {
                             instance = new Logger2FileSingleton();
+                            instance.SaveLog("Logger2FileSingleton.Started");
+                        }
                     }
                 }
                 return instance;
@@ -71,7 +75,7 @@ namespace XLIB_COMMON.Model
             //Console.WriteLine(msg);
             writeToFile(msg, prefix);
         }
-
+        
         private void writeToFile(string msg, string prefix)
         {
             try

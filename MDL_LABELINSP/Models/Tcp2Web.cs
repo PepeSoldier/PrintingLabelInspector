@@ -18,7 +18,7 @@ namespace MDL_LABELINSP.Models
         public Tcp2Web(string apiAddress, string apiCallUrl)
         {
             tcpListeners = new List<TcpListener>();
-            webApi = new WebApi(apiAddress, apiCallUrl, (ILogger)Logger2FileSingleton.Instance);
+            webApi = new WebApi(apiAddress, apiCallUrl, Logger2FileSingleton.Instance);
         }
 
         public void RegisterAndRunTCPListener(string ip, string strport)
@@ -33,7 +33,7 @@ namespace MDL_LABELINSP.Models
                 Logger2FileSingleton.Instance.SaveLog("Run Tcp Listener for " + ip + ":" + strport);
 
                 string name = strport;
-                TcpListener tcp = new TcpListener(name, ip, port, (ILogger)Logger2FileSingleton.Instance);
+                TcpListener tcp = new TcpListener(name, ip, port, Logger2FileSingleton.Instance);
                 tcpListeners.Add(tcp);
 
                 tcp.RegisterObserver(webApi);

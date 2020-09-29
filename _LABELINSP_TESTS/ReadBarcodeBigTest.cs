@@ -12,9 +12,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_076044()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911076044.jpg"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911076044.jpg"));
+            
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
             Assert.AreEqual("2409110760442103018600", bigBarcode);
@@ -22,9 +22,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_076047()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911076047.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911076047.png"));
+            
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
             Assert.AreEqual("2409110760472103412345", bigBarcode);
@@ -32,9 +32,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_076076()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911076076.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911076076.png"));
+            
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
             Assert.AreEqual("2409110760762103412345", bigBarcode);
@@ -42,9 +42,8 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_076077()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911076077.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911076077.png"));
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
             Assert.AreEqual("2409110760772103412345", bigBarcode);
@@ -52,9 +51,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_076078()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911076078.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911076078.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -64,9 +63,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_079036()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911079036.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911079036.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -76,9 +75,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535086()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535086.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535086.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -88,9 +87,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535219()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535219.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535219.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -100,9 +99,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535233()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535233.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535233.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -112,9 +111,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535234()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535234.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535234.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -124,9 +123,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535235()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535235.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535235.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -136,9 +135,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535236()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535236.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535236.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -148,9 +147,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535250()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535250.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535250.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -160,9 +159,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535252()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535252.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535252.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -172,9 +171,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_535253()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911535253.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911535253.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -184,9 +183,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536310()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536310.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536310.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -196,9 +195,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536377()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536377.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536377.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -208,9 +207,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536492()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536492.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536492.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -220,9 +219,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536493()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536493.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536493.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -232,9 +231,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536494()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536494.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536494.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -244,9 +243,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536497()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536497.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536497.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -256,9 +255,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536499()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536499.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536499.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -268,9 +267,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_536500()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911536500.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911536500.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -280,9 +279,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_539181()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911539181.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911539181.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 
@@ -292,9 +291,9 @@ namespace IKEA_Labels_TEST
         [TestMethod]
         public void ReadBarcodeBigTest_539237()
         {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(Helper.GetImgPath("911539237.png"));
             ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(image);
+            ip.SetImage(Helper.GetImgPath("911539237.png"));
+            
             //string smallBarcode = ip.BarcodeDetectReadAddFrame_Manual();
             string bigBarcode = ip.BarcodeDetectReadAddFrame_Big();
 

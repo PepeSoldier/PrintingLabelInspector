@@ -19,7 +19,7 @@
     <AssemblyName>_MPPL_WEB_START</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44336</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -507,6 +507,10 @@
     <Compile Include="Migrations\DbContextAPP_Dev.cs" />
     <Compile Include="Migrations\DevK\Configuration.cs" />
     <Compile Include="Migrations\DevP\Configuration.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202009291930415_1K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202009291930415_1K.designer.cs">
+      <DependentUpon>202009291930415_1K.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ElectroluxPLV\Configuration.cs" />
     <Compile Include="Areas\_APPWEB\Models\AreaRegistrationMPPL.cs" />
     <Compile Include="Areas\_APPWEB\Models\LicenceManager.cs" />
@@ -2866,6 +2870,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202009291930415_1K.resx">
+      <DependentUpon>202009291930415_1K.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009291121101_1P.resx">
       <DependentUpon>202009291121101_1P.cs</DependentUpon>
     </EmbeddedResource>
@@ -2963,7 +2970,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49962</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/_LABELINSP_APPWEB</IISUrl>
+          <IISUrl>http://localhost:49966</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
