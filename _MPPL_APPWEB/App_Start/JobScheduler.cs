@@ -31,18 +31,18 @@ namespace _MPPL_WEB_START.App_Start
 
         public static void ScheduleJOB_1(IScheduler sched, string clientName)
         {
-            //IJobDetail job = JobBuilder.Create<JobImportDeliveries>()
-            //    .UsingJobData("clientName", clientName)
-            //    .WithIdentity("JobImportDeliveries", "group2")
-            //    .Build();
+            IJobDetail job = JobBuilder.Create<JobTcp2Web>()
+                .UsingJobData("clientName", clientName)
+                .WithIdentity("JobTcp2Web", "group2")
+                .Build();
 
-            //ITrigger trigger = TriggerBuilder.Create()
-            //        .StartNow()
-            //        .WithDailyTimeIntervalSchedule(s =>
-            //            //s.WithIntervalInMinutes(1))
-            //            s.WithIntervalInSeconds(120))
-            //        .Build();
-            //sched.ScheduleJob(job, trigger);
+            ITrigger trigger = TriggerBuilder.Create()
+                    .StartNow()
+                    .WithDailyTimeIntervalSchedule(s =>
+                        //s.WithIntervalInMinutes(1))
+                        s.WithIntervalInSeconds(15))
+                    .Build();
+            sched.ScheduleJob(job, trigger);
         }
         public static void NoJOB() { }
     }

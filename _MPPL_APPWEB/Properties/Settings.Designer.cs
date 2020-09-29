@@ -70,7 +70,7 @@ namespace _MPPL_WEB_START.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("System")]
+        [global::System.Configuration.DefaultSettingValueAttribute("LABELINSP")]
         public string EmailSenderDisplayName {
             get {
                 return ((string)(this["EmailSenderDisplayName"]));
@@ -124,7 +124,7 @@ namespace _MPPL_WEB_START.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://plws4036")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://plws4036:95")]
         public string AppAdress {
             get {
                 return ((string)(this["AppAdress"]));
@@ -169,7 +169,7 @@ namespace _MPPL_WEB_START.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MPPL_Cookie")]
+        [global::System.Configuration.DefaultSettingValueAttribute("LABELINSP_Cookie")]
         public string CookieName {
             get {
                 return ((string)(this["CookieName"]));
@@ -178,7 +178,16 @@ namespace _MPPL_WEB_START.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WRP")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:\\Log\\LABELINSP")]
+        public string LogFilePath {
+            get {
+                return ((string)(this["LogFilePath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ElectroluxPLV")]
         public string Client {
             get {
                 return ((string)(this["Client"]));
@@ -187,10 +196,10 @@ namespace _MPPL_WEB_START.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\Log")]
-        public string LogFilePath {
+        [global::System.Configuration.DefaultSettingValueAttribute("[\"10.26.10.90:10091\", \"10.26.10.90:10092\"]")]
+        public string TCPListeners {
             get {
-                return ((string)(this["LogFilePath"]));
+                return ((string)(this["TCPListeners"]));
             }
         }
     }
