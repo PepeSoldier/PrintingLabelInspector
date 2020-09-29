@@ -1365,6 +1365,14 @@
     <Compile Include="Migrations\PackingLabel\202009290750560_3P.designer.cs">
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\PackingLabel\202009290924222_4P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009290924222_4P.designer.cs">
+      <DependentUpon>202009290924222_4P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\202009291047103_5P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009291047103_5P.designer.cs">
+      <DependentUpon>202009291047103_5P.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PackingLabel\Configuration.cs" />
     <Compile Include="Migrations\WRP\201909281910197_1K.cs" />
     <Compile Include="Migrations\WRP\201909281910197_1K.Designer.cs">
@@ -4846,6 +4854,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009290750560_3P.resx">
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202009290924222_4P.resx">
+      <DependentUpon>202009290924222_4P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202009291047103_5P.resx">
+      <DependentUpon>202009291047103_5P.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\WRP\201909281910197_1K.resx">
       <DependentUpon>201909281910197_1K.cs</DependentUpon>

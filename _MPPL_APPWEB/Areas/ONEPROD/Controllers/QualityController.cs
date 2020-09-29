@@ -1,5 +1,7 @@
 ﻿using _MPPL_WEB_START.Areas.ONEPROD.Models;
 using MDL_BASE.Models.IDENTITY;
+using MDL_CORE.ComponentCore.Entities;
+using MDL_CORE.ComponentCore.ViewModel;
 using MDL_iLOGIS.ComponentConfig.Mappers;
 using MDL_iLOGIS.ComponentWMS.Mappers;
 using MDL_ONEPROD.ComponentQuality._Interfaces;
@@ -91,6 +93,16 @@ namespace _MPPL_WEB_START.Areas.ONEPROD.Controllers
             //context.Clients.All.broadcastMessage(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             //context.Clients.Group(workstationName).broadcastMessage(barcode);
             return Json(0, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult PackingLabelGetData(string serialNumber)
+        {
+            PackingLabelViewModel packingLabelViewModel = new PackingLabelViewModel();
+            packingLabelViewModel.PackingLabel = uow.PackingLabelRepo.GetBySerialNumber(serialNumber);
+            packingLabelViewModel.PackingLabelTests = uow.PackingLabelTestRepo.GetByPackingLabelId(packingLabelViewModel.PackingLabel.Id);
+
+            return Json(packingLabelViewModel);
         }
 
     }
