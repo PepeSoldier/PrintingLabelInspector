@@ -488,8 +488,9 @@
     <Compile Include="Areas\iLOGIS\Controllers\MovementController.cs" />
     <Compile Include="Areas\CORE\Controllers\NotificationDeviceController.cs" />
     <Compile Include="Areas\ONEPROD\Controllers\BOMController.cs" />
-    <Compile Include="Areas\ONEPROD\Controllers\QualityController.cs" />
+    <Compile Include="Areas\CORE\Controllers\QualityController.cs" />
     <Compile Include="Areas\ONEPROD\Controllers\MESController.WIP.cs" />
+    <Compile Include="Areas\ONEPROD\Controllers\QualityController.cs" />
     <Compile Include="Areas\ONEPROD\Models\ElectrPLV.cs" />
     <Compile Include="Areas\ONEPROD\Models\JobLabelCheckHub.cs" />
     <Compile Include="Areas\ONEPROD\Models\WorkplaceHub.cs" />
@@ -1474,6 +1475,9 @@
     </None>
     <Content Include="Areas\CORE\Views\NotificationDevice\NotificationDeviceGrid.js" />
     <Content Include="Areas\CORE\Views\Printer\PrinterGrid.js" />
+    <Content Include="Areas\CORE\Views\Quality\ItemMeasurement.js" />
+    <Content Include="Areas\CORE\Views\Quality\ItemParameter.js" />
+    <Content Include="Areas\CORE\Views\Quality\JobLabelCheck.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.js" />
     <Content Include="Areas\iLOGIS\Views\Config\AutomaticRulePackageGrid.js" />
     <Content Include="Areas\iLOGIS\Views\Config\ItemWMSAutocomplete.js" />
@@ -1489,6 +1493,9 @@
     <Content Include="Areas\iLOGIS\Views\Config\PrintLabels.cshtml" />
     <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\TransporterList.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Lockout.cshtml" />
+    <Content Include="Areas\CORE\Views\Quality\ItemMeasurement.cshtml" />
+    <Content Include="Areas\CORE\Views\Quality\ItemParameter.cshtml" />
+    <Content Include="Areas\CORE\Views\Quality\PrintingLabelInspector.cshtml" />
     <None Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.less" />
     <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.js" />
     <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionBlindCheck.js" />

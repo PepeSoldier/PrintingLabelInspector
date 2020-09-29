@@ -17,7 +17,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.ONEPROD.Controllers
+namespace _MPPL_WEB_START.Areas.CORE.Controllers
 {
     //[System.Web.Mvc.Authorize(Roles = DefRoles.ONEPROD_MES_OPERATOR)]
     public partial class QualityController : BaseController

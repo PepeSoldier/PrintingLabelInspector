@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Parametery";
+}
+
+<div id="configMenu">
+    @{ Html.RenderAction("Index", "Configuration"); }
+</div>
+
+<div class="row justify-content-center h-100 mh-100 flex-grow-1 mt-2 mb-0 no-gutters" style="overflow: auto;">
+    <div class="col-12" id="itemParameterGrid">
+        Loading...
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/MASTERDATA/ItemAutocomplete.js"></script>
+<script type="text/javascript">
+    var wnd = null;
+    var itemParameterGrid = new ItemParameter("#itemParameterGrid");
+    $(document).ready(function () {
+        itemParameterGrid.InitGrid();
+        itemParameterGrid.RefreshGrid();
+    });
+
+</script>
