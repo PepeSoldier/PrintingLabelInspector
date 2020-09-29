@@ -53,7 +53,7 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         {
             ImageProcessing ip = new ImageProcessing();
 
-            ip.SetImage(@"C:\inetpub\wwwroot\LABELINSP\RawLables\" + serialNumber + "_.png");
+            ip.SetImage(@"C:\inetpub\wwwroot\LABELINSP\RawLables\" + serialNumber + ".png");
 
             string expectedB = "2409110790362103412345";
             string expectedS = "30385789215529";
@@ -62,9 +62,9 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
 
             ip.RotateImage(180);
             ip.BarcodeDetectReadAddFrame_Big(expectedB);
-            //ip.BarcodeDetectReadAddFrame_Small(expectedS);
-            //ip.ReadModelName(expectedN);
-           // ip.ReadIKEAProductCode(expectedP);
+            ip.BarcodeDetectReadAddFrame_Small(expectedS);
+            ip.ReadModelName(expectedN);
+            ip.ReadIKEAProductCode(expectedP);
 
             //ip.SaveFinalPreviewImage(@"C:\inetpub\wwwroot\LABELINSP\InspectedLabels\" + serialNumber + ".png");
             ip.SaveAllImages(@"C:\inetpub\wwwroot\LABELINSP\InspectedLabels\", serialNumber);
