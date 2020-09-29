@@ -10,8 +10,7 @@ namespace _MPPL_WEB_START.Areas._APPWEB.Models.Clients
     {
         public AppClientApbstract()
         {
-            Configure_ONEPROD();
-            Configure_iLOGIS();
+            Configure_LABELINSP();
         }
 
         //-----------------------------------------------------ACCESS-CONTROL
@@ -29,16 +28,9 @@ namespace _MPPL_WEB_START.Areas._APPWEB.Models.Clients
         }
 
         //--------------------------------------------------------ONEPROD-SETTINGS
-        public SettingsONEPROD SettingsONEPROD = new SettingsONEPROD();
+        public SettingsLABELINSP SettingsLABELINSP = new SettingsLABELINSP();
 
-        public virtual void Configure_ONEPROD()
-        {
-        }
-
-        //--------------------------------------------------------ILOGIS-SETTINGS
-        public SettingsILOGIS SettingsILOGIS = new SettingsILOGIS();
-
-        public virtual void Configure_iLOGIS()
+        public virtual void Configure_LABELINSP()
         {
         }
     }

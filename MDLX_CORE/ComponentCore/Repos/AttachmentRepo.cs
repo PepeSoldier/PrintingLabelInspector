@@ -16,14 +16,14 @@ namespace XLIB_COMMON.Repo.Base
             this.db = db;
         }
 
-        public override Attachment GetById(int parentObjectId)
-        {
-            return db.Attachments.FirstOrDefault(d => d.ParentObjectId == parentObjectId);
-        }
-        public override IQueryable<Attachment> GetList()
-        {
-            return db.Attachments.OrderByDescending(x => x.Id);
-        }
+        //public override Attachment GetById(int parentObjectId)
+        //{
+        //    return db.Attachments.FirstOrDefault(d => d.ParentObjectId == parentObjectId);
+        //}
+        //public override IQueryable<Attachment> GetList()
+        //{
+        //    return db.Attachments.OrderByDescending(x => x.Id);
+        //}
 
         public void DeleteFile(Attachment attachment)
         {

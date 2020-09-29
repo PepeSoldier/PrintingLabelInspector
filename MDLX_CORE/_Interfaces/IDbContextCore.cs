@@ -20,23 +20,15 @@ namespace MDL_BASE.Interfaces
         DbSet<PackingLabelTest> PackingLabelTests { get; set; }
         DbSet<PackingLabel> PackingLabels { get; set; }
 
-        //BASE
-        DbSet<ProductionOrder> ProductionOrders { get; set; }
-        
-
-        DbSet<Bom> Boms { get; set; }
-        DbSet<BomWorkorder> BomWorkorders { get; set; }
-
-        //DbSet<JobList> JobLists { get; set; }
-        DbSet<Attachment> Attachments { get; set; }
-
-        DbSet<ChangeLog> ChangeLogs { get; set; }
-
-        //DbSet<ExtensionFile> ExtensionFiles { get; set; }
         DbSet<SystemVariable> SystemVariables { get; set; }
-
         DbSet<Printer> Printers { get; set; }
 
-        DbSet<NotificationDevice> NotificationDevices { get; set; }
+        //BASE
+        //DbSet<ProductionOrder> ProductionOrders { get; set; }
+        //DbSet<Bom> Boms { get; set; }
+        //DbSet<BomWorkorder> BomWorkorders { get; set; }
+        //DbSet<Attachment> Attachments { get; set; }
+        //DbSet<ChangeLog> ChangeLogs { get; set; }
+        //DbSet<NotificationDevice> NotificationDevices { get; set; }
     }
 }

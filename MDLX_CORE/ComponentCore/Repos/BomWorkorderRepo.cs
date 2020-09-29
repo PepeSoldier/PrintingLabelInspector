@@ -15,26 +15,26 @@ namespace XLIB_COMMON.Repo.Base
             this.db = db;
         }
 
-        public override BomWorkorder GetById(int id)
-        {
-            return db.BomWorkorders.FirstOrDefault(d => d.Id == id);
-        }
-        public override IQueryable<BomWorkorder> GetList()
-        {
-            return db.BomWorkorders.OrderByDescending(x => x.Id);
-        }
+        //public override BomWorkorder GetById(int id)
+        //{
+        //    return db.BomWorkorders.FirstOrDefault(d => d.Id == id);
+        //}
+        //public override IQueryable<BomWorkorder> GetList()
+        //{
+        //    return db.BomWorkorders.OrderByDescending(x => x.Id);
+        //}
 
-        public void TruncateTable()
-        {
-            db.Database.ExecuteSqlCommand("TRUNCATE TABLE [CORE].[BOM_Workorder]");
-            //db.Database.ExecuteSqlCommand("TRUNCATE TABLE " + GetTableName());
-        }
-        public List<BomWorkorder> GetItemsOfWorkOrderFilteredByIds(ProductionOrder po, List<int> itemIds)
-        {
-            return db.BomWorkorders.Where(x => 
-                x.OrderNo == po.OrderNumber && 
-                itemIds.Contains(x.ChildId)
-            ).ToList();
-        }
+        //public void TruncateTable()
+        //{
+        //    db.Database.ExecuteSqlCommand("TRUNCATE TABLE [CORE].[BOM_Workorder]");
+        //    //db.Database.ExecuteSqlCommand("TRUNCATE TABLE " + GetTableName());
+        //}
+        //public List<BomWorkorder> GetItemsOfWorkOrderFilteredByIds(ProductionOrder po, List<int> itemIds)
+        //{
+        //    return db.BomWorkorders.Where(x => 
+        //        x.OrderNo == po.OrderNumber && 
+        //        itemIds.Contains(x.ChildId)
+        //    ).ToList();
+        //}
     }
 }

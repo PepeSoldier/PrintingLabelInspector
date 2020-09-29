@@ -226,10 +226,6 @@
       <Project>{3f323248-fee7-4618-bdda-ac19d49125d4}</Project>
       <Name>MDL_iLOGIS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MDL_ONEPROD\MDL_ONEPROD.csproj">
-      <Project>{a8fb4f45-566c-4bd8-815a-3f8bf493b45e}</Project>
-      <Name>MDL_ONEPROD</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MDL_PRD2\MDL_PRD2.csproj">
       <Project>{dade3ccc-9aec-4a76-a47e-2cb5ff3c0166}</Project>
       <Name>MDL_PRD2</Name>

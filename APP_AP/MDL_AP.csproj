@@ -244,10 +244,6 @@
       <Project>{16ad63f8-0d1b-48cc-9681-3dadd497e72f}</Project>
       <Name>MDLX_MASTERDATA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MDL_iLOGIS\MDL_iLOGIS.csproj">
-      <Project>{3f323248-fee7-4618-bdda-ac19d49125d4}</Project>
-      <Name>MDL_iLOGIS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XLIB_COMMON\XLIB_COMMON\XLIB_COMMON.csproj">
       <Project>{a0b99e24-f08f-454c-b322-9af2ea87a295}</Project>
       <Name>XLIB_COMMON</Name>

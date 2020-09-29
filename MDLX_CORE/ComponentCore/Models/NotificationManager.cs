@@ -19,7 +19,7 @@ namespace MDL_CORE.ComponentCore.Models
         public static string SendNotification(UnitOfWorkCore uow, string userId, string title, string bodyTxt, string link)
         {
             string msg = "";
-            List<NotificationDevice> deviceList = uow.NotificationDeviceRepo.GetByUserId(userId);
+            List<NotificationDevice> deviceList = null; //uow.NotificationDeviceRepo.GetByUserId(userId);
             if (deviceList == null)
             {
                 msg = "Brak urządzeń dla tego użytkownika";

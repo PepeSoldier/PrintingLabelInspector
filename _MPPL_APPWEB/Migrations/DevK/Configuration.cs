@@ -19,10 +19,7 @@ namespace _MPPL_WEB_START.Migrations.DevK
 
         protected override void Seed(DbContextAPP_DevK context)
         {
-            CnfigurationHelper.SeedDataNewRoles(context);
-
-            CnfigurationHelper.Seed(context);
-            CnfigurationHelper.SeedData(context);
+            CnfigurationHelper.Seed(context);   
         }
     }
 

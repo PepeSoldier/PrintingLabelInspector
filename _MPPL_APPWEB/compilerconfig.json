@@ -1,13 +1,5 @@
 ﻿[
   {
-    "outputFile": "_ClientAppJS/AP/AP_Style.css",
-    "inputFile": "_ClientAppJS/AP/AP_Style.less"
-  },
-  {
-    "outputFile": "_ClientAppJS/PFEP/PFEP_Style.css",
-    "inputFile": "_ClientAppJS/PFEP/PFEP_Style.less"
-  },
-  {
     "outputFile": "_ClientAppJS/_APPWEB/App.css",
     "inputFile": "_ClientAppJS/_APPWEB/App.less"
   },
@@ -28,27 +20,11 @@
     "inputFile": "_ClientAppJS/_APPWEB/Layout/App_askins.less"
   },
   {
-    "outputFile": "Areas/ONEPROD/Views/ONEPROD_Style.css",
-    "inputFile": "Areas/ONEPROD/Views/ONEPROD_Style.less"
-  },
-  {
-    "outputFile": "Areas/iLOGIS/Views/iLOGIS_Style.css",
-    "inputFile": "Areas/iLOGIS/Views/iLOGIS_Style.less"
-  },
-  {
     "outputFile": "_ClientAppJS/_APPWEB/Keypad/Keypad.css",
     "inputFile": "_ClientAppJS/_APPWEB/Keypad/Keypad.less"
   },
   {
-    "outputFile": "Areas/iLOGIS/Views/iLOGIS_Script.es5.js",
-    "inputFile": "Areas/iLOGIS/Views/iLOGIS_Script.js"
-  },
-  {
-    "outputFile": "Areas/PRD/Views/PRD_style.css",
-    "inputFile": "Areas/PRD/Views/PRD_style.less"
-  },
-  {
-    "outputFile": "Areas/iLOGIS/Views/PickingList/Index.css",
-    "inputFile": "Areas/iLOGIS/Views/PickingList/Index.less"
+    "outputFile": "Areas/LABELINSP/Views/LABELINSP_Style.css",
+    "inputFile": "Areas/LABELINSP/Views/LABELINSP_Style.less"
   }
 ]

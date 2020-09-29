@@ -301,7 +301,7 @@ namespace XLIB_COMMON.Repo.IDENTITY
         public void SetDepartment(string id, int departmentId)
         {
             User user = db.Users.FirstOrDefault(u => u.Id == id);
-            user.Department = db.Departments.FirstOrDefault(x => x.Id == departmentId && x.Deleted != true);
+            //user.Department = db.Departments.FirstOrDefault(x => x.Id == departmentId && x.Deleted != true);
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }

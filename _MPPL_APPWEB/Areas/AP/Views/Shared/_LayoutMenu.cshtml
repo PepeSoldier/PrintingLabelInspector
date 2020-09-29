@@ -1,6 +1,0 @@
-﻿@using _MPPL_WEB_START.Areas._APPWEB.Models;
-@using MDL_BASE.Models;
-
-@{ ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", ""); }
-
-@MenuHelper.DrawMenu(MenuAP.MenuItem.Children, ViewBag.ClientName, Url, User)

@@ -9,11 +9,7 @@ namespace _MPPL_WEB_START
         {
             EXTERNAL_Scripts_AND_Styles(bundles);
             COMMON_MPPL_MODULE_Scripts_AND_Styles(bundles);
-            ACTIONPLANS_MODULE_Scripts_AND_Styles(bundles);
-            ONEPROD_MODULE_Scripts_AND_Styles(bundles);
-            PRD_MODULE_Scripts_AND_Styles(bundles);
-            PFEP_MODULE_Scripts_AND_Styles(bundles);
-            iLOGIS_MODULE_Scripts_AND_Styles(bundles);
+            LABELINSP_MODULE_Scripts_AND_Styles(bundles);
             CORE_MODULE_SIGN_Scripts_AND_Styles(bundles);
             BundleTable.EnableOptimizations = true;
         }
@@ -55,148 +51,17 @@ namespace _MPPL_WEB_START
                 "~/_ClientAppJS/_APPWEB/Keypad/Keypad.min.css"
             ));
         }
-        private static void ACTIONPLANS_MODULE_Scripts_AND_Styles(BundleCollection bundles)
+        
+        private static void LABELINSP_MODULE_Scripts_AND_Styles(BundleCollection bundles)
         {
-            //-----------------MODULE-ACTION-PLANS--------------------------------------
-            //--------------------------------------------------------------------------
-            bundles.Add(new StyleBundle("~/Content/AP_Styles").Include(
-                "~/_ClientAppJS/AP/AP_Style.min.css"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/AP_Scripts").Include(
-                "~/_ClientAppJS/AP/Action/browse.js",
-                "~/_ClientAppJS/AP/Action/Show.js",
-                "~/_ClientAppJS/AP/ActionActivity/ActionActivity.js",
-                "~/_ClientAppJS/AP/Dashboard/dashboard.js"
-            ));
-        }
-        private static void ONEPROD_MODULE_Scripts_AND_Styles(BundleCollection bundles)
-        {
-            //-----------------MODULE-ONEPROD-------------------------------------------
-            //--------------------------------------------------------------------------
-            bundles.Add(new StyleBundle("~/Content/ONEPROD_Styles").Include(
-                "~/Areas/ONEPROD/Views/ONEPROD_Style.min.css"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/ONEPROD_Scripts")
-                .IncludeDirectory("~/Areas/ONEPROD/Views/APS/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ClientOrder/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/Configuration/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ConfigurationAPS/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ConfigurationENERGY/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ConfigurationMES/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ConfigurationOEE/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/ConfigurationWMS/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/JobList/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/MES/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/OEECreateReport/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/OEEReportOnline/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/Quality/", "*.js", true)
-                .IncludeDirectory("~/Areas/ONEPROD/Views/RTV/", "*.js", true)
-                .Include(                
-                //"~/Areas/ONEPROD/Views/APS/Calculation.js",
-                //"~/Areas/ONEPROD/Views/APS/GanttChart.js",
-                //"~/Areas/ONEPROD/Views/ClientOrder/ClientOrderGrid.js",
-                //"~/Areas/ONEPROD/Views/JobList/JobList.js",
-                "~/Areas/ONEPROD/Views/Home/WorkingHoursPreview.js",
-                "~/Areas/ONEPROD/Views/Home/WeekPicker.js",
-                "~/Areas/ONEPROD/Views/Quality/JobLabelCheck.js",
-                "~/Areas/ONEPROD/Views/BOM/BOM.js",
-
-                //"~/Areas/ONEPROD/Views/MES/Workplace.js",
-                //"~/Areas/ONEPROD/Views/MES/WorkplaceBuffer.js",
-                //"~/Areas/ONEPROD/Views/MES/WorkplaceTraceability.js",
-                //"~/Areas/ONEPROD/Views/MES/WorkplaceWorkorder.js",
-
-                "~/Areas/ONEPROD/Views/OEEDashboard/Dashboard.js",
-                "~/Areas/ONEPROD/Views/OEEDashboard/MachineDetails_OEEGauges.js",
-                "~/Areas/ONEPROD/Views/OEEBrowse/OeeBrowseGrid.js"
-                //"~/Areas/ONEPROD/Views/OEEReportOnline/ReportOnline.js",
-                //"~/Areas/ONEPROD/Views/OEEReportOnline/ReportOnline.ReasonSelector.js",
-                //"~/Areas/ONEPROD/Views/OEEReportOnline/StopSplit.js",
-                //"~/Areas/ONEPROD/Views/OEEReportOnline/ChangeDeclarationDate.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Index_HeaderStepIndicator.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step3_ItemAutocompleteOEE.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step2_OperatorsGrid.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step2_EmployeeAutocomplete.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step3_ANCautocomplete.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step3_ProductionDataGrid.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_ReasonsManager.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_Stop_GridHelper.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopBreakdownGrid.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopChangeOver.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopPerformance.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopPlannedGrid.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopUnplannedChangeOver.js",
-                //"~/Areas/ONEPROD/Views/OEECreateReport/Step4_StopUnplannedGrid.js",
-                
-                //"~/Areas/ONEPROD/Views/RTV/MachineDetails.js",
-
-                //"~/Areas/ONEPROD/Views/Configuration/Item.js",
-                //"~/Areas/ONEPROD/Views/Configuration/ItemGroup.js",
-                //"~/Areas/ONEPROD/Views/Configuration/ItemGroupCycleTimePopup.js",
-                //"~/Areas/ONEPROD/Views/Configuration/ItemGroupToolPopup.js",
-                //"~/Areas/ONEPROD/Views/Configuration/Process.js",
-                //"~/Areas/ONEPROD/Views/Configuration/Resource.js",
-                //"~/Areas/ONEPROD/Views/Configuration/ResourceGroup.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationAPS/ToolMachine.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationMES/Workplace.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationOEE/ReasonGrid.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationOEE/ResourceTarget.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationWMS/Box.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationWMS/BoxItemGroupPopup.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationEnergy/EnergyMeter.js",
-                //"~/Areas/ONEPROD/Views/ConfigurationEnergy/EnergyCost.js"
-            ));
-        }
-        private static void PRD_MODULE_Scripts_AND_Styles(BundleCollection bundles)
-        {
-            //-----------------MODULE-PRD-----------------------------------------------
-            //--------------------------------------------------------------------------
-            bundles.Add(new StyleBundle("~/Content/PRD_Styles").Include(
-                "~/Areas/PRD/Views/PRD_style.css"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/PRD_Scripts").Include(
-                "~/Areas/PRD/Views/PSI/Analyze.js",
-                "~/Areas/PRD/Views/PSI/ReasonSelector.js",
-                "~/Areas/PRD/Views/Schedule/ScheduleGrid.js",
-                "~/Areas/PRD/Views/Schedule/StautsGrid.js"
-            ));
-        }
-        private static void PFEP_MODULE_Scripts_AND_Styles(BundleCollection bundles)
-        {
-            //-----------------MODULE-PFEP----------------------------------------------
-            //--------------------------------------------------------------------------
-            bundles.Add(new StyleBundle("~/Content/PFEP_Styles").Include(
-                "~/_ClientAppJS/PFEP/PFEP_style.css"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/PFEP_Scripts").Include(
-                "~/_ClientAppJS/PFEP/Print/Print.js",
-                "~/_ClientAppJS/PFEP/Print/PrintMatrix.js"
-            ));
-        }
-        private static void iLOGIS_MODULE_Scripts_AND_Styles(BundleCollection bundles)
-        {
-            //-----------------MODULE-iLOGIS----------------------------------------------
-            //--------------------------------------------------------------------------
-            bundles.Add(new StyleBundle("~/Content/iLOGIS_Styles").Include(
-                "~/Areas/iLOGIS/Views/iLOGIS_Style.min.css"
+            ////-----------------MODULE-LABELINSP----------------------------------------------
+            ////--------------------------------------------------------------------------
+            bundles.Add(new StyleBundle("~/Content/LABELINSP_Styles").Include(
+                "~/Areas/LABELINSP/Views/LABELINSP_Style.min.css"
             ));
 
-            bundles.Add(new ScriptBundle("~/bundles/iLOGIS_Scripts")
-                .IncludeDirectory("~/Areas/iLOGIS/Views/Config/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/PFEP/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/Delivery/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/DeliveryList/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/DeliveryListLineFeed/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/PickingList/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/PickingListItem/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/StockUnit/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/Movement/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/Warehouse/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/WhDoc/", "*.js", true)
-                .IncludeDirectory("~/Areas/iLOGIS/Views/WMS/", "*.js", true)
-                .Include(
-                    "~/Areas/iLOGIS/Views/iLOGIS_Script.bundle.js"
-                )
+            bundles.Add(new ScriptBundle("~/bundles/LABELINSP_Scripts")
+                .IncludeDirectory("~/Areas/LABELINSP/Views/", "*.js", true)
             );
         }
         private static void EXTERNAL_Scripts_AND_Styles(BundleCollection bundles)

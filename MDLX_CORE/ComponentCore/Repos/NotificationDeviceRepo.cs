@@ -19,24 +19,24 @@ namespace MDLX_CORE.ComponentCore.Repos
             this.db = db;
         }
 
-        public override NotificationDevice GetById(int id)
-        {
-            return db.NotificationDevices.FirstOrDefault(d => d.Id == id && d.Deleted == false);
-        }
+        //public override NotificationDevice GetById(int id)
+        //{
+        //    return db.NotificationDevices.FirstOrDefault(d => d.Id == id && d.Deleted == false);
+        //}
 
-        public override IQueryable<NotificationDevice> GetList()
-        {
-            return db.NotificationDevices.Where(x => x.Deleted == false).OrderBy(x => x.Id);
-        }
+        //public override IQueryable<NotificationDevice> GetList()
+        //{
+        //    return db.NotificationDevices.Where(x => x.Deleted == false).OrderBy(x => x.Id);
+        //}
 
-        public List<NotificationDevice> GetByUserId(string userId)
-        {
-            return db.NotificationDevices.Where(x => x.UserId == userId && x.Deleted == false).OrderByDescending(x => x.Id).Take(3).ToList();
-        }
+        //public List<NotificationDevice> GetByUserId(string userId)
+        //{
+        //    return db.NotificationDevices.Where(x => x.UserId == userId && x.Deleted == false).OrderByDescending(x => x.Id).Take(3).ToList();
+        //}
 
-        public NotificationDevice GetByUserIdAndPushEndpoint(string userId, string pushEndpoint)
-        {
-            return db.NotificationDevices.Where(x => x.Deleted == false && x.UserId == userId && x.PushEndpoint == pushEndpoint).FirstOrDefault();
-        }
+        //public NotificationDevice GetByUserIdAndPushEndpoint(string userId, string pushEndpoint)
+        //{
+        //    return db.NotificationDevices.Where(x => x.Deleted == false && x.UserId == userId && x.PushEndpoint == pushEndpoint).FirstOrDefault();
+        //}
     }
 }
