@@ -2,11 +2,4 @@
 @using MDL_BASE.Models;
 
 
-@if (ViewBag.ClientName == "Eldisy")
-{
-    @MenuHelper.DrawMenu(MenuPFEP.MenuItem.Children, ViewBag.ClientName, Url, User)
-}
-else
-{
-    @MenuHelper.DrawMenu(AppMenu.MenuItems, ViewBag.ClientName, Url, User)
-}
+@MenuHelper.DrawMenu(AppMenu.MenuItems, ViewBag.ClientName, Url, User)

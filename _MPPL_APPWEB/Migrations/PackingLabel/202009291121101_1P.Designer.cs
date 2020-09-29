@@ -7,13 +7,13 @@ namespace _MPPL_WEB_START.Migrations.PackingLabel
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class _4P : IMigrationMetadata
+    public sealed partial class _1P : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_4P));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_1P));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009290924222_4P"; }
+            get { return "202009291121101_1P"; }
         }
         
         string IMigrationMetadata.Source
