@@ -238,6 +238,7 @@
     <Compile Include="ComponentCore\Repos\BomWorkorderRepo.cs" />
     <Compile Include="ComponentCore\Repos\JoblistRepo.cs" />
     <Compile Include="ComponentCore\UnitOfWorks\UnitOfWorkCore.cs" />
+    <Compile Include="ComponentCore\ViewModel\PackingLabelViewModel.cs" />
     <Compile Include="ComponentCore\ViewModel\PrinterViewModel.cs" />
     <Compile Include="ComponentCore\ViewModel\BOMViewModel.cs" />
     <Compile Include="ComponentIdentity\Models\ApplicationRole.cs" />

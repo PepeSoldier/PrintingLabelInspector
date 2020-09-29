@@ -1,5 +1,7 @@
 ﻿using MDL_BASE.Interfaces;
 using MDL_CORE.ComponentCore.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using XLIB_COMMON.Repo;
 
@@ -22,6 +24,11 @@ namespace MDLX_CORE.ComponentCore.Repos
         public override IQueryable<PackingLabelTest> GetList()
         {
             return db.PackingLabelTests.OrderBy(x => x.Id);
+        }
+
+        public List<PackingLabelTest> GetByPackingLabelId(int packingLabelId)
+        {
+            return db.PackingLabelTests.Where(x => x.PackingLabelId == packingLabelId).ToList();
         }
     }
 }

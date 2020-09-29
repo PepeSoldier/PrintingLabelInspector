@@ -14,8 +14,11 @@ namespace MDL_CORE.ComponentCore.Entities
         [MaxLength(10)]
         public string OrderNo { get; set; }
 
-        public virtual Item Pnc { get; set; }
-        public int PncId { get; set; }
+        [MaxLength(50)]
+        public string ItemCode { get; set; }
+
+        [MaxLength(50)]
+        public string ItemName { get; set; }
 
         [MaxLength(50)]
         public string SerialNumber { get; set; }

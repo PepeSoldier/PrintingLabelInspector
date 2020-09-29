@@ -531,6 +531,14 @@
     <Compile Include="Migrations\PackingLabel\202009290750560_3P.designer.cs">
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\PackingLabel\202009290924222_4P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009290924222_4P.designer.cs">
+      <DependentUpon>202009290924222_4P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\202009291047103_5P.cs" />
+    <Compile Include="Migrations\PackingLabel\202009291047103_5P.designer.cs">
+      <DependentUpon>202009291047103_5P.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PackingLabel\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -555,9 +563,46 @@
     </None>
     <Content Include="Areas\CORE\Views\NotificationDevice\NotificationDeviceGrid.js" />
     <Content Include="Areas\CORE\Views\Printer\PrinterGrid.js" />
+    <Content Include="Areas\CORE\Views\Quality\ItemMeasurement.js" />
+    <Content Include="Areas\CORE\Views\Quality\ItemParameter.js" />
+    <Content Include="Areas\CORE\Views\Quality\JobLabelCheck.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Lockout.cshtml" />
+    <None Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.less" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspection.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionBlindCheck.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionLocalization.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionPackingMethod.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItemLocate.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummaryItem.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryInspectionSummary.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\DeliveryItemGrid.js" />
+    <Content Include="Areas\iLOGIS\Views\Delivery\Edit.js" />
+    <Content Include="Areas\iLOGIS\Views\iLOGIS_Script.bundle.js" />
+    <Content Include="Areas\iLOGIS\Views\iLOGIS_Script.js" />
+    <Content Include="Areas\iLOGIS\Views\iLOGIS_Style.css">
+      <DependentUpon>iLOGIS_Style.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\iLOGIS\Views\iLOGIS_Style.min.css">
+      <DependentUpon>iLOGIS_Style.css</DependentUpon>
+    </Content>
+    <Content Include="Areas\iLOGIS\Views\DeliveryListLineFeed\DeliveryListLF.js" />
+    <Content Include="Areas\iLOGIS\Views\Movement\Movement.js" />
+    <Content Include="Areas\iLOGIS\Views\PFEP\ChangeLogGrid.js" />
+    <Content Include="Areas\iLOGIS\Views\PFEP\TrainDashboard.js" />
+    <Content Include="Areas\iLOGIS\Views\PFEP\TrainRoute.js" />
+    <Content Include="Areas\iLOGIS\Views\PickingList\Index.css">
+      <DependentUpon>Index.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\iLOGIS\Views\PickingList\Index.min.css">
+      <DependentUpon>Index.css</DependentUpon>
+    </Content>
+    <Content Include="Areas\iLOGIS\Views\PickingList\PickingList.less" />
+    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryListMultiLines.cshtml" />
+    <Content Include="Areas\iLOGIS\Views\DeliveryList\DeliveryListMultiLines.less" />
+    <Content Include="Areas\iLOGIS\Views\Config\WarehouseLocationSort.cshtml" />
+    <Content Include="Areas\iLOGIS\Views\PFEP\ChangeLog.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\RegisterOperator.cshtml" />
     <Content Include="Areas\CORE\Views\_ViewStart.cshtml" />
     <Content Include="Areas\CORE\Views\Shared\_Layout.cshtml" />
@@ -2877,6 +2922,63 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009290750560_3P.resx">
       <DependentUpon>202009290750560_3P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201909281910197_1K.resx">
+      <DependentUpon>201909281910197_1K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201910071200051_2K.resx">
+      <DependentUpon>201910071200051_2K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201910111843398_3K.resx">
+      <DependentUpon>201910111843398_3K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201911130849078_4K.resx">
+      <DependentUpon>201911130849078_4K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201911191209160_5K.resx">
+      <DependentUpon>201911191209160_5K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201912011252306_6K.resx">
+      <DependentUpon>201912011252306_6K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201912011834106_7K.resx">
+      <DependentUpon>201912011834106_7K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\201912121015249_8K.resx">
+      <DependentUpon>201912121015249_8K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202003171307076_9K.resx">
+      <DependentUpon>202003171307076_9K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202005111134250_10K.resx">
+      <DependentUpon>202005111134250_10K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202006211556521_11K.resx">
+      <DependentUpon>202006211556521_11K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202006211653434_12K.resx">
+      <DependentUpon>202006211653434_12K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202006211715527_13K.resx">
+      <DependentUpon>202006211715527_13K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202007070953097_14K.resx">
+      <DependentUpon>202007070953097_14K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202007071147136_15K.resx">
+      <DependentUpon>202007071147136_15K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202007071159315_16K.resx">
+      <DependentUpon>202007071159315_16K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202007091907026_17K.resx">
+      <DependentUpon>202007091907026_17K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202008130757364_18P.resx">
+      <DependentUpon>202008130757364_18P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\WRP\202009142013563_19K.resx">
+      <DependentUpon>202009142013563_19K.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
