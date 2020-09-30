@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Skin = "nasaSkin";
     ViewBag.Title = "PrintingLabelInspector";
+    int port = ViewBag.Port;
 }
 
 <style>
@@ -69,15 +70,18 @@
     <div class="col-4 digitalClock" style="text-align: center;">
         <div class="headerMid" id="clockHeaderMid"></div>
     </div>
-    <div class="col-4" style="width: 100%; font-size: 50px; margin-top: -18px; background: none;" id="barcode">
-    </div>
-    <div class="col-2">
+    <div class="col-2 headerLeft">
+        @ViewBag.Port
     </div>
 </div>
 <div class="row" style="height:4px; background-color:white">
 
 </div>
 <div class="row jobListInvisible mt-1" id="joblistColumns">
+    
+</div>
+
+<script id="testPackingLabelTemplate" type="x-tmpl-mustache">
     <div class="col-12" style="align-items: flex-start;">
         <div class="row no-gutters">
             <div class="col-4 p-1" id="frontPhoto"></div>
@@ -94,60 +98,56 @@
                     <div class="card-body">
                         <div class="form-group row mb-0">
                             <label class="col-sm-4 col-form-label barcodeDescription">Zamówienie: </label>
-                            <div class="col-sm-8 barcodeDetails" id="workorderNo"></div>
+                            <div class="col-sm-8 barcodeDetails">{{WorkorderNo}}</div>
                         </div>
                         <div class="form-group row mb-0">
                             <label class="col-sm-4 col-form-label barcodeDescription">Pnc: </label>
-                            <div class="col-sm-8 barcodeDetails" id="itemCode"></div>
+                            <div class="col-sm-8 barcodeDetails">{{ItemCode}}</div>
                         </div>
                         <div class="form-group row mb-0">
                             <label class="col-sm-4 col-form-label barcodeDescription ">Nazwa: </label>
-                            <div class="col-sm-8 barcodeDetails" id="itemName"></div>
+                            <div class="col-sm-8 barcodeDetails">{{ItemName}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="card mt-1" id="testView">
-                    
+                    <div class="card-body testResultsCard">
+                        <div class="form-group row testResultHeader">
+                            <div class="col-sm-3 col-form-label font-weight-bold">Nazwa testu</div>
+                            <div class="col-sm-2 col-form-label font-weight-bold text-center">FRONT</div>
+                            <div class="col-sm-2 col-form-label font-weight-bold text-center">REAR</div>
+                            <div class="col-sm-2 col-form-label font-weight-bold text-center">SIDE</div>
+                            <div class="col-sm-3 col-form-label ">Oczekiw. Wart.</div>
+                        </div>
+                        {{#Test}}
+                                <div class="form-group row mb-0">
+                                    <div class="col-sm-3 col-form-label">{{TestName}}</div>
+                                    {{#FrontResult}}
+                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{FrontExpectedValue}}</div>
+                                    {{/FrontResult}}
+                                    {{^FrontResult}}
+                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+                                    {{/FrontResult}}
+                                    {{#SideResult}}
+                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{SideExpectedValue}}</div>
+                                    {{/SideResult}}
+                                    {{^SideResult}}
+                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+                                    {{/SideResult}}
+                                    {{#RearResult}}
+                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{RearExpectedValue}}</div>
+                                    {{/RearResult}}
+                                    {{^RearResult}}
+                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
+                                    {{/RearResult}}
+                                    <div class="col-sm-2 col-form-label ">{{ExpectedValue}}</div>
+                                </div>
+                                {{/Test}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<script id="testPackingLabelTemplate" type="x-tmpl-mustache">
-    <div class="card-body testResultsCard">
-        <div class="form-group row testResultHeader">
-            <div class="col-sm-3 col-form-label font-weight-bold">Nazwa testu</div>
-            <div class="col-sm-2 col-form-label font-weight-bold text-center">FRONT</div>
-            <div class="col-sm-2 col-form-label font-weight-bold text-center">REAR</div>
-            <div class="col-sm-2 col-form-label font-weight-bold text-center">SIDE</div>
-            <div class="col-sm-3 col-form-label ">Oczekiw. Wart.</div>
-        </div>
-        {{#Test}}
-    <div class="form-group row">
-        <div class="col-sm-3 col-form-label">{{TestName}}</div>
-        {{#FrontResult}}
-        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{FrontExpectedValue}}</div>
-        {{/FrontResult}}
-        {{^FrontResult}}
-        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-        {{/FrontResult}}
-        {{#SideResult}}
-        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{SideExpectedValue}}</div>
-        {{/SideResult}}
-        {{^SideResult}}
-        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-        {{/SideResult}}
-        {{#RearResult}}
-        <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{RearExpectedValue}}</div>
-        {{/RearResult}}
-        {{^RearResult}}
-        <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-        {{/RearResult}}
-        <div class="col-sm-2 col-form-label ">{{ExpectedValue}}</div>
-    </div>
-        {{/Test}}
-            </div>
 </script>
 
 
@@ -156,7 +156,7 @@
 <script src="~/signalR/hubs"></script>
 
 <script type="text/javascript">
-
+     var _port = @Html.Raw(Json.Encode(port));
     if (jobLabelCheck != null) { console.log("Preparing to stop clock"); jobLabelCheck.StopClock(); }
     var jobLabelCheck = new JobLabelCheck(false);
 
@@ -187,6 +187,7 @@
 
         $.connection.hub.start().done(function () {
             console.log("Hub is started.");
+            jlR.server.joinWorkstation(_port);
         });
         $.connection.hub.disconnected(function () {
             setTimeout(function () {

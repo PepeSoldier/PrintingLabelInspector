@@ -26,19 +26,15 @@ var JobLabelCheck = function (markNew = true) {
 
     this.LoadDataBySerialNumber = function (serialNumber) {
         console.log("tekstsasa");
-        var ajax = AjaxPost("/_LABELINSP_APPWEB/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber });
-        ajax.done(function (packingLabelViewModel) {
-
-            $("#workorderNo").text(packingLabelViewModel.PackingLabel.OrderNo);
-            $("#itemCode").text(packingLabelViewModel.PackingLabel.ItemCode);
-            $("#itemName").text(packingLabelViewModel.PackingLabel.ItemName);
-            
-            ClearPhotos();
-            LoadAndPutPhotos(serialNumber);
+        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber});
+        ajax.done(function (packingLabelViewModel) {           
             console.log(packingLabelViewModel.PackingLabelTests);
             var uniqueTestNames = {};
             let view = {
-                Test : [],
+                Test: [],
+                WorkorderNo: packingLabelViewModel.PackingLabel.OrderNo,
+                ItemCode: packingLabelViewModel.PackingLabel.ItemCode,
+                ItemName: packingLabelViewModel.PackingLabel.ItemName
             }
             // Pobranie unikatowych nazw z tablicy testów
             uniqueTestNames = packingLabelViewModel.PackingLabelTests.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
@@ -61,7 +57,9 @@ var JobLabelCheck = function (markNew = true) {
             console.log("Tutaj tablica");
             console.log(view.Test);
 
-            RenderTemplate("#testPackingLabelTemplate", "#testView", view);
+            RenderTemplate("#testPackingLabelTemplate", "#joblistColumns", view);
+            ClearPhotos();
+            LoadAndPutPhotos(serialNumber);
         });
     }
 
@@ -84,7 +82,7 @@ var JobLabelCheck = function (markNew = true) {
 
     function PutPhoto(photo, selector) {
         var img = new Image();
-        img.src = window.location.origin + "/_LABELINSP_APPWEB" + photo;          //'url(\'' + '/_MPPL_APPWEB' + photo + '\')';
+        img.src = window.location.origin + photo;          //'url(\'' + '/_MPPL_APPWEB' + photo + '\')';
         img.className = "img-fluid";
         $(selector).append(img);
     }

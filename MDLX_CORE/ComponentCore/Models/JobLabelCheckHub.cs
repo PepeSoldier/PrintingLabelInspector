@@ -15,5 +15,17 @@ namespace _MPPL_WEB_START.Areas.ONEPROD.Models
         {
             await Clients.Others.broadcastMessage(barcode);
         }
+
+        public async Task JoinWorkstation(string workstationName)
+        {
+            await Groups.Add(Context.ConnectionId, workstationName);
+            var c = Clients.Group(workstationName);
+            c.broadcastMessage("99999999999999999999");
+        }
+
+        public Task LeaveWorkstation(string workstationName)
+        {
+            return Groups.Remove(Context.ConnectionId, workstationName);
+        }
     }
 }
