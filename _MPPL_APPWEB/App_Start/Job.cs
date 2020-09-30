@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using Autofac;
 using Autofac.Integration.Mvc;
+using MDL_LABELINSP.Models;
 using Quartz;
 
 namespace _MPPL_WEB_START.App_Start
@@ -21,17 +23,27 @@ namespace _MPPL_WEB_START.App_Start
         }
     }
 
-    //public class JobImportDeliveries : IJob
-    //{
-    //    public Task Execute(IJobExecutionContext context)
-    //    {
-    //        IDbContextiLOGIS db = AutofacDependencyResolver.Current.ApplicationContainer.Resolve<IDbContextiLOGIS>();
-    //        string clientName = context.JobDetail.JobDataMap.FirstOrDefault(x => x.Key == "clientName").Value.ToString();
+    public class JobTcp2Web : IJob
+    {
+        public Task Execute(IJobExecutionContext context)
+        {
+            List<string> tcpL = JsonSerializer.Deserialize<List<string>>(Properties.Settings.Default.TCPListeners);
 
-    //        new ApiController(db).ImportDeliveries(clientName);
-            
-    //        return null;
-    //    }
-    //}
+            Tcp2Web tcp2Web = new Tcp2Web("http://localhost:49966", "/LABELINSP/Quality/TCPBarcodeReceived");
+
+            foreach(string tcp in tcpL)
+            {
+                if (tcp.Contains(":"))
+                {
+                    string ip = tcp.Split(':')[0];
+                    string port = tcp.Split(':')[1];
+
+                    tcp2Web.RegisterAndRunTCPListener(ip, port);
+                }
+            }
+
+            return null;
+        }
+    }
 
 }

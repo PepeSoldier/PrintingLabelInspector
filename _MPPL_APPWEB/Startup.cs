@@ -107,10 +107,9 @@ namespace _MPPL_WEB_START
             dbContextParameter = new ResolvedParameter((pi, ctx) => pi.ParameterType == typeof(DbContext),
                                                            (pi, ctx) => ctx.Resolve<DbContextAPP_Dev>());
 
-            //builder.RegisterType<DbContextAPP_Dev>().AsSelf().InstancePerRequest().WithParameter("nameOrConnectionString", connectionNameStr);
-            //builder.RegisterType<DbContextAPP_Dev>().As<IDbContextCore>().WithParameter("nameOrConnectionString", connectionNameStr);
-            //builder.RegisterType<DbContextAPP_Dev>().As<IDbContextMasterData>().WithParameter("nameOrConnectionString", connectionNameStr);
-            //builder.RegisterType<BarcodeParserEluxPLVTech>().As<IBarcodeParser>();
+            builder.RegisterType<DbContextAPP_PackingLabel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextCore>();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextMasterData>();
             
         }
         private void ElectroluxPLVInjections()
@@ -121,11 +120,11 @@ namespace _MPPL_WEB_START
                 (pi, ctx) => new DbContextAPP_ElectroluxPLV(connectionName)
             );
 
-            //builder.RegisterType<DbContextAPP_ElectroluxPLV>().AsSelf().InstancePerDependency().WithParameter("connectionName", connectionName);
-            //builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>().WithParameter("connectionName", connectionName);
-            //builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextMasterData>().WithParameter("connectionName", connectionName);
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().AsSelf().InstancePerDependency().WithParameter("connectionName", connectionName);
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>().WithParameter("connectionName", connectionName);
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextMasterData>().WithParameter("connectionName", connectionName);
             //builder.RegisterType<BarcodeParserEluxPLVTech>().As<IBarcodeParser>();
-            
+
         }
         private void DefaultInjections()
         {

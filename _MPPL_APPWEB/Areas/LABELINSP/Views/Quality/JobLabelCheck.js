@@ -3,23 +3,17 @@ var ImageObject = function () {
     this.src;
     this.title;
     this.name;
-}
+};
 
 var JobLabelCheck = function (markNew = true) {
     var threadClock = null;
 
-    var p = false;
+    
     this.StartClock = function () {
         threadClock = setInterval(function () {
-            if (p == true) {
-                var today = new moment(new Date());
-                $("#clockHeaderMid").html(today.format("HH:mm:ss"));
-            }
-            if (markNew == true) {
-                $(".photoFrameWarning").toggleClass("photoFrameWarning2");
-            }
-            p = !p;
-        }, 500);
+            var dateTimeNow = new moment(new Date());
+            $("#clockHeaderMid").html(dateTimeNow.format("HH:mm:ss"));
+        }, 1000);
     };
     this.StopClock = function () {
         console.log("threadClock----------------------------------------------------------");

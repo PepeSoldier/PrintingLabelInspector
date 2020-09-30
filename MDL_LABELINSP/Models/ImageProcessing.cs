@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -61,8 +62,9 @@ namespace MDL_LABELINSP.Models
             //SourceImage = ResizeImage(SourceImage.Mat, 50).ToImage<Bgr, byte>();
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
-        public void SetImage(Image<Bgr, byte> img)
+        public void SetImage(Bitmap image)
         {
+            Image<Bgr, byte> img = image.ToImage<Bgr, byte>();
             ClearDataAndImages();
             SourceImageFullSize = img;
             SourceImage = ResizeImage(SourceImageFullSize.Mat, 50).ToImage<Bgr, byte>();
@@ -83,6 +85,41 @@ namespace MDL_LABELINSP.Models
             ProcessedImageStep6 = new Mat();
             ExtractedImage = new Mat();
             FinalPreviewImage = new Mat();
+        }
+        public void RotateImage(double angle)
+        {
+            SourceImageFullSize = SourceImageFullSize.Rotate(angle, new Bgr(255,255,255), false);
+            SourceImage = SourceImage.Rotate(angle, new Bgr(255,255,255), false);
+            FinalPreviewImage = SourceImage.Copy().Mat;
+        }
+        public void SaveFinalPreviewImage(string filePath)
+        {
+            try
+            {
+                FinalPreviewImage.ToBitmap().Save(filePath, ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void SaveAllImages(string filePath, string fileName)
+        {
+            try
+            {
+                if(ProcessedImageStep1 != null && !ProcessedImageStep1.IsEmpty) ProcessedImageStep1.ToBitmap().Save(filePath + fileName + "_s1" + ".png", ImageFormat.Png);
+                if(ProcessedImageStep2 != null && !ProcessedImageStep2.IsEmpty) ProcessedImageStep2.ToBitmap().Save(filePath + fileName + "_s2" + ".png", ImageFormat.Png);
+                if(ProcessedImageStep3 != null && !ProcessedImageStep3.IsEmpty) ProcessedImageStep3.ToBitmap().Save(filePath + fileName + "_s3" + ".png", ImageFormat.Png);
+                if(ProcessedImageStep4 != null && !ProcessedImageStep4.IsEmpty) ProcessedImageStep4.ToBitmap().Save(filePath + fileName + "_s4" + ".png", ImageFormat.Png);
+                if(ProcessedImageStep5 != null && !ProcessedImageStep5.IsEmpty) ProcessedImageStep5.ToBitmap().Save(filePath + fileName + "_s5" + ".png", ImageFormat.Png);
+                if(ProcessedImageStep6 != null && !ProcessedImageStep6.IsEmpty) ProcessedImageStep6.ToBitmap().Save(filePath + fileName + "_s6" + ".png", ImageFormat.Png);
+                ExtractedImage.ToBitmap().Save(filePath + fileName + "sEI" + ".png", ImageFormat.Png);
+                FinalPreviewImage.ToBitmap().Save(filePath + fileName + "sFI" + ".png", ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public string BarcodeDetectReadAddFrame_Big(string expectedValue = "")
@@ -190,6 +227,7 @@ namespace MDL_LABELINSP.Models
             IkeaProductCode = productCode;
             return IkeaProductCode;
         }
+
 
         public Image<Bgr, byte> CropImage(Image<Bgr, byte> frame, int xPercent, int yPercent, int widthPercent, int heightPercent)
         {
@@ -338,7 +376,7 @@ namespace MDL_LABELINSP.Models
             //Detection of vertical lines
             CvInvoke.Subtract(absGradX, absGradY, fullGrad);
             //Blur
-            CvInvoke.Blur(fullGrad, bluredFrame, new Size(9, 9), new Point(-1, -1));
+            CvInvoke.Blur(fullGrad, bluredFrame, new Size(5, 5), new Point(-1, -1));
             //Binarization            
             CvInvoke.Threshold(bluredFrame, thresholdFrame, 80, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
             // Closure
@@ -449,9 +487,10 @@ namespace MDL_LABELINSP.Models
             IBarcodeReader reader = new BarcodeReader();
             var grayFrame = frame.ToImage<Gray, byte>(); //.Convert<Gray, byte>();
             grayFrame = grayFrame.ThresholdBinary(new Gray(treschold), new Gray(maxValue));
+            //CvInvoke.Blur(grayFrame, grayFrame, new Size(1, 2), new Point(0, 0));
 
             reader.Options.TryHarder = true;
-            reader.Options.PossibleFormats = new List<BarcodeFormat> {BarcodeFormat.ITF, BarcodeFormat.CODE_128, BarcodeFormat.AZTEC };
+            reader.Options.PossibleFormats = new List<BarcodeFormat> {BarcodeFormat.ITF, BarcodeFormat.CODE_128 };
             
             //reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_39, BarcodeFormat.CODE_128, BarcodeFormat.EAN_8, BarcodeFormat.EAN_13 };
             //reader.Options.UseCode39ExtendedMode = true;
@@ -490,7 +529,7 @@ namespace MDL_LABELINSP.Models
         public string OCR(Image<Gray, byte> temp, string lang = "eng")
         {
             ExtractedImage = temp.Mat;
-            var OCRz = new Tesseract(@"./tessdata", lang, OcrEngineMode.Default);
+            var OCRz = new Tesseract(@"C:\inetpub\wwwroot\tessdata", lang, OcrEngineMode.Default);
             //var OCRz = new Tesseract();
             OCRz.SetImage(temp);
             OCRz.Recognize();

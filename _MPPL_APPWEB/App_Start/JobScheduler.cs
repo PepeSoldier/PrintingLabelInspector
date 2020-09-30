@@ -12,7 +12,7 @@ namespace _MPPL_WEB_START.App_Start
             string HostName = System.Environment.MachineName;
             List<string> HostsDev = new List<string>() { "C4AEDF-NB", "IN0003", "DESKTOP-VTS936D", "SAMKAM10", "IN0001" };
 
-            if (!HostsDev.Contains(HostName))
+            if (HostsDev.Contains(HostName))
             {
                 ISchedulerFactory schedFact = new StdSchedulerFactory();
                 IScheduler sched = schedFact.GetScheduler().GetAwaiter().GetResult();
@@ -20,29 +20,29 @@ namespace _MPPL_WEB_START.App_Start
                 switch (clientName)
                 {
                     case "ElectroluxPLV": 
-                        ScheduleJOB_1(sched, clientName);
+                        ScheduleJOB_TcpToWeb(sched, clientName);
                         break;
                     default: NoJOB(); break;
                 }
 
                 sched.Start();
-            }            
+            }
         }
 
-        public static void ScheduleJOB_1(IScheduler sched, string clientName)
+        public static void ScheduleJOB_TcpToWeb(IScheduler sched, string clientName)
         {
-            //IJobDetail job = JobBuilder.Create<JobImportDeliveries>()
-            //    .UsingJobData("clientName", clientName)
-            //    .WithIdentity("JobImportDeliveries", "group2")
-            //    .Build();
+            IJobDetail job = JobBuilder.Create<JobTcp2Web>()
+                .UsingJobData("clientName", clientName)
+                .WithIdentity("JobTcp2Web", "group2")
+                .Build();
 
-            //ITrigger trigger = TriggerBuilder.Create()
-            //        .StartNow()
-            //        .WithDailyTimeIntervalSchedule(s =>
-            //            //s.WithIntervalInMinutes(1))
-            //            s.WithIntervalInSeconds(120))
-            //        .Build();
-            //sched.ScheduleJob(job, trigger);
+            ITrigger trigger = TriggerBuilder.Create()
+                    .StartNow()
+                    //.WithDailyTimeIntervalSchedule(s =>
+                    //    //s.WithIntervalInMinutes(1))
+                    //    s.WithIntervalInSeconds(15))
+                    .Build();
+            sched.ScheduleJob(job, trigger);
         }
         public static void NoJOB() { }
     }
