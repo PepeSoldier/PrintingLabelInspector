@@ -2,7 +2,6 @@
     ViewBag.Skin = "nasaSkin";
     ViewBag.Title = "PrintingLabelInspector";
     int port = ViewBag.Port;
-    string workstationIds = ViewBag.WorkstationIds;
 }
 
 <style>
@@ -74,9 +73,6 @@
     <div class="col-2 headerLeft">
         @ViewBag.Port
     </div>
-    <div class="col-2 headerLeft" id="workstationIds">
-        @ViewBag.WorkstationIds
-    </div>
 </div>
 <div class="row" style="height:4px; background-color:white">
 
@@ -124,7 +120,7 @@
                             <div class="col-sm-3 col-form-label ">Oczekiw. Wart.</div>
                         </div>
                         {{#Test}}
-                                <div class="form-group row">
+                                <div class="form-group row mb-0">
                                     <div class="col-sm-3 col-form-label">{{TestName}}</div>
                                     {{#FrontResult}}
                                     <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{FrontExpectedValue}}</div>
@@ -181,8 +177,7 @@
                     let serialNumberIndexStart = barcode.length - 9;
                     let serialNumberIndexEnd = serialNumberIndexStart + 8;
                     let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
-                    let workstationids = $("#workstationIds").text();
-                    jobLabelCheck.LoadDataBySerialNumber(serialNumer, workstationids);
+                    jobLabelCheck.LoadDataBySerialNumber(serialNumer);
                 } else {
                     console.log("zbyt krótki barkod");
                 }

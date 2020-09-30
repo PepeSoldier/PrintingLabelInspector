@@ -24,9 +24,9 @@ var JobLabelCheck = function (markNew = true) {
         console.log(threadClock);
     };
 
-    this.LoadDataBySerialNumber = function (serialNumber, workstationIds) {
+    this.LoadDataBySerialNumber = function (serialNumber) {
         console.log("tekstsasa");
-        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber, workstationIds});
+        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber});
         ajax.done(function (packingLabelViewModel) {           
             console.log(packingLabelViewModel.PackingLabelTests);
             var uniqueTestNames = {};

@@ -23,9 +23,8 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         }
 
         //PrintingLabelInspector Methods
-        public ActionResult PrintingLabelInspector(int port, string workstationIds)
+        public ActionResult PrintingLabelInspector(int port)
         {
-            ViewBag.WorkstationIds = workstationIds;
             ViewBag.Port = port;
             return View();
         }
@@ -34,14 +33,14 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         public JsonResult TCPBarcodeReceived(string barcode, string workstationName)
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<JobLabelCheckHub>();
-            context.Clients.All.broadcastMessage(barcode);
+            //context.Clients.All.broadcastMessage(barcode);
             //context.Clients.All.broadcastMessage(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             context.Clients.Group(workstationName).broadcastMessage(barcode);
             return Json(0, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult PackingLabelGetData(string serialNumber, string workstationIds)
+        public JsonResult PackingLabelGetData(string serialNumber)
         {
             PackingLabelViewModel packingLabelViewModel = new PackingLabelViewModel();
             packingLabelViewModel.PackingLabel = uow.PackingLabelRepo.GetBySerialNumber(serialNumber);
