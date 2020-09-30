@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Skin = "nasaSkin";
     ViewBag.Title = "PrintingLabelInspector";
+    int port = ViewBag.Port;
+    string workstationIds = ViewBag.WorkstationIds;
 }
 
 <style>
@@ -69,9 +71,8 @@
     <div class="col-4 digitalClock" style="text-align: center;">
         <div class="headerMid" id="clockHeaderMid"></div>
     </div>
-    <div class="col-4" style="width: 100%; font-size: 50px; margin-top: -18px; background: none;" id="barcode">
-    </div>
-    <div class="col-2">
+    <div class="col-4 headerLeft">
+        @ViewBag.Port
     </div>
 </div>
 <div class="row" style="height:4px; background-color:white">
@@ -156,7 +157,7 @@
 <script src="~/signalR/hubs"></script>
 
 <script type="text/javascript">
-
+     var _port = @Html.Raw(Json.Encode(port));
     if (jobLabelCheck != null) { console.log("Preparing to stop clock"); jobLabelCheck.StopClock(); }
     var jobLabelCheck = new JobLabelCheck(false);
 
@@ -177,6 +178,7 @@
                     let serialNumberIndexStart = barcode.length - 9;
                     let serialNumberIndexEnd = serialNumberIndexStart + 8;
                     let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
+                    
                     jobLabelCheck.LoadDataBySerialNumber(serialNumer);
                 } else {
                     console.log("zbyt krótki barkod");
@@ -187,6 +189,7 @@
 
         $.connection.hub.start().done(function () {
             console.log("Hub is started.");
+            jlR.server.joinWorkstation(_port);
         });
         $.connection.hub.disconnected(function () {
             setTimeout(function () {
