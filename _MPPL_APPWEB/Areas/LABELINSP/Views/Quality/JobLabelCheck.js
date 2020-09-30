@@ -27,18 +27,14 @@ var JobLabelCheck = function (markNew = true) {
     this.LoadDataBySerialNumber = function (serialNumber, workstationIds) {
         console.log("tekstsasa");
         var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber, workstationIds});
-        ajax.done(function (packingLabelViewModel) {
-
-            $("#workorderNo").text(packingLabelViewModel.PackingLabel.OrderNo);
-            $("#itemCode").text(packingLabelViewModel.PackingLabel.ItemCode);
-            $("#itemName").text(packingLabelViewModel.PackingLabel.ItemName);
-            
-            ClearPhotos();
-            LoadAndPutPhotos(serialNumber);
+        ajax.done(function (packingLabelViewModel) {           
             console.log(packingLabelViewModel.PackingLabelTests);
             var uniqueTestNames = {};
             let view = {
-                Test : [],
+                Test: [],
+                WorkorderNo: packingLabelViewModel.PackingLabel.OrderNo,
+                ItemCode: packingLabelViewModel.PackingLabel.ItemCode,
+                ItemName: packingLabelViewModel.PackingLabel.ItemName
             }
             // Pobranie unikatowych nazw z tablicy testów
             uniqueTestNames = packingLabelViewModel.PackingLabelTests.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
@@ -61,7 +57,9 @@ var JobLabelCheck = function (markNew = true) {
             console.log("Tutaj tablica");
             console.log(view.Test);
 
-            RenderTemplate("#testPackingLabelTemplate", "#testView", view);
+            RenderTemplate("#testPackingLabelTemplate", "#joblistColumns", view);
+            ClearPhotos();
+            LoadAndPutPhotos(serialNumber);
         });
     }
 
