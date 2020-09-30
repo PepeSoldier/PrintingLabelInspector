@@ -71,8 +71,11 @@
     <div class="col-4 digitalClock" style="text-align: center;">
         <div class="headerMid" id="clockHeaderMid"></div>
     </div>
-    <div class="col-4 headerLeft">
+    <div class="col-2 headerLeft">
         @ViewBag.Port
+    </div>
+    <div class="col-2 headerLeft" id="workstationIds">
+        @ViewBag.WorkstationIds
     </div>
 </div>
 <div class="row" style="height:4px; background-color:white">
@@ -178,8 +181,8 @@
                     let serialNumberIndexStart = barcode.length - 9;
                     let serialNumberIndexEnd = serialNumberIndexStart + 8;
                     let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
-                    
-                    jobLabelCheck.LoadDataBySerialNumber(serialNumer);
+                    let workstationids = $("#workstationIds").text();
+                    jobLabelCheck.LoadDataBySerialNumber(serialNumer, workstationids);
                 } else {
                     console.log("zbyt krótki barkod");
                 }

@@ -23,8 +23,9 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         }
 
         //PrintingLabelInspector Methods
-        public ActionResult PrintingLabelInspector(int port)
+        public ActionResult PrintingLabelInspector(int port, string workstationIds)
         {
+            ViewBag.WorkstationIds = workstationIds;
             ViewBag.Port = port;
             return View();
         }
@@ -40,7 +41,7 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         }
 
         [HttpPost]
-        public JsonResult PackingLabelGetData(string serialNumber)
+        public JsonResult PackingLabelGetData(string serialNumber, string workstationIds)
         {
             PackingLabelViewModel packingLabelViewModel = new PackingLabelViewModel();
             packingLabelViewModel.PackingLabel = uow.PackingLabelRepo.GetBySerialNumber(serialNumber);

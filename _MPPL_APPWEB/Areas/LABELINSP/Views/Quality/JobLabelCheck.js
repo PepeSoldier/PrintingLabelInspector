@@ -24,9 +24,9 @@ var JobLabelCheck = function (markNew = true) {
         console.log(threadClock);
     };
 
-    this.LoadDataBySerialNumber = function (serialNumber) {
+    this.LoadDataBySerialNumber = function (serialNumber, workstationIds) {
         console.log("tekstsasa");
-        var ajax = AjaxPost("/_LABELINSP_APPWEB/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber });
+        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber, workstationIds});
         ajax.done(function (packingLabelViewModel) {
 
             $("#workorderNo").text(packingLabelViewModel.PackingLabel.OrderNo);
@@ -84,7 +84,7 @@ var JobLabelCheck = function (markNew = true) {
 
     function PutPhoto(photo, selector) {
         var img = new Image();
-        img.src = window.location.origin + "/_LABELINSP_APPWEB" + photo;          //'url(\'' + '/_MPPL_APPWEB' + photo + '\')';
+        img.src = window.location.origin + photo;          //'url(\'' + '/_MPPL_APPWEB' + photo + '\')';
         img.className = "img-fluid";
         $(selector).append(img);
     }
