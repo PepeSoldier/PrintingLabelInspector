@@ -44,7 +44,7 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         {
             PackingLabelViewModel packingLabelViewModel = new PackingLabelViewModel();
             packingLabelViewModel.PackingLabel = uow.PackingLabelRepo.GetBySerialNumber(serialNumber);
-            packingLabelViewModel.PackingLabelTests = uow.PackingLabelTestRepo.GetByPackingLabelId(packingLabelViewModel.PackingLabel.Id);
+            packingLabelViewModel.PackingLabelTests = uow.PackingLabelTestRepo.GetByPackingLabelId(packingLabelViewModel.PackingLabel?.Id ?? 0);
 
             return Json(packingLabelViewModel);
         }

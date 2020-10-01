@@ -132,6 +132,7 @@ namespace _MPPL_WEB_START
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().AsSelf().InstancePerDependency().WithParameter("connectionName", connectionName);
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>().WithParameter("connectionName", connectionName);
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextMasterData>().WithParameter("connectionName", connectionName);
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextLabelInsp>();
             //builder.RegisterType<BarcodeParserEluxPLVTech>().As<IBarcodeParser>();
         }
 

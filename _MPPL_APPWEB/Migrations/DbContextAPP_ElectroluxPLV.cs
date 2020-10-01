@@ -3,6 +3,9 @@ using System.Data.Entity;
 
 namespace _MPPL_WEB_START.Migrations
 {
+    //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.ElectroluxPLV.Configuration 1K
+    //Update-Database -ConfigurationTypeName _MPPL_WEB_START.Migrations.ElectroluxPLV.Configuration
+
     public class DbContextAPP_ElectroluxPLV : DbContextAPP_
     {
 

@@ -769,27 +769,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <None Include="Web.ElectroluxPLB.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.ElectroluxPLS.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.ElectroluxPLV-Staging.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <None Include="Web.ElectroluxPLV.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Web.ElectroluxPLV_Staging.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Grandhome.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.WRP.config">
-      <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="_ClientAppJS\ExternalLibraries\ExternalStyles.less" />
     <Content Include="_ClientAppJS\ExternalLibraries\MustacheJS\mostache.js" />
@@ -2570,9 +2552,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Web.Dev.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Eldisy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="_ClientAppJS\ExternalLibraries\bootstrap\bootstrap-checkbox.js" />

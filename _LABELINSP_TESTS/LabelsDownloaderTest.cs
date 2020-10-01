@@ -20,16 +20,16 @@ namespace _LABELINSP_TESTS
             LabelsDownloader labelsDownloader = new LabelsDownloader(new ConnectionParameters());
             
             List<PrintLog> printingLogs = new List<PrintLog>();
-            printingLogs.Add(new PrintLog {IdBarcode = 1, Barcode = "05240570080040178388", Label_F = true, Label_R = true, Label_S = true, Downloaded_F = true, Downloaded_R = true, Downloaded_S = true, IsPrintEnd = true, IsProcessingEnd = true, });
-            printingLogs.Add(new PrintLog {IdBarcode = 2, Barcode = "05240570080040178390", Label_F = false, Label_R = false, Label_S = true, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false, IsProcessingEnd = false });
+            printingLogs.Add(new PrintLog {IdBarcode = 1, Barcode = "05240570080040178388", Label_F = true, Label_R = true, Label_S = true, Downloaded_F = true, Downloaded_R = true, Downloaded_S = true, IsPrintEnd = true, });
+            printingLogs.Add(new PrintLog {IdBarcode = 2, Barcode = "05240570080040178390", Label_F = false, Label_R = false, Label_S = true, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false });
 
             PrivateObject obj = new PrivateObject(labelsDownloader);
             obj.SetField("printingLogs", printingLogs);
-            obj.SetField("lastProcessedId", 1);
+            obj.SetField("lastId", 0);
 
             List<PrintLog> newPrintingLogs = new List<PrintLog>();
-            newPrintingLogs.Add(new PrintLog {IdBarcode = 2, Barcode = "05240570080040178390", Label_F = true, Label_R = true, Label_S = true, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false, IsProcessingEnd = false });
-            newPrintingLogs.Add(new PrintLog {IdBarcode = 3, Barcode = "05240570080040178400", Label_F = true, Label_R = false, Label_S = false, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false, IsProcessingEnd = false });
+            newPrintingLogs.Add(new PrintLog {IdBarcode = 2, Barcode = "05240570080040178390", Label_F = true, Label_R = true, Label_S = true, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false });
+            newPrintingLogs.Add(new PrintLog {IdBarcode = 3, Barcode = "05240570080040178400", Label_F = true, Label_R = false, Label_S = false, Downloaded_F = false, Downloaded_R = false, Downloaded_S = false, IsPrintEnd = false });
 
             //execute
             obj.Invoke("PrepareDownloadTasks", newPrintingLogs);
@@ -42,13 +42,14 @@ namespace _LABELINSP_TESTS
             pt_expected.Add(new DownloadTask { Barcode = "05240570080040178390", LabelType = "Label_R", PrinterIp = "" });
             pt_expected.Add(new DownloadTask { Barcode = "05240570080040178400", LabelType = "Label_F", PrinterIp = "" });
             
-            int lastProcessedId = (int)obj.GetField("lastProcessedId");
+            int lastId = (int)obj.GetField("lastId");
 
             Assert.AreEqual(2, pl.Count);
             Assert.AreEqual(3, pt.Count);
             Assert.IsTrue(pt_expected.Find(x => x.Barcode == "05240570080040178390" && x.LabelType == "Label_F") != null);
             Assert.IsTrue(pt_expected.Find(x => x.Barcode == "05240570080040178390" && x.LabelType == "Label_R") != null);
             Assert.IsTrue(pt_expected.Find(x => x.Barcode == "05240570080040178400" && x.LabelType == "Label_F") != null);
+            Assert.AreEqual(1, lastId);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace _MPPL_WEB_START.App_Start
         {
             List<string> tcpL = JsonSerializer.Deserialize<List<string>>(Properties.Settings.Default.TCPListeners);
 
-            Tcp2Web tcp2Web = new Tcp2Web("http://localhost:49966", "/LABELINSP/Quality/TCPBarcodeReceived");
+            Tcp2Web tcp2Web = new Tcp2Web("http://10.26.10.90:84", "/LABELINSP/Quality/TCPBarcodeReceived");
 
             foreach(string tcp in tcpL)
             {
@@ -41,6 +41,17 @@ namespace _MPPL_WEB_START.App_Start
                     tcp2Web.RegisterAndRunTCPListener(ip, port);
                 }
             }
+
+            return null;
+        }
+    }
+
+    public class JobInspection : IJob
+    {
+        public Task Execute(IJobExecutionContext context)
+        {
+            LabelInspectionManager labelInspectionManager = new LabelInspectionManager();
+            labelInspectionManager.Start();
 
             return null;
         }

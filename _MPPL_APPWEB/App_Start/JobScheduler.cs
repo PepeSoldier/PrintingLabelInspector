@@ -12,7 +12,7 @@ namespace _MPPL_WEB_START.App_Start
             string HostName = System.Environment.MachineName;
             List<string> HostsDev = new List<string>() { "C4AEDF-NB", "IN0003", "DESKTOP-VTS936D", "SAMKAM10", "IN0001" };
 
-            if (HostsDev.Contains(HostName))
+            if (!HostsDev.Contains(HostName))
             {
                 ISchedulerFactory schedFact = new StdSchedulerFactory();
                 IScheduler sched = schedFact.GetScheduler().GetAwaiter().GetResult();
@@ -20,7 +20,8 @@ namespace _MPPL_WEB_START.App_Start
                 switch (clientName)
                 {
                     case "ElectroluxPLV": 
-                        ScheduleJOB_TcpToWeb(sched, clientName);
+                        //ScheduleJOB_TcpToWeb(sched, clientName);
+                        ScheduleJOB_Inspection(sched, clientName);
                         break;
                     default: NoJOB(); break;
                 }
@@ -34,6 +35,21 @@ namespace _MPPL_WEB_START.App_Start
             IJobDetail job = JobBuilder.Create<JobTcp2Web>()
                 .UsingJobData("clientName", clientName)
                 .WithIdentity("JobTcp2Web", "group2")
+                .Build();
+
+            ITrigger trigger = TriggerBuilder.Create()
+                    .StartNow()
+                    //.WithDailyTimeIntervalSchedule(s =>
+                    //    //s.WithIntervalInMinutes(1))
+                    //    s.WithIntervalInSeconds(15))
+                    .Build();
+            sched.ScheduleJob(job, trigger);
+        }
+        public static void ScheduleJOB_Inspection(IScheduler sched, string clientName)
+        {
+            IJobDetail job = JobBuilder.Create<JobInspection>()
+                .UsingJobData("clientName", clientName)
+                .WithIdentity("JobInspection", "group2")
                 .Build();
 
             ITrigger trigger = TriggerBuilder.Create()

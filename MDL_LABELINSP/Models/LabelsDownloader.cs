@@ -8,19 +8,20 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using XLIB_COMMON.Model;
+using DbConnector = IMPLEA.Data.DbConnector;
 
 namespace MDL_LABELINSP.Models
 {
     public class LabelsDownloader
     {
         private bool appIsRunning = true;
-        private int lastProcessedId = 0;
+        private int lastId = 0;
         private List<IObserver> observers;
-        private List<string> savedPhotos;
+        private List<string> savedImages;
         private List<PrintLog> printingLogs;
         private List<DownloadTask> downloadTasks;
-        private DbConnector dbConnector;
+        private IMPLEA.Data.DbConnector dbConnector;
         private ConnectionParameters connparams;
 
         public LabelsDownloader(ConnectionParameters connectionParameters) {
@@ -33,7 +34,10 @@ namespace MDL_LABELINSP.Models
 
         public void Start()
         {
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.Start()");
+
             appIsRunning = true;
+            lastId = GetLastId();
             Thread t = new Thread(Thread_CheckForNewLabels);
             t.Start();
         }
@@ -44,22 +48,65 @@ namespace MDL_LABELINSP.Models
 
         private void Thread_CheckForNewLabels()
         {
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.Thread_CheckForNewLabels");
+
             while (appIsRunning) {
-                GetPrintingLogs(out List<PrintLog> newPrintingLogs);
-                PrepareDownloadTasks(newPrintingLogs);
-                DownloadLabelFromPrinter();
-                NotifyObservers();
-                Thread.Sleep(1000);
+                try
+                {
+                    GetPrintingLogs(out List<PrintLog> newPrintingLogs);
+                    PrepareDownloadTasks(newPrintingLogs);
+                    DownloadLabelFromPrinter();
+                    NotifyObservers();
+                    Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.Thread_CheckForNewLabels is Alive");
+                }
+                catch(Exception ex)
+                {
+                    Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.Thread_CheckForNewLabels Exception: " + ex.Message);
+                }
+
+                Thread.Sleep(3000);
             }
         }
 
+        private int GetLastId()
+        {
+            try
+            {
+                var query =
+                "SELECT MAX(p.[IdBarcode]) as MAxIdBarcode "
+                    + " FROM [dbo].[ResPrintedProducts] p "
+                    + " LEFT JOIN [dbo].[ResPrintedProductsDetails] pd ON pd.IdBarcode = p.IdBarcode "
+                    + " WHERE IsPrintEnd = 1";
+
+                dbConnector.connect();
+                DataTable dt = dbConnector.runCommand(query);
+                dbConnector.disconnect();
+
+                int maxIdBarcode = 0;
+
+                if (dt.Rows.Count > 0)
+                {
+                    maxIdBarcode = Convert.ToInt32(dt.Rows[0][0]);
+                }
+
+                Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.GetLastId: result: " + maxIdBarcode);
+
+                return maxIdBarcode;
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.GetLastId Exception: " +  ex.Message);
+                return 0;
+            }
+            
+        }
         private void GetPrintingLogs(out List<PrintLog> newPrintingLogs)
         {
             newPrintingLogs = new List<PrintLog>();
-            int lastId = 3353872;
-
+            
             string query =
-                "SELECT TOP(100) p.[IdBarcode] "
+                "SELECT TOP(100) "
+                      + "p.[IdBarcode] "
                       + ",[Barcode]"
                       + ",[LastIdSession]"
                       + ",pd.CurrentAngle"
@@ -69,17 +116,19 @@ namespace MDL_LABELINSP.Models
                       + ",pd.IsPrinted_270  as Label_S"
                       + ",pd.IsPrintEnd"
                       + ",pd.PrintDate"
-                + " FROM[LabelPrinter_1].[dbo].[ResPrintedProducts] p "
-                + " LEFT JOIN[LabelPrinter_1].[dbo].[ResPrintedProductsDetails] pd ON pd.IdBarcode = p.IdBarcode "
+                + " FROM [dbo].[ResPrintedProducts] p "
+                + " LEFT JOIN [dbo].[ResPrintedProductsDetails] pd ON pd.IdBarcode = p.IdBarcode "
                 + " WHERE p.IdBarcode > " + lastId
                 + " ORDER BY p.IdBarcode DESC";
 
             dbConnector.connect();
             DataTable dt = dbConnector.runCommand(query);
+            dbConnector.disconnect();
 
             foreach(DataRow dr in dt.Rows)
             {
                 PrintLog pl = new PrintLog();
+                pl.IdBarcode = MyConvert.ToInt32(dr["IdBarcode"]);
                 pl.Barcode = MyConvert.ToString(dr["Barcode"]);
                 pl.Label_F = Convert.ToBoolean(MyConvert.ToInt32(dr["Label_F"]));
                 pl.Label_R = Convert.ToBoolean(MyConvert.ToInt32(dr["Label_R"]));
@@ -88,10 +137,12 @@ namespace MDL_LABELINSP.Models
 
                 newPrintingLogs.Add(pl);
             }
+
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.GetPrintingLogs: newPrintingLogs.Count: " + newPrintingLogs.Count);
         }
         private void PrepareDownloadTasks(List<PrintLog> newPrintLogs)
         {
-            printingLogs.RemoveAll(x => x.IsProcessingEnd);
+            if (newPrintLogs == null || newPrintLogs.Count == 0) return;
 
             foreach(var newPL in newPrintLogs)
             {
@@ -100,11 +151,20 @@ namespace MDL_LABELINSP.Models
                 if (existingPL != null)
                 {
                     if (existingPL.Label_F != newPL.Label_F && !existingPL.Downloaded_F)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_F" });
+                        existingPL.Downloaded_F = true;
+                    }
                     if (existingPL.Label_R != newPL.Label_R && !existingPL.Downloaded_R)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_R" });
+                        existingPL.Downloaded_R = true;
+                    }
                     if (existingPL.Label_S != newPL.Label_S && !existingPL.Downloaded_S)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_S" });
+                        existingPL.Downloaded_S = true;
+                    }
 
                     existingPL.Label_F = newPL.Label_F;
                     existingPL.Label_R = newPL.Label_R;
@@ -115,45 +175,79 @@ namespace MDL_LABELINSP.Models
                     printingLogs.Add(newPL);
 
                     if (newPL.Label_F)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_F" });
+                        newPL.Downloaded_F = true;
+                    }
                     if (newPL.Label_R)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_R" });
+                        newPL.Downloaded_R = true;
+                    }
                     if (newPL.Label_S)
+                    {
                         downloadTasks.Add(new DownloadTask { Barcode = newPL.Barcode, LabelType = "Label_S" });
-
+                        newPL.Downloaded_S = true;
+                    }
                 }
             }
+
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.PrepareDownloadTasks: printingLogs.Count: " + printingLogs.Count + ", lastId: " + lastId);
+
+            int lastId_tmp = printingLogs.Where(x => x.IsProcessingEnd).DefaultIfEmpty().Max(x => x != null ? x.IdBarcode : 0);
+            lastId = Math.Max(lastId, lastId_tmp);
+            printingLogs.RemoveAll(x => x.IsProcessingEnd);
+            //lastId = printingLogs.DefaultIfEmpty().Min(x => x != null ? x.IdBarcode : lastId);
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.PrepareDownloadTasks: printingLogs.Count: " + printingLogs.Count + ", lastId: " + lastId);
         }
         private void DownloadLabelFromPrinter()
         {
-            savedPhotos = new List<string>();
+            savedImages = new List<string>();
+            string printerIp = "";
+
             foreach (var dt in downloadTasks)
             {
-                using (var client = new WebClient())
+                if (dt.LabelType == "Label_F") printerIp = connparams.PrinterF;
+                else if (dt.LabelType == "Label_R") printerIp = connparams.PrinterR;
+                else if (dt.LabelType == "Label_S") printerIp = connparams.PrinterS;
+
+                if (dt.LabelType == "Label_S")
                 {
-                    string printerIp = "";
+                    Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + dt.Barcode);
 
-                    if (dt.LabelType == "Label_F") printerIp = connparams.PrinterF;
-                    else if (dt.LabelType == "Label_R") printerIp = connparams.PrinterR;
-                    else if (dt.LabelType == "Label_S") printerIp = connparams.PrinterS;
-
-                    client.DownloadFile("http://" + printerIp + "/printer/label.png", connparams.RawLabelsPath + dt.Barcode + "_" + dt.LabelType + ".png");
+                    using (var client = new WebClient())
+                    {
+                        try
+                        {
+                            string dateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
+                            client.DownloadFile("http://" + printerIp + "/printer/label.png", connparams.RawLabelsPath + dateNow + "_" + dt.Barcode + "_" + dt.LabelType + ".png");
+                            savedImages.Add(dateNow + "_" + dt.Barcode + "_" + dt.LabelType);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Exception: " + ex.Message + " d:" + ex.InnerException?.Message);
+                        }
+                    }
                 }
-                savedPhotos.Add(dt.Barcode + "_" + dt.LabelType);
             }
+
+            downloadTasks.Clear();
         }
         private void NotifyObservers()
         {
-            foreach(var savedPhoto in savedPhotos)
+            //Informujemy LabelInspectora o tym, że pojawiły się nowe obrazki
+            foreach(var savedImage in savedImages)
             {
                 foreach(IObserver observer in observers)
                 {
-                    observer.Update(savedPhoto);
+                    Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.NotifyObservers - savedImage: " + savedImage);
+                    observer.Update(savedImage);
                 }
             }
         }
         public void RegisterObserver(IObserver observer)
         {
+            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.RegisterObserver");
             observers.Add(observer);
         }
     }
@@ -172,7 +266,7 @@ namespace MDL_LABELINSP.Models
         public bool Downloaded_F { get; set; }
         public bool Downloaded_S { get; set; }
         public bool Downloaded_R { get; set; }
-        public bool IsProcessingEnd { get; set; }
+        public bool IsProcessingEnd { get { return Downloaded_F && Downloaded_S && Downloaded_R; } }
     }
     public class DownloadTask
     {
