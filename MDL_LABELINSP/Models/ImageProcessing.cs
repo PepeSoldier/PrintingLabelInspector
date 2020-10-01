@@ -50,8 +50,7 @@ namespace MDL_LABELINSP.Models
         
         public ImageProcessing()
         {
-            ProcessedImageStep1 = new Mat();
-            ExtractedImage = new Mat();
+            ClearDataAndImages();
         }
 
         public void SetImage(string path)

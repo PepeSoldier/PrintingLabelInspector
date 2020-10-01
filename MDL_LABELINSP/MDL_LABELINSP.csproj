@@ -80,6 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\LabelInspectionManager.cs" />
+    <Compile Include="Models\LabelsDownloader.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="Models\MyAlgorithms.cs" />
     <Compile Include="Models\Tcp2Web.cs" />
