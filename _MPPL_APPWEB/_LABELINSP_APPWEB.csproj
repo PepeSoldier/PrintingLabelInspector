@@ -715,10 +715,6 @@
     <Content Include="Areas\LABELINSP\Views\Shared\_LayoutHeadIncludes.cshtml" />
     <Content Include="Areas\LABELINSP\Views\Shared\_LayoutMenu.cshtml" />
     <Content Include="Areas\LABELINSP\Views\LABELINSP_Style.less" />
-    <None Include="Properties\PublishProfiles\Publish_Electrolux_PLS %28local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_Grandhome %28local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_WRP %28local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\PushNotif.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -752,11 +748,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Areas\CORE\Views\web.config" />
-    <None Include="Properties\PublishProfiles\Publish_Eldisy %28Local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_Eldisy %28Piotrek Local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_Eldisy %28Server VDSAD02%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_Electrolux_PLB %28Local%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish_Electrolux_PLV %28Local%29 [Staging].pubxml" />
     <None Include="Properties\PublishProfiles\Publish_Electrolux_PLV %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Publish_IMPLEA.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
