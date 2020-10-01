@@ -1,8 +1,6 @@
-﻿using MDL_BASE.ComponentBase.Entities;
+﻿using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
 using MDL_BASE.Interfaces;
-using MDL_BASE.Models.Base;
 using MDL_BASE.Models.IDENTITY;
-using MDL_BASE.Models.MasterData;
 using MDL_CORE.ComponentCore.Entities;
 using MDLX_CORE.ComponentCore.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -10,18 +8,17 @@ using System;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics;
-using Process = MDLX_MASTERDATA.Entities.Process;
 
 namespace _MPPL_WEB_START.Migrations
 {
-    public class DbContextAPP_ : IdentityDbContext<User, ApplicationRole, string, UserLogin, UserRole, UserClaim>, IDbContextCore
+    public class DbContextAPP_ : IdentityDbContext<User, ApplicationRole, string, UserLogin, UserRole, UserClaim>, IDbContextCore, IDbContextLabelInsp
     {
         private object lockObj = new object();
         public object LockObj { get { return lockObj; } }
 
         //IDENTITY
         public override IDbSet<User> Users { get; set; }
+
         public override IDbSet<ApplicationRole> Roles { get; set; }
         public virtual IDbSet<UserLogin> UserLogins { get; set; }
         public virtual IDbSet<UserClaim> UserClaims { get; set; }
@@ -29,21 +26,21 @@ namespace _MPPL_WEB_START.Migrations
 
         //MasterData
         public DbSet<MDL_CORE.ComponentCore.Entities.PackingLabel> PackingLabels { get; set; }
+
         public DbSet<PackingLabelTest> PackingLabelTests { get; set; }
         public DbSet<SystemVariable> SystemVariables { get; set; }
         public DbSet<Printer> Printers { get; set; }
-
-
-
 
         public DbContextAPP_(string nameOrConnectionString) : base(nameOrConnectionString) //, throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = true;
         }
+
         public DbContextAPP_(DbConnection connection) : base(connection, false)
         {
             this.Configuration.LazyLoadingEnabled = true;
         }
+
         public DbContextAPP_() : base("DefaultConnection") //, throwIfV1Schema: false)
         {
             this.Configuration.LazyLoadingEnabled = true;
@@ -65,10 +62,12 @@ namespace _MPPL_WEB_START.Migrations
             modelBuilder.Entity<UserLogin>().ToTable("IDENTITY_UserLogin");
             modelBuilder.Entity<UserClaim>().ToTable("IDENTITY_UserClaim");
         }
+
         public static DbContextAPP_ Create()
         {
             return new DbContextAPP_();
         }
+
         public override int SaveChanges()
         {
             lock (LockObj)
@@ -100,22 +99,27 @@ namespace _MPPL_WEB_START.Migrations
         {
             return this.Database.BeginTransaction();
         }
+
         public void SetEntryState_Added(IModelEntity entity)
         {
             Entry(entity).State = EntityState.Added;
         }
+
         public void SetEntryState_Modified(IModelEntity entity)
         {
             Entry(entity).State = EntityState.Modified;
         }
+
         public void SetEntryState_Detached(IModelEntity entity)
         {
             Entry(entity).State = EntityState.Detached;
         }
+
         public void SetEntryState_Unchanged(IModelEntity entity)
         {
             Entry(entity).State = EntityState.Unchanged;
         }
+
         public void SetEntryState_Deleted(IModelEntity entity)
         {
             Entry(entity).State = EntityState.Deleted;

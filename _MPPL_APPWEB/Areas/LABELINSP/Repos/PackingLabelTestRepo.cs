@@ -1,17 +1,16 @@
-﻿using MDL_BASE.Interfaces;
+﻿using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
 using MDL_CORE.ComponentCore.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using XLIB_COMMON.Repo;
 
-namespace MDLX_CORE.ComponentCore.Repos
+namespace _MPPL_WEB_START.Areas.LABELINSP.Repos
 {
     public class PackingLabelTestRepo : RepoGenericAbstract<PackingLabelTest>
     {
-        protected new IDbContextCore db;
+        protected new IDbContextLabelInsp db;
 
-        public PackingLabelTestRepo(IDbContextCore db) : base(db)
+        public PackingLabelTestRepo(IDbContextLabelInsp db) : base(db)
         {
             this.db = db;
         }

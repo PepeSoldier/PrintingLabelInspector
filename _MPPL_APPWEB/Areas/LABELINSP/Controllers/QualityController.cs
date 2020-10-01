@@ -1,9 +1,9 @@
 ﻿using _MPPL_WEB_START.Areas._APPWEB.Controllers;
-using _MPPL_WEB_START.Areas.ONEPROD.Models;
-using MDL_BASE.Interfaces;
-using MDL_CORE.ComponentCore.ViewModel;
+using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
+using _MPPL_WEB_START.Areas.LABELINSP.Models;
+using _MPPL_WEB_START.Areas.LABELINSP.UnitOfWorks;
+using _MPPL_WEB_START.Areas.LABELINSP.ViewModel;
 using MDL_LABELINSP.Models;
-using MDLX_CORE.ComponentCore.UnitOfWorks;
 using Microsoft.AspNet.SignalR;
 using System.Web.Mvc;
 
@@ -12,14 +12,14 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
     //[System.Web.Mvc.Authorize(Roles = DefRoles.ONEPROD_MES_OPERATOR)]
     public partial class QualityController : BaseController
     {
-        private readonly UnitOfWorkCore uow;
-        private readonly IDbContextCore db;
+        private readonly UnitOfWorkLabelInsp uow;
+        private readonly IDbContextLabelInsp db;
 
-        public QualityController(IDbContextCore db)
+        public QualityController(IDbContextLabelInsp db)
         {
             this.db = db;
             ViewBag.Skin = "nasaSkin";
-            uow = new UnitOfWorkCore(db);
+            uow = new UnitOfWorkLabelInsp(db);
         }
 
         //PrintingLabelInspector Methods

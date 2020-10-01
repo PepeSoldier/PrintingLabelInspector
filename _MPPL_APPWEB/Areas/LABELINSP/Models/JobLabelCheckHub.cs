@@ -6,7 +6,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Infrastructure;
 
-namespace _MPPL_WEB_START.Areas.ONEPROD.Models
+namespace _MPPL_WEB_START.Areas.LABELINSP.Models
 {
     [Microsoft.AspNet.SignalR.Hubs.HubName("jobLabelCheckHub")]
     public class JobLabelCheckHub : Hub
