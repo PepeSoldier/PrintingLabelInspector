@@ -1,13 +1,6 @@
 ﻿
-var ImageObject = function () {
-    this.src;
-    this.title;
-    this.name;
-};
-
 var JobLabelCheck = function (markNew = true) {
     var threadClock = null;
-
     
     this.StartClock = function () {
         threadClock = setInterval(function () {
@@ -15,18 +8,15 @@ var JobLabelCheck = function (markNew = true) {
             $("#clockHeaderMid").html(dateTimeNow.format("HH:mm:ss"));
         }, 1000);
     };
+
     this.StopClock = function () {
-        console.log("threadClock----------------------------------------------------------");
-        console.log(threadClock);
-        //console.log("clearTimeout");
         window.clearInterval(threadClock);
         threadClock = null;
         console.log(threadClock);
     };
 
     this.LoadDataBySerialNumber = function (serialNumber) {
-        console.log("tekstsasa");
-        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber});
+        var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber });
         ajax.done(function (packingLabelViewModel) {           
             console.log(packingLabelViewModel.PackingLabelTests);
             var uniqueTestNames = {};
@@ -43,6 +33,8 @@ var JobLabelCheck = function (markNew = true) {
                 //Pobranie wszystkich 3 wynikow dla jednego testu
                 let allTestsForUniqueTestName = packingLabelViewModel.PackingLabelTests.where(x => x.TestName == uniqueTestNames[i]);
                 let viewModel = {};
+
+                //Przypisanie wartości do viewModel'u
                 viewModel.TestName = allTestsForUniqueTestName[0].TestName;
                 viewModel.ExpectedValue = allTestsForUniqueTestName[0].ActualValue;
                 viewModel.FrontResult = allTestsForUniqueTestName.find(x => x.LabelType == 0).Result;
@@ -54,15 +46,11 @@ var JobLabelCheck = function (markNew = true) {
                 view.Test.push(viewModel);
             }
 
-            console.log("Tutaj tablica");
-            console.log(view.Test);
-
-            RenderTemplate("#testPackingLabelTemplate", "#joblistColumns", view);
+            RenderTemplate("#testPackingLabelTemplate", "#contenView", view);
             ClearPhotos();
             LoadAndPutPhotos(serialNumber);
         });
     }
-
 
     function ClearPhotos() {
         $("#frontPhoto").html("");
