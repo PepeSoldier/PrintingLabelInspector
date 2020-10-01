@@ -25,26 +25,7 @@ namespace MDLX_CORE.ComponentCore.UnitOfWorks
         private PrinterRepo printerRepo;
         private ProductionOrderRepo productionOrderRepo;
         private SystemVariableRepo systemVariableRepo;
-        private PackingLabelRepo packingLabelRepo;
-        private PackingLabelTestRepo packingLabelTestRepo;
-
-        public PackingLabelTestRepo PackingLabelTestRepo
-        {
-            get
-            {
-                packingLabelTestRepo = (packingLabelTestRepo != null) ? packingLabelTestRepo : new PackingLabelTestRepo(db);
-                return packingLabelTestRepo;
-            }
-        }
-
-        public PackingLabelRepo PackingLabelRepo
-        {
-            get
-            {
-                packingLabelRepo = (packingLabelRepo != null) ? packingLabelRepo : new PackingLabelRepo(db);
-                return packingLabelRepo;
-            }
-        }
+        
 
         public AttachmentRepo AttachmentRepo
         {

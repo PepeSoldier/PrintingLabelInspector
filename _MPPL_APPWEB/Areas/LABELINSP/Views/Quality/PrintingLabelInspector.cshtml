@@ -13,12 +13,14 @@
         margin-left: 1px;
     }
 
-    .header, .header input {
-        background-color: powderblue !important;
+    .header {
+        margin-top: 2px; 
+        height: 66px;
     }
 
-    .header {
-        height: 135px;
+    .headerDownLine {
+        height:4px; 
+        background-color:white;
     }
 
     .digitalClock {
@@ -33,12 +35,22 @@
         padding:5px;
     }
 
+    .photoMaxHeight {
+        max-width:375px;
+    }
+
     .testResultHeader {
         color: aquamarine;
     }
 
     .testResultsCard {
         background-color: #2e94a4;
+    }
+
+    .testResultBox {
+        text-align: center;
+        border-radius: 5px;
+        margin:4px;
     }
 
     .testResultFalse {
@@ -63,21 +75,21 @@
     }
 </style>
 
-<div class="row no-gutters" style="margin-top: 2px; height: 66px">
+<div class="row no-gutters header" >
     <div class="col-2 h-100">
         <div class="logoMD logo clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectroluxPLV_white.png")) !important"></div>
     </div>
-    <div class="col-4 digitalClock" style="text-align: center;">
+    <div class="col-4 digitalClock text-center">
         <div class="headerMid" id="clockHeaderMid"></div>
     </div>
     <div class="col-2 headerLeft">
         @ViewBag.Port
     </div>
 </div>
-<div class="row" style="height:4px; background-color:white">
+<div class="row headerDownLine">
 
 </div>
-<div class="row jobListInvisible mt-1" id="joblistColumns">
+<div class="row mt-1" id="contenView">
     
 </div>
 
@@ -87,10 +99,10 @@
             <div class="col-4 p-1" id="frontPhoto"></div>
             <div class="col-2">
                 <div class="row no-gutters">
-                    <div class="col-12 p-1" id="sidePhoto" style="max-width:375px;"></div>
+                    <div class="col-12 p-1 photoMaxHeight" id="sidePhoto" ></div>
                 </div>
                 <div class="row no-gutters p-1 mt-1">
-                    <div class="col-12" id="rearPhoto" style="max-width:375px;"></div>
+                    <div class="col-12 photoMaxHeight" id="rearPhoto"></div>
                 </div>
             </div>
             <div class="col-5 mt-1">
@@ -105,7 +117,7 @@
                             <div class="col-sm-8 barcodeDetails">{{ItemCode}}</div>
                         </div>
                         <div class="form-group row mb-0">
-                            <label class="col-sm-4 col-form-label barcodeDescription ">Nazwa: </label>
+                            <label class="col-sm-4 col-form-label barcodeDescription">Nazwa: </label>
                             <div class="col-sm-8 barcodeDetails">{{ItemName}}</div>
                         </div>
                     </div>
@@ -119,37 +131,37 @@
                             <div class="col-sm-2 col-form-label font-weight-bold text-center">SIDE</div>
                             <div class="col-sm-3 col-form-label ">Oczekiw. Wart.</div>
                         </div>
+                      
                         {{#Test}}
-                                <div class="form-group row mb-0">
-                                    <div class="col-sm-3 col-form-label">{{TestName}}</div>
-                                    {{#FrontResult}}
-                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{FrontExpectedValue}}</div>
-                                    {{/FrontResult}}
-                                    {{^FrontResult}}
-                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-                                    {{/FrontResult}}
-                                    {{#SideResult}}
-                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{SideExpectedValue}}</div>
-                                    {{/SideResult}}
-                                    {{^SideResult}}
-                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-                                    {{/SideResult}}
-                                    {{#RearResult}}
-                                    <div class="col-sm-2 col-form-label border border-danger m-1 testResultFalse text-center rounded">{{RearExpectedValue}}</div>
-                                    {{/RearResult}}
-                                    {{^RearResult}}
-                                    <div class="col-sm-2 col-form-label m-1 testResultPositive text-center rounded"><i class="far fa-check-square"></i></div>
-                                    {{/RearResult}}
-                                    <div class="col-sm-2 col-form-label ">{{ExpectedValue}}</div>
-                                </div>
-                                {{/Test}}
+                        <div class="form-group row mb-0">
+                            <div class="col-3 col-form-label">{{TestName}}</div>
+                            {{#FrontResult}}
+                            <div class="col-2 col-form-label testResultFalse testResultBox">{{FrontExpectedValue}}</div>
+                            {{/FrontResult}}
+                            {{^FrontResult}}
+                            <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
+                            {{/FrontResult}}
+                            {{#SideResult}}
+                            <div class="col-2 col-form-label testResultFalse testResultBox">{{SideExpectedValue}}</div>
+                            {{/SideResult}}
+                            {{^SideResult}}
+                            <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
+                            {{/SideResult}}
+                            {{#RearResult}}
+                            <div class="col-2 col-form-label testResultFalse testResultBox">{{RearExpectedValue}}</div>
+                            {{/RearResult}}
+                            {{^RearResult}}
+                            <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
+                            {{/RearResult}}
+                            <div class="col-2 col-form-label ">{{ExpectedValue}}</div>
+                        </div>
+                        {{/Test}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </script>
-
 
 
 <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
@@ -177,14 +189,13 @@
                     let serialNumberIndexStart = barcode.length - 9;
                     let serialNumberIndexEnd = serialNumberIndexStart + 8;
                     let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
+
                     jobLabelCheck.LoadDataBySerialNumber(serialNumer);
                 } else {
                     console.log("zbyt krótki barkod");
                 }
-
             }
         };
-
         $.connection.hub.start().done(function () {
             console.log("Hub is started.");
             jlR.server.joinWorkstation(_port);
@@ -194,7 +205,6 @@
                 $.connection.hub.start();
             }, 5000); // Restart connection after 5 seconds.
         });
-
     });
 </script>
 

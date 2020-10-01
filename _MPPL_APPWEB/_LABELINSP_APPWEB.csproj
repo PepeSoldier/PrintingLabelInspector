@@ -481,7 +481,16 @@
     <Compile Include="Areas\IDENTITY\ViewModels\UserGridViewModel.cs" />
     <Compile Include="App_Start\JobScheduler.cs" />
     <Compile Include="Areas\LABELINSP\Controllers\QualityController.cs" />
+    <Compile Include="Areas\LABELINSP\Entities\PackingLabel.cs" />
+    <Compile Include="Areas\LABELINSP\Entities\PackingLabelTest.cs" />
+    <Compile Include="Areas\LABELINSP\Enums\EnumLabelType.cs" />
     <Compile Include="Areas\LABELINSP\LABELINSPAreaRegistration.cs" />
+    <Compile Include="Areas\LABELINSP\Models\JobLabelCheckHub.cs" />
+    <Compile Include="Areas\LABELINSP\Repos\PackingLabelRepo.cs" />
+    <Compile Include="Areas\LABELINSP\Repos\PackingLabelTestRepo.cs" />
+    <Compile Include="Areas\LABELINSP\UnitOfWorks\UnitOfWorkLabelInsp.cs" />
+    <Compile Include="Areas\LABELINSP\Interfaces\IDbContextLabelInsp.cs" />
+    <Compile Include="Areas\LABELINSP\ViewModel\PackingLabelViewModel.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppClient.cs" />
     <Compile Include="Areas\_APPWEB\Models\AppMenu_CORE.cs" />
     <Compile Include="Areas\_APPWEB\Models\AutocompleteViewModel.cs" />
@@ -2837,7 +2846,6 @@
     <Folder Include="Areas\CORE\Views\Common\" />
     <Folder Include="Areas\IDENTITY\Models\" />
     <Folder Include="Areas\IDENTITY\Views\Shared\" />
-    <Folder Include="Areas\LABELINSP\Models\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>

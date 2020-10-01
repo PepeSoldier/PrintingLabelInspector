@@ -1,30 +1,31 @@
-﻿using Microsoft.Owin;
-using Owin;
-using System.Linq;
-using System.Web.Mvc;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataProtection;
-using System.Web;
-using Autofac;
-using _MPPL_WEB_START.App_Start;
+﻿using _MPPL_WEB_START.App_Start;
+using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
 using _MPPL_WEB_START.Migrations;
+using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
 using MDL_BASE.Interfaces;
 using MDL_BASE.Models.IDENTITY;
+using MDLX_MASTERDATA._Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Autofac.Core;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
+using Owin;
 using System.Data.Entity;
-using MDLX_MASTERDATA._Interfaces;
-
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 [assembly: OwinStartupAttribute(typeof(_MPPL_WEB_START.Startup))]
+
 namespace _MPPL_WEB_START
 {
     public partial class Startup
     {
         public IContainer container;
+
         public void Configuration(IAppBuilder app)
         {
             string clientName = Properties.Settings.Default.Client;
@@ -33,7 +34,7 @@ namespace _MPPL_WEB_START
             var razorEngine = ViewEngines.Engines.OfType<MyRazorViewEngine>().FirstOrDefault();
 
             razorEngine.ViewLocationFormats = razorEngine.ViewLocationFormats
-                .Concat(new string[] {"~/Areas/_APPWEB/Views/{1}/{0}.cshtml", "~/Areas/_APPWEB/Views/{0}.cshtml"}).ToArray();
+                .Concat(new string[] { "~/Areas/_APPWEB/Views/{1}/{0}.cshtml", "~/Areas/_APPWEB/Views/{0}.cshtml" }).ToArray();
 
             razorEngine.PartialViewLocationFormats = razorEngine.PartialViewLocationFormats.
                 Concat(new string[] { "~/Areas/_APPWEB/Views/Shared/{0}.cshtml" }).ToArray();
@@ -56,12 +57,17 @@ namespace _MPPL_WEB_START
 
             app.MapSignalR();
         }
-}
+    }
 
     public class MyRazorViewEngine : RazorViewEngine
     {
-        public MyRazorViewEngine() : base() { }
-        public MyRazorViewEngine(IViewPageActivator viewPageActivator) : base(viewPageActivator) { }
+        public MyRazorViewEngine() : base()
+        {
+        }
+
+        public MyRazorViewEngine(IViewPageActivator viewPageActivator) : base(viewPageActivator)
+        {
+        }
 
         public override ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
         {
@@ -73,6 +79,7 @@ namespace _MPPL_WEB_START
     {
         public ContainerBuilder builder = new ContainerBuilder();
         public ResolvedParameter dbContextParameter;
+
         public DependencyInjectorMPPLTwo(string clientName, IAppBuilder appk)
         {
             switch (clientName)
@@ -93,14 +100,16 @@ namespace _MPPL_WEB_START
         {
             dbContextParameter = new ResolvedParameter(
                 (pi, ctx) => pi.ParameterType == typeof(DbContext),
-                (pi, ctx) => ctx.Resolve< DbContextAPP_PackingLabel> ()
+                (pi, ctx) => ctx.Resolve<DbContextAPP_PackingLabel>()
             );
 
             builder.RegisterType<DbContextAPP_PackingLabel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextLabelInsp>();
             builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextCore>();
             builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextMasterData>();
             //builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextOneprodQuality>();
         }
+
         private void DevInjections()
         {
             string connectionNameStr = DbContextAPP_Dev.GetConnectionName();
@@ -110,8 +119,8 @@ namespace _MPPL_WEB_START
             builder.RegisterType<DbContextAPP_PackingLabel>().AsSelf().InstancePerDependency();
             builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextCore>();
             builder.RegisterType<DbContextAPP_PackingLabel>().As<IDbContextMasterData>();
-            
         }
+
         private void ElectroluxPLVInjections()
         {
             string connectionName = DbContextAPP_ElectroluxPLV.GetConnectionName();
@@ -124,8 +133,8 @@ namespace _MPPL_WEB_START
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>().WithParameter("connectionName", connectionName);
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextMasterData>().WithParameter("connectionName", connectionName);
             //builder.RegisterType<BarcodeParserEluxPLVTech>().As<IBarcodeParser>();
-
         }
+
         private void DefaultInjections()
         {
             dbContextParameter = new ResolvedParameter(

@@ -7,15 +7,18 @@ using MDLX_MASTERDATA._Interfaces;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
-namespace MDL_BASE.Interfaces
+namespace _MPPL_WEB_START.Areas.LABELINSP.Interfaces
 {
-    public interface IDbContextCore : IDbContextMasterData
+    public interface IDbContextLabelInsp : IDbContextMasterData
     {
         //ID
         IDbSet<User> Users { get; set; }
         IDbSet<ApplicationRole> Roles { get; set; }
         IDbSet<UserRole> UserRoles { get; set; }
 
+        //MasterData
+        DbSet<PackingLabelTest> PackingLabelTests { get; set; }
+        DbSet<PackingLabel> PackingLabels { get; set; }
 
         DbSet<SystemVariable> SystemVariables { get; set; }
         DbSet<Printer> Printers { get; set; }
