@@ -1,10 +1,7 @@
-﻿using MDL_CORE.ComponentCore.Entities;
-using System;
+﻿using MDL_LABELINSP.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.ViewModel
+namespace MDL_LABELINSP.ViewModel
 {
     public class PackingLabelViewModel
     {

@@ -1,9 +1,8 @@
-﻿using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
-using _MPPL_WEB_START.Areas.LABELINSP.Repos;
-using MDL_BASE.Interfaces;
+﻿using MDL_LABELINSP.Interfaces;
+using MDL_LABELINSP.Models.Repos;
 using MDL_ONEPROD.Repo;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.UnitOfWorks
+namespace MDL_LABELINSP.UnitOfWorkLabelInsp
 {
     public class UnitOfWorkLabelInsp : UnitOfWorkMasterData
     {

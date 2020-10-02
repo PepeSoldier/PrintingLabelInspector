@@ -1,23 +1,23 @@
-﻿using MDL_BASE.Models.Base;
-using MDL_BASE.Models.IDENTITY;
-using MDL_BASE.Models.MasterData;
+﻿using MDL_BASE.Models.IDENTITY;
 using MDL_CORE.ComponentCore.Entities;
+using MDL_LABELINSP.Entities;
 using MDLX_CORE.ComponentCore.Entities;
 using MDLX_MASTERDATA._Interfaces;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.Interfaces
+namespace MDL_LABELINSP.Interfaces
 {
     public interface IDbContextLabelInsp : IDbContextMasterData
     {
         //ID
         IDbSet<User> Users { get; set; }
+
         IDbSet<ApplicationRole> Roles { get; set; }
         IDbSet<UserRole> UserRoles { get; set; }
 
         //MasterData
         DbSet<PackingLabelTest> PackingLabelTests { get; set; }
+
         DbSet<PackingLabel> PackingLabels { get; set; }
 
         DbSet<SystemVariable> SystemVariables { get; set; }

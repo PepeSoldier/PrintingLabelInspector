@@ -1,7 +1,8 @@
-﻿using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
-using MDL_BASE.Interfaces;
+﻿using MDL_BASE.Interfaces;
 using MDL_BASE.Models.IDENTITY;
 using MDL_CORE.ComponentCore.Entities;
+using MDL_LABELINSP.Entities;
+using MDL_LABELINSP.Interfaces;
 using MDLX_CORE.ComponentCore.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -25,7 +26,7 @@ namespace _MPPL_WEB_START.Migrations
         public virtual IDbSet<UserRole> UserRoles { get; set; }
 
         //MasterData
-        public DbSet<MDL_CORE.ComponentCore.Entities.PackingLabel> PackingLabels { get; set; }
+        public DbSet<MDL_LABELINSP.Entities.PackingLabel> PackingLabels { get; set; }
 
         public DbSet<PackingLabelTest> PackingLabelTests { get; set; }
         public DbSet<SystemVariable> SystemVariables { get; set; }

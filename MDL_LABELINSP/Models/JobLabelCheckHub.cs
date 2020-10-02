@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Infrastructure;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.Models
+namespace MDL_LABELINSP.Models
 {
     [Microsoft.AspNet.SignalR.Hubs.HubName("jobLabelCheckHub")]
     public class JobLabelCheckHub : Hub

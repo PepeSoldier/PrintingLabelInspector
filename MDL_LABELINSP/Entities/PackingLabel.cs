@@ -1,10 +1,9 @@
 ﻿using MDL_BASE.Interfaces;
-using MDLX_MASTERDATA.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MDL_CORE.ComponentCore.Entities
+namespace MDL_LABELINSP.Entities
 {
     [Table("MASTERDATA_PackingLabel")]
     public class PackingLabel : IModelEntity

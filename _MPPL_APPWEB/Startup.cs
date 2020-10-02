@@ -1,11 +1,11 @@
 ﻿using _MPPL_WEB_START.App_Start;
-using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
 using _MPPL_WEB_START.Migrations;
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
 using MDL_BASE.Interfaces;
 using MDL_BASE.Models.IDENTITY;
+using MDL_LABELINSP.Interfaces;
 using MDLX_MASTERDATA._Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

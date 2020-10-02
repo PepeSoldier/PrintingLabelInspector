@@ -1,9 +1,8 @@
 ﻿using _MPPL_WEB_START.Areas._APPWEB.Controllers;
-using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
-using _MPPL_WEB_START.Areas.LABELINSP.Models;
-using _MPPL_WEB_START.Areas.LABELINSP.UnitOfWorks;
-using _MPPL_WEB_START.Areas.LABELINSP.ViewModel;
+using MDL_LABELINSP.Interfaces;
 using MDL_LABELINSP.Models;
+using MDL_LABELINSP.UnitOfWorkLabelInsp;
+using MDL_LABELINSP.ViewModel;
 using Microsoft.AspNet.SignalR;
 using System.Web.Mvc;
 

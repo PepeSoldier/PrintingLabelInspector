@@ -1,9 +1,8 @@
 ﻿using MDL_BASE.Interfaces;
-using MDL_CORE.ComponentCore.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MDL_CORE.ComponentCore.Entities
+namespace MDL_LABELINSP.Entities
 {
     [Table("MASTERDATA_PackingLabelTest")]
     public class PackingLabelTest : IModelEntity

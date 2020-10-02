@@ -5,27 +5,20 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using ZXing;
 
 namespace MDL_LABELINSP.Models
 {
     public class ImageProcessing
     {
-        int treschold = 64;
-        int maxValue = 230;
-        int a = 16;
-        int b = 5;
+        private int treschold = 64;
+        private int maxValue = 230;
+        private int a = 16;
+        private int b = 5;
 
         public int Treschold { set { treschold = value; } }
         public int MaxValue { set { maxValue = value; } }
@@ -35,7 +28,7 @@ namespace MDL_LABELINSP.Models
         public string BarcodeBig { get; private set; }
         public string BarcodeSmall { get; private set; }
         public string IkeaProductCode { get; private set; }
-        public string ProductName{ get; private set; }
+        public string ProductName { get; private set; }
 
         public Image<Bgr, byte> SourceImageFullSize { get; set; }
         public Image<Bgr, byte> SourceImage { get; set; }
@@ -47,7 +40,7 @@ namespace MDL_LABELINSP.Models
         public Mat ProcessedImageStep6 { get; set; }
         public Mat ExtractedImage { get; set; }
         public Mat FinalPreviewImage { get; set; }
-        
+
         public ImageProcessing()
         {
             ClearDataAndImages();
@@ -61,6 +54,7 @@ namespace MDL_LABELINSP.Models
             //SourceImage = ResizeImage(SourceImage.Mat, 50).ToImage<Bgr, byte>();
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
+
         public void SetImage(Bitmap image)
         {
             Image<Bgr, byte> img = image.ToImage<Bgr, byte>();
@@ -70,6 +64,7 @@ namespace MDL_LABELINSP.Models
             //SourceImage = ResizeImage(SourceImage.Mat, 50).ToImage<Bgr, byte>();
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
+
         private void ClearDataAndImages()
         {
             BarcodeBig = "";
@@ -85,12 +80,14 @@ namespace MDL_LABELINSP.Models
             ExtractedImage = new Mat();
             FinalPreviewImage = new Mat();
         }
+
         public void RotateImage(double angle)
         {
-            SourceImageFullSize = SourceImageFullSize.Rotate(angle, new Bgr(255,255,255), false);
-            SourceImage = SourceImage.Rotate(angle, new Bgr(255,255,255), false);
+            SourceImageFullSize = SourceImageFullSize.Rotate(angle, new Bgr(255, 255, 255), false);
+            SourceImage = SourceImage.Rotate(angle, new Bgr(255, 255, 255), false);
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
+
         public void SaveFinalPreviewImage(string filePath)
         {
             try
@@ -102,16 +99,17 @@ namespace MDL_LABELINSP.Models
                 throw ex;
             }
         }
+
         public void SaveAllImages(string filePath, string fileName)
         {
             try
             {
-                if(ProcessedImageStep1 != null && !ProcessedImageStep1.IsEmpty) ProcessedImageStep1.ToBitmap().Save(filePath + fileName + "_s1" + ".png", ImageFormat.Png);
-                if(ProcessedImageStep2 != null && !ProcessedImageStep2.IsEmpty) ProcessedImageStep2.ToBitmap().Save(filePath + fileName + "_s2" + ".png", ImageFormat.Png);
-                if(ProcessedImageStep3 != null && !ProcessedImageStep3.IsEmpty) ProcessedImageStep3.ToBitmap().Save(filePath + fileName + "_s3" + ".png", ImageFormat.Png);
-                if(ProcessedImageStep4 != null && !ProcessedImageStep4.IsEmpty) ProcessedImageStep4.ToBitmap().Save(filePath + fileName + "_s4" + ".png", ImageFormat.Png);
-                if(ProcessedImageStep5 != null && !ProcessedImageStep5.IsEmpty) ProcessedImageStep5.ToBitmap().Save(filePath + fileName + "_s5" + ".png", ImageFormat.Png);
-                if(ProcessedImageStep6 != null && !ProcessedImageStep6.IsEmpty) ProcessedImageStep6.ToBitmap().Save(filePath + fileName + "_s6" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep1 != null && !ProcessedImageStep1.IsEmpty) ProcessedImageStep1.ToBitmap().Save(filePath + fileName + "_s1" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep2 != null && !ProcessedImageStep2.IsEmpty) ProcessedImageStep2.ToBitmap().Save(filePath + fileName + "_s2" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep3 != null && !ProcessedImageStep3.IsEmpty) ProcessedImageStep3.ToBitmap().Save(filePath + fileName + "_s3" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep4 != null && !ProcessedImageStep4.IsEmpty) ProcessedImageStep4.ToBitmap().Save(filePath + fileName + "_s4" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep5 != null && !ProcessedImageStep5.IsEmpty) ProcessedImageStep5.ToBitmap().Save(filePath + fileName + "_s5" + ".png", ImageFormat.Png);
+                if (ProcessedImageStep6 != null && !ProcessedImageStep6.IsEmpty) ProcessedImageStep6.ToBitmap().Save(filePath + fileName + "_s6" + ".png", ImageFormat.Png);
                 ExtractedImage.ToBitmap().Save(filePath + fileName + "sEI" + ".png", ImageFormat.Png);
                 FinalPreviewImage.ToBitmap().Save(filePath + fileName + "sFI" + ".png", ImageFormat.Png);
             }
@@ -131,11 +129,12 @@ namespace MDL_LABELINSP.Models
             BarcodeBig = barcodeData[0];
             return BarcodeBig;
         }
+
         public string BarcodeDetectReadAddFrame_Small(string expectedValue = "")
         {
-            //Algorytm nie radzi sobie z czytaniem pomniejszonego barcode'u, wiec przeszukanie barcode 
+            //Algorytm nie radzi sobie z czytaniem pomniejszonego barcode'u, wiec przeszukanie barcode
             //odbywa się na obrazku o bokach 50% oryginalnego, a sam odczyt dokonywany jest z dużego obrazka.
-            Rectangle rectAreaWithSmallBarcode = DetectBarcode(CropImage(SourceImage,0,0,100,30), a, b);
+            Rectangle rectAreaWithSmallBarcode = DetectBarcode(CropImage(SourceImage, 0, 0, 100, 30), a, b);
             Rectangle rectForFullSizeImage = new Rectangle()
             {
                 Height = rectAreaWithSmallBarcode.Height * 2,
@@ -143,7 +142,7 @@ namespace MDL_LABELINSP.Models
                 X = rectAreaWithSmallBarcode.X * 2 + 25,
                 Y = rectAreaWithSmallBarcode.Y * 2,
             };
-            
+
             Image<Bgr, byte> imgCropped = CropImage(SourceImageFullSize, rectForFullSizeImage);
             string[] barcodeData = ReadBarcode(imgCropped.Mat);
 
@@ -151,13 +150,15 @@ namespace MDL_LABELINSP.Models
             BarcodeSmall = barcodeData[0];
             return BarcodeSmall;
         }
+
         public string ReadModelName(string expectedValue = "")
         {
             //Rectangle areaWithModelName = new Rectangle() { X = 270, Y = 45, Height = 70, Width = 310 };
-            Rectangle rectAreaWithModelName = new Rectangle() { 
-                X = (int)(13.82 * SourceImageFullSize.Width / 100), 
-                Y = (int)(1.86 * SourceImageFullSize.Height / 100), 
-                Height = (int)(2.9 * SourceImageFullSize.Height / 100), 
+            Rectangle rectAreaWithModelName = new Rectangle()
+            {
+                X = (int)(13.82 * SourceImageFullSize.Width / 100),
+                Y = (int)(1.86 * SourceImageFullSize.Height / 100),
+                Height = (int)(2.9 * SourceImageFullSize.Height / 100),
                 Width = (int)(15.88 * SourceImageFullSize.Width / 100)
             };
 
@@ -174,7 +175,7 @@ namespace MDL_LABELINSP.Models
                 CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
                 //_RemoveVerticalLines(imgGrayCropped);
                 modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "deu"));
-                
+
                 CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
             }
 
@@ -188,6 +189,7 @@ namespace MDL_LABELINSP.Models
             ProductName = modelName;
             return ProductName;
         }
+
         public string ReadIKEAProductCode(string expectedValue = "")
         {
             //Rectangle areaWithProductCode = new Rectangle() { X = 270, Y = 200, Height = 80, Width = 310 };
@@ -206,7 +208,7 @@ namespace MDL_LABELINSP.Models
             CvInvoke.Threshold(imgCroppedGray, imgThreshold, 0, 255, ThresholdType.BinaryInv | ThresholdType.Otsu);
             CvInvoke.Blur(imgThreshold, imgBlur, new Size(1, 1), new Point(0, 0), BorderType.Default);
             CvInvoke.FindContours(imgBlur, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
-            
+
             Rectangle rectWithProductNumber = _FindLargestRectFromContours(contours);
             Image<Gray, byte> matCroppedGray = CropImage(imgBlur.ToImage<Gray, byte>(), rectWithProductNumber);
 
@@ -226,7 +228,6 @@ namespace MDL_LABELINSP.Models
             IkeaProductCode = productCode;
             return IkeaProductCode;
         }
-
 
         public Image<Bgr, byte> CropImage(Image<Bgr, byte> frame, int xPercent, int yPercent, int widthPercent, int heightPercent)
         {
@@ -248,6 +249,7 @@ namespace MDL_LABELINSP.Models
 
             return dst.ToImage<Bgr, byte>();
         }
+
         public Image<Bgr, byte> CropImage(Image<Bgr, byte> frame, Rectangle roi)
         {
             Image<Bgr, byte> img = frame.Copy();
@@ -264,6 +266,7 @@ namespace MDL_LABELINSP.Models
 
             return dst.ToImage<Bgr, byte>();
         }
+
         public Image<Gray, byte> CropImage(Image<Gray, byte> frame, Rectangle roi)
         {
             Image<Gray, byte> img = frame.Copy();
@@ -280,12 +283,14 @@ namespace MDL_LABELINSP.Models
 
             return dst.ToImage<Gray, byte>();
         }
+
         public Mat ResizeImage(Mat frame, int percent)
         {
             Mat mat = new Mat();
             CvInvoke.Resize(frame, mat, new Size(frame.Width * percent / 100, frame.Height * percent / 100), interpolation: Inter.Lanczos4);
             return mat;
         }
+
         public Mat ResizeImage(Mat frame, int maxWidth, int maxHeight)
         {
             int percentW = maxWidth * 100 / frame.Width;
@@ -325,7 +330,7 @@ namespace MDL_LABELINSP.Models
             Mat dilated = new Mat();
             //DetectionImage = kernel;
             CvInvoke.Dilate(new_img, dilated, kernel, new Point(0, 0), 4, BorderType.Default, new MCvScalar(0, 0, 0));
-            
+
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
             CvInvoke.FindContours(dilated, contours, null, RetrType.External, ChainApproxMethod.ChainApproxNone);
 
@@ -349,6 +354,7 @@ namespace MDL_LABELINSP.Models
 
             return rectangles;
         }
+
         public Rectangle DetectBarcode(Image<Bgr, byte> capturedFrame, int a = 21, int b = 7)
         {
             Mat grayscaleFrame = new Mat();
@@ -376,7 +382,7 @@ namespace MDL_LABELINSP.Models
             CvInvoke.Subtract(absGradX, absGradY, fullGrad);
             //Blur
             CvInvoke.Blur(fullGrad, bluredFrame, new Size(5, 5), new Point(-1, -1));
-            //Binarization            
+            //Binarization
             CvInvoke.Threshold(bluredFrame, thresholdFrame, 80, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
             // Closure
             CvInvoke.MorphologyEx(thresholdFrame, thresholdFrame, Emgu.CV.CvEnum.MorphOp.Close, verticalRectangle, new Point(-1, -1), 2, Emgu.CV.CvEnum.BorderType.Constant, new MCvScalar((double)0));
@@ -396,6 +402,7 @@ namespace MDL_LABELINSP.Models
             Rectangle newrectangle = new Rectangle((int)(r.X - r.Width / 8), (int)(r.Y - r.Height / 8), (int)(r.Width * 1.25m), (int)(r.Height * 1.25m));
             return newrectangle;
         }
+
         public Rectangle DrawFrame(Mat capturedFrame, Rectangle rect, string value, string expectedValue, bool text = false)
         {
             bool? isValueCorrect = expectedValue.Length > 0 ? (bool?)(value == expectedValue) : null;
@@ -414,7 +421,6 @@ namespace MDL_LABELINSP.Models
                 colorB = new MCvScalar(0, 255, 0);
                 colorF = new MCvScalar(0, 128, 0);
             }
-            
 
             CvInvoke.Rectangle(capturedFrame, rect, colorB, 3);
 
@@ -427,12 +433,14 @@ namespace MDL_LABELINSP.Models
             }
             return rect;
         }
+
         public Rectangle DrawGreenFrame(Mat capturedFrame, Rectangle rect)
         {
             rect = _TrimRectangleToMat(capturedFrame, rect);
             CvInvoke.Rectangle(capturedFrame, rect, new MCvScalar(0.0, 255.0, 0.0), 3);
             return rect;
         }
+
         public Rectangle DrawRedFrame(Mat capturedFrame, Rectangle rect)
         {
             rect = _TrimRectangleToMat(capturedFrame, rect);
@@ -480,6 +488,7 @@ namespace MDL_LABELINSP.Models
 
             return data;
         }
+
         public string[] ReadBarcode(Mat frame)
         {
             string[] data = new string[2] { "NoRead", "" };
@@ -489,8 +498,8 @@ namespace MDL_LABELINSP.Models
             //CvInvoke.Blur(grayFrame, grayFrame, new Size(1, 2), new Point(0, 0));
 
             reader.Options.TryHarder = true;
-            reader.Options.PossibleFormats = new List<BarcodeFormat> {BarcodeFormat.ITF, BarcodeFormat.CODE_128 };
-            
+            reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.ITF, BarcodeFormat.CODE_128 };
+
             //reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_39, BarcodeFormat.CODE_128, BarcodeFormat.EAN_8, BarcodeFormat.EAN_13 };
             //reader.Options.UseCode39ExtendedMode = true;
             //reader.Options.UseCode39RelaxedExtendedMode = true;
@@ -524,7 +533,7 @@ namespace MDL_LABELINSP.Models
 
             return data;
         }
-        
+
         public string OCR(Image<Gray, byte> temp, string lang = "eng")
         {
             ExtractedImage = temp.Mat;
@@ -536,6 +545,7 @@ namespace MDL_LABELINSP.Models
             //var rr = OCRz.GetCharacters();
             return text;
         }
+
         public void DetectShapes(Image<Bgr, byte> imgInput, Image<Gray, byte> temp)
         {
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
@@ -552,6 +562,7 @@ namespace MDL_LABELINSP.Models
                 //PutDescriptions(imgInput, contours, i, approx);
             }
         }
+
         public void PutDescriptions(Image<Bgr, byte> imgInput, VectorOfVectorOfPoint contours, int i, VectorOfPoint approx)
         {
             var moments = CvInvoke.Moments(contours[i]);
@@ -594,6 +605,7 @@ namespace MDL_LABELINSP.Models
                 CvInvoke.DrawContours(imageGray, contours, i, new MCvScalar(255, 255, 255), thickness: 1);
             }
         }
+
         private static Rectangle _FindLargestRectFromContours(VectorOfVectorOfPoint contours)
         {
             //IF CONTOURS WERE FOUND ON THE IMAGE,
@@ -620,6 +632,7 @@ namespace MDL_LABELINSP.Models
             Rectangle rectangle = new Rectangle(x, y, width, height);
             return rectangle;
         }
+
         private Rectangle _TrimRectangleToMat(Mat src, Rectangle roi)
         {
             if (roi.X < 0) roi.X = 0;
@@ -649,6 +662,7 @@ namespace MDL_LABELINSP.Models
 
             return roi;
         }
+
         private Rectangle rectAbsolutePosition(Rectangle rectToDraw, Rectangle rectContainer)
         {
             Rectangle br = new Rectangle() { X = rectContainer.X + rectToDraw.X, Y = rectContainer.Y + rectToDraw.Y, Width = rectToDraw.Width, Height = rectToDraw.Height, };
@@ -656,4 +670,3 @@ namespace MDL_LABELINSP.Models
         }
     }
 }
-

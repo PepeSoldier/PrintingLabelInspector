@@ -1,10 +1,10 @@
-﻿using _MPPL_WEB_START.Areas.LABELINSP.Interfaces;
-using MDL_CORE.ComponentCore.Entities;
+﻿using MDL_LABELINSP.Entities;
+using MDL_LABELINSP.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using XLIB_COMMON.Repo;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.Repos
+namespace MDL_LABELINSP.Models.Repos
 {
     public class PackingLabelTestRepo : RepoGenericAbstract<PackingLabelTest>
     {
