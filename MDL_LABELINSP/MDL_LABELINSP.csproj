@@ -104,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\PackingLabel.cs" />
+    <Compile Include="Entities\ExpectedValues.cs" />
+    <Compile Include="Entities\Workorders.cs" />
     <Compile Include="Entities\PackingLabelTest.cs" />
     <Compile Include="Enums\EnumLabelType.cs" />
     <Compile Include="Interfaces\IDbContextLabelInsp.cs" />
@@ -114,6 +116,8 @@
     <Compile Include="Models\MyAlgorithms.cs" />
     <Compile Include="Models\Tcp2Web.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\WorkordersRepo.cs" />
+    <Compile Include="Repos\ExpectedValuesRepo.cs" />
     <Compile Include="Repos\PackingLabelRepo.cs" />
     <Compile Include="Repos\PackingLabelTestRepo.cs" />
     <Compile Include="UnitOfWorks\UnitOfWorkLabelInsp.cs" />

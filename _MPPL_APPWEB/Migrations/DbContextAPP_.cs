@@ -31,6 +31,9 @@ namespace _MPPL_WEB_START.Migrations
         public DbSet<PackingLabelTest> PackingLabelTests { get; set; }
         public DbSet<SystemVariable> SystemVariables { get; set; }
         public DbSet<Printer> Printers { get; set; }
+        public DbSet<ExpectedValues> ExpectedValues { get; set; }
+        public DbSet<Workorders> Workorders { get; set; }
+
 
         public DbContextAPP_(string nameOrConnectionString) : base(nameOrConnectionString) //, throwIfV1Schema: false)
         {

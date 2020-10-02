@@ -531,6 +531,14 @@
     <Compile Include="Migrations\PackingLabel\202009291121101_1P.designer.cs">
       <DependentUpon>202009291121101_1P.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\PackingLabel\202010020712441_2P.cs" />
+    <Compile Include="Migrations\PackingLabel\202010020712441_2P.designer.cs">
+      <DependentUpon>202010020712441_2P.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\PackingLabel\202010020757483_3P.cs" />
+    <Compile Include="Migrations\PackingLabel\202010020757483_3P.designer.cs">
+      <DependentUpon>202010020757483_3P.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PackingLabel\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -2849,6 +2857,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009291121101_1P.resx">
       <DependentUpon>202009291121101_1P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202010020712441_2P.resx">
+      <DependentUpon>202010020712441_2P.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\PackingLabel\202010020757483_3P.resx">
+      <DependentUpon>202010020757483_3P.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

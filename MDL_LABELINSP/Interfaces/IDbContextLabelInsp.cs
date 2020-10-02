@@ -19,6 +19,9 @@ namespace MDL_LABELINSP.Interfaces
         DbSet<PackingLabelTest> PackingLabelTests { get; set; }
 
         DbSet<PackingLabel> PackingLabels { get; set; }
+        DbSet<ExpectedValues> ExpectedValues { get; set; }
+        DbSet<Workorders> Workorders { get; set; }
+
 
         DbSet<SystemVariable> SystemVariables { get; set; }
         DbSet<Printer> Printers { get; set; }

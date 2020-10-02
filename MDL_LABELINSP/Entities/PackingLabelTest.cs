@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MDL_LABELINSP.Entities
 {
-    [Table("MASTERDATA_PackingLabelTest")]
+    [Table("LABELINSP_PackingLabelTest")]
     public class PackingLabelTest : IModelEntity
     {
         public int Id { get; set; }
