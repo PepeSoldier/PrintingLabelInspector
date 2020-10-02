@@ -35,8 +35,13 @@
         padding:5px;
     }
 
-    .photoMaxHeight {
-        max-width:375px;
+    .photoSize {
+        height: 374px;
+        max-width: 375px;
+    }
+
+    .backgroundGhost {
+        background-color: rgba(255, 255, 255, 0.1) !important;
     }
 
     .testResultHeader {
@@ -96,13 +101,13 @@
 <script id="testPackingLabelTemplate" type="x-tmpl-mustache">
     <div class="col-12" style="align-items: flex-start;">
         <div class="row no-gutters">
-            <div class="col-4 p-1" id="frontPhoto"></div>
+            <div class="col-4 p-1 {{^isChecking}}backgroundGhost {{/isChecking}}" id="frontPhoto"></div>
             <div class="col-2">
-                <div class="row no-gutters">
-                    <div class="col-12 p-1 photoMaxHeight" id="sidePhoto" ></div>
+                <div class="row no-gutters pl-1 pr-1">
+                    <div class="col-12 photoSize {{^isChecking}}backgroundGhost {{/isChecking}}" id="sidePhoto" ></div>
                 </div>
-                <div class="row no-gutters p-1 mt-1">
-                    <div class="col-12 photoMaxHeight" id="rearPhoto"></div>
+                <div class="row no-gutters p-1">
+                    <div class="col-12 photoSize {{^isChecking}}backgroundGhost {{/isChecking}}" id="rearPhoto"></div>
                 </div>
             </div>
             <div class="col-5 mt-1">
@@ -135,22 +140,22 @@
                         {{#Test}}
                         <div class="form-group row mb-0">
                             <div class="col-3 col-form-label">{{TestName}}</div>
-                            {{#FrontResult}}
-                            <div class="col-2 col-form-label testResultFalse testResultBox">{{FrontExpectedValue}}</div>
-                            {{/FrontResult}}
                             {{^FrontResult}}
+                            <div class="col-2 col-form-label testResultFalse {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox">{{FrontExpectedValue}}</div>
+                            {{/FrontResult}}
+                            {{#FrontResult}}
                             <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
                             {{/FrontResult}}
-                            {{#SideResult}}
-                            <div class="col-2 col-form-label testResultFalse testResultBox">{{SideExpectedValue}}</div>
-                            {{/SideResult}}
                             {{^SideResult}}
+                            <div class="col-2 col-form-label testResultFalse {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox">{{SideExpectedValue}}</div>
+                            {{/SideResult}}
+                            {{#SideResult}}
                             <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
                             {{/SideResult}}
-                            {{#RearResult}}
-                            <div class="col-2 col-form-label testResultFalse testResultBox">{{RearExpectedValue}}</div>
-                            {{/RearResult}}
                             {{^RearResult}}
+                            <div class="col-2 col-form-label testResultFalse {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox">{{RearExpectedValue}}</div>
+                            {{/RearResult}}
+                            {{#RearResult}}
                             <div class="col-2 col-form-label testResultPositive testResultBox"><i class="far fa-check-square"></i></div>
                             {{/RearResult}}
                             <div class="col-2 col-form-label ">{{ExpectedValue}}</div>

@@ -2,6 +2,7 @@
 var JobLabelCheck = function (markNew = true) {
     var threadClock = null;
     
+
     this.StartClock = function () {
         threadClock = setInterval(function () {
             var dateTimeNow = new moment(new Date());
@@ -17,38 +18,65 @@ var JobLabelCheck = function (markNew = true) {
 
     this.LoadDataBySerialNumber = function (serialNumber) {
         var ajax = AjaxPost("/LABELINSP/QUALITY/PackingLabelGetData", { serialNumber });
+        var uniqueTestNames = {};
+        var view = {
+            isChecking: true,
+            Test: [],
+            WorkorderNo: "",
+            ItemCode: "",
+            ItemName: ""
+        };
         ajax.done(function (packingLabelViewModel) {           
-            console.log(packingLabelViewModel.PackingLabelTests);
-            var uniqueTestNames = {};
-            let view = {
-                Test: [],
-                WorkorderNo: packingLabelViewModel.PackingLabel.OrderNo,
-                ItemCode: packingLabelViewModel.PackingLabel.ItemCode,
-                ItemName: packingLabelViewModel.PackingLabel.ItemName
+            console.log(packingLabelViewModel);
+            view.WorkorderNo = packingLabelViewModel.PackingLabel.OrderNo;
+            view.ItemCode = packingLabelViewModel.PackingLabel.ItemCode;
+            view.ItemName = packingLabelViewModel.PackingLabel.ItemName;
+            if (packingLabelViewModel.PackingLabelTests.length != 0) {
+                view.isChecking = true;
+                uniqueTestNames = {};
+                
+                // Pobranie unikatowych nazw z tablicy testów
+                uniqueTestNames = packingLabelViewModel.PackingLabelTests.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
+                
+                for (let i = 0; i < uniqueTestNames.length; i++) {
+                    //Pobranie wszystkich 3 wynikow dla jednego testu
+                    let allTestsForUniqueTestName = packingLabelViewModel.PackingLabelTests.where(x => x.TestName == uniqueTestNames[i]);
+                    let viewModel = {};
+                
+                    //Przypisanie wartości do viewModel'u
+                    viewModel.TestName = allTestsForUniqueTestName[0].TestName;
+                    viewModel.ExpectedValue = allTestsForUniqueTestName[0].ActualValue;
+                    viewModel.FrontResult = allTestsForUniqueTestName.find(x => x.LabelType == 0).Result;
+                    viewModel.FrontExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 0).ActualValue;
+                    viewModel.SideResult = allTestsForUniqueTestName.find(x => x.LabelType == 1).Result;
+                    viewModel.SideExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 1).ActualValue;
+                    viewModel.RearResult = allTestsForUniqueTestName.find(x => x.LabelType == 2).Result;
+                    viewModel.RearExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 2).ActualValue;
+                    view.Test.push(viewModel);
+                }
+            } else {
+                view.isChecking = false;
+                uniqueTestNames = ["Test A", "Test B", "Test C", "Test D", "Test E"];
+                for (let i = 0; i < uniqueTestNames.length; i++) {
+                    let viewModel = {};
+                    viewModel.TestName = uniqueTestNames[i];
+                    viewModel.ExpectedValue = "";
+                    viewModel.FrontResult = false;
+                    viewModel.FrontExpectedValue = "XXX";
+                    viewModel.SideResult = false;
+                    viewModel.SideExpectedValue = "XXX";
+                    viewModel.RearResult = false;
+                    viewModel.RearExpectedValue = "XXX";
+                    view.Test.push(viewModel);
+                }
             }
-            // Pobranie unikatowych nazw z tablicy testów
-            uniqueTestNames = packingLabelViewModel.PackingLabelTests.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
-
-            for (let i = 0; i < uniqueTestNames.length; i++) {
-                //Pobranie wszystkich 3 wynikow dla jednego testu
-                let allTestsForUniqueTestName = packingLabelViewModel.PackingLabelTests.where(x => x.TestName == uniqueTestNames[i]);
-                let viewModel = {};
-
-                //Przypisanie wartości do viewModel'u
-                viewModel.TestName = allTestsForUniqueTestName[0].TestName;
-                viewModel.ExpectedValue = allTestsForUniqueTestName[0].ActualValue;
-                viewModel.FrontResult = allTestsForUniqueTestName.find(x => x.LabelType == 0).Result;
-                viewModel.FrontExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 0).ActualValue;
-                viewModel.SideResult = allTestsForUniqueTestName.find(x => x.LabelType == 1).Result;
-                viewModel.SideExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 1).ActualValue;
-                viewModel.RearResult = allTestsForUniqueTestName.find(x => x.LabelType == 2).Result;
-                viewModel.RearExpectedValue = allTestsForUniqueTestName.find(x => x.LabelType == 2).ActualValue;
-                view.Test.push(viewModel);
-            }
-
+            console.log("24-");
             RenderTemplate("#testPackingLabelTemplate", "#contenView", view);
             ClearPhotos();
-            LoadAndPutPhotos(serialNumber);
+
+            if (packingLabelViewModel.PackingLabelTests.length != 0) {
+                LoadAndPutPhotos(serialNumber);
+            }
         });
     }
 
