@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MDL_BASE.Models.Base
+namespace MDLX_CORE.Models.Base
 {
     public enum AttachmentParentTypeEnum
     {

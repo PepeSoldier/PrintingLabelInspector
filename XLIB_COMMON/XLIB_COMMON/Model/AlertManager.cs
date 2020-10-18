@@ -6,7 +6,6 @@ using XLIB_COMMON.Interface;
 
 namespace XLIB_COMMON.Model
 {
-    //SINGLETON!!
     public class AlertManager : IAlertManager
     {
         List<AlertModel> Alerts;

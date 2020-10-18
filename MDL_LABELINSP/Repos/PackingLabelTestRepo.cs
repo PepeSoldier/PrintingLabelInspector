@@ -1,4 +1,5 @@
 ﻿using MDL_LABELINSP.Entities;
+using MDL_LABELINSP.Enums;
 using MDL_LABELINSP.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using XLIB_COMMON.Model;
 using XLIB_COMMON.Repo;
 
-namespace MDL_LABELINSP.Models.Repos
+namespace MDL_LABELINSP.Repos
 {
     public class WorkorderLabelInspectionRepo : RepoGenericAbstract<WorkorderLabelInspection>
     {

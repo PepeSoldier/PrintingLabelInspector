@@ -3,7 +3,7 @@ using MDL_LABELINSP.Interfaces;
 using System.Linq;
 using XLIB_COMMON.Repo;
 
-namespace MDL_LABELINSP.Models.Repos
+namespace MDL_LABELINSP.Repos
 {
     public class ItemDataRepo : RepoGenericAbstract<ItemData>
     {

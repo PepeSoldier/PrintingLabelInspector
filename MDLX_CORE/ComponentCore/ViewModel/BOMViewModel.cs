@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using XLIB_COMMON.Enums;
 
-namespace MDL_BASE.ViewModel
+namespace MDLX_CORE.ViewModel
 {
     public class BOMViewModel
     {

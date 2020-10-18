@@ -1,4 +1,4 @@
-﻿namespace MDL_LABELINSP.Entities
+﻿namespace MDL_LABELINSP.Enums
 {
     public enum EnumLabelType
     {

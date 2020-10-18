@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="APP_ACTPL.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="MTNG_Lic" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">08CDU-K6DSQ-MLDS90-DTA0E</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>

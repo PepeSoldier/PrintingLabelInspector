@@ -1,5 +1,5 @@
-﻿using MDL_BASE.Interfaces;
-using MDL_BASE.Models.IDENTITY;
+﻿using MDLX_CORE.Interfaces;
+using MDLX_CORE.Models.IDENTITY;
 using MDL_CORE.ComponentCore.Enums;
 using System;
 using System.Collections.Generic;

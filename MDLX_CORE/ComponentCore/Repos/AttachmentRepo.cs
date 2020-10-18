@@ -1,9 +1,9 @@
 ﻿using XLIB_COMMON.Repo;
 using System.Linq;
-using MDL_BASE.Interfaces;
+using MDLX_CORE.Interfaces;
 using System.IO;
 using System.Web.Hosting;
-using MDL_BASE.Models.Base;
+using MDLX_CORE.Models.Base;
 
 namespace XLIB_COMMON.Repo.Base
 {
@@ -15,15 +15,6 @@ namespace XLIB_COMMON.Repo.Base
         {
             this.db = db;
         }
-
-        //public override Attachment GetById(int parentObjectId)
-        //{
-        //    return db.Attachments.FirstOrDefault(d => d.ParentObjectId == parentObjectId);
-        //}
-        //public override IQueryable<Attachment> GetList()
-        //{
-        //    return db.Attachments.OrderByDescending(x => x.Id);
-        //}
 
         public void DeleteFile(Attachment attachment)
         {

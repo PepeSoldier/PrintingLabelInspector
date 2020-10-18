@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 
 
-namespace MDL_BASE.Models
+namespace MDLX_CORE.Models
 {
     public class EFMetadataMappingHelper
     {

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     public class UserRolesName
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IKEA_Labels_TEST
+namespace _LABELINSP_TESTS
 {
     public class Helper
     {

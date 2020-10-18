@@ -4,7 +4,7 @@ using Emgu.CV.Structure;
 using MDL_LABELINSP.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace IKEA_Labels_TEST
+namespace _LABELINSP_TESTS
 {
     [TestClass]
     public class ReadModelNameTest

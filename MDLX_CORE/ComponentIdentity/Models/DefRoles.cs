@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Web;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     public class DefRoles
     {

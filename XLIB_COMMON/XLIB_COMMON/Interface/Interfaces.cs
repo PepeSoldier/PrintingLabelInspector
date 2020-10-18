@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MDL_BASE.Interfaces
+namespace MDLX_CORE.Interfaces
 {
     public interface IModelEntity
     {

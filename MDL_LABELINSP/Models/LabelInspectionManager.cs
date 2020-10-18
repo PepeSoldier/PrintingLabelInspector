@@ -1,6 +1,7 @@
 ﻿using IMPLEA.Text;
 using IMPLEA.Utilities;
 using MDL_LABELINSP.Entities;
+using MDL_LABELINSP.Enums;
 using MDL_LABELINSP.Interfaces;
 using MDL_LABELINSP.UnitOfWorks;
 using System;

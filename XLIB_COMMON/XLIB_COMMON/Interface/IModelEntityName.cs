@@ -1,6 +1,6 @@
-﻿using MDL_BASE.Interfaces;
+﻿using MDLX_CORE.Interfaces;
 
-namespace MDL_BASE.Interface
+namespace MDLX_CORE.Interface
 {
     public interface IModelEntityName : IModelEntity
     {

@@ -1,0 +1,114 @@
+﻿@using MDLX_CORE.Models.IDENTITY
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Przeglądaj Użytkowników";
+    List<SelectListItem> list = new List<SelectListItem>() {
+            new SelectListItem() { Value = "false", Text = "Użytkownicy" },
+            new SelectListItem() { Value = "true", Text = "Operatorzy" }  };
+}
+<div class="row">
+    <div class="col-lg-12 shadow formArea">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Numer", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.Editor("userId", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Nazwa Użytkownika", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.Editor("userNAme", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Imię", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.Editor("firstNAme", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("LastName", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.Editor("lastNAme", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Rola", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.DropDownList("roleId", (IEnumerable<SelectListItem>)ViewBag.Roles, "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    @Html.Label("Typ", htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="formInlineRow">
+                    @Html.DropDownList("showOperators", list, "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="formInlineGroup">
+                <div class="formInlineRow">
+                    <span></span>
+                </div>
+                <div class="formInlineRow">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Odśwież" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<hr />
+@*<div class="row">
+    <div class="col-md-12">
+        <div id="gridUsers" style="min-height: 600px;"></div>
+    </div>
+</div>
+<hr />*@
+<div class="row">
+    <div class="col-md-12">
+        @Html.Grid((IQueryable<User>
+            )ViewBag.Users).Columns(columns =>
+            {
+            columns.Add(u => u.UserName).Titled("Nazwa Użytkownika").SetWidth(110);
+            columns.Add(u => u.FullName).Titled("Imie i Nazwisko").SetWidth(110);
+            columns.Add(u => u.Email).Titled("email").SetWidth(110);
+
+
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderValueAs(u =>@<b>@Html.ActionLink("Pokaż", "Edit", new { id = u.Id })</b>);
+             })
+    </div>
+</div>
+
+<script src="~/_ClientAppJS/BASE/Identity/UsersGrid.js"></script>
+<script type="text/javascript">
+
+    var grid = null;
+
+    $(document).ready(function () {
+
+        grid = new UsersGrid("#gridUsers");
+        grid.InitGrid();
+        grid.RefreshGrid();
+    });
+
+
+</script>
+

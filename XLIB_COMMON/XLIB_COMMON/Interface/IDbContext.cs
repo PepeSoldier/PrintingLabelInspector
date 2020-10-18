@@ -5,7 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 
-namespace MDL_BASE.Interfaces
+namespace MDLX_CORE.Interfaces
 {
     public interface IDbContext : IDisposable
     {

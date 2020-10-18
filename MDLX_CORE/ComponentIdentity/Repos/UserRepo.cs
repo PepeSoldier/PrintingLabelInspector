@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using MDL_BASE.Models.IDENTITY;
+using MDLX_CORE.Models.IDENTITY;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using MDL_BASE.Interfaces;
+using MDLX_CORE.Interfaces;
 using System.Data;
 using System.Data.Entity.Migrations;
 
@@ -101,11 +101,7 @@ namespace XLIB_COMMON.Repo.IDENTITY
         }
         public List<User> GetSubordinates(string userId)
         {
-            User user = FindById(userId);
-            if (user.Department != null)
-            {
-                return db.Users.Where(x => x.Department.Id == user.Department.Id).ToList();
-            }
+            
             return new List<User>();
         }
         public List<User> GetManagers()
@@ -167,7 +163,7 @@ namespace XLIB_COMMON.Repo.IDENTITY
             List<User> usreList = db.Users.ToList();
             var queue = (from t in db.Users
                          where (t.FirstName.StartsWith(prefix) || t.LastName.StartsWith(prefix)) &&
-                          (DepartmentId == 0 || t.DepartmentId == DepartmentId)
+                          (DepartmentId == 0) //|| t.DepartmentId == DepartmentId)
                          select new UserLight()
                          {
                              FullName = t.LastName + " " + t.FirstName,

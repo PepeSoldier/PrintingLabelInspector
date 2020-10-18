@@ -182,22 +182,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\PrintingStatus.cs" />
-    <Compile Include="Enums\EnumHelper.cs" />
-    <Compile Include="Enums\PrinterType.cs" />
-    <Compile Include="Enums\SerialNumberType.cs" />
-    <Compile Include="Enums\Shift.cs" />
     <Compile Include="Enums\UnitOfMeasure.cs" />
-    <Compile Include="Enums\UserType.cs" />
     <Compile Include="Interface\IAlertManager.cs" />
-    <Compile Include="Enums\Inactive.cs" />
-    <Compile Include="Interface\IBarcode.cs" />
     <Compile Include="Interface\IDbContext.cs" />
     <Compile Include="Interface\IDefModel.cs" />
-    <Compile Include="Interface\ILogger.cs" />
     <Compile Include="Interface\IModelEntityName.cs" />
     <Compile Include="Interface\Interfaces.cs" />
-    <Compile Include="Interface\ISelectListItem.cs" />
     <Compile Include="Interface\UnitOfWorkAbstract.cs" />
     <Compile Include="mailer.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -206,18 +196,13 @@
     </Compile>
     <Compile Include="Model\AlertManager.cs" />
     <Compile Include="Model\AlertModel.cs" />
-    <Compile Include="Model\BarcodeParser.cs" />
-    <Compile Include="Model\ChangeAnalizer.cs" />
     <Compile Include="Model\CustomSettings.cs" />
     <Compile Include="Model\DataTableHelper.cs" />
     <Compile Include="Model\DbConnector.cs" />
     <Compile Include="Model\Ldap.cs" />
     <Compile Include="Model\Logger2File.cs" />
     <Compile Include="Model\Mailers.cs" />
-    <Compile Include="Model\QrCodeGenerator.cs" />
     <Compile Include="Model\ReflectionHelper.cs" />
-    <Compile Include="Model\StringFormatter.cs" />
-    <Compile Include="Model\TreantJsNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -229,6 +214,7 @@
     <Compile Include="Repo\RepoGenericAbstract.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

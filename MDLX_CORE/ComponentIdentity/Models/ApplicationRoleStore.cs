@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     public class ApplicationRoleStore : RoleStore<ApplicationRole, string, UserRole>, IQueryableRoleStore<ApplicationRole, string>, IRoleStore<ApplicationRole, string>, IDisposable //where TRole : ApplicationRole
     {

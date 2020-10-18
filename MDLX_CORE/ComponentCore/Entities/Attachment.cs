@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using MDL_BASE.Interfaces;
+using MDLX_CORE.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Hosting;
 using System.Web;
 
-namespace MDL_BASE.Models.Base
+namespace MDLX_CORE.Models.Base
 {
     [Table("Attachment", Schema = "CORE")]
     public class Attachment : IModelEntity

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MDL_BASE.ViewModel
+namespace MDLX_CORE.ViewModel
 {
     public class ChartJSViewModel
     {

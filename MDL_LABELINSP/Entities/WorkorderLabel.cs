@@ -1,4 +1,4 @@
-﻿using MDL_BASE.Interfaces;
+﻿using MDLX_CORE.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;

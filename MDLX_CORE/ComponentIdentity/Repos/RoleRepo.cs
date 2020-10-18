@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using MDL_BASE.Models;
+using MDLX_CORE.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MDL_BASE.Interfaces;
+using MDLX_CORE.Interfaces;
 using Microsoft.AspNet.Identity;
-using MDL_BASE.Models.IDENTITY;
+using MDLX_CORE.Models.IDENTITY;
 using System.Diagnostics;
 
 namespace XLIB_COMMON.Repo.IDENTITY

@@ -1,0 +1,52 @@
+﻿@*@inherits System.Web.Mvc.WebViewPage;*@
+@using _LABELINSP_APPWEB.Areas._APPWEB.Models;
+@using _LABELINSP_APPWEB.Areas._APPWEB.Models.Clients;
+@using MDLX_CORE.Models;
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using _LABELINSP_APPWEB.Areas._APPWEB.ViewModels
+
+
+@helper DrawMenu(IMenuItem[] menuItems, string clientName, UrlHelper Url, System.Security.Principal.IPrincipal user)
+{
+    <ul id="sidebar_menu" class="sidebar-nav">
+        <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span id="main_icon" class="fas"></span></a></li>
+    </ul>
+    <ul class="sidebar-nav" id="sidebar">
+
+        @{ 
+            AppClientApbstract appClient = AppClient.GetClient(clientName);
+        }
+
+        @foreach (MDLX_CORE.Models.IMenuItem menuItem in menuItems)
+{
+            //.HasClientAccess(clientName, (MenuAccessCode)menuItem.AccessCode, user, menuItem.RequiredRole))
+            if (AppMenu.CheckAccess(menuItem, appClient, user))
+                    {
+                <li class="menuLi">
+                    <a href='@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea })'>
+                        <div class="menuItem">@menuItem.Name</div><span class="sub_icon @menuItem.Class1"></span>
+                    </a>
+                    <div class="subMenu hidden">
+                        <div class="subMenuTitle">@menuItem.Name</div>
+                        <ul id="subSidebar">
+                            @foreach (MDLX_CORE.Models.IMenuItem menuItem2 in menuItem.Children)
+                            {
+                                if (menuItem2.Name != "Home" && AppMenu.CheckAccess(menuItem2, appClient, user)) //Menu.HasClientAccess(clientName, (MenuAccessCode)menuItem2.AccessCode, user, menuItem.RequiredRole))
+                                {
+                                    <li class="subMenuLi">
+                                        <a href='@Url.Action(menuItem2.HrefAction, menuItem2.HrefController, 
+                                                new { area = menuItem2.HrefArea, id = "" })@(menuItem2.HashSuffix != null? "#" + menuItem2.HashSuffix : "")'>
+                                            <div class="sub_name2">@menuItem2.Name</div>
+                                            <span class="sub_icon2 @menuItem2.Class1"></span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+}

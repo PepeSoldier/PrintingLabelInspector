@@ -1,5 +1,4 @@
-﻿using MDL_BASE.Interfaces;
-using MDL_BASE.Models.MasterData;
+﻿using MDLX_CORE.Interfaces;
 using MDL_CORE.ComponentCore.Enums;
 using MDL_CORE.ComponentCore.Models;
 using MDLX_CORE.ComponentCore.Entities;

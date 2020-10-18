@@ -4,10 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
-using MDL_BASE.Models.MasterData;
 using System.Threading.Tasks;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     public class UserLogin : IdentityUserLogin<string>
     {

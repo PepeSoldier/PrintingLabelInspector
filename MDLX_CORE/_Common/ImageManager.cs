@@ -1,8 +1,8 @@
-﻿using MDL_BASE.Models.Base;
+﻿using MDLX_CORE.Models.Base;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace MDL_BASE.Models
+namespace MDLX_CORE.Models
 {
     public class ImageManager
     {

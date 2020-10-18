@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MDL_BASE.Models
+namespace MDLX_CORE.Models
 {
     //public class AppClient
     //{

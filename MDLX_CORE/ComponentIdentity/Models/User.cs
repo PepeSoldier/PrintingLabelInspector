@@ -4,11 +4,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
-using MDL_BASE.Models.MasterData;
 using System.Threading.Tasks;
 using System;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     [Table("IDENTITY_User", Schema = "_MPPL")]
     public class User : IdentityUser<string, UserLogin, UserRole, UserClaim>, IUser, IUser<string>//, IUser, //ApplicationUser
@@ -27,10 +26,6 @@ namespace MDL_BASE.Models.IDENTITY
 
         [DisplayName("Nazwisko")]
         public string LastName { get; set; }
-
-        [DisplayName("Dział")]
-        public Department Department { get; set; }
-        public int? DepartmentId { get; set; }
 
         [DisplayName("Data ostatniej zmiany hasła")]
         public DateTime LastPasswordChangedDate { get; set; }

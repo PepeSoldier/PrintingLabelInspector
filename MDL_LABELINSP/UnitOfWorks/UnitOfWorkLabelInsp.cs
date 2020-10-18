@@ -1,11 +1,11 @@
 ﻿using MDL_LABELINSP.Entities;
 using MDL_LABELINSP.Interfaces;
-using MDL_LABELINSP.Models.Repos;
-using MDL_ONEPROD.Repo;
+using MDL_LABELINSP.Repos;
+using MDLX_CORE.ComponentCore.UnitOfWorks;
 
 namespace MDL_LABELINSP.UnitOfWorks
 {
-    public class UnitOfWorkLabelInsp : UnitOfWorkMasterData
+    public class UnitOfWorkLabelInsp : UnitOfWorkCore
     {
         private IDbContextLabelInsp db;
 

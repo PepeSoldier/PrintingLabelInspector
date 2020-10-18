@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MDL_CORE</RootNamespace>
-    <AssemblyName>MDL_CORE</AssemblyName>
+    <RootNamespace>MDLX_CORE</RootNamespace>
+    <AssemblyName>MDLX_CORE</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -226,54 +226,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentCore\Entities\BomWorkorder.cs" />
-    <Compile Include="ComponentCore\Entities\NotificationDevice.cs" />
-    <Compile Include="ComponentCore\Entities\Printer.cs" />
-    <Compile Include="ComponentCore\Entities\JobList.cs" />
-    <Compile Include="ComponentCore\Entities\JsonUpdateGridModel.cs" />
-    <Compile Include="ComponentCore\Entities\ProductionOrder.cs" />
+    <Compile Include="ComponentCore\Entities\Attachment.cs" />
+    <Compile Include="ComponentCore\Entities\AttachmentParentTypeEnum.cs" />
     <Compile Include="ComponentCore\Entities\SystemVariables.cs" />
     <Compile Include="ComponentCore\Enums\EnumVariableType.cs" />
-    <Compile Include="ComponentCore\Enums\InstructionVersion.cs" />
     <Compile Include="ComponentCore\Models\DefSystemVariables.cs" />
-    <Compile Include="ComponentCore\Models\NotificationManager.cs" />
-    <Compile Include="ComponentCore\Models\SerialNumberManager.cs" />
-    <Compile Include="ComponentCore\Models\VapidKey.cs" />
-    <Compile Include="ComponentCore\Repos\NotificationDeviceRepo.cs" />
-    <Compile Include="ComponentCore\Repos\PrinterRepo.cs" />
-    <Compile Include="ComponentCore\Repos\ProductionOrderRepo.cs" />
     <Compile Include="ComponentCore\Repos\SystemVariableRepo.cs" />
-    <Compile Include="ComponentCore\Repos\BomWorkorderRepo.cs" />
-    <Compile Include="ComponentCore\Repos\JoblistRepo.cs" />
     <Compile Include="ComponentCore\UnitOfWorks\UnitOfWorkCore.cs" />
-    <Compile Include="ComponentCore\ViewModel\PrinterViewModel.cs" />
     <Compile Include="ComponentCore\ViewModel\BOMViewModel.cs" />
     <Compile Include="ComponentIdentity\Models\ApplicationRole.cs" />
     <Compile Include="ComponentIdentity\Models\ApplicationUserStore.cs" />
     <Compile Include="ComponentIdentity\Models\ApplicationRoleStore.cs" />
     <Compile Include="ComponentIdentity\Models\UserLogin.cs" />
     <Compile Include="ComponentIdentity\Models\UserClaim.cs" />
-    <Compile Include="Mappers\NotificationDeviceMapper.cs" />
-    <Compile Include="ViewModels\NotificationDeviceViewModel.cs" />
     <Compile Include="_Interfaces\IDbContextCore.cs" />
     <Compile Include="_Common\AppClient.cs" />
-    <Compile Include="ComponentCore\Entities\Attachment.cs" />
-    <Compile Include="ComponentCore\Entities\AttachmentParentTypeEnum.cs" />
-    <Compile Include="ComponentCore\Entities\ChangeLog.cs" />
     <Compile Include="_Common\EFMappingHelper.cs" />
     <Compile Include="_Common\ImageManager.cs" />
-    <Compile Include="ComponentCore\Entities\Bom.cs" />
-    <Compile Include="ComponentCore\_Unused\ResourceType.cs" />
-    <Compile Include="ComponentCore\_Unused\Resource.cs" />
-    <Compile Include="ComponentIdentity\Models\IdentityUser_UNUSED.cs" />
     <Compile Include="ComponentIdentity\Models\DefRoles.cs" />
     <Compile Include="ComponentIdentity\Models\User.cs" />
     <Compile Include="ComponentIdentity\Models\UserRole.cs" />
     <Compile Include="ComponentIdentity\Models\UserRolesName.cs" />
     <Compile Include="_Common\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ComponentCore\Repos\BomRepo.cs" />
-    <Compile Include="ComponentCore\Repos\ChangeLogRepo.cs" />
     <Compile Include="ComponentCore\Repos\AttachmentRepo.cs" />
     <Compile Include="_Common\GenericRepository.cs" />
     <Compile Include="ComponentIdentity\Repos\RoleRepo.cs" />
@@ -285,6 +260,8 @@
     <Folder Include="ComponentIdentity\Entities\" />
     <Folder Include="ComponentIdentity\UnitOfWorks\" />
     <Folder Include="ComponentIdentity\_Interfaces\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -312,10 +289,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MDLX_MASTERDATA\MDLX_MASTERDATA.csproj">
-      <Project>{16AD63F8-0D1B-48CC-9681-3DADD497E72F}</Project>
-      <Name>MDLX_MASTERDATA</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XLIB_COMMON\XLIB_COMMON\XLIB_COMMON.csproj">
       <Project>{A0B99E24-F08F-454C-B322-9AF2EA87A295}</Project>
       <Name>XLIB_COMMON</Name>

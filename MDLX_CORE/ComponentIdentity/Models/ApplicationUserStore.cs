@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace MDL_BASE.Models.IDENTITY
+namespace MDLX_CORE.Models.IDENTITY
 {
     public class ApplicationUserStore<TUser> : UserStore<TUser, ApplicationRole, string, UserLogin, UserRole, UserClaim>, IUserStore<TUser, string>, IDisposable where TUser : User
     {

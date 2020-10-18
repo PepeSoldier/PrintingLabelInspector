@@ -1,4 +1,5 @@
-﻿using MDL_BASE.Interfaces;
+﻿using MDLX_CORE.Interfaces;
+using MDL_LABELINSP.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
