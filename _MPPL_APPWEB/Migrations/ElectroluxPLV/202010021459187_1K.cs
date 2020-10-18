@@ -1,4 +1,4 @@
-﻿namespace _MPPL_WEB_START.Migrations.ElectroluxPLV
+﻿namespace _LABELINSP_APPWEB.Migrations.ElectroluxPLV
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -8,7 +8,21 @@
         public override void Up()
         {
             CreateTable(
-                "_LABELINSP.MASTERDATA_PackingLabel",
+                "LABELINSP.ItemData",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ItemCode = c.String(maxLength: 50),
+                        ItemVersion = c.String(maxLength: 50),
+                        ExpectedName = c.String(maxLength: 50),
+                        ExpectedProductCode = c.String(maxLength: 50),
+                        ExpectedWeightKG = c.String(maxLength: 50),
+                        ExpectedWeightLBS = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "LABELINSP.WorkorderLabel",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -21,7 +35,7 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "_LABELINSP.MASTERDATA_PackingLabelTest",
+                "LABELINSP.WorkorderLabelInspection",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -34,7 +48,7 @@
                         Result = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("_LABELINSP.MASTERDATA_PackingLabel", t => t.PackingLabelId)
+                .ForeignKey("LABELINSP.WorkorderLabel", t => t.PackingLabelId)
                 .Index(t => t.PackingLabelId);
             
             CreateTable(
@@ -160,6 +174,24 @@
                 .ForeignKey("_LABELINSP.IDENTITY_User", t => t.UserId)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "LABELINSP.Workorder",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        WorkorderNumber = c.String(maxLength: 50),
+                        ItemCode = c.String(maxLength: 50),
+                        Qty = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        SerialNumberFrom = c.String(maxLength: 50),
+                        SerialNumberTo = c.String(maxLength: 50),
+                        FirstInspectionDate = c.DateTime(nullable: false),
+                        LastInspectionDate = c.DateTime(nullable: false),
+                        SuccessfullInspections = c.Int(nullable: false),
+                        FailfullInspections = c.Int(nullable: false),
+                        FailInspectionLabelPath = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
@@ -171,7 +203,7 @@
             DropForeignKey("_LABELINSP.IDENTITY_User", "DepartmentId", "_LABELINSP.MASTERDATA_Department");
             DropForeignKey("_LABELINSP.IDENTITY_UserClaim", "UserId", "_LABELINSP.IDENTITY_User");
             DropForeignKey("_LABELINSP.IDENTITY_UserRole", "RoleId", "_LABELINSP.IDENTITY_Role");
-            DropForeignKey("_LABELINSP.MASTERDATA_PackingLabelTest", "PackingLabelId", "_LABELINSP.MASTERDATA_PackingLabel");
+            DropForeignKey("LABELINSP.WorkorderLabelInspection", "PackingLabelId", "LABELINSP.WorkorderLabel");
             DropIndex("_LABELINSP.IDENTITY_UserLogin", new[] { "UserId" });
             DropIndex("_LABELINSP.IDENTITY_UserClaim", new[] { "UserId" });
             DropIndex("_LABELINSP.IDENTITY_User", "UserNameIndex");
@@ -182,7 +214,8 @@
             DropIndex("_LABELINSP.IDENTITY_UserRole", new[] { "UserId" });
             DropIndex("_LABELINSP.IDENTITY_Role", "RoleNameIndex");
             DropIndex("CORE.Printer", new[] { "IpAdress" });
-            DropIndex("_LABELINSP.MASTERDATA_PackingLabelTest", new[] { "PackingLabelId" });
+            DropIndex("LABELINSP.WorkorderLabelInspection", new[] { "PackingLabelId" });
+            DropTable("LABELINSP.Workorder");
             DropTable("_LABELINSP.IDENTITY_UserLogin");
             DropTable("_LABELINSP.MASTERDATA_Department");
             DropTable("_LABELINSP.IDENTITY_UserClaim");
@@ -191,8 +224,9 @@
             DropTable("_LABELINSP.IDENTITY_UserRole");
             DropTable("_LABELINSP.IDENTITY_Role");
             DropTable("CORE.Printer");
-            DropTable("_LABELINSP.MASTERDATA_PackingLabelTest");
-            DropTable("_LABELINSP.MASTERDATA_PackingLabel");
+            DropTable("LABELINSP.WorkorderLabelInspection");
+            DropTable("LABELINSP.WorkorderLabel");
+            DropTable("LABELINSP.ItemData");
         }
     }
 }

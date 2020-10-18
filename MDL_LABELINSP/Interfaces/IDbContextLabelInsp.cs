@@ -11,17 +11,14 @@ namespace MDL_LABELINSP.Interfaces
     {
         //ID
         IDbSet<User> Users { get; set; }
-
         IDbSet<ApplicationRole> Roles { get; set; }
         IDbSet<UserRole> UserRoles { get; set; }
 
         //MasterData
-        DbSet<PackingLabelTest> PackingLabelTests { get; set; }
-
-        DbSet<PackingLabel> PackingLabels { get; set; }
-        DbSet<ExpectedValues> ExpectedValues { get; set; }
-        DbSet<Workorders> Workorders { get; set; }
-
+        DbSet<ItemData> ItemData { get; set; }
+        DbSet<Workorder> Workorders { get; set; }
+        DbSet<WorkorderLabel> WorkorderLabels { get; set; }
+        DbSet<WorkorderLabelInspection> WorkorderLabelInspections { get; set; }
 
         DbSet<SystemVariable> SystemVariables { get; set; }
         DbSet<Printer> Printers { get; set; }

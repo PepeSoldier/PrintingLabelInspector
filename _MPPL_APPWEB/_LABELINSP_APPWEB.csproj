@@ -15,8 +15,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>_MPPL_WEB_START</RootNamespace>
-    <AssemblyName>_MPPL_WEB_START</AssemblyName>
+    <RootNamespace>_LABELINSP_APPWEB</RootNamespace>
+    <AssemblyName>_LABELINSP_APPWEB</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -507,9 +507,29 @@
     <Compile Include="Migrations\DbContextAPP_Dev.cs" />
     <Compile Include="Migrations\DevK\Configuration.cs" />
     <Compile Include="Migrations\DevP\Configuration.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202009291930415_1K.cs" />
-    <Compile Include="Migrations\ElectroluxPLV\202009291930415_1K.designer.cs">
-      <DependentUpon>202009291930415_1K.cs</DependentUpon>
+    <Compile Include="Migrations\ElectroluxPLV\202010021459187_1K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010021459187_1K.designer.cs">
+      <DependentUpon>202010021459187_1K.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectroluxPLV\202010021603497_2K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010021603497_2K.designer.cs">
+      <DependentUpon>202010021603497_2K.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectroluxPLV\202010091128571_3K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010091128571_3K.designer.cs">
+      <DependentUpon>202010091128571_3K.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectroluxPLV\202010091215447_4K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010091215447_4K.designer.cs">
+      <DependentUpon>202010091215447_4K.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectroluxPLV\202010091230506_5K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010091230506_5K.designer.cs">
+      <DependentUpon>202010091230506_5K.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectroluxPLV\202010161349107_6K.cs" />
+    <Compile Include="Migrations\ElectroluxPLV\202010161349107_6K.designer.cs">
+      <DependentUpon>202010161349107_6K.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ElectroluxPLV\Configuration.cs" />
     <Compile Include="Areas\_APPWEB\Models\AreaRegistrationMPPL.cs" />
@@ -563,11 +583,11 @@
     </None>
     <Content Include="Areas\CORE\Views\NotificationDevice\NotificationDeviceGrid.js" />
     <Content Include="Areas\CORE\Views\Printer\PrinterGrid.js" />
-    <Content Include="Areas\LABELINSP\Views\Quality\JobLabelCheck.js" />
+    <Content Include="Areas\LABELINSP\Views\Quality\LabelInspector.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.js" />
     <Content Include="Areas\CORE\Views\Sign\Sign.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\Lockout.cshtml" />
-    <Content Include="Areas\LABELINSP\Views\Quality\PrintingLabelInspector.cshtml" />
+    <Content Include="Areas\LABELINSP\Views\Quality\LabelInspector.cshtml" />
     <Content Include="Areas\IDENTITY\Views\Account\RegisterOperator.cshtml" />
     <Content Include="Areas\CORE\Views\_ViewStart.cshtml" />
     <Content Include="Areas\CORE\Views\Shared\_Layout.cshtml" />
@@ -2852,8 +2872,23 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\ElectroluxPLV\202009291930415_1K.resx">
-      <DependentUpon>202009291930415_1K.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010021459187_1K.resx">
+      <DependentUpon>202010021459187_1K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010021603497_2K.resx">
+      <DependentUpon>202010021603497_2K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010091128571_3K.resx">
+      <DependentUpon>202010091128571_3K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010091215447_4K.resx">
+      <DependentUpon>202010091215447_4K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010091230506_5K.resx">
+      <DependentUpon>202010091230506_5K.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ElectroluxPLV\202010161349107_6K.resx">
+      <DependentUpon>202010161349107_6K.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\PackingLabel\202009291121101_1P.resx">
       <DependentUpon>202009291121101_1P.cs</DependentUpon>
@@ -2958,7 +2993,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49962</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49962/</IISUrl>
+          <IISUrl>http://localhost:49966/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

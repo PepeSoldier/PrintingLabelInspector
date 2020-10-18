@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using XLIB_COMMON.Interface;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY.ViewModels
+namespace _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

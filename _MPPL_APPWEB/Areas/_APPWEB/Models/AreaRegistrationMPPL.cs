@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Models
+namespace _LABELINSP_APPWEB.Models
 {
     public abstract class AreaRegistrationMPPL : AreaRegistration
     {
@@ -13,11 +13,11 @@ namespace _MPPL_WEB_START.Models
             string[] namespaces = new string[components.Length + 1];
             string[] viewLocatios = new string[components.Length];
 
-            namespaces[0] = "_MPPL_WEB_START.Areas." + AreaName + ".Controllers";
+            namespaces[0] = "_LABELINSP_APPWEB.Areas." + AreaName + ".Controllers";
 
             for (int i = 0; i < components.Length; i++)
             {
-                namespaces[i + 1] = "_MPPL_WEB_START.Areas." + AreaName + "." + components[i] + ".Controllers";
+                namespaces[i + 1] = "_LABELINSP_APPWEB.Areas." + AreaName + "." + components[i] + ".Controllers";
                 viewLocatios[i] = "~/Areas/" + AreaName + "/" + components[i] + "/Views/{1}/{0}.cshtml";
             }
 

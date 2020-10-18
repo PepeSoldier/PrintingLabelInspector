@@ -1,4 +1,4 @@
-﻿using _MPPL_WEB_START.Areas.IDENTITY.ViewModels;
+﻿using _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels;
 using MDL_BASE.Models.IDENTITY;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace _MPPL_WEB_START.Areas.Models
+namespace _LABELINSP_APPWEB.Areas.Models
 {
     public class IdApi
     {

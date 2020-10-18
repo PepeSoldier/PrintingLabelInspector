@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.CORE.Controllers
+namespace _LABELINSP_APPWEB.Areas.CORE.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,5 +1,5 @@
-﻿using _MPPL_WEB_START.App_Start;
-using _MPPL_WEB_START.Migrations;
+﻿using _LABELINSP_APPWEB.App_Start;
+using _LABELINSP_APPWEB.Migrations;
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.Mvc;
@@ -18,9 +18,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-[assembly: OwinStartupAttribute(typeof(_MPPL_WEB_START.Startup))]
+[assembly: OwinStartupAttribute(typeof(_LABELINSP_APPWEB.Startup))]
 
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     public partial class Startup
     {
@@ -53,8 +53,8 @@ namespace _MPPL_WEB_START
             app.UseAutofacMvc();
 
             ConfigureAuth(app);
-            JobScheduler.Start(clientName);
 
+            JobScheduler.Instance.Start(clientName);
             app.MapSignalR();
         }
     }

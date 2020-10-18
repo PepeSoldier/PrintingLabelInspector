@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY
+namespace _LABELINSP_APPWEB.Areas.IDENTITY
 {
     public class ExcludeFilterAttribute : FilterAttribute
     {

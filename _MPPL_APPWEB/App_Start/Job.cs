@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
+using _LABELINSP_APPWEB.Migrations;
 using Autofac;
 using Autofac.Integration.Mvc;
+using MDL_LABELINSP.Interfaces;
 using MDL_LABELINSP.Models;
 using Quartz;
 
-namespace _MPPL_WEB_START.App_Start
+namespace _LABELINSP_APPWEB.App_Start
 {
     public class JobEnergyMetersImport : IJob
     {
@@ -23,15 +25,23 @@ namespace _MPPL_WEB_START.App_Start
         }
     }
 
-    public class JobTcp2Web : IJob
+    public class JobTcp2Web : IStoppableJob
     {
+        private Tcp2Web tcp2Web;
+
         public Task Execute(IJobExecutionContext context)
+        {
+            Start();
+            return null;
+        }
+
+        public void Start()
         {
             List<string> tcpL = JsonSerializer.Deserialize<List<string>>(Properties.Settings.Default.TCPListeners);
 
-            Tcp2Web tcp2Web = new Tcp2Web("http://10.26.10.90:84", "/LABELINSP/Quality/TCPBarcodeReceived");
+            tcp2Web = new Tcp2Web("http://10.26.10.90:84", "/LABELINSP/Quality/TCPBarcodeReceived");
 
-            foreach(string tcp in tcpL)
+            foreach (string tcp in tcpL)
             {
                 if (tcp.Contains(":"))
                 {
@@ -41,19 +51,36 @@ namespace _MPPL_WEB_START.App_Start
                     tcp2Web.RegisterAndRunTCPListener(ip, port);
                 }
             }
+        }
 
-            return null;
+        public void Stop()
+        {
+            tcp2Web.Stop();
         }
     }
 
-    public class JobInspection : IJob
+    public class JobInspection : IStoppableJob
     {
+        LabelInspectionManager labelInspectionManager;
+
         public Task Execute(IJobExecutionContext context)
         {
-            LabelInspectionManager labelInspectionManager = new LabelInspectionManager();
-            labelInspectionManager.Start();
+           
 
             return null;
+        }
+
+        public void Start()
+        {
+            //IDbContextLabelInsp db = AutofacDependencyResolver.Current.ApplicationContainer.Resolve<IDbContextLabelInsp>();
+            IDbContextLabelInsp db = new DbContextAPP_ElectroluxPLV();
+            labelInspectionManager = new LabelInspectionManager(db);
+            labelInspectionManager.Start();
+        }
+
+        public void Stop()
+        {
+            labelInspectionManager.Stop();
         }
     }
 

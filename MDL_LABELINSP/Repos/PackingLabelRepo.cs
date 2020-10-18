@@ -1,32 +1,69 @@
 ﻿using MDL_LABELINSP.Entities;
 using MDL_LABELINSP.Interfaces;
+using System;
 using System.Linq;
+using XLIB_COMMON.Model;
 using XLIB_COMMON.Repo;
 
 namespace MDL_LABELINSP.Models.Repos
 {
-    public class PackingLabelRepo : RepoGenericAbstract<PackingLabel>
+    public class WorkorderLabelRepo : RepoGenericAbstract<WorkorderLabel>
     {
         protected new IDbContextLabelInsp db;
 
-        public PackingLabelRepo(IDbContextLabelInsp db) : base(db)
+        public WorkorderLabelRepo(IDbContextLabelInsp db) : base(db)
         {
             this.db = db;
         }
 
-        public override PackingLabel GetById(int id)
+        public override WorkorderLabel GetById(int id)
         {
-            return db.PackingLabels.FirstOrDefault(d => d.Id == id);
+            return db.WorkorderLabels.FirstOrDefault(d => d.Id == id);
         }
 
-        public override IQueryable<PackingLabel> GetList()
+        public override IQueryable<WorkorderLabel> GetList()
         {
-            return db.PackingLabels.OrderBy(x => x.Id);
+            return db.WorkorderLabels.OrderBy(x => x.Id);
         }
 
-        public PackingLabel GetBySerialNumber(string serialNumber)
+        public WorkorderLabel GetOrCreate(Workorder wo, string serialNumber)
         {
-            return db.PackingLabels.Where(x => x.SerialNumber == serialNumber).FirstOrDefault();
+            WorkorderLabel workorderLabel = null;
+
+            try
+            {
+                workorderLabel = db.WorkorderLabels.FirstOrDefault(x => x.SerialNumber == serialNumber);
+
+                if (workorderLabel == null)
+                {
+                    workorderLabel = new WorkorderLabel()
+                    {
+                        Id = 0,
+                        SerialNumber = serialNumber,
+                        Workorder = wo,
+                        WorkorderId = wo.Id,
+                        TimeStamp = DateTime.Now
+                    };
+                    Add(workorderLabel);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("WorkorderLabelRepo.Create problem. Model: "
+                    + workorderLabel.Id + ", "
+                    + workorderLabel.SerialNumber + ", "
+                    + wo?.WorkorderNumber ?? "1600000000" + ", "
+                    + workorderLabel.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss")
+                );
+                //Logger2FileSingleton.Instance.SaveLog("ItemData: " + itemData.ExpectedName + ", " + itemData.ExpectedProductCode);
+            }
+
+            return workorderLabel;
+        }
+
+        public WorkorderLabel GetBySerialNumber(string serialNumber)
+        {
+            return db.WorkorderLabels.Where(x => x.SerialNumber == serialNumber).FirstOrDefault();
         }
     }
 }

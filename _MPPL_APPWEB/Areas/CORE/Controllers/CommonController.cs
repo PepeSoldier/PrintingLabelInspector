@@ -2,7 +2,7 @@
 using MDLX_CORE.ComponentCore.UnitOfWorks;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.CORE.Controllers
+namespace _LABELINSP_APPWEB.Areas.CORE.Controllers
 {
     public class CommonController : Controller
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY.ViewModels
+namespace _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels
 {
     public class EditViewModel
     {

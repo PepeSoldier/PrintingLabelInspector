@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Skin = "nasaSkin";
+    ViewBag.Title = "PrintingLabelInspector";
+    int port = ViewBag.Port;
+}
+
+<style>
+    .logo {
+        height: 80px !important;
+        width: 280px !important;
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-left: 1px;
+    }
+
+    .header {
+        margin-top: 2px; 
+        height: 66px;
+    }
+
+    .headerDownLine {
+        height: 2px;
+        background-color: #00ffab3b;
+        margin-top: 4px;
+    }
+
+    .digitalClock {
+        font-family: 'DigitalClock';
+        font-size: 80px;
+        padding: 0;
+        margin-top: -30px;
+        color: #c4ffeca8; 
+    }
+    .title {
+        color: rgb(20, 44, 53);
+        text-align: center;
+        background-color: #f7d400;
+        font-size: 38px;
+        font-weight: bold;
+        height: 48px;
+        margin-bottom: 8px;
+    }
+
+    .card-body {
+        background-color: cadetblue;
+        padding: 5px;
+    }
+
+    .labelImg{
+        background-color: white;
+    }
+    .labelImg img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .bigPhoto {
+        width: 800px;
+        min-width: 800px;
+        height: 968px;
+    }
+    .photoSize {
+        height: 320px;
+        max-width: 265px;
+    }
+
+    .backgroundGhost {
+        background-color: #19323cab !important;
+    }
+
+
+    .testResultHeader {
+        color: aquamarine;
+        background-color: #274b58;
+        margin-bottom: 2px !important;
+
+    }
+
+    .card {
+        border-radius: 0;
+        background-color: #19323cab;
+    }
+    .card-body{
+        background-color: #19323cab;
+    }
+    .cardInspectionHeader{
+        height: 264px;
+        background-color: transparent !important;
+        border: 0 !important;
+    }
+        .cardInspectionHeader .bg5 {
+            padding: 0px 4px;
+            min-height: 63px;
+        }
+    .barcodeDescription {
+        font-size: 28px;
+        color: #63c6e6;
+    }
+    .barcodeDescription .bg5{
+        padding: 9px 4px;
+    }
+    .barcodeDetails {
+        font-size: 40px;
+        font-weight: bold;
+    }
+    
+    .cardInspectionResults {
+        background-color: #19323cab;
+        height: 645px;
+    }
+    .box{
+        padding: 2px !important;
+    }
+    .bg5{
+        padding: 10px 4px;
+        background-color: #233c46;
+        min-height: 44px;
+    }
+    .backgroundGhost .bg5 {
+        background-color: #233c46 !important;
+    }
+
+    .testResultBox .bg5 {
+        padding: 0px 4px;
+        font-size: 29px;
+    }
+
+    .testResultBox {
+        text-align: center;
+        border-radius: 0px;
+    }
+
+    .testResultFalse .bg5 {
+        background-color: #f13f3fe8 !important;
+    }
+    .testResultPositive .bg5 {
+        background-color: #10ad5e !important;
+    }
+    .testResultUnknown .bg5 {
+        background-color: #19323cab !important;
+    }
+
+    .labelType {
+        border: 1px solid white;
+    }
+</style>
+
+<div class="row no-gutters header" >
+    <div class="col-2 h-100">
+        <div class="logoMD logo clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectroluxPLV_white.png")) !important"></div>
+    </div>
+    <div class="col-4 digitalClock text-center">
+        <div class="headerMid" id="clockHeaderMid"></div>
+    </div>
+    <div class="col-2 offset-4 headerLeft" style="text-align: right;padding-right: 15px;font-size: 36px;">
+        @ViewBag.Port
+    </div>
+</div>
+<div class="row headerDownLine">
+
+</div>
+<div id="contenView">
+    
+</div>
+
+<script id="WorkorderLabelTemplate" type="x-tmpl-mustache">
+    <div class="row no-gutters mt-3">
+        <div class="col-12" style=" align-items: flex-start;">
+            <div class="row no-gutters">
+                <div class="col-7">
+                    <div class="row no-gutters">
+                        <div class="col-9 labelImg bigPhoto {{^isChecking}}backgroundGhost {{/isChecking}}" id="frontPhoto"></div>
+                        <div class="col-3">
+                            <div class="row no-gutters pl-1 pr-1">
+                                <div class="col-12 labelImg photoSize {{^isChecking}}backgroundGhost {{/isChecking}}" id="image_F"></div>
+                            </div>
+                            <div class="row no-gutters pl-1 pt-1 ">
+                                <div class="col-12 labelImg photoSize {{^isChecking}}backgroundGhost {{/isChecking}}" id="image_S"></div>
+                            </div>
+                            <div class="row no-gutters p-1">
+                                <div class="col-12 labelImg photoSize {{^isChecking}}backgroundGhost {{/isChecking}}" id="image_R"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h2 class="title">SYSTEM WERYFIKACJI ETYKIET IKEA</h2>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="card cardInspectionHeader">
+                                <div class="card-body" style="padding: 0; margin: -2px; background-color: transparent;">
+                                    <div class="row no-gutters mb-0">
+                                        <div class="col-3 barcodeDescription box"><div class="bg5">Barcode:</div></div>
+                                        <div class="col-9 barcodeDetails box"><div class="bg5">{{Barcode}}</div></div>
+                                    </div>
+                                    <div class="form-group row no-gutters mb-0">
+                                        <div class="col-3 barcodeDescription box"><div class="bg5">Zamówienie:</div></div>
+                                        <div class="col-9 barcodeDetails box"><div class="bg5">{{WorkorderNo}}</div></div>
+                                    </div>
+                                    <div class="form-group row no-gutters mb-0">
+                                        <div class="col-3 barcodeDescription box"><div class="bg5">Pnc:</div></div>
+                                        <div class="col-9 barcodeDetails box"><div class="bg5">{{ItemCode}}</div></div>
+                                    </div>
+                                    <div class="form-group row no-gutters mb-0">
+                                        <div class="col-3 barcodeDescription box"><div class="bg5">Nazwa:</div></div>
+                                        <div class="col-9 barcodeDetails box"><div class="bg5">{{ItemName}}</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-1" id="testView" style="border:0;">
+                                <div class="card-body cardInspectionResults" style="padding: 0;">
+                                    <div class="form-group row no-gutters testResultHeader">
+                                        <div class="col-3 col-form-label font-weight-bold pl-2">NAZWA TESTU</div>
+                                        <div class="col-3 col-form-label font-weight-bold">WARTOŚĆ OCZEKIW.</div>
+                                        <div class="col-2 col-form-label font-weight-bold text-center">FRONT</div>
+                                        <div class="col-2 col-form-label font-weight-bold text-center">SIDE</div>
+                                        <div class="col-2 col-form-label font-weight-bold text-center">REAR</div>
+                                    </div>
+                                    {{#Inspection}}
+                                    <div class="form-group row no-gutters mb-0">
+                                        <div class="col-3 col-form-label box"><div class="bg5">{{TestName}}</div></div>
+                                        <div class="col-3 col-form-label box"><div class="bg5">{{ExpectedValue}}</div></div>
+                                        <div class="col-2 col-form-label box {{ResultClass_F}} {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox"><div class="bg5">{{{ActualValueIcon_F}}}</div></div>
+                                        <div class="col-2 col-form-label box {{ResultClass_S}} {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox"><div class="bg5">{{{ActualValueIcon_S}}}</div></div>
+                                        <div class="col-2 col-form-label box {{ResultClass_R}} {{^isChecking}}backgroundGhost{{/isChecking}} testResultBox"><div class="bg5">{{{ActualValueIcon_R}}}</div></div>
+                                    </div>
+                                    {{/Inspection}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+<script src="~/signalR/hubs"></script>
+
+<script type="text/javascript">
+     var _port = @Html.Raw(Json.Encode(port));
+    if (labelInspector != null) { console.log("Preparing to stop clock"); LabelInspector.StopClock(); }
+    var labelInspector = new LabelInspector(false);
+
+    $(document).ready(function () {
+        openFullscreen();
+        labelInspector.StartClock();
+        labelInspector.Init();
+
+        signalR = $.connection.labelInspectorHub;
+        signalR.client.broadcastMessage = function (barcode) {
+            console.log(barcode);
+            if (barcode == "reset") {
+                $("#barcode").text(barcode);
+                location.reload(true);
+            }
+            else if (barcode != "99999999999999999999") {
+                $("#barcode").text(barcode);
+                if (barcode.length > 10){
+                    let serialNumberIndexStart = barcode.length - 8;
+                    let serialNumberIndexEnd = serialNumberIndexStart + 8;
+                    let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
+
+                    labelInspector.LoadDataBySerialNumber(serialNumer, barcode);
+                }
+                else {
+                    labelInspector.Init();
+                    console.log("zbyt krótki barkod");
+                }
+            }
+        };
+        $.connection.hub.start().done(function () {
+            console.log("Hub is started.");
+            signalR.server.joinWorkstation(_port);
+        });
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, 5000); // Restart connection after 5 seconds.
+        });
+    });
+</script>
+

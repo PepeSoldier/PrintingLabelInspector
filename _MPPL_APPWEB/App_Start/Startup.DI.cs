@@ -1,5 +1,5 @@
 ﻿
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     //public partial class Startup
     //{

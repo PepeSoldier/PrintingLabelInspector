@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     public class RouteConfig
     {
@@ -19,7 +19,7 @@ namespace _MPPL_WEB_START
                 "Default",
                 "{controller}/{action}/{id}",
                 new { area = "", controller = "Home", action = "Index", id = UrlParameter.Optional }
-                , new[] { "_MPPL_WEB_START.Areas._APPWEB.Controllers" }
+                , new[] { "_LABELINSP_APPWEB.Areas._APPWEB.Controllers" }
             );
 
             //routes.MapRoute(

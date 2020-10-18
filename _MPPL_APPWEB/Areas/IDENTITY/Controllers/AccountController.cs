@@ -11,16 +11,16 @@ using MDL_BASE.Models.IDENTITY;
 using XLIB_COMMON.Repo.IDENTITY;
 using MDL_BASE.ViewModel;
 using XLIB_COMMON.Model;
-using _MPPL_WEB_START.App_Start;
+using _LABELINSP_APPWEB.App_Start;
 using MDL_BASE.Models.MasterData;
 using MDL_BASE.Interfaces;
 using XLIB_COMMON.Interface;
-using _MPPL_WEB_START.Areas.IDENTITY.ViewModels;
+using _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels;
 using MDLX_MASTERDATA.Repos;
 using Microsoft.Owin.Security.DataProtection;
 using System;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY.Controllers
+namespace _LABELINSP_APPWEB.Areas.IDENTITY.Controllers
 {
     [Authorize]
     public class AccountController : Controller

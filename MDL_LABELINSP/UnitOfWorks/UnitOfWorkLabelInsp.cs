@@ -1,8 +1,9 @@
-﻿using MDL_LABELINSP.Interfaces;
+﻿using MDL_LABELINSP.Entities;
+using MDL_LABELINSP.Interfaces;
 using MDL_LABELINSP.Models.Repos;
 using MDL_ONEPROD.Repo;
 
-namespace MDL_LABELINSP.UnitOfWorkLabelInsp
+namespace MDL_LABELINSP.UnitOfWorks
 {
     public class UnitOfWorkLabelInsp : UnitOfWorkMasterData
     {
@@ -13,24 +14,41 @@ namespace MDL_LABELINSP.UnitOfWorkLabelInsp
             this.db = db;
         }
 
-        private PackingLabelRepo packingLabelRepo;
-        private PackingLabelTestRepo packingLabelTestRepo;
+        private WorkorderRepo workorderRepo;
+        private WorkorderLabelRepo workorderLabelRepo;
+        private WorkorderLabelInspectionRepo workorderLabelInspectionRepo;
+        private ItemDataRepo itemDataRepo;
 
-        public PackingLabelTestRepo PackingLabelTestRepo
+        public WorkorderRepo WorkorderRepo
         {
             get
             {
-                packingLabelTestRepo = (packingLabelTestRepo != null) ? packingLabelTestRepo : new PackingLabelTestRepo(db);
-                return packingLabelTestRepo;
+                workorderRepo = (workorderRepo != null) ? workorderRepo : new WorkorderRepo(db);
+                return workorderRepo;
             }
         }
-
-        public PackingLabelRepo PackingLabelRepo
+        public WorkorderLabelRepo WorkorderLabelRepo
         {
             get
             {
-                packingLabelRepo = (packingLabelRepo != null) ? packingLabelRepo : new PackingLabelRepo(db);
-                return packingLabelRepo;
+                workorderLabelRepo = (workorderLabelRepo != null) ? workorderLabelRepo : new WorkorderLabelRepo(db);
+                return workorderLabelRepo;
+            }
+        }
+        public WorkorderLabelInspectionRepo WorkorderLabelInspectionRepo
+        {
+            get
+            {
+                workorderLabelInspectionRepo = (workorderLabelInspectionRepo != null) ? workorderLabelInspectionRepo : new WorkorderLabelInspectionRepo(db);
+                return workorderLabelInspectionRepo;
+            }
+        }
+        public ItemDataRepo ItemDataRepo
+        {
+            get
+            {
+                itemDataRepo = (itemDataRepo != null) ? itemDataRepo : new ItemDataRepo(db);
+                return itemDataRepo;
             }
         }
     }

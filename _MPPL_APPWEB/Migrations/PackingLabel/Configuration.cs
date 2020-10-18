@@ -1,15 +1,15 @@
-namespace _MPPL_WEB_START.Migrations.PackingLabel
+namespace _LABELINSP_APPWEB.Migrations.PackingLabel
 {
-    using _MPPL_WEB_START.Migrations;
+    using _LABELINSP_APPWEB.Migrations;
     using MDL_BASE.Models.IDENTITY;
     using System.Data.Entity.Migrations;
     using XLIB_COMMON.Repo.IDENTITY;
 
     internal sealed class Configuration : DbMigrationsConfiguration<DbContextAPP_PackingLabel>
     {
-        //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_PackingLabel -MigrationsDirectory:Migrations.PackingLabel
-        //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.PackingLabel.Configuration 1K
-        //Update-Database -ConfigurationTypeName _MPPL_WEB_START.Migrations.PackingLabel.Configuration
+        //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_PackingLabel -MigrationsDirectory:Migrations.PackingLabel
+        //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.PackingLabel.Configuration 1K
+        //Update-Database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.PackingLabel.Configuration
 
         public Configuration()
         {

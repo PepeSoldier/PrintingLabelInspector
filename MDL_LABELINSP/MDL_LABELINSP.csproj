@@ -95,33 +95,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="zxing, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing.presentation, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.presentation.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\PackingLabel.cs" />
-    <Compile Include="Entities\ExpectedValues.cs" />
-    <Compile Include="Entities\Workorders.cs" />
-    <Compile Include="Entities\PackingLabelTest.cs" />
+    <Compile Include="Entities\WorkorderLabel.cs" />
+    <Compile Include="Entities\ItemData.cs" />
+    <Compile Include="Entities\Workorder.cs" />
+    <Compile Include="Entities\WorkorderLabelInspection.cs" />
     <Compile Include="Enums\EnumLabelType.cs" />
     <Compile Include="Interfaces\IDbContextLabelInsp.cs" />
-    <Compile Include="Models\JobLabelCheckHub.cs" />
+    <Compile Include="Models\LabelInspectorHub.cs" />
     <Compile Include="Models\LabelInspectionManager.cs" />
     <Compile Include="Models\LabelsDownloader.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="Models\MyAlgorithms.cs" />
     <Compile Include="Models\Tcp2Web.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\WorkordersRepo.cs" />
+    <Compile Include="Repos\WorkorderRepo.cs" />
     <Compile Include="Repos\ExpectedValuesRepo.cs" />
     <Compile Include="Repos\PackingLabelRepo.cs" />
     <Compile Include="Repos\PackingLabelTestRepo.cs" />
     <Compile Include="UnitOfWorks\UnitOfWorkLabelInsp.cs" />
-    <Compile Include="ViewModel\PackingLabelViewModel.cs" />
+    <Compile Include="ViewModel\LabelinspViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\" />
@@ -131,6 +125,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Documents\Visual Studio 2019\Projects\ZXing.Net-master\Source\lib\zxing.net4.8.csproj">
+      <Project>{d3751126-7345-4459-994d-8e3a8b5a1b1e}</Project>
+      <Name>zxing.net4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MDLX_CORE\MDLX_CORE.csproj">
       <Project>{7759B657-A830-4EE1-8412-97971B2441A2}</Project>
       <Name>MDLX_CORE</Name>

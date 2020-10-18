@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.Controllers
+namespace _LABELINSP_APPWEB.Areas._APPWEB.Controllers
 {
     //RequireHttps]
     public class BaseController : Controller

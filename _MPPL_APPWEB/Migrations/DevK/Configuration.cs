@@ -1,4 +1,4 @@
-namespace _MPPL_WEB_START.Migrations.DevK
+namespace _LABELINSP_APPWEB.Migrations.DevK
 {
     using System;
     using System.Data.Entity;
@@ -12,9 +12,9 @@ namespace _MPPL_WEB_START.Migrations.DevK
             AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"Migrations\DevK";
 
-            //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_DevK -MigrationsDirectory:Migrations\DevK
-            //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration 1K
-            //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration
+            //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_DevK -MigrationsDirectory:Migrations\DevK
+            //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration 1K
+            //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration
         }
 
         protected override void Seed(DbContextAPP_DevK context)
@@ -29,8 +29,8 @@ namespace _MPPL_WEB_START.Migrations.DevK
     //    {
     //    }
 
-    //    //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_Dev -MigrationsDirectory:Migrations\DevK
-    //    //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration 1K
-    //    //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration
+    //    //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_Dev -MigrationsDirectory:Migrations\DevK
+    //    //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration 1K
+    //    //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration
     //}
 }

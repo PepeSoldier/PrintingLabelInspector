@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
 
-namespace _MPPL_WEB_START.Migrations
+namespace _LABELINSP_APPWEB.Migrations
 {
-    //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.ElectroluxPLV.Configuration 1K
-    //Update-Database -ConfigurationTypeName _MPPL_WEB_START.Migrations.ElectroluxPLV.Configuration
+    //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.ElectroluxPLV.Configuration 1K
+    //Update-Database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.ElectroluxPLV.Configuration
 
     public class DbContextAPP_ElectroluxPLV : DbContextAPP_
     {
@@ -24,7 +24,7 @@ namespace _MPPL_WEB_START.Migrations
 
         public static string GetConnectionName()
         {
-            string clientName = _MPPL_WEB_START.Properties.Settings.Default.Client;
+            string clientName = _LABELINSP_APPWEB.Properties.Settings.Default.Client;
             return clientName + "Connection";
         }
         public static new DbContextAPP_ElectroluxPLV Create()

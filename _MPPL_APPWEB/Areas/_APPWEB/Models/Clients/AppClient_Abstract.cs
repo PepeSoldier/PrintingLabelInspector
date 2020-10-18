@@ -1,10 +1,10 @@
-﻿using _MPPL_WEB_START.Areas._APPWEB.Models.Settings;
+﻿using _LABELINSP_APPWEB.Areas._APPWEB.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.Models.Clients
+namespace _LABELINSP_APPWEB.Areas._APPWEB.Models.Clients
 {
     public abstract class AppClientApbstract
     {

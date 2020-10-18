@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.App_Start
+namespace _LABELINSP_APPWEB.App_Start
 {
     //public class Logger2FileSingleton : Logger2File
     //{
-    //    static string LogFilePath = _MPPL_WEB_START.Properties.Settings.Default.LogFilePath;
+    //    static string LogFilePath = _LABELINSP_APPWEB.Properties.Settings.Default.LogFilePath;
 
     //    private Logger2FileSingleton() : base("log_mppl", LogFilePath, AppDomain.CurrentDomain.BaseDirectory)
     //    {

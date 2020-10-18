@@ -1,4 +1,4 @@
-﻿namespace _MPPL_WEB_START.Migrations.PackingLabel
+﻿namespace _LABELINSP_APPWEB.Migrations.PackingLabel
 {
     using System;
     using System.Data.Entity.Migrations;

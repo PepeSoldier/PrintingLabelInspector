@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY
+namespace _LABELINSP_APPWEB.Areas.IDENTITY
 {
     public class CustomPasswordValidator : PasswordValidator
     {

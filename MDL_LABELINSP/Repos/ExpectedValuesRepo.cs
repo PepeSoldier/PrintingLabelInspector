@@ -5,23 +5,34 @@ using XLIB_COMMON.Repo;
 
 namespace MDL_LABELINSP.Models.Repos
 {
-    public class ExpectedValuesRepo : RepoGenericAbstract<ExpectedValues>
+    public class ItemDataRepo : RepoGenericAbstract<ItemData>
     {
         protected new IDbContextLabelInsp db;
 
-        public ExpectedValuesRepo(IDbContextLabelInsp db) : base(db)
+        public ItemDataRepo(IDbContextLabelInsp db) : base(db)
         {
             this.db = db;
         }
 
-        public override ExpectedValues GetById(int id)
+        public override ItemData GetById(int id)
         {
-            return db.ExpectedValues.FirstOrDefault(d => d.Id == id);
+            return db.ItemData.FirstOrDefault(d => d.Id == id);
         }
 
-        public override IQueryable<ExpectedValues> GetList()
+        public ItemData GetByItemCodeAndVersion(string ItemCode, string ItemVersion)
         {
-            return db.ExpectedValues.OrderBy(x => x.Id);
+            var itemData = db.ItemData.FirstOrDefault(d => 
+                (ItemCode == null || ItemCode == d.ItemCode) &&
+                (ItemVersion == null || ItemVersion == d.ItemVersion)
+            );
+
+            //itemData.ExpectedProductCode = itemData.ExpectedProductCode.Replace(".", "");
+            return itemData;
+        }
+
+        public override IQueryable<ItemData> GetList()
+        {
+            return db.ItemData.OrderBy(x => x.Id);
         }
 
     }

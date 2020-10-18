@@ -4,7 +4,7 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (_MPPL_WEB_START.Properties.Settings.Default.Client == "Eldisy")
+            if (_LABELINSP_APPWEB.Properties.Settings.Default.Client == "Eldisy")
             {
                 @*<li>
                     <a href='@Url.Action("Edit", "Account", new { area = "IDENTITY", id = User.Identity.GetUserId() })'

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.Areas.CORE.Controllers
+namespace _LABELINSP_APPWEB.Areas.CORE.Controllers
 {
     public class SignController : Controller
     {

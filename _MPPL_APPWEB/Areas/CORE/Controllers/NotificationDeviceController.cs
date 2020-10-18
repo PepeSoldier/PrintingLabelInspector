@@ -14,12 +14,12 @@ using XLIB_COMMON.Repo.IDENTITY;
 using MDL_CORE.ViewModels;
 using MDLX_CORE.Mappers;
 using MDL_CORE.ComponentCore.Models;
-using _MPPL_WEB_START.Areas._APPWEB.ViewModels;
+using _LABELINSP_APPWEB.Areas._APPWEB.ViewModels;
 using System.Threading.Tasks;
 
 
 
-namespace _MPPL_WEB_START.Areas.CORE.Controllers
+namespace _LABELINSP_APPWEB.Areas.CORE.Controllers
 {
     [Authorize]
     public class NotificationDeviceController : Controller

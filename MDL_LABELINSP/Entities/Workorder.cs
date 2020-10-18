@@ -5,20 +5,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MDL_LABELINSP.Entities
 {
-    [Table("LABELINSP_Workorders")]
-    public class Workorders : IModelEntity
+    [Table("Workorder", Schema = "LABELINSP")]
+    public class Workorder : IModelEntity
     {
         public int Id { get; set; }
         [MaxLength(50)]
         public string WorkorderNumber { get; set; }
         [MaxLength(50)]
         public string ItemCode { get; set; }
+        [MaxLength(50)]
+        public string ItemName { get; set; }
 
         public decimal Qty { get; set; }
         [MaxLength(50)]
-        public string SerialNumberFrom { get; set; }
+        public string SerialNumberFrom{ get; set; }
         [MaxLength(50)]
         public string SerialNumberTo { get; set; }
+
+        public int SerialNumberFromInt { get; set; }
+        public int SerialNumberToInt { get; set; }
 
         public DateTime FirstInspectionDate { get; set; }
 

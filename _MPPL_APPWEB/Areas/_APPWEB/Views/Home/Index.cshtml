@@ -1,9 +1,9 @@
-@using _MPPL_WEB_START.Areas._APPWEB.Models;
-@using _MPPL_WEB_START.Areas._APPWEB.Models.Clients;
+@using _LABELINSP_APPWEB.Areas._APPWEB.Models;
+@using _LABELINSP_APPWEB.Areas._APPWEB.Models.Clients;
 @{
     ViewBag.Title = "Home Page";
-    //string clientName = _MPPL_WEB_START.Properties.Settings.Default.Client;
-    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+    //string clientName = _LABELINSP_APPWEB.Properties.Settings.Default.Client;
+    ViewBag.ClientName = (_LABELINSP_APPWEB.Properties.Settings.Default.Client).Replace("_Staging", "");
     AppClientApbstract appClient = AppClient.GetClient(ViewBag.ClientName);
 }
 

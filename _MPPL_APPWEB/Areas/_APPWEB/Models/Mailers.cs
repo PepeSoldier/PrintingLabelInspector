@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.Models
+namespace _LABELINSP_APPWEB.Models
 {
     
     public class MailerSettingsLoader

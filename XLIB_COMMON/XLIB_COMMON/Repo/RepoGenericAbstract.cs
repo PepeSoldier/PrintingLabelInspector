@@ -10,6 +10,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using XLIB_COMMON.Interface;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Core;
+using XLIB_COMMON.Model;
+using System.Data.Entity.Validation;
 
 namespace XLIB_COMMON.Repo
 {
@@ -73,9 +76,10 @@ namespace XLIB_COMMON.Repo
                     db.SetEntryState_Added(entity);
                     db.SaveChanges();
                 }
-                catch (Exception e)
+                catch (DbEntityValidationException e)
                 {
                     db.SetEntryState_Detached(entity);
+                    SaveExceptionToLogFile(e);
                     throw e;
                 }
                 return entity.Id;
@@ -129,12 +133,13 @@ namespace XLIB_COMMON.Repo
                     db.SaveChanges();
                     db.Configuration.AutoDetectChangesEnabled = true;
                 }
-                catch (Exception e)
+                catch (DbEntityValidationException e)
                 {
-                    //dbSet.RemoveRange(entities);
                     db.Configuration.AutoDetectChangesEnabled = true;
+                    SaveExceptionToLogFile(e);
                     throw e;
                 }
+                
                 return true;
             }
         }
@@ -149,9 +154,10 @@ namespace XLIB_COMMON.Repo
                         db.SetEntryState_Modified(entity);
                         db.SaveChanges();
                     }
-                    catch (Exception e)
+                    catch (DbEntityValidationException e)
                     {
                         db.SetEntryState_Detached(entity);
+                        SaveExceptionToLogFile(e);
                         throw e;
                     }
                     return entity.Id;
@@ -159,6 +165,17 @@ namespace XLIB_COMMON.Repo
                 return 0;
             }
         }
+
+        private static void SaveExceptionToLogFile(DbEntityValidationException e)
+        {
+            StringBuilder sb = new StringBuilder();
+            e.EntityValidationErrors.SelectMany(error => error.ValidationErrors).ToList()
+                .ForEach(item =>
+                    sb.Append(string.Format("{0} - {1}", item.PropertyName, item.ErrorMessage))
+                );
+            Logger2FileSingleton.Instance.SaveLog("Repo: " + sb.ToString());
+        }
+
         public virtual int AddOrUpdate(IModelEntity entity)
         {
             if (entity.Id > 0)

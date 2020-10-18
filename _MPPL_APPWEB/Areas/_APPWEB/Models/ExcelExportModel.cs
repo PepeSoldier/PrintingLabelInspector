@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.Models
+namespace _LABELINSP_APPWEB.Areas._APPWEB.Models
 {
     public static class ExcelExportModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.Areas._APPWEB
+namespace _LABELINSP_APPWEB.Areas._APPWEB
 {
     //public class _APPWEBAreaRegistration : AreaRegistration 
     //{
@@ -18,7 +18,7 @@ namespace _MPPL_WEB_START.Areas._APPWEB
     //        "_APPWEB_default",
     //            "APP/{controller}/{action}/{id}",
     //            new { controller = "AppHome", action = "Index", id = UrlParameter.Optional },
-    //            namespaces: new[] { "_MPPL_WEB_START.Areas._APPWEB.Controllers" }
+    //            namespaces: new[] { "_LABELINSP_APPWEB.Areas._APPWEB.Controllers" }
     //        );
     //    }
     //}

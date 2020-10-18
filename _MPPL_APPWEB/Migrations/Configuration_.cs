@@ -1,6 +1,6 @@
 ﻿using MDLX_MASTERDATA.Enums;
 
-namespace _MPPL_WEB_START.Migrations
+namespace _LABELINSP_APPWEB.Migrations
 {
     using MDL_BASE.ComponentBase.Entities;
     using MDL_BASE.ComponentBase.Repos;

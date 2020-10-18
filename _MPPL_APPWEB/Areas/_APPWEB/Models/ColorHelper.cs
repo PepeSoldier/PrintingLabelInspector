@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.Models
+namespace _LABELINSP_APPWEB.Areas._APPWEB.Models
 {
     public static class ColorHelper
     {

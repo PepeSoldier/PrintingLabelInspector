@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace _MPPL_WEB_START.Models
+namespace _LABELINSP_APPWEB.Models
 {
     public static class LicenceManager
     {

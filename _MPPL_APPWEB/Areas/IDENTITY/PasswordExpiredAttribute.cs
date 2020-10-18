@@ -1,4 +1,4 @@
-﻿using _MPPL_WEB_START.App_Start;
+﻿using _LABELINSP_APPWEB.App_Start;
 using Autofac;
 using Autofac.Integration.Mvc;
 using MDL_BASE.Interfaces;
@@ -11,7 +11,7 @@ using System.Security.Principal;
 using System.Web.Mvc;
 using XLIB_COMMON.Repo.IDENTITY;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY
+namespace _LABELINSP_APPWEB.Areas.IDENTITY
 {
     public class PasswordExpiredAttribute : System.Web.Mvc.AuthorizeAttribute
     {

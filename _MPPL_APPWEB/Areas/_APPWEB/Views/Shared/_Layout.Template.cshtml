@@ -39,7 +39,7 @@
         wrapperClass = "active-right";
     }
     string skin = (ViewBag.Skin != null) ? ViewBag.Skin : "defaultSkin";
-    ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", "");
+    ViewBag.ClientName = (_LABELINSP_APPWEB.Properties.Settings.Default.Client).Replace("_Staging", "");
 }
 
 <body class="@skin @ViewBag.ClientName @ViewBag.BodyClass">

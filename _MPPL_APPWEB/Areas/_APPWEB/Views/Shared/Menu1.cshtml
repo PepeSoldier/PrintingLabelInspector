@@ -1,6 +1,6 @@
 ﻿@*@helper Menu1(List<MDL_BASE.Models.MenuItem> MenuItems)
 {
-    @foreach (MDL_BASE.Models.MenuItem menuItem in _MPPL_WEB_START.Areas._APPWEB.Models.Menu.MenuItems)
+    @foreach (MDL_BASE.Models.MenuItem menuItem in _LABELINSP_APPWEB.Areas._APPWEB.Models.Menu.MenuItems)
     {
         <li class="menuLi">
             <a href='@Url.Action(menuItem.HrefAction, menuItem.HrefController, new { area = menuItem.HrefArea })'>

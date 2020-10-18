@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace MDL_LABELINSP.Models
 {
-    [Microsoft.AspNet.SignalR.Hubs.HubName("jobLabelCheckHub")]
-    public class JobLabelCheckHub : Hub
+    [Microsoft.AspNet.SignalR.Hubs.HubName("labelInspectorHub")]
+    public class LabelInspectorHub : Hub
     {
         public async Task SendBarcode(string barcode)
         {

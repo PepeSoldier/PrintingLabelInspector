@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     public class BundleConfig
     {

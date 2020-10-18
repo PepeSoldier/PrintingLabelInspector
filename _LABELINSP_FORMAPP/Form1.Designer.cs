@@ -65,6 +65,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.btnBarcodeSmall = new System.Windows.Forms.Button();
+            this.btnWeightBig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbSourceImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPrcessedImageStep1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -419,11 +420,22 @@
             this.btnBarcodeSmall.UseVisualStyleBackColor = true;
             this.btnBarcodeSmall.Click += new System.EventHandler(this.btnBarcodeSmall_Click);
             // 
+            // btnWeightBig
+            // 
+            this.btnWeightBig.Location = new System.Drawing.Point(1223, 13);
+            this.btnWeightBig.Name = "btnWeightBig";
+            this.btnWeightBig.Size = new System.Drawing.Size(75, 23);
+            this.btnWeightBig.TabIndex = 38;
+            this.btnWeightBig.Text = "WeightBig";
+            this.btnWeightBig.UseVisualStyleBackColor = true;
+            this.btnWeightBig.Click += new System.EventHandler(this.btnWeightBig_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1534, 1048);
+            this.Controls.Add(this.btnWeightBig);
             this.Controls.Add(this.btnBarcodeSmall);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -520,6 +532,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnBarcodeSmall;
+        private System.Windows.Forms.Button btnWeightBig;
     }
 }
 

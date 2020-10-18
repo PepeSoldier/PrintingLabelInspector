@@ -14,12 +14,12 @@ using MDL_BASE.Models;
 using MDL_BASE.Models.IDENTITY;
 using MDL_BASE.Interfaces;
 using XLIB_COMMON.Repo.IDENTITY;
-using _MPPL_WEB_START.Migrations;
+using _LABELINSP_APPWEB.Migrations;
 using System.Web.Mvc;
 using Microsoft.Owin.Security.DataProtection;
-using _MPPL_WEB_START.Areas.IDENTITY;
+using _LABELINSP_APPWEB.Areas.IDENTITY;
 
-namespace _MPPL_WEB_START.App_Start
+namespace _LABELINSP_APPWEB.App_Start
 {
     public class EmailService : IIdentityMessageService
     {

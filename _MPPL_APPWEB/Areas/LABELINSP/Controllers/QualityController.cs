@@ -1,12 +1,16 @@
-﻿using _MPPL_WEB_START.Areas._APPWEB.Controllers;
+﻿using _LABELINSP_APPWEB.Areas._APPWEB.Controllers;
+using MDL_LABELINSP.Entities;
 using MDL_LABELINSP.Interfaces;
 using MDL_LABELINSP.Models;
-using MDL_LABELINSP.UnitOfWorkLabelInsp;
+using MDL_LABELINSP.UnitOfWorks;
 using MDL_LABELINSP.ViewModel;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
+using System;
 using System.Web.Mvc;
+using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
+namespace _LABELINSP_APPWEB.Areas.LABELINSP.Controllers
 {
     //[System.Web.Mvc.Authorize(Roles = DefRoles.ONEPROD_MES_OPERATOR)]
     public partial class QualityController : BaseController
@@ -22,7 +26,7 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         }
 
         //PrintingLabelInspector Methods
-        public ActionResult PrintingLabelInspector(int port)
+        public ActionResult LabelInspector(int port)
         {
             ViewBag.Port = port;
             return View();
@@ -31,7 +35,7 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         [HttpGet]
         public JsonResult TCPBarcodeReceived(string barcode, string workstationName)
         {
-            var context = GlobalHost.ConnectionManager.GetHubContext<JobLabelCheckHub>();
+            var context = GlobalHost.ConnectionManager.GetHubContext<LabelInspectorHub>();
             //context.Clients.All.broadcastMessage(barcode);
             //context.Clients.All.broadcastMessage(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             context.Clients.Group(workstationName).broadcastMessage(barcode);
@@ -39,11 +43,12 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
         }
 
         [HttpPost]
-        public JsonResult PackingLabelGetData(string serialNumber)
+        public JsonResult WorkorderLabelGetData(string serialNumber)
         {
-            PackingLabelViewModel packingLabelViewModel = new PackingLabelViewModel();
-            packingLabelViewModel.PackingLabel = uow.PackingLabelRepo.GetBySerialNumber(serialNumber);
-            packingLabelViewModel.PackingLabelTests = uow.PackingLabelTestRepo.GetByPackingLabelId(packingLabelViewModel.PackingLabel?.Id ?? 0);
+            //uow.DisableProxyCreation();
+            LabelinspViewModel packingLabelViewModel = new LabelinspViewModel();
+            packingLabelViewModel.WorkorderLabel = uow.WorkorderLabelRepo.GetBySerialNumber(serialNumber);
+            packingLabelViewModel.WorkorderLabelInspections = uow.WorkorderLabelInspectionRepo.GetByPackingLabelId(packingLabelViewModel.WorkorderLabel?.Id ?? 0);
 
             return Json(packingLabelViewModel);
         }
@@ -71,5 +76,24 @@ namespace _MPPL_WEB_START.Areas.LABELINSP.Controllers
 
             return Json(0, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult SaveToDBTest(string serialNumber, string elc)
+        {
+            Logger2FileSingleton.Instance.SaveLog("TestLog");
+            try
+            {
+                WorkorderLabel workorderLabel = new WorkorderLabel() {SerialNumber = serialNumber, TimeStamp = DateTime.Now };
+                uow.WorkorderLabelRepo.AddOrUpdate(workorderLabel);
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+            
+
+            return Json(0, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

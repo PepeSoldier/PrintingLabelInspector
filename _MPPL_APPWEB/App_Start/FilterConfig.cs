@@ -1,8 +1,8 @@
-﻿using _MPPL_WEB_START.Areas.IDENTITY;
+﻿using _LABELINSP_APPWEB.Areas.IDENTITY;
 using System.Web;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     public class FilterConfig
     {

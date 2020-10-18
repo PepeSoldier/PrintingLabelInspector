@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using XLIB_COMMON.Model;
 
-namespace _MPPL_WEB_START.Areas.Models
+namespace _LABELINSP_APPWEB.Areas.Models
 {
     public class Mailer_AP
     {

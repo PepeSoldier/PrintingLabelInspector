@@ -1,4 +1,4 @@
-﻿using _MPPL_WEB_START.App_Start;
+﻿using _LABELINSP_APPWEB.App_Start;
 using Autofac;
 using Autofac.Integration.Mvc;
 using MDL_BASE;
@@ -18,12 +18,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START
+namespace _LABELINSP_APPWEB
 {
     public partial class Startup
     {
-        private static readonly int cookieExpireTimeSpanMinutes = _MPPL_WEB_START.Properties.Settings.Default.CookieExpireTimeSpanInMinutes;
-        private static readonly string cookieName = _MPPL_WEB_START.Properties.Settings.Default.CookieName;
+        private static readonly int cookieExpireTimeSpanMinutes = _LABELINSP_APPWEB.Properties.Settings.Default.CookieExpireTimeSpanInMinutes;
+        private static readonly string cookieName = _LABELINSP_APPWEB.Properties.Settings.Default.CookieName;
 
         internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
 

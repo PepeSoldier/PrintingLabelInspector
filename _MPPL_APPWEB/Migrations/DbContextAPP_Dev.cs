@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Common;
 
 
-namespace _MPPL_WEB_START.Migrations
+namespace _LABELINSP_APPWEB.Migrations
 {
 
     public class DbContextAPP_DevK : DbContextAPP_Dev
@@ -11,9 +11,9 @@ namespace _MPPL_WEB_START.Migrations
         public DbContextAPP_DevK() : base("DevKConnection")
         {
             this.Configuration.LazyLoadingEnabled = true;
-            //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_DevK -MigrationsDirectory:Migrations.DevK
-            //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration 1K
-            //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevK.Configuration
+            //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_DevK -MigrationsDirectory:Migrations.DevK
+            //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration 1K
+            //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevK.Configuration
         }
     }
 
@@ -22,9 +22,9 @@ namespace _MPPL_WEB_START.Migrations
         public DbContextAPP_DevP() : base("DevPConnection")
         {
             this.Configuration.LazyLoadingEnabled = true;
-            //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_DevP -MigrationsDirectory:Migrations.DevP
-            //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevP.Configuration 1K
-            //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevP.Configuration
+            //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_DevP -MigrationsDirectory:Migrations.DevP
+            //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevP.Configuration 1K
+            //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevP.Configuration
         }
     }
 
@@ -33,9 +33,9 @@ namespace _MPPL_WEB_START.Migrations
         public DbContextAPP_DevPE() : base("DevPEConnection")
         {
             this.Configuration.LazyLoadingEnabled = true;
-            //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_DevPE -MigrationsDirectory:Migrations.DevPE
-            //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevPE.Configuration 1K
-            //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.DevPE.Configuration
+            //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_DevPE -MigrationsDirectory:Migrations.DevPE
+            //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevPE.Configuration 1K
+            //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.DevPE.Configuration
         }
     }
 
@@ -45,9 +45,9 @@ namespace _MPPL_WEB_START.Migrations
         public DbContextAPP_Dev() : base("Dev")
         {
             this.Configuration.LazyLoadingEnabled = true;
-            //enable-migrations -ContextTypeName  _MPPL_WEB_START.Migrations.DbContextAPP_Dev -MigrationsDirectory:Migrations.Dev
-            //Add-Migration -ConfigurationTypeName _MPPL_WEB_START.Migrations.Dev.Configuration 1K
-            //Update-database -ConfigurationTypeName _MPPL_WEB_START.Migrations.Dev.Configuration
+            //enable-migrations -ContextTypeName  _LABELINSP_APPWEB.Migrations.DbContextAPP_Dev -MigrationsDirectory:Migrations.Dev
+            //Add-Migration -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.Dev.Configuration 1K
+            //Update-database -ConfigurationTypeName _LABELINSP_APPWEB.Migrations.Dev.Configuration
         }
 
         public DbContextAPP_Dev(string nameOrConnectionString) : base(nameOrConnectionString)

@@ -37,7 +37,7 @@ namespace _LABELINSP_FORMAPP
             trackBar1.Value = treschold;
             trackBar2.Value = maxValue;
             //tbImageName.Text = @"\IKEA\911535086.png";
-            tbImageName.Text = @"\IKEA\911535250.png";
+            tbImageName.Text = @"\IKEA\911076044.png";
             processImageDelegate = ProcessCapturedImage;
             ip = new ImageProcessing();
             //_delegate = SetImage(Bitmap b);
@@ -63,6 +63,7 @@ namespace _LABELINSP_FORMAPP
             string expectedS = "30385789215529";
             string expectedN = "HJÄLPSAM";
             string expectedP = "30385789";
+            string expectedW = "35";
 
             switch (command)
             {
@@ -70,11 +71,13 @@ namespace _LABELINSP_FORMAPP
                 case 2: ip.BarcodeDetectReadAddFrame_Small(expectedS); break;
                 case 3: ip.ReadModelName(expectedN); break;
                 case 4: ip.ReadIKEAProductCode(expectedP); break;
+                case 5: ip.ReadWeightBig(expectedW); break;
                 default:
-                    ip.BarcodeDetectReadAddFrame_Big(expectedB);
-                    //ip.BarcodeDetectReadAddFrame_Small(expectedS);
+                    //ip.BarcodeDetectReadAddFrame_Big(expectedB);
+                    ip.BarcodeDetectReadAddFrame_Small(expectedS);
                     //ip.ReadModelName(expectedN);
                     //ip.ReadIKEAProductCode(expectedP);
+                    //ip.ReadWeightBig(expectedW);
                     break;
             }
 
@@ -195,6 +198,11 @@ namespace _LABELINSP_FORMAPP
         private void btnBarcodeSmall_Click(object sender, EventArgs e)
         {
             ProcessLoadedImage(2);
+        }
+
+        private void btnWeightBig_Click(object sender, EventArgs e)
+        {
+            ProcessLoadedImage(5);
         }
     }
 }

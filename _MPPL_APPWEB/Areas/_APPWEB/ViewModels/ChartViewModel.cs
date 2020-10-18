@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.ViewModels
+namespace _LABELINSP_APPWEB.Areas._APPWEB.ViewModels
 {
     public class TestChart
     {

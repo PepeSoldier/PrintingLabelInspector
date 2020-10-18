@@ -3,7 +3,7 @@
 //using MDL_ONEPROD.Model.Scheduling;
 using System.Data.Entity;
 
-namespace _MPPL_WEB_START.Migrations
+namespace _LABELINSP_APPWEB.Migrations
 {
     public class DbContextAPP_PackingLabel : DbContextAPP_//, IDbContextOneprodQuality
     {
@@ -19,7 +19,7 @@ namespace _MPPL_WEB_START.Migrations
 
         public static string GetConnectionName()
         {
-            string clientName = _MPPL_WEB_START.Properties.Settings.Default.Client;
+            string clientName = _LABELINSP_APPWEB.Properties.Settings.Default.Client;
             return clientName + "Connection";
         }
 

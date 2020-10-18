@@ -1,7 +1,7 @@
-﻿@*@using _MPPL_WEB_START.Areas._APPWEB.Models;
+﻿@*@using _LABELINSP_APPWEB.Areas._APPWEB.Models;
 @using MDL_BASE.Models;
 
-@{ ViewBag.ClientName = (_MPPL_WEB_START.Properties.Settings.Default.Client).Replace("_Staging", ""); }
+@{ ViewBag.ClientName = (_LABELINSP_APPWEB.Properties.Settings.Default.Client).Replace("_Staging", ""); }
 
 @MenuHelper.DrawMenu(MenuiLOGIS.MenuItem.Children, ViewBag.ClientName, Url, User)*@
 

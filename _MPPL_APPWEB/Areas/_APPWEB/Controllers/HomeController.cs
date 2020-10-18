@@ -1,5 +1,5 @@
-﻿using _MPPL_WEB_START.Areas._APPWEB.Controllers;
-using _MPPL_WEB_START.Areas.IDENTITY;
+﻿using _LABELINSP_APPWEB.Areas._APPWEB.Controllers;
+using _LABELINSP_APPWEB.Areas.IDENTITY;
 using MDL_BASE.Interfaces;
 using MDL_BASE.Models.IDENTITY;
 using Microsoft.AspNet.Identity;
@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using XLIB_COMMON.Repo.IDENTITY;
 
-namespace _MPPL_WEB_START.Areas._APPWEB.Controllers
+namespace _LABELINSP_APPWEB.Areas._APPWEB.Controllers
 {
     [PasswordExpiredAttribute]
     public class HomeController : BaseController

@@ -7,10 +7,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MDL_BASE.Models.IDENTITY;
-using _MPPL_WEB_START.App_Start;
-using _MPPL_WEB_START.Areas.IDENTITY.ViewModels;
+using _LABELINSP_APPWEB.App_Start;
+using _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY.Controllers
+namespace _LABELINSP_APPWEB.Areas.IDENTITY.Controllers
 {
     //[]
     [ExcludeFilter(typeof(PasswordExpiredAttribute))]

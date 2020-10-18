@@ -1,4 +1,4 @@
-﻿namespace _MPPL_WEB_START.Properties {
+﻿namespace _LABELINSP_APPWEB.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

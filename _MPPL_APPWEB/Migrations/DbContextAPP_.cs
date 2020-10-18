@@ -10,7 +10,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace _MPPL_WEB_START.Migrations
+namespace _LABELINSP_APPWEB.Migrations
 {
     public class DbContextAPP_ : IdentityDbContext<User, ApplicationRole, string, UserLogin, UserRole, UserClaim>, IDbContextCore, IDbContextLabelInsp
     {
@@ -26,13 +26,13 @@ namespace _MPPL_WEB_START.Migrations
         public virtual IDbSet<UserRole> UserRoles { get; set; }
 
         //MasterData
-        public DbSet<MDL_LABELINSP.Entities.PackingLabel> PackingLabels { get; set; }
+        public DbSet<MDL_LABELINSP.Entities.WorkorderLabel> WorkorderLabels { get; set; }
 
-        public DbSet<PackingLabelTest> PackingLabelTests { get; set; }
+        public DbSet<WorkorderLabelInspection> WorkorderLabelInspections { get; set; }
         public DbSet<SystemVariable> SystemVariables { get; set; }
         public DbSet<Printer> Printers { get; set; }
-        public DbSet<ExpectedValues> ExpectedValues { get; set; }
-        public DbSet<Workorders> Workorders { get; set; }
+        public DbSet<ItemData> ItemData { get; set; }
+        public DbSet<Workorder> Workorders { get; set; }
 
 
         public DbContextAPP_(string nameOrConnectionString) : base(nameOrConnectionString) //, throwIfV1Schema: false)

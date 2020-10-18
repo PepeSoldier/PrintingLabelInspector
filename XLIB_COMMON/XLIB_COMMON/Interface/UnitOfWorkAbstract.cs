@@ -24,5 +24,10 @@ namespace XLIB_COMMON.Interface
         {
             return db.Database.BeginTransaction();
         }
+
+        public void DisableProxyCreation()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+        }
     }
 }

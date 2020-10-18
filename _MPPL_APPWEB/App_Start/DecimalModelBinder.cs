@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Web.Mvc;
 
-namespace _MPPL_WEB_START.App_Start
+namespace _LABELINSP_APPWEB.App_Start
 {
     public class CustomModelBinder : DefaultModelBinder
     {

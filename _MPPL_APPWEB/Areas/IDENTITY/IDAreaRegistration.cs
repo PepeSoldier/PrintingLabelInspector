@@ -18,7 +18,7 @@ namespace MDL_BASE.Areas.IDENTITY
                 "IDENTITY_default",
                 "IDENTITY/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "_MPPL_WEB_START.Areas.IDENTITY.Controllers" }
+                namespaces: new string[] { "_LABELINSP_APPWEB.Areas.IDENTITY.Controllers" }
             );
         }
     }

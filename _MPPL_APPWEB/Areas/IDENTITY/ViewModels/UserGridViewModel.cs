@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace _MPPL_WEB_START.Areas.IDENTITY.ViewModels
+namespace _LABELINSP_APPWEB.Areas.IDENTITY.ViewModels
 {
     public class UserGridViewModel
     {

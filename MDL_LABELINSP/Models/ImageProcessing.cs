@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ZXing;
@@ -54,7 +55,6 @@ namespace MDL_LABELINSP.Models
             //SourceImage = ResizeImage(SourceImage.Mat, 50).ToImage<Bgr, byte>();
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
-
         public void SetImage(Bitmap image)
         {
             Image<Bgr, byte> img = image.ToImage<Bgr, byte>();
@@ -64,7 +64,6 @@ namespace MDL_LABELINSP.Models
             //SourceImage = ResizeImage(SourceImage.Mat, 50).ToImage<Bgr, byte>();
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
-
         private void ClearDataAndImages()
         {
             BarcodeBig = "";
@@ -87,7 +86,6 @@ namespace MDL_LABELINSP.Models
             SourceImage = SourceImage.Rotate(angle, new Bgr(255, 255, 255), false);
             FinalPreviewImage = SourceImage.Copy().Mat;
         }
-
         public void SaveFinalPreviewImage(string filePath)
         {
             try
@@ -99,7 +97,6 @@ namespace MDL_LABELINSP.Models
                 throw ex;
             }
         }
-
         public void SaveAllImages(string filePath, string fileName)
         {
             try
@@ -123,82 +120,103 @@ namespace MDL_LABELINSP.Models
         {
             Rectangle rectBarcode = DetectBarcode(SourceImage, a, b);
             Image<Bgr, byte> imgCropped = CropImage(SourceImage, rectBarcode);
-            string[] barcodeData = ReadBarcode_Auto(imgCropped.Mat);
+            //string[] barcodeData = ReadBarcode_Auto(imgCropped.Mat);
+            string[] barcodeData = ReadBarcode(imgCropped.Mat);
 
             DrawFrame(FinalPreviewImage, rectBarcode, barcodeData[0], expectedValue, true);
             BarcodeBig = barcodeData[0];
             return BarcodeBig;
         }
-
         public string BarcodeDetectReadAddFrame_Small(string expectedValue = "")
         {
             //Algorytm nie radzi sobie z czytaniem pomniejszonego barcode'u, wiec przeszukanie barcode
-            //odbywa się na obrazku o bokach 50% oryginalnego, a sam odczyt dokonywany jest z dużego obrazka.
-            Rectangle rectAreaWithSmallBarcode = DetectBarcode(CropImage(SourceImage, 0, 0, 100, 30), a, b);
+            //odbywa się na obrazku o bokach 50 % oryginalnego, a sam odczyt dokonywany jest z dużego obrazka.
+            //string[] barcodeData1 = ReadBarcode(SourceImage.Mat);
+
+            Rectangle rectCrop = new Rectangle()
+            {
+                X = 0, //(int)(SourceImage.Width * 0.4),
+                Y = 0,
+                Width = (int)(SourceImage.Width * 1), //(int)(SourceImage.Width * 0.6),
+                Height = (int)(SourceImage.Height * 0.3),
+            };
+            Rectangle rectAreaWithSmallBarcode = DetectBarcode(CropImage(SourceImage, rectCrop), 6, b);
             Rectangle rectForFullSizeImage = new Rectangle()
             {
-                Height = rectAreaWithSmallBarcode.Height * 2,
                 Width = rectAreaWithSmallBarcode.Width * 2,
+                Height = rectAreaWithSmallBarcode.Height * 2 + 20,
                 X = rectAreaWithSmallBarcode.X * 2 + 25,
                 Y = rectAreaWithSmallBarcode.Y * 2,
             };
 
-            Image<Bgr, byte> imgCropped = CropImage(SourceImageFullSize, rectForFullSizeImage);
+            Image<Gray, byte> imgCropped = CropImage(SourceImageFullSize, rectForFullSizeImage).Convert<Gray, byte>();
+            _RemoveVerticalLines(imgCropped, 1, (int)(imgCropped.Height*0.95));
             string[] barcodeData = ReadBarcode(imgCropped.Mat);
+            //string[] barcodeData = ReadBarcode(SourceImageFullSize.Mat);
 
-            DrawFrame(FinalPreviewImage, rectAreaWithSmallBarcode, barcodeData[0], expectedValue, true);
+            DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectAreaWithSmallBarcode, rectCrop), barcodeData[0], expectedValue, true);
             BarcodeSmall = barcodeData[0];
             return BarcodeSmall;
         }
-
         public string ReadModelName(string expectedValue = "")
         {
             //Rectangle areaWithModelName = new Rectangle() { X = 270, Y = 45, Height = 70, Width = 310 };
             Rectangle rectAreaWithModelName = new Rectangle()
             {
-                X = (int)(13.82 * SourceImageFullSize.Width / 100),
+                X = (int)(10.365 * SourceImageFullSize.Width / 100),
                 Y = (int)(1.86 * SourceImageFullSize.Height / 100),
                 Height = (int)(2.9 * SourceImageFullSize.Height / 100),
-                Width = (int)(15.88 * SourceImageFullSize.Width / 100)
+                Width = (int)(19.85 * SourceImageFullSize.Width / 100)
             };
 
             rectAreaWithModelName = _TrimRectangleToMat(SourceImageFullSize.Mat, rectAreaWithModelName);
-            List<Rectangle> rectanglesWihtText = DetectText(rectAreaWithModelName);
+            List<Rectangle> rectanglesWihtText = DetectText(rectAreaWithModelName, 5, 6, 80, 50, 500);
             StringBuilder modelNameSB = new StringBuilder(); ;
 
-            for (int i = rectanglesWihtText.Count - 1; i >= 0; i--)
-            {
-                Rectangle rectWithText = rectanglesWihtText[i];
-                Rectangle rectWithTextAbsolute = rectAbsolutePosition(rectWithText, rectAreaWithModelName);
+            //for (int i = rectanglesWihtText.Count - 1; i >= 0; i--)
+            //{
+            //    Rectangle rectWithText = rectanglesWihtText[i];
+            //    Rectangle rectWithTextAbsolute = rectAbsolutePosition(rectWithText, rectAreaWithModelName);
 
-                var imgGrayCropped = CropImage(SourceImage, rectWithTextAbsolute).Convert<Gray, byte>();
-                CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
-                //_RemoveVerticalLines(imgGrayCropped);
-                modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "deu"));
+            //    var imgGrayCropped = CropImage(SourceImage, rectWithTextAbsolute).Convert<Gray, byte>();
+            //    CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
+            //    //_RemoveVerticalLines(imgGrayCropped);
+            //    modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "deu"));
 
-                CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
-            }
+            //    CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
+            //}
+
+            Rectangle rectWithText = rectanglesWihtText.OrderByDescending(x => x.Width).FirstOrDefault();
+            Rectangle rectWithTextAbsolute = rectAbsolutePosition(rectWithText, rectAreaWithModelName);
+            var imgGrayCropped = CropImage(SourceImage, rectWithTextAbsolute).Convert<Gray, byte>();
+            CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
+            //_RemoveVerticalLines(imgGrayCropped);
+            modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "deu"));
+
+            CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
 
             //string modelName = modelNameSB.ToString();
             string modelName = Regex.Replace(modelNameSB.ToString(), "[^a-zA-Z0-9ÖÄ]", String.Empty);
 
-            if (rectanglesWihtText.Count > 0)
-            {
-                DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectanglesWihtText[0], rectAreaWithModelName), modelName, expectedValue);
-            }
+            //if (rectanglesWihtText.Count > 0)
+            //{
+            // DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectanglesWihtText[0], rectAreaWithModelName), modelName, expectedValue);
+            //}
+
+            DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectWithText, rectAreaWithModelName), modelName, expectedValue);
+
             ProductName = modelName;
             return ProductName;
         }
-
         public string ReadIKEAProductCode(string expectedValue = "")
         {
             //Rectangle areaWithProductCode = new Rectangle() { X = 270, Y = 200, Height = 80, Width = 310 };
             Rectangle areaWithProductCode = new Rectangle()
             {
-                X = (int)(27.64 * SourceImage.Width / 100),
+                X = (int)(20.73 * SourceImage.Width / 100),
                 Y = (int)(14.5 * SourceImage.Height / 100),
                 Height = (int)(9.0 * SourceImage.Height / 100),
-                Width = (int)(31.76 * SourceImage.Width / 100)
+                Width = (int)(39.7 * SourceImage.Width / 100)
             };
             Image<Gray, byte> imgCroppedGray = CropImage(SourceImage, areaWithProductCode).Convert<Gray, byte>();
             Mat imgThreshold = new Mat();
@@ -206,13 +224,13 @@ namespace MDL_LABELINSP.Models
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
 
             CvInvoke.Threshold(imgCroppedGray, imgThreshold, 0, 255, ThresholdType.BinaryInv | ThresholdType.Otsu);
-            CvInvoke.Blur(imgThreshold, imgBlur, new Size(1, 1), new Point(0, 0), BorderType.Default);
+            CvInvoke.Blur(imgThreshold, imgBlur, new Size(2, 2), new Point(0, 0), BorderType.Constant);
             CvInvoke.FindContours(imgBlur, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
 
             Rectangle rectWithProductNumber = _FindLargestRectFromContours(contours);
             Image<Gray, byte> matCroppedGray = CropImage(imgBlur.ToImage<Gray, byte>(), rectWithProductNumber);
 
-            string productCode = OCR(matCroppedGray, "eng");
+            string productCode = OCR(matCroppedGray, "digits_comma");
             productCode = Regex.Replace(productCode, "[^0-9]", String.Empty);
 
             DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectWithProductNumber, areaWithProductCode), productCode, expectedValue);
@@ -227,6 +245,41 @@ namespace MDL_LABELINSP.Models
 
             IkeaProductCode = productCode;
             return IkeaProductCode;
+        }
+        public string ReadWeightBig(string expectedValue = "")
+        {
+            Rectangle rectAreaWithModelName = new Rectangle()
+            {
+                X = (int)(5.1 * SourceImage.Width / 100),
+                Y = (int)(42.57 * SourceImage.Height / 100),
+                Height = (int)(11.243 * SourceImage.Height / 100),
+                Width = (int)(30.8 * SourceImage.Width / 100)
+            };
+
+            string modelName = "";
+
+            rectAreaWithModelName = _TrimRectangleToMat(SourceImage.Mat, rectAreaWithModelName);
+            List<Rectangle> rectanglesWihtText = DetectText(rectAreaWithModelName, 6, 50, 260, 50, 150);
+            StringBuilder modelNameSB = new StringBuilder(); ;
+
+            for (int i = rectanglesWihtText.Count - 1; i >= 0; i--)
+            {
+                Rectangle rectWithText = rectanglesWihtText[i];
+                Rectangle rectWithTextAbsolute = rectAbsolutePosition(rectWithText, rectAreaWithModelName);
+
+                var imgGrayCropped = CropImage(SourceImage, rectWithTextAbsolute).Convert<Gray, byte>();
+                CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
+                //_RemoveVerticalLines(imgGrayCropped);
+                modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "digits"));
+
+                CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
+
+                modelName = Regex.Replace(modelNameSB.ToString(), "[^0-9]", String.Empty);
+                DrawFrame(FinalPreviewImage, rectAbsolutePosition(rectWithText, rectAreaWithModelName), modelName, expectedValue);
+            }
+
+            ProductName = modelName;
+            return ProductName;
         }
 
         public Image<Bgr, byte> CropImage(Image<Bgr, byte> frame, int xPercent, int yPercent, int widthPercent, int heightPercent)
@@ -249,7 +302,6 @@ namespace MDL_LABELINSP.Models
 
             return dst.ToImage<Bgr, byte>();
         }
-
         public Image<Bgr, byte> CropImage(Image<Bgr, byte> frame, Rectangle roi)
         {
             Image<Bgr, byte> img = frame.Copy();
@@ -266,7 +318,6 @@ namespace MDL_LABELINSP.Models
 
             return dst.ToImage<Bgr, byte>();
         }
-
         public Image<Gray, byte> CropImage(Image<Gray, byte> frame, Rectangle roi)
         {
             Image<Gray, byte> img = frame.Copy();
@@ -290,7 +341,6 @@ namespace MDL_LABELINSP.Models
             CvInvoke.Resize(frame, mat, new Size(frame.Width * percent / 100, frame.Height * percent / 100), interpolation: Inter.Lanczos4);
             return mat;
         }
-
         public Mat ResizeImage(Mat frame, int maxWidth, int maxHeight)
         {
             int percentW = maxWidth * 100 / frame.Width;
@@ -299,7 +349,7 @@ namespace MDL_LABELINSP.Models
             return ResizeImage(frame, Math.Min(percentH, percentW));
         }
 
-        public List<Rectangle> DetectText(Rectangle rect)
+        public List<Rectangle> DetectText(Rectangle rect, decimal dilate, int minFontSize = 6, int maxFontSize = 300, int minWidth = 35, int maxWidth = 500)
         {
             //img = cv2.imread(file_name)
             //Rectangle rect = new Rectangle() { X = 270, Y = 45, Height = 70, Width = 310 };
@@ -329,7 +379,7 @@ namespace MDL_LABELINSP.Models
             CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(12, 12), new Point(-1, -1));
             Mat dilated = new Mat();
             //DetectionImage = kernel;
-            CvInvoke.Dilate(new_img, dilated, kernel, new Point(0, 0), 4, BorderType.Default, new MCvScalar(0, 0, 0));
+            CvInvoke.Dilate(new_img, dilated, kernel, new Point(0, 0), (int)dilate, BorderType.Default, new MCvScalar(0, 0, 0));
 
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
             CvInvoke.FindContours(dilated, contours, null, RetrType.External, ChainApproxMethod.ChainApproxNone);
@@ -339,9 +389,9 @@ namespace MDL_LABELINSP.Models
             for (int i = 0; i < contours.Size; i++)
             {
                 Rectangle br = CvInvoke.BoundingRectangle(contours[i]);
-                if (br.Width < 35 || br.Width > 500 || br.Height > 300) continue;
+                if (br.Width < minWidth || br.Width > maxWidth || br.Height > maxFontSize || br.Height < minFontSize) continue;
 
-                //CvInvoke.Rectangle(img, br, new MCvScalar(255, 0, 255), 3);
+                CvInvoke.Rectangle(img, br, new MCvScalar(255, 0, 255), 3);
                 rectangles.Add(br);
             }
 
@@ -354,7 +404,6 @@ namespace MDL_LABELINSP.Models
 
             return rectangles;
         }
-
         public Rectangle DetectBarcode(Image<Bgr, byte> capturedFrame, int a = 21, int b = 7)
         {
             Mat grayscaleFrame = new Mat();
@@ -402,7 +451,6 @@ namespace MDL_LABELINSP.Models
             Rectangle newrectangle = new Rectangle((int)(r.X - r.Width / 8), (int)(r.Y - r.Height / 8), (int)(r.Width * 1.25m), (int)(r.Height * 1.25m));
             return newrectangle;
         }
-
         public Rectangle DrawFrame(Mat capturedFrame, Rectangle rect, string value, string expectedValue, bool text = false)
         {
             bool? isValueCorrect = expectedValue.Length > 0 ? (bool?)(value == expectedValue) : null;
@@ -433,14 +481,12 @@ namespace MDL_LABELINSP.Models
             }
             return rect;
         }
-
         public Rectangle DrawGreenFrame(Mat capturedFrame, Rectangle rect)
         {
             rect = _TrimRectangleToMat(capturedFrame, rect);
             CvInvoke.Rectangle(capturedFrame, rect, new MCvScalar(0.0, 255.0, 0.0), 3);
             return rect;
         }
-
         public Rectangle DrawRedFrame(Mat capturedFrame, Rectangle rect)
         {
             rect = _TrimRectangleToMat(capturedFrame, rect);
@@ -458,7 +504,6 @@ namespace MDL_LABELINSP.Models
             reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_39, BarcodeFormat.CODE_128, BarcodeFormat.EAN_8, BarcodeFormat.EAN_13, BarcodeFormat.ITF };
             reader.Options.UseCode39ExtendedMode = true;
             reader.Options.UseCode39RelaxedExtendedMode = true;
-
             //BarcodeReadImage = null;
 
             int i = 64;
@@ -467,6 +512,7 @@ namespace MDL_LABELINSP.Models
             {
                 grayFrame = frame.ToImage<Gray, byte>();
                 grayFrame = grayFrame.ThresholdBinary(new Gray(i), new Gray(maxValue));
+
                 var result = reader.Decode(grayFrame.ToBitmap());
                 if (result != null)
                 {
@@ -488,32 +534,30 @@ namespace MDL_LABELINSP.Models
 
             return data;
         }
-
         public string[] ReadBarcode(Mat frame)
         {
-            string[] data = new string[2] { "NoRead", "" };
-            IBarcodeReader reader = new BarcodeReader();
-            var grayFrame = frame.ToImage<Gray, byte>(); //.Convert<Gray, byte>();
-            grayFrame = grayFrame.ThresholdBinary(new Gray(treschold), new Gray(maxValue));
             //CvInvoke.Blur(grayFrame, grayFrame, new Size(1, 2), new Point(0, 0));
 
-            reader.Options.TryHarder = true;
+            string[] data = new string[2] { "NoRead", "" };
+            var image = frame.ToImage<Gray, byte>(); //.Convert<Gray, byte>();
+            image = image.ThresholdBinary(new Gray(treschold), new Gray(maxValue));
+
+            BarcodeReader reader = new BarcodeReader();
+            //reader.AutoRotate = true;
+            //reader.TryInverted = true;
+            //reader.Options.TryHarder = true;
             reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.ITF, BarcodeFormat.CODE_128 };
+            var result = reader.Decode(image.ToBitmap());
 
-            //reader.Options.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.CODE_39, BarcodeFormat.CODE_128, BarcodeFormat.EAN_8, BarcodeFormat.EAN_13 };
-            //reader.Options.UseCode39ExtendedMode = true;
-            //reader.Options.UseCode39RelaxedExtendedMode = true;
-
-            reader.Options.AllowedLengths = new int[14];
-            reader.Options.PureBarcode = true;
-            reader.Options.Hints.Add(DecodeHintType.TRY_HARDER_WITHOUT_ROTATION, Boolean.TrueString);// zXing
-
-            var result = reader.Decode(grayFrame.ToBitmap());
             if (result != null)
             {
                 data[0] = result.Text;
                 data[1] = result.BarcodeFormat.ToString();
             }
+
+            //reader.Options.AllowedLengths = new int[14];
+            //reader.Options.PureBarcode = true;
+            //reader.Options.Hints.Add(DecodeHintType.TRY_HARDER_WITHOUT_ROTATION, Boolean.TrueString);// zXing
 
             //var bs = new BarcodeTypeSelector();
             //bs.ITF14 = true;
@@ -528,16 +572,16 @@ namespace MDL_LABELINSP.Models
             //    data[1] = "";
             //}
 
-            ExtractedImage = grayFrame.Mat;
+            ExtractedImage = image.Mat;
             //pictureBox3.Image = grayFrame.ToBitmap();
 
             return data;
         }
-
         public string OCR(Image<Gray, byte> temp, string lang = "eng")
         {
             ExtractedImage = temp.Mat;
             var OCRz = new Tesseract(@"C:\inetpub\wwwroot\tessdata", lang, OcrEngineMode.Default);
+            //OCRz.SetVariable("tessedit_char_whitelist", "0123456789");
             //var OCRz = new Tesseract();
             OCRz.SetImage(temp);
             OCRz.Recognize();
@@ -545,7 +589,6 @@ namespace MDL_LABELINSP.Models
             //var rr = OCRz.GetCharacters();
             return text;
         }
-
         public void DetectShapes(Image<Bgr, byte> imgInput, Image<Gray, byte> temp)
         {
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
@@ -562,7 +605,6 @@ namespace MDL_LABELINSP.Models
                 //PutDescriptions(imgInput, contours, i, approx);
             }
         }
-
         public void PutDescriptions(Image<Bgr, byte> imgInput, VectorOfVectorOfPoint contours, int i, VectorOfPoint approx)
         {
             var moments = CvInvoke.Moments(contours[i]);
@@ -589,13 +631,15 @@ namespace MDL_LABELINSP.Models
         }
 
         //Helpers
-        private static void _RemoveVerticalLines(Image<Gray, byte> imageGray)
+        private void _RemoveVerticalLines(Image<Gray, byte> imageGray, int width = 1, int height = 25)
         {
+            Mat tresh0 = new Mat();
             Mat tresh = new Mat();
-            CvInvoke.Threshold(imageGray, tresh, 0, 255, ThresholdType.BinaryInv | ThresholdType.Otsu);
-            Mat horizontal_kernel = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 60), new Point(-1, -1));
+            CvInvoke.Threshold(imageGray, tresh0, 200, 255, ThresholdType.Binary);
+            CvInvoke.Threshold(tresh0, tresh, 0, 255, ThresholdType.BinaryInv | ThresholdType.Otsu);
+            Mat horizontal_kernel = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(width, height), new Point(-1, -1));
             Mat detected_lines = new Mat();
-            CvInvoke.MorphologyEx(tresh, detected_lines, MorphOp.Open, horizontal_kernel, new Point(-1, -1), 2, BorderType.Default, new MCvScalar(0));
+            CvInvoke.MorphologyEx(tresh, detected_lines, MorphOp.Open, horizontal_kernel, new Point(0, 0), 3, BorderType.Default, new MCvScalar(0));
 
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
             CvInvoke.FindContours(detected_lines, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
@@ -605,7 +649,6 @@ namespace MDL_LABELINSP.Models
                 CvInvoke.DrawContours(imageGray, contours, i, new MCvScalar(255, 255, 255), thickness: 1);
             }
         }
-
         private static Rectangle _FindLargestRectFromContours(VectorOfVectorOfPoint contours)
         {
             //IF CONTOURS WERE FOUND ON THE IMAGE,
@@ -621,18 +664,23 @@ namespace MDL_LABELINSP.Models
                     largestAreaIndex = i;
                 }
             }
-            RotatedRect r_rect = CvInvoke.MinAreaRect(contours[largestAreaIndex]);
-            PointF[] vertixles = r_rect.GetVertices();
-            int x = (int)vertixles[1].X;
-            int y = (int)vertixles[2].Y;
-            //OBTAIN RECTANGLE THAT SURROUNDS THE DETECTED CONTOUR
-            int width = (int)((vertixles[3].X) - (vertixles[1].X));
-            int height = (int)((vertixles[0].Y) - (vertixles[2].Y));
+            try {
+                RotatedRect r_rect = CvInvoke.MinAreaRect(contours[largestAreaIndex]);
+                PointF[] vertixles = r_rect.GetVertices();
+                int x = (int)vertixles[1].X;
+                int y = (int)vertixles[2].Y;
+                //OBTAIN RECTANGLE THAT SURROUNDS THE DETECTED CONTOUR
+                int width = (int)((vertixles[3].X) - (vertixles[1].X));
+                int height = (int)((vertixles[0].Y) - (vertixles[2].Y));
 
-            Rectangle rectangle = new Rectangle(x, y, width, height);
-            return rectangle;
+                Rectangle rectangle = new Rectangle(x, y, width, height);
+                return rectangle;
+            }
+            catch {
+                return new Rectangle(0,0,1,1);
+            }
+            
         }
-
         private Rectangle _TrimRectangleToMat(Mat src, Rectangle roi)
         {
             if (roi.X < 0) roi.X = 0;
@@ -662,7 +710,6 @@ namespace MDL_LABELINSP.Models
 
             return roi;
         }
-
         private Rectangle rectAbsolutePosition(Rectangle rectToDraw, Rectangle rectContainer)
         {
             Rectangle br = new Rectangle() { X = rectContainer.X + rectToDraw.X, Y = rectContainer.Y + rectToDraw.Y, Width = rectToDraw.Width, Height = rectToDraw.Height, };
