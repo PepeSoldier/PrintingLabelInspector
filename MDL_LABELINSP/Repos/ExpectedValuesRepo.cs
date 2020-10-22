@@ -21,10 +21,10 @@ namespace MDL_LABELINSP.Repos
 
         public ItemData GetByItemCodeAndVersion(string ItemCode, string ItemVersion)
         {
-            var itemData = db.ItemData.FirstOrDefault(d => 
+            var itemData = db.ItemData.Where(d => 
                 (ItemCode == null || ItemCode == d.ItemCode) &&
                 (ItemVersion == null || ItemVersion == d.ItemVersion)
-            );
+            ).OrderByDescending(x => x.ItemVersion).FirstOrDefault();
 
             //itemData.ExpectedProductCode = itemData.ExpectedProductCode.Replace(".", "");
             return itemData;

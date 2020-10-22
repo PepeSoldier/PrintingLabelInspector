@@ -2,10 +2,12 @@
 var LabelInspector = function (markNew = true) {
     var self = this;
     var threadClock = null;
+    var threadAlarm = null;
     var ViewModel = null;
     let waitSeconds = 0;
     let waitScreen = false;
-    
+    let labelsPath = '/Labels/';
+    let i = 1;
     this.Init = function () {
         console.log("LabelInspector.Init");
         ViewModel = {
@@ -16,7 +18,25 @@ var LabelInspector = function (markNew = true) {
             ItemName: "",
             Barcode: "oczekuję na skan..."
         };
+        StopAlarm();
         Render();
+        ClearPhotos();
+    };
+    this.InitTest = function () {
+        console.log("LabelInspector.InitTest");
+        $("#clockHeaderMid").html("TEST");
+        labelsPath = '/LabelsTest/';
+        ViewModel = {
+            isChecking: false,
+            Inspection: [],
+            WorkorderNo: "",
+            ItemCode: "",
+            ItemName: "",
+            Barcode: "wprowadz nazwe etykiety"
+        };
+        StopAlarm();
+        Render();
+        Actions();
         ClearPhotos();
     };
 
@@ -31,18 +51,36 @@ var LabelInspector = function (markNew = true) {
             }
         }, 1000);
     };
-
     this.StopClock = function () {
         window.clearInterval(threadClock);
         threadClock = null;
         console.log(threadClock);
     };
 
+    function StartAlarm() {
+        i = 1;
+        threadAlarm = setInterval(function () {
+            if (i % 2 == 0) {
+                $(".cardInspectionHeader .bg5").addClass("bg5red");
+                i = 1;
+            }
+            else {
+                $(".bg5red").removeClass("bg5red");
+                i++;
+            }
+        }, 500);
+    }
+    function StopAlarm() {
+        window.clearInterval(threadAlarm);
+        threadAlarm = null;
+        console.log(threadAlarm);
+    }
+
     this.LoadDataBySerialNumber = function (serialNumber, barcode = "") {
+        StopAlarm();
         waitSeconds = 0;
         waitScreen = false;
         var ajax = AjaxPost("/LABELINSP/QUALITY/WorkorderLabelGetData", { serialNumber });
-        var uniqueTestNames = {};
         ViewModel = {
             isChecking: true,
             Inspection: [],
@@ -53,91 +91,124 @@ var LabelInspector = function (markNew = true) {
         };
         ajax.done(function (labelinspViewModel) {
             console.log(labelinspViewModel);
-
-            if (labelinspViewModel.WorkorderLabel != null) {
-                ViewModel.WorkorderNo = labelinspViewModel.WorkorderLabel.Workorder.WorkorderNumber;
-                ViewModel.ItemCode = labelinspViewModel.WorkorderLabel.Workorder.ItemCode;
-                ViewModel.ItemName = labelinspViewModel.WorkorderLabel.Workorder.ItemName;
-                ViewModel.isChecking = true;
-
-                if (labelinspViewModel.WorkorderLabelInspections.length != 0) {
-                    uniqueTestNames = {};
-                    uniqueTestNames = labelinspViewModel.WorkorderLabelInspections.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
-
-                    for (let i = 0; i < uniqueTestNames.length; i++) {
-                        //Pobranie wszystkich 3 wynikow dla jednego testu
-                        let allTestsForUniqueTestName = labelinspViewModel.WorkorderLabelInspections.where(x => x.TestName == uniqueTestNames[i]);
-                        let viewModelInspection = {};
-
-                        //Przypisanie wartości do viewModel'u
-                        viewModelInspection.TestName = allTestsForUniqueTestName[0].TestName;
-                        viewModelInspection.ExpectedValue = _getExpectedValue(allTestsForUniqueTestName[0]);
-
-                        viewModelInspection.ActualValue_F = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 0));
-                        viewModelInspection.ActualValue_S = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 1));
-                        viewModelInspection.ActualValue_R = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 2));
-
-                        viewModelInspection.Result_F = allTestsForUniqueTestName.find(x => x.LabelType == 0)?.Result;
-                        viewModelInspection.Result_S = allTestsForUniqueTestName.find(x => x.LabelType == 1)?.Result;
-                        viewModelInspection.Result_R = allTestsForUniqueTestName.find(x => x.LabelType == 2)?.Result;
-
-                        viewModelInspection.ResultClass_F = _GetResultClass(viewModelInspection.Result_F);
-                        viewModelInspection.ResultClass_S = _GetResultClass(viewModelInspection.Result_S);
-                        viewModelInspection.ResultClass_R = _GetResultClass(viewModelInspection.Result_R);
-
-                        viewModelInspection.ActualValueIcon_F = _GetResultIcon(viewModelInspection.Result_F);
-                        viewModelInspection.ActualValueIcon_S = _GetResultIcon(viewModelInspection.Result_S);
-                        viewModelInspection.ActualValueIcon_R = _GetResultIcon(viewModelInspection.Result_R);
-
-                        if (viewModelInspection.ExpectedValue.length > 0 && viewModelInspection.ExpectedValue[0] == '-') {
-                            viewModelInspection.ResultClass_F = "testResultUnknown";
-                            viewModelInspection.ResultClass_S = "testResultUnknown";
-                            viewModelInspection.ResultClass_R = "testResultUnknown";
-                            viewModelInspection.ActualValueIcon_F = "";
-                            viewModelInspection.ActualValueIcon_S = "";
-                            viewModelInspection.ActualValueIcon_R = "";
-                        }
-
-                        ViewModel.Inspection.push(viewModelInspection);
-                    }
-                }
-            }
-            else {
-                ViewModel.isChecking = false;
-                uniqueTestNames = ["Test A", "Test B", "Test C", "Test D", "Test E"];
-                for (let i = 0; i < uniqueTestNames.length; i++) {
-                    ViewModel.Barcode = "000000000000000000000";
-                    ViewModel.WorkorderNo = "1600000000";
-                    ViewModel.ItemCode = "911000000";
-                    ViewModel.ItemName = "?";
-
-                    let viewModelInspection = {};
-
-                    viewModelInspection.TestName = uniqueTestNames[i];
-                    viewModelInspection.ExpectedValue = "?";
-                    viewModelInspection.ActualValue_F = "---";
-                    viewModelInspection.ActualValue_S = "---";
-                    viewModelInspection.ActualValue_R = "---";
-                    viewModelInspection.Result_F = false;
-                    viewModelInspection.Result_S = false;
-                    viewModelInspection.Result_R = false;
-                    viewModelInspection.ActualValueIcon_F = '<i class="fas fa-question-circle"></i>';
-                    viewModelInspection.ActualValueIcon_S = '<i class="fas fa-question-circle"></i>';
-                    viewModelInspection.ActualValueIcon_R = '<i class="fas fa-question-circle"></i>';
-
-                    ViewModel.Inspection.push(viewModelInspection);
-                }
-            }
-            
+            _PrepareViewModel(labelinspViewModel);
             Render();
             ClearPhotos();
+            if (_IsErrorFound()) {
+                StartAlarm();
+            }
 
             if (labelinspViewModel.WorkorderLabel != null) {
                 LoadAndPutPhotos(serialNumber);
             }
         });
     };
+    this.InspectLabelTest = function (fileName) {
+        StopAlarm();
+        var ajax = AjaxPost("/LABELINSP/QUALITY/InspectLabelTest", { fileName });
+        ViewModel = {
+            isChecking: true,
+            Inspection: [],
+            WorkorderNo: "",
+            ItemCode: "",
+            ItemName: "",
+            Barcode: ""
+        };
+        ajax.done(function (labelinspViewModel) {
+            console.log(labelinspViewModel);
+            _PrepareViewModel(labelinspViewModel);
+            Render();
+            ClearPhotos();
 
+            if (_IsErrorFound()) {
+                StartAlarm();
+            }
+
+            if (labelinspViewModel.WorkorderLabel != null
+                && labelinspViewModel.WorkorderLabel.SerialNumber != null)
+            {
+                LoadAndPutPhotos(labelinspViewModel.WorkorderLabel.SerialNumber);
+            }
+        });
+    };
+
+    function _PrepareViewModel(labelinspViewModel) {
+        var uniqueTestNames = {};
+        if (labelinspViewModel.WorkorderLabel != null) {
+            ViewModel.WorkorderNo = labelinspViewModel.WorkorderLabel.Workorder?.WorkorderNumber;
+            ViewModel.ItemCode = labelinspViewModel.WorkorderLabel.Workorder?.ItemCode;
+            ViewModel.ItemName = labelinspViewModel.WorkorderLabel.Workorder?.ItemName;
+            ViewModel.isChecking = true;
+
+            if (labelinspViewModel.WorkorderLabelInspections.length != 0) {
+                uniqueTestNames = {};
+                uniqueTestNames = labelinspViewModel.WorkorderLabelInspections.map(item => item.TestName).filter((value, index, self) => self.indexOf(value) === index);
+
+                for (let i = 0; i < uniqueTestNames.length; i++) {
+                    //Pobranie wszystkich 3 wynikow dla jednego testu
+                    let allTestsForUniqueTestName = labelinspViewModel.WorkorderLabelInspections.where(x => x.TestName == uniqueTestNames[i]);
+                    let viewModelInspection = {};
+
+                    //Przypisanie wartości do viewModel'u
+                    viewModelInspection.TestName = allTestsForUniqueTestName[0].TestName;
+                    viewModelInspection.ExpectedValue = _getExpectedValue(allTestsForUniqueTestName[0]);
+
+                    viewModelInspection.ActualValue_F = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 0));
+                    viewModelInspection.ActualValue_S = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 1));
+                    viewModelInspection.ActualValue_R = _getActualValue(allTestsForUniqueTestName.find(x => x.LabelType == 2));
+
+                    viewModelInspection.Result_F = allTestsForUniqueTestName.find(x => x.LabelType == 0)?.Result;
+                    viewModelInspection.Result_S = allTestsForUniqueTestName.find(x => x.LabelType == 1)?.Result;
+                    viewModelInspection.Result_R = allTestsForUniqueTestName.find(x => x.LabelType == 2)?.Result;
+
+                    viewModelInspection.ResultClass_F = _GetResultClass(viewModelInspection.Result_F);
+                    viewModelInspection.ResultClass_S = _GetResultClass(viewModelInspection.Result_S);
+                    viewModelInspection.ResultClass_R = _GetResultClass(viewModelInspection.Result_R);
+
+                    viewModelInspection.ActualValueIcon_F = _GetResultIcon(viewModelInspection.Result_F);
+                    viewModelInspection.ActualValueIcon_S = _GetResultIcon(viewModelInspection.Result_S);
+                    viewModelInspection.ActualValueIcon_R = _GetResultIcon(viewModelInspection.Result_R);
+
+                    if (viewModelInspection.ExpectedValue.length > 0 && viewModelInspection.ExpectedValue[0] == '-') {
+                        viewModelInspection.ResultClass_F = "testResultUnknown";
+                        viewModelInspection.ResultClass_S = "testResultUnknown";
+                        viewModelInspection.ResultClass_R = "testResultUnknown";
+                        viewModelInspection.ActualValueIcon_F = "";
+                        viewModelInspection.ActualValueIcon_S = "";
+                        viewModelInspection.ActualValueIcon_R = "";
+                    }
+
+                    ViewModel.Inspection.push(viewModelInspection);
+                }
+            }
+        }
+        else {
+            ViewModel.isChecking = false;
+            uniqueTestNames = ["Test A", "Test B", "Test C", "Test D", "Test E"];
+            for (let i = 0; i < uniqueTestNames.length; i++) {
+                ViewModel.Barcode = "000000000000000000000";
+                ViewModel.WorkorderNo = "1600000000";
+                ViewModel.ItemCode = "911000000";
+                ViewModel.ItemName = "?";
+
+                let viewModelInspection = {};
+
+                viewModelInspection.TestName = uniqueTestNames[i];
+                viewModelInspection.ExpectedValue = "?";
+                viewModelInspection.ActualValue_F = "---";
+                viewModelInspection.ActualValue_S = "---";
+                viewModelInspection.ActualValue_R = "---";
+                viewModelInspection.Result_F = false;
+                viewModelInspection.Result_S = false;
+                viewModelInspection.Result_R = false;
+                viewModelInspection.ActualValueIcon_F = '<i class="fas fa-question-circle"></i>';
+                viewModelInspection.ActualValueIcon_S = '<i class="fas fa-question-circle"></i>';
+                viewModelInspection.ActualValueIcon_R = '<i class="fas fa-question-circle"></i>';
+
+                ViewModel.Inspection.push(viewModelInspection);
+            }
+        }
+    }
     function _getActualValue(obj) {
         if (obj != null) {
             return obj.ActualValueText != null ? obj.ActualValueText : obj.ActualValue;
@@ -154,7 +225,6 @@ var LabelInspector = function (markNew = true) {
             return 0;
         }
     }
-
     function _GetResultClass(result) {
         switch (result) {
             case true: return "testResultPositive";
@@ -169,7 +239,12 @@ var LabelInspector = function (markNew = true) {
             case null: return '';
         }
     }
-
+    function _IsErrorFound() {
+        return $(".testResultFalse").length > 0;
+    }
+    function _Alarm(i) {
+        
+    }
 
     function ClearPhotos() {
         $("#frontPhoto").html("");
@@ -178,9 +253,9 @@ var LabelInspector = function (markNew = true) {
         $("#image_R").html("");
     }
     function LoadAndPutPhotos(serialNumber) {
-        let imageFront = '/Labels/' + serialNumber + '_F' + '.PNG';
-        let imageSide = '/Labels/' + serialNumber + '_S' + '.PNG';
-        let imageRear = '/Labels/' + serialNumber + '_R' + '.PNG';
+        let imageFront = labelsPath + serialNumber + '_F' + '.PNG';
+        let imageSide = labelsPath + serialNumber + '_S' + '.PNG';
+        let imageRear = labelsPath + serialNumber + '_R' + '.PNG';
 
         PutBigPhoto(serialNumber);
 
@@ -193,7 +268,12 @@ var LabelInspector = function (markNew = true) {
             var img = new Image();
             img.src = window.location.origin + filePath;          //'url(\'' + '/_MPPL_APPWEB' + photo + '\')';
             img.className = "img-fluid";
-            img.onerror = function () { console.log("Error: Unable to load image " + filePath); };
+            img.onerror = function () {
+                console.log("Error: Unable to load image " + filePath);
+                img.src = window.location.origin + '/Content/images/LabelUnavailable.PNG';
+                img.className = "img-fluid";
+                $(selector).append(img);
+            };
             $(selector).append(img);
         } catch (e) {
             console.log("Unable to load image " + filePath);
@@ -201,7 +281,7 @@ var LabelInspector = function (markNew = true) {
     }
     function PutBigPhoto(serialNumber, i = 0) {
         let imageTypes = ['F', 'S', 'R'];
-        let filePath = '/Labels/' + serialNumber + '_' + imageTypes[i] + '.PNG';
+        let filePath = labelsPath + serialNumber + '_' + imageTypes[i] + '.PNG';
 
         $("#frontPhoto").html("");
 
@@ -236,5 +316,12 @@ var LabelInspector = function (markNew = true) {
 
     function Render() {
         RenderTemplate("#WorkorderLabelTemplate", "#contenView", ViewModel);
+    }
+
+    function Actions() {
+        $(document).on("click", "#btnTest", function () {
+            let fileName = $("#fileName").val();
+            self.InspectLabelTest(fileName);
+        });
     }
 };

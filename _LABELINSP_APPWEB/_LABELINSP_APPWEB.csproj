@@ -736,6 +736,7 @@
     <Content Include="Areas\LABELINSP\Views\Shared\_LayoutHeadIncludes.cshtml" />
     <Content Include="Areas\LABELINSP\Views\Shared\_LayoutMenu.cshtml" />
     <Content Include="Areas\LABELINSP\Views\LABELINSP_Style.less" />
+    <Content Include="Areas\LABELINSP\Views\Quality\LabelInspectorTest.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />

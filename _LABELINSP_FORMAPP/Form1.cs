@@ -37,7 +37,7 @@ namespace _LABELINSP_FORMAPP
             trackBar1.Value = treschold;
             trackBar2.Value = maxValue;
             //tbImageName.Text = @"\IKEA\911535086.png";
-            tbImageName.Text = @"\IKEA\911076044.png";
+            tbImageName.Text = @"\IKEA\20201022082347_01535253020043178456_Label_S.png";
             processImageDelegate = ProcessCapturedImage;
             ip = new ImageProcessing();
             //_delegate = SetImage(Bitmap b);

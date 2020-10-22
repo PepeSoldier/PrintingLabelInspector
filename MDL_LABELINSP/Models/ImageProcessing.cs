@@ -259,8 +259,11 @@ namespace MDL_LABELINSP.Models
             string modelName = "";
 
             rectAreaWithModelName = _TrimRectangleToMat(SourceImage.Mat, rectAreaWithModelName);
-            List<Rectangle> rectanglesWihtText = DetectText(rectAreaWithModelName, 6, 50, 260, 50, 150);
-            StringBuilder modelNameSB = new StringBuilder(); ;
+            var imageWithText = RemoveText(rectAreaWithModelName, 2, 6, 55, 0, 250);
+            //List<Rectangle> rectanglesWihtText = DetectText(rectAreaWithModelName, 4, 55, 260, 50, 150);
+            //List<Rectangle> rectanglesWihtText = DetectText(Rectangle.Empty, 6, 55, 260, 50, 150);
+            List<Rectangle> rectanglesWihtText = DetectText(imageWithText, 6, 55, 260, 50, 150);
+            StringBuilder modelNameSB = new StringBuilder();
 
             for (int i = rectanglesWihtText.Count - 1; i >= 0; i--)
             {
@@ -271,7 +274,7 @@ namespace MDL_LABELINSP.Models
                 CvInvoke.Blur(imgGrayCropped, imgGrayCropped, new Size(2, 2), new Point(0, 0), BorderType.Default);
                 //_RemoveVerticalLines(imgGrayCropped);
                 modelNameSB.Append(OCR(imgGrayCropped.Convert<Gray, byte>(), "digits"));
-
+                ProcessedImageStep6 = imgGrayCropped.Mat;
                 CvInvoke.Rectangle(FinalPreviewImage, rectWithTextAbsolute, new MCvScalar(255, 0, 255), 3);
 
                 modelName = Regex.Replace(modelNameSB.ToString(), "[^0-9]", String.Empty);
@@ -349,6 +352,59 @@ namespace MDL_LABELINSP.Models
             return ResizeImage(frame, Math.Min(percentH, percentW));
         }
 
+        public Image<Bgr, byte> RemoveText(Rectangle rect, decimal dilate, int minFontSize = 6, int maxFontSize = 300, int minWidth = 35, int maxWidth = 500)
+        {
+            //img = cv2.imread(file_name)
+            //Rectangle rect = new Rectangle() { X = 270, Y = 45, Height = 70, Width = 310 };
+            //Image<Bgr, byte> img = Image.em Image<Bgr, byte>();
+            Image<Bgr, byte> img = SourceImage; //.Convert<Gray, byte>();
+
+            if (!rect.IsEmpty)
+            {
+                img = CropImage(SourceImage, rect);
+            }
+
+            ProcessedImageStep1 = img.Copy().Mat;
+
+            //img_final = cv2.imread(file_name)
+            //var img_final = CropImage(SourceImage, rect).Convert<Gray, byte>();
+            //img2gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            var img2gray = img.Convert<Gray, byte>();
+            _RemoveVerticalLines(img2gray);
+
+            Mat mask = new Mat();
+            CvInvoke.Threshold(img2gray, mask, 180, 255, ThresholdType.Binary);
+            Mat image_final = new Mat();
+            CvInvoke.BitwiseAnd(img2gray, img2gray, image_final, mask);
+            Mat new_img = new Mat();
+            CvInvoke.Threshold(image_final, new_img, 180, 255, ThresholdType.BinaryInv);
+            Mat kernel = new Mat();
+            CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(12, 12), new Point(-1, -1));
+            Mat dilated = new Mat();
+            //DetectionImage = kernel;
+            CvInvoke.Dilate(new_img, dilated, kernel, new Point(0, 0), (int)dilate, BorderType.Default, new MCvScalar(0, 0, 0));
+
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            CvInvoke.FindContours(dilated, contours, null, RetrType.External, ChainApproxMethod.ChainApproxNone);
+
+            List<Rectangle> rectangles = new List<Rectangle>();
+
+            for (int i = 0; i < contours.Size; i++)
+            {
+                Rectangle br = CvInvoke.BoundingRectangle(contours[i]);
+                if (br.Width < minWidth || br.Width > maxWidth || br.Height > maxFontSize || br.Height < minFontSize) continue;
+
+                CvInvoke.Rectangle(img, br, new MCvScalar(255, 255, 255), -1);
+                rectangles.Add(br);
+            }
+
+            //ProcessedImageStep2 = img2gray.Mat;
+            //ProcessedImageStep3 = image_final;
+            //ProcessedImageStep4 = new_img;
+            //ProcessedImageStep5 = dilated;
+
+            return img;
+        }
         public List<Rectangle> DetectText(Rectangle rect, decimal dilate, int minFontSize = 6, int maxFontSize = 300, int minWidth = 35, int maxWidth = 500)
         {
             //img = cv2.imread(file_name)
@@ -366,6 +422,47 @@ namespace MDL_LABELINSP.Models
             //img_final = cv2.imread(file_name)
             //var img_final = CropImage(SourceImage, rect).Convert<Gray, byte>();
             //img2gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            var img2gray = img.Convert<Gray, byte>();
+            _RemoveVerticalLines(img2gray);
+
+            Mat mask = new Mat();
+            CvInvoke.Threshold(img2gray, mask, 180, 255, ThresholdType.Binary);
+            Mat image_final = new Mat();
+            CvInvoke.BitwiseAnd(img2gray, img2gray, image_final, mask);
+            Mat new_img = new Mat();
+            CvInvoke.Threshold(image_final, new_img, 180, 255, ThresholdType.BinaryInv);
+            Mat kernel = new Mat();
+            CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(12, 12), new Point(-1, -1));
+            Mat dilated = new Mat();
+            //DetectionImage = kernel;
+            CvInvoke.Dilate(new_img, dilated, kernel, new Point(0, 0), (int)dilate, BorderType.Default, new MCvScalar(0, 0, 0));
+
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            CvInvoke.FindContours(dilated, contours, null, RetrType.External, ChainApproxMethod.ChainApproxNone);
+
+            List<Rectangle> rectangles = new List<Rectangle>();
+
+            for (int i = 0; i < contours.Size; i++)
+            {
+                Rectangle br = CvInvoke.BoundingRectangle(contours[i]);
+                if (br.Width < minWidth || br.Width > maxWidth || br.Height > maxFontSize || br.Height < minFontSize) continue;
+
+                CvInvoke.Rectangle(img, br, new MCvScalar(255, 0, 255), 3);
+                rectangles.Add(br);
+            }
+
+            ProcessedImageStep2 = img2gray.Mat;
+            ProcessedImageStep3 = image_final;
+            ProcessedImageStep4 = new_img;
+            ProcessedImageStep5 = dilated;
+
+            ExtractedImage = img.Mat;
+
+            return rectangles;
+        }
+        public List<Rectangle> DetectText(Image<Bgr, byte> img, decimal dilate, int minFontSize = 6, int maxFontSize = 300, int minWidth = 35, int maxWidth = 500)
+        {
+            //ProcessedImageStep1 = img.Mat;
             var img2gray = img.Convert<Gray, byte>();
             _RemoveVerticalLines(img2gray);
 

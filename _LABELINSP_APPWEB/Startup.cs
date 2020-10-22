@@ -16,6 +16,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Reflection;
+using XLIB_COMMON.Model;
 
 [assembly: OwinStartupAttribute(typeof(_LABELINSP_APPWEB.Startup))]
 
@@ -27,7 +29,12 @@ namespace _LABELINSP_APPWEB
 
         public void Configuration(IAppBuilder app)
         {
+            Logger2FileSingleton.Instance.SaveLog("Startup");
+
             string clientName = Properties.Settings.Default.Client;
+            Logger2FileSingleton.Instance.SaveLog("Startup Client: " + clientName);
+
+
             DependencyInjectorMPPLTwo di = new DependencyInjectorMPPLTwo(clientName, app);
 
             var razorEngine = ViewEngines.Engines.OfType<MyRazorViewEngine>().FirstOrDefault();
@@ -92,6 +99,7 @@ namespace _LABELINSP_APPWEB
             }
             // REGISTER CONTROLLERS SO DEPENDENCIES ARE CONSTRUCTOR INJECTED
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            //builder.RegisterControllers(Assembly.GetExecutingAssembly());
             ClientIndependentInjections(appk);
         }
 
@@ -120,14 +128,18 @@ namespace _LABELINSP_APPWEB
 
         private void ElectroluxPLVInjections()
         {
-            string connectionName = DbContextAPP_ElectroluxPLV.GetConnectionName();
+            //string connectionName = DbContextAPP_ElectroluxPLV.GetConnectionName();
             dbContextParameter = new ResolvedParameter(
                 (pi, ctx) => pi.ParameterType == typeof(DbContext),
-                (pi, ctx) => new DbContextAPP_ElectroluxPLV(connectionName)
+                (pi, ctx) => new DbContextAPP_ElectroluxPLV()
             );
 
-            builder.RegisterType<DbContextAPP_ElectroluxPLV>().AsSelf().InstancePerDependency().WithParameter("connectionName", connectionName);
-            builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>().WithParameter("connectionName", connectionName);
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>()
+               .AsSelf()
+               .As<IdentityDbContext<User, ApplicationRole, string, UserLogin, UserRole, UserClaim>>()
+               .InstancePerDependency();
+            builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextCore>();
             builder.RegisterType<DbContextAPP_ElectroluxPLV>().As<IDbContextLabelInsp>();
             //builder.RegisterType<BarcodeParserEluxPLVTech>().As<IBarcodeParser>();
         }

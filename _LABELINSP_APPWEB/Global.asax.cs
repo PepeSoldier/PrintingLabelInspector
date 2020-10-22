@@ -24,7 +24,6 @@ namespace _LABELINSP_APPWEB
         }
     }
 
-
     public class HostingEnvironmentRegisteredObject : IRegisteredObject
     {
         // this is called both when shutting down starts and when it ends

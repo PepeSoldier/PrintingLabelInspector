@@ -34,7 +34,7 @@
     .title {
         color: rgb(20, 44, 53);
         text-align: center;
-        background-color: #f7d400;
+        background-color: #00c7f7;
         font-size: 38px;
         font-weight: bold;
         height: 48px;
@@ -149,15 +149,18 @@
     }
 </style>
 
-<div class="row no-gutters header" >
+<div class="row no-gutters header">
     <div class="col-2 h-100">
         <div class="logoMD logo clickable" style="background-image: url(@Url.Content("~/Content/images/logoElectroluxPLV_white.png")) !important"></div>
     </div>
     <div class="col-4 digitalClock text-center">
         <div class="headerMid" id="clockHeaderMid"></div>
     </div>
-    <div class="col-2 offset-4 headerLeft" style="text-align: right;padding-right: 15px;font-size: 36px;">
-        @ViewBag.Port
+    <div class="col-4 headerLeft" style="font-size: 36px;">
+        <input type="text" class="form-control" id="fileName" style="font-size: 36px;" />
+    </div>
+    <div class="col-2 headerLeft" style="font-size: 36px;">
+        <div class="btn btn-primary" id="btnTest" style="font-size: 36px;">TESTUJ</div>
     </div>
 </div>
 <div class="row headerDownLine">
@@ -190,7 +193,7 @@
                 <div class="col-5">
                     <div class="row no-gutters">
                         <div class="col-12">
-                            <h2 class="title">SYSTEM WERYFIKACJI ETYKIET IKEA</h2>
+                            <h2 class="title">INTERFEJS TESTOWY ETYKIET IKEA</h2>
                         </div>
                     </div>
                     <div class="row no-gutters">
@@ -254,41 +257,7 @@
 
     $(document).ready(function () {
         openFullscreen();
-        labelInspector.StartClock();
-        labelInspector.Init();
-
-        signalR = $.connection.labelInspectorHub;
-        signalR.client.broadcastMessage = function (barcode) {
-            console.log(barcode);
-            if (barcode == "reset") {
-                $("#barcode").text(barcode);
-                location.reload(true);
-            }
-            else if (barcode != "99999999999999999999") {
-                $("#barcode").text(barcode);
-                if (barcode.length > 10){
-                    let serialNumberIndexStart = barcode.length - 8;
-                    let serialNumberIndexEnd = serialNumberIndexStart + 8;
-                    let serialNumer = barcode.slice(serialNumberIndexStart, serialNumberIndexEnd);
-
-                    labelInspector.LoadDataBySerialNumber(serialNumer, barcode);
-                }
-                else {
-                    labelInspector.Init();
-                    console.log("zbyt krótki barkod");
-                }
-            }
-        };
-        $.connection.hub.start().done(function () {
-            console.log("Hub is started.");
-            signalR.server.joinWorkstation(_port);
-        });
-        $.connection.hub.disconnected(function () {
-            setTimeout(function () {
-                console.log("labelInspectorHub.Reconnect");
-                $.connection.hub.start();
-            }, 5000); // Restart connection after 5 seconds.
-        });
+        labelInspector.InitTest();
     });
 </script>
 

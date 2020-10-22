@@ -18,6 +18,9 @@ namespace _LABELINSP_APPWEB.Areas._APPWEB.Controllers
     {
         private readonly UserRepo UserRepo;
         private readonly IDbContextCore db;
+
+        public HomeController() { }
+
         public HomeController(IUserStore<User, string> userStore, IDbContextCore db)
         {
             this.db = db;

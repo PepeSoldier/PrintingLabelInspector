@@ -3,7 +3,9 @@ using IMPLEA.Utilities;
 using MDL_LABELINSP.Entities;
 using MDL_LABELINSP.Enums;
 using MDL_LABELINSP.Interfaces;
+using MDL_LABELINSP.Repos;
 using MDL_LABELINSP.UnitOfWorks;
+using MDL_LABELINSP.ViewModel;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -26,6 +28,19 @@ namespace MDL_LABELINSP.Models
         string rawLabelsPath;
         string inspectedLabelsPath;
         string invalidLabelsPath;
+        bool isTest;
+
+        public LabelInspectionManager(IDbContextLabelInsp db, bool isTest)
+        {
+            this.isTest = true;
+            labelsToBeInspected = new ConcurrentQueue<string>();
+            uow = new UnitOfWorkLabelInsp(db);
+            imgProcessing = new ImageProcessing();
+
+            rawLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\TestLabels\";
+            inspectedLabelsPath = @"C:\inetpub\wwwroot\LABELINSP_DATA\TestLabels\InspectedLabels\";
+            invalidLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\TestLabels\"; ;
+        }
 
         public LabelInspectionManager(IDbContextLabelInsp db)
         {
@@ -81,6 +96,8 @@ namespace MDL_LABELINSP.Models
 
         public void Start()
         {
+            if (isTest) return;
+
             Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.Starting...");
 
             Thread t = new Thread(InspectLabel_Thread);
@@ -156,7 +173,50 @@ namespace MDL_LABELINSP.Models
                     Environment.NewLine + " s:" + ex.ToString());
             }
         }
-        private void InspectLabel_AnalizeImage(string fileName, out ItemData itemData, out string serialNumber, out EnumLabelType labelType)
+        public LabelinspViewModel InspectLabelTest(string fileName)
+        {
+            LabelinspViewModel packingLabelViewModel = new LabelinspViewModel();
+            packingLabelViewModel.WorkorderLabel = new WorkorderLabel();
+            packingLabelViewModel.WorkorderLabelInspections = new List<WorkorderLabelInspection>();
+
+            try
+            {
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.InspectLabelTest(" + fileName + ") START");
+                InspectLabel_AnalizeImage(fileName, out ItemData itemData, out string serialNumber, out EnumLabelType labelType, true);
+
+                if (itemData != null)
+                {
+                    Workorder wo = uow.WorkorderRepo.Get(serialNumber, itemData.ItemCode);
+                    packingLabelViewModel.WorkorderLabel = new WorkorderLabel()
+                    {
+                        Id = 0,
+                        SerialNumber = serialNumber,
+                        TimeStamp = DateTime.Now,
+                        Workorder = new Workorder() { 
+                            ItemCode = wo?.ItemCode ?? "", 
+                            ItemName = wo?.ItemName ?? "", 
+                            WorkorderNumber = wo?.WorkorderNumber ?? "" 
+                        }
+                    };
+                    packingLabelViewModel.WorkorderLabelInspections = WorkorderLabelInspectionRepo.PrepareInspectionResults(0, itemData, labelType);
+                    Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.InspectLabelTest(" + fileName + ") END");
+                }
+                else
+                {
+                    //ArchiveOrDeleteRawLabel(fileName, true);
+                    Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.InspectLabelTest(" + fileName + ") END - ItemData is NULL");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.InspectLabelTest(" + fileName + ") Exception: " + ex.Message +
+                    Environment.NewLine + " d:" + ex.InnerException?.Message +
+                    Environment.NewLine + " s:" + ex.ToString());
+            }
+
+            return packingLabelViewModel;
+        }
+        private void InspectLabel_AnalizeImage(string fileName, out ItemData itemData, out string serialNumber, out EnumLabelType labelType, bool force = false)
         {
             string[] barcode = fileName.Split('_'); //FILENAME EXAMPLE: 20201002124748_05292260050040276228_Label_S
             string labelType_ = barcode[barcode.Length - 1];
@@ -166,16 +226,17 @@ namespace MDL_LABELINSP.Models
             imgProcessing.RotateImage(180);
             string bigBarcode = imgProcessing.BarcodeDetectReadAddFrame_Big("");
 
-            ParseBarcode_RatingLabel(barcode.Length >= 2 ? barcode[1] : "", out serialNumber, out string elc);
+            ParseBarcode_RatingLabel(barcode.Length >= 2 ? barcode[1] : "", out string serialNumberRating, out string elc);
             ParseBarcode_PackLabel(bigBarcode, out string serialNumberBarcode, out string pncBarcode);
 
             itemData = null;
+            serialNumber = serialNumberBarcode;
 
-            if (serialNumber == serialNumberBarcode)
+            if (serialNumberRating == serialNumberBarcode || force)
             {
-                itemData = uow.ItemDataRepo.GetByItemCodeAndVersion(null, elc);
+                itemData = uow.ItemDataRepo.GetByItemCodeAndVersion(pncBarcode, elc);
 
-                if (itemData != null && serialNumber == serialNumberBarcode)
+                if (itemData != null)
                 {
                     itemData.ActualBarcode = imgProcessing.BarcodeDetectReadAddFrame_Small(itemData.ExpectedBarcodeSmall);
                     itemData.ActualName = imgProcessing.ReadModelName(itemData.ExpectedName);
@@ -221,9 +282,17 @@ namespace MDL_LABELINSP.Models
         }
         private void ParseBarcode_RatingLabel(string data, out string serialNumber, out string elc)
         {
-            //05240570080040178388        
-            serialNumber = data.Mid(11, 8);
-            elc = data.Mid(1, 9);
+            //05240570080040178388
+            if (data.Length > 18)
+            {
+                serialNumber = data.Mid(11, 8);
+                elc = data.Mid(1, 9);
+            }
+            else
+            {
+                serialNumber = null;
+                elc = null;
+            }
         }
 
         public void Update(string fileName)

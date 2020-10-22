@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MDL_LABELINSP.Models;
 using Moq;
+using System.Collections.Concurrent;
 
 namespace _LABELINSP_TESTS
 {
@@ -36,7 +37,7 @@ namespace _LABELINSP_TESTS
 
             //Assert
             List<PrintLog> pl = (List<PrintLog>)obj.GetField("printingLogs");
-            List<DownloadTask> pt = (List<DownloadTask>)obj.GetField("downloadTasks");
+            ConcurrentQueue<DownloadTask> pt = (ConcurrentQueue<DownloadTask>)obj.GetField("downloadTasks");
             List<DownloadTask> pt_expected = new List<DownloadTask>();
             pt_expected.Add(new DownloadTask { Barcode = "05240570080040178390", LabelType = "Label_F", PrinterIp = "" });
             pt_expected.Add(new DownloadTask { Barcode = "05240570080040178390", LabelType = "Label_R", PrinterIp = "" });

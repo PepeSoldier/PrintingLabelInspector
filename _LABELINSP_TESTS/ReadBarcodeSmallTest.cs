@@ -10,16 +10,6 @@ namespace _LABELINSP_TESTS
     public class ReadBarcodeSmallTest
     {
         [TestMethod]
-        public void ReadBarcodeSmallTest_076044()
-        {
-            ImageProcessing ip = new ImageProcessing();
-            ip.SetImage(Helper.GetImgPath("911076044.jpg"));
-            
-            string smallBarcode = ip.BarcodeDetectReadAddFrame_Small();
-
-            Assert.AreEqual("20385799215529", smallBarcode);
-        }
-        [TestMethod]
         public void ReadBarcodeSmallTest_076047()
         {
             ImageProcessing ip = new ImageProcessing();

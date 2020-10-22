@@ -39,55 +39,9 @@ namespace MDL_LABELINSP.Repos
             {
                 if (workorderLabel.Id > 0 && itemData.IsDataEmpty == false)
                 {
-                    List<WorkorderLabelInspection> workorderLabelInspections = new List<WorkorderLabelInspection>();
-
-                    workorderLabelInspections.Add(new WorkorderLabelInspection
-                    {
-                        TestName = "Nazwa Modelu",
-                        ExpectedValueText = itemData.ExpectedName,
-                        ActualValueText = itemData.ActualName,
-                        Result = itemData.ExpectedName == itemData.ActualName,
-                        LabelType = labelType,
-                        TimeStamp = DateTime.Now,
-                        WorkorderLabelId = workorderLabel.Id
-                    });
-                    
-                    workorderLabelInspections.Add(new WorkorderLabelInspection
-                    {
-                        TestName = "Kod Produktu",
-                        ExpectedValueText = itemData.ExpectedProductCode,
-                        ActualValueText = itemData.ActualProductCode,
-                        Result = itemData.ExpectedProductCode == itemData.ActualProductCode,
-                        LabelType = labelType,
-                        TimeStamp = DateTime.Now,
-                        WorkorderLabelId = workorderLabel.Id
-                    });
-                    
-                    workorderLabelInspections.Add(new WorkorderLabelInspection
-                    {
-                        TestName = "Kod Kreskowy",
-                        ExpectedValueText = itemData.ExpectedBarcodeSmall,
-                        ActualValueText = itemData.ActualBarcode,
-                        Result = itemData.ExpectedBarcodeSmall == itemData.ActualBarcode,
-                        LabelType = labelType,
-                        TimeStamp = DateTime.Now,
-                        WorkorderLabelId = workorderLabel.Id
-                    });
-
-                    workorderLabelInspections.Add(new WorkorderLabelInspection
-                    {
-                        TestName = "Waga",
-                        ExpectedValueText = itemData.ExpectedWeightKG,
-                        ActualValueText = itemData.ActualWeightKG,
-                        Result = itemData.ExpectedWeightKG == itemData.ActualWeightKG,
-                        LabelType = labelType,
-                        TimeStamp = DateTime.Now,
-                        WorkorderLabelId = workorderLabel.Id
-                    });
-
-                    workorderLabelInspections.RemoveAll(x => x.ActualValueText.Length < 1);
+                    List<WorkorderLabelInspection> workorderLabelInspections = PrepareInspectionResults(workorderLabel.Id, itemData, labelType);
                     AddOrUpdateRange(workorderLabelInspections);
-                    
+
                     int positiveCount = workorderLabelInspections.Count(x => x.Result == true);
                     return positiveCount == workorderLabelInspections.Count;
                 }
@@ -104,5 +58,56 @@ namespace MDL_LABELINSP.Repos
             return true;
         }
 
+        public static List<WorkorderLabelInspection> PrepareInspectionResults(int workorderLabelId, ItemData itemData, EnumLabelType labelType)
+        {
+            List<WorkorderLabelInspection> workorderLabelInspections = new List<WorkorderLabelInspection>();
+
+            workorderLabelInspections.Add(new WorkorderLabelInspection
+            {
+                TestName = "Nazwa Modelu",
+                ExpectedValueText = itemData.ExpectedName,
+                ActualValueText = itemData.ActualName,
+                Result = itemData.ExpectedName == itemData.ActualName,
+                LabelType = labelType,
+                TimeStamp = DateTime.Now,
+                WorkorderLabelId = workorderLabelId
+            });
+
+            workorderLabelInspections.Add(new WorkorderLabelInspection
+            {
+                TestName = "Kod Produktu",
+                ExpectedValueText = itemData.ExpectedProductCode,
+                ActualValueText = itemData.ActualProductCode,
+                Result = itemData.ExpectedProductCode == itemData.ActualProductCode,
+                LabelType = labelType,
+                TimeStamp = DateTime.Now,
+                WorkorderLabelId = workorderLabelId
+            });
+
+            workorderLabelInspections.Add(new WorkorderLabelInspection
+            {
+                TestName = "Kod Kreskowy",
+                ExpectedValueText = itemData.ExpectedBarcodeSmall,
+                ActualValueText = itemData.ActualBarcode,
+                Result = itemData.ExpectedBarcodeSmall == itemData.ActualBarcode,
+                LabelType = labelType,
+                TimeStamp = DateTime.Now,
+                WorkorderLabelId = workorderLabelId
+            });
+
+            workorderLabelInspections.Add(new WorkorderLabelInspection
+            {
+                TestName = "Waga",
+                ExpectedValueText = itemData.ExpectedWeightKG,
+                ActualValueText = itemData.ActualWeightKG,
+                Result = itemData.ExpectedWeightKG == itemData.ActualWeightKG,
+                LabelType = labelType,
+                TimeStamp = DateTime.Now,
+                WorkorderLabelId = workorderLabelId
+            });
+
+            workorderLabelInspections.RemoveAll(x => x.ActualValueText.Length < 1);
+            return workorderLabelInspections;
+        }
     }
 }

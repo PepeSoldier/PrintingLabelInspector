@@ -19,13 +19,6 @@ namespace _LABELINSP_TESTS
         }
 
         [TestMethod]
-        public void ReadWeightBig_076044()
-        {
-            string itemCode = "911076044";
-            TestWeightBig(itemCode);
-        }
-
-        [TestMethod]
         public void ReadWeightBig_076047()
         {
             string itemCode = "911076047";

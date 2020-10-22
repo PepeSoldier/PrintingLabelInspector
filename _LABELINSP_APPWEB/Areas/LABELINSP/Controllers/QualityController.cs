@@ -7,6 +7,7 @@ using MDL_LABELINSP.ViewModel;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using XLIB_COMMON.Model;
 
@@ -25,11 +26,24 @@ namespace _LABELINSP_APPWEB.Areas.LABELINSP.Controllers
             uow = new UnitOfWorkLabelInsp(db);
         }
 
-        //PrintingLabelInspector Methods
+        [HttpGet]
         public ActionResult LabelInspector(int port)
         {
             ViewBag.Port = port;
             return View();
+        }
+        [HttpGet]
+        public ActionResult LabelInspectorTest()
+        {
+            ViewBag.Port = 0;
+            return View();
+        }
+        [HttpPost]
+        public JsonResult InspectLabelTest(string fileName)
+        {
+            LabelInspectionManager lim = new LabelInspectionManager(db, true);
+            LabelinspViewModel packingLabelViewModel = lim.InspectLabelTest(fileName);
+            return Json(packingLabelViewModel);
         }
 
         [HttpGet]
