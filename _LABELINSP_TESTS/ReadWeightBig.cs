@@ -132,6 +132,11 @@ namespace _LABELINSP_TESTS
             string itemCode = "911536494";
             TestWeightBig(itemCode);
         }
+        public void ReadWeightBig_536495()
+        {
+            string itemCode = "911536495";
+            TestWeightBig(itemCode);
+        }
         [TestMethod]
         public void ReadWeightBig_536497()
         {

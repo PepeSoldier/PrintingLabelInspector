@@ -241,6 +241,17 @@ namespace _LABELINSP_TESTS
             Assert.AreEqual("RENODLAD", modelName);
             //Assert.AreEqual("2409110760782103412345", bigBarcode);
         }
+        public void ReadModelNameTest_536495()
+        {
+            ImageProcessing ip = new ImageProcessing();
+            ip.SetImage(Helper.GetImgPath("911536495.png"));
+
+            string modelName = ip.ReadModelName();
+            //string bigBarcode = ip.BarcodeDetectReadAddFrame();
+
+            Assert.AreEqual("RENODLAD", modelName);
+            //Assert.AreEqual("2409110760782103412345", bigBarcode);
+        }
         [TestMethod]
         public void ReadModelNameTest_536497()
         {

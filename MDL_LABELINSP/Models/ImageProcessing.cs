@@ -527,7 +527,7 @@ namespace MDL_LABELINSP.Models
             //Detection of vertical lines
             CvInvoke.Subtract(absGradX, absGradY, fullGrad);
             //Blur
-            CvInvoke.Blur(fullGrad, bluredFrame, new Size(5, 5), new Point(-1, -1));
+            CvInvoke.Blur(fullGrad, bluredFrame, new Size(2, 2), new Point(-1, -1));
             //Binarization
             CvInvoke.Threshold(bluredFrame, thresholdFrame, 80, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
             // Closure

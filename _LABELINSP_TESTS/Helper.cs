@@ -31,6 +31,7 @@ namespace _LABELINSP_TESTS
             new ItemData(){ ItemCode = "911536492", ExpectedProductCode = "90475616", ExpectedWeightKG = "41", ExpectedName = "" },
             new ItemData(){ ItemCode = "911536493", ExpectedProductCode = "70475617", ExpectedWeightKG = "40", ExpectedName = "" },
             new ItemData(){ ItemCode = "911536494", ExpectedProductCode = "50475618", ExpectedWeightKG = "40", ExpectedName = "" },
+            new ItemData(){ ItemCode = "911536495", ExpectedProductCode = "30475619", ExpectedWeightKG = "40", ExpectedName = "" },
             new ItemData(){ ItemCode = "911536497", ExpectedProductCode = "20475610", ExpectedWeightKG = "42", ExpectedName = "" },
             new ItemData(){ ItemCode = "911536499", ExpectedProductCode = "00475611", ExpectedWeightKG = "41", ExpectedName = "" },
             new ItemData(){ ItemCode = "911536500", ExpectedProductCode = "80475612", ExpectedWeightKG = "41", ExpectedName = "" },

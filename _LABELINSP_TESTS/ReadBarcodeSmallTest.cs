@@ -232,6 +232,18 @@ namespace _LABELINSP_TESTS
             //Assert.AreEqual("2409110760782103412345", bigBarcode);
         }
         [TestMethod]
+        public void ReadBarcodeSmallTest_536495()
+        {
+            ImageProcessing ip = new ImageProcessing();
+            ip.SetImage(Helper.GetImgPath("911536495.png"));
+
+            string smallBarcode = ip.BarcodeDetectReadAddFrame_Small();
+            //string bigBarcode = ip.BarcodeDetectReadAddFrame();
+
+            Assert.AreEqual("30475619215529", smallBarcode);
+            //Assert.AreEqual("2409110760782103412345", bigBarcode);
+        }
+        [TestMethod]
         public void ReadBarcodeSmallTest_536497()
         {
             ImageProcessing ip = new ImageProcessing();
