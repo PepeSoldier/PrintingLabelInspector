@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Features2D;
 using Emgu.CV.OCR;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -204,5 +206,75 @@ namespace _LABELINSP_FORMAPP
         {
             ProcessLoadedImage(5);
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            //tbImageName.Text = @"\IKEA\20201107_190718.jpg";
+            //string imagePath = @"C:\Temp\" + tbImageName.Text;
+            //string imagePath = @"C:\temp\IKEA\sim.png";
+            //ip.SetImage(imagePath);
+
+            //var img = new Image<Bgr, byte>(@"C:\Temp\IKEA\sim.png");
+            var img1 = new Image<Bgr, byte>(@"C:\Temp\IKEA\20201107_190718.jpg");
+            var img = new MyAlgorithms().Contours(img1.Convert<Gray, byte>());
+
+            //img.ToBitmap().Save(@"C:\Temp\IKEA\Shape__.png", ImageFormat.Png);
+
+            var shape = new Image<Bgr, byte>(@"C:\temp\IKEA\shape_2.png");
+            VectorOfVectorOfDMatch matches = new VectorOfVectorOfDMatch();
+
+            Mat res = new Mat();
+            CvInvoke.MatchTemplate(img, shape, res, TemplateMatchingType.CcoeffNormed);
+
+            var img2 = res.ToImage<Gray, byte>();
+            var data = res.GetData();
+            double[] max = new double[3]{ 0, 0, 0 };
+
+            for (int r = 0; r < res.Rows; r += 1)
+            {
+                for (int c = 0; c < res.Cols; c += 1)
+                {
+                    if(Convert.ToDouble(data.GetValue(r,c)) > max[2])
+                    {
+                        max[0] = r;
+                        max[1] = c;
+                        max[2] = Convert.ToDouble(data.GetValue(r, c));
+                    }
+                }
+            }
+
+            ip.DrawGreenFrame(img.Mat, new Rectangle(new Point((int)max[1],(int)max[0]), new Size(shape.Width, shape.Height)), 1);
+            
+            
+
+
+            //MyAlgorithms.FindMatch(shape.Mat, ip.SourceImage.Mat, out long matchTime, out VectorOfKeyPoint modelKeyPoints, out VectorOfKeyPoint observedKeyPoints, matches, out Mat mask, out Mat homography);
+
+
+            //List<MDMatch[]> good = new List<MDMatch[]>();
+            //List<MKeyPoint> points1 = new List<MKeyPoint>();
+
+            //int idx = 0;
+            //foreach (MDMatch[] m in matches.ToArrayOfArray())
+            //{
+            //    if (m[0].Distance < 0.85 * m[1].Distance)
+            //    {
+            //        good.Add(m);
+            //        points1.Add(observedKeyPoints[idx]);
+            //    }
+            //    idx++;
+            //}
+
+            //foreach (MKeyPoint p in points1)
+            //{
+            //    ip.DrawGreenFrame(ip.SourceImage.Mat, new Rectangle(new Point((int)p.Point.X, (int)p.Point.Y), new Size(shape.Width, shape.Height)), 1);
+            //    ip.DrawGreenFrame(ip.SourceImage.Mat, new Rectangle(new Point((int)p.Point.X, (int)p.Point.Y), new Size(shape.Width, shape.Height)), 1);
+            //}
+
+            DisplayImg(pbSourceImage, img.Mat);
+            DisplayImg(pbFinalPreviewImage, img.Mat);
+        }
+
+
     }
 }

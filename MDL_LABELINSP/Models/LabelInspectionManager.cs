@@ -25,9 +25,10 @@ namespace MDL_LABELINSP.Models
         List<LabelsDownloader> LabelsDownloaders;
         ImageProcessing imgProcessing;
         ConcurrentQueue<string> labelsToBeInspected = new ConcurrentQueue<string>();
-        string rawLabelsPath;
-        string inspectedLabelsPath;
-        string invalidLabelsPath;
+        readonly string RAW_LABELS_PATH;
+        readonly string INSPECTED_LABELS_PATH;
+        readonly string INVALID_LABELS_PATH;
+        readonly string WORKORDERS_LABELS_PATH;
         bool isTest;
 
         public LabelInspectionManager(IDbContextLabelInsp db, bool isTest)
@@ -37,23 +38,24 @@ namespace MDL_LABELINSP.Models
             uow = new UnitOfWorkLabelInsp(db);
             imgProcessing = new ImageProcessing();
 
-            rawLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\TestLabels\";
-            inspectedLabelsPath = @"C:\inetpub\wwwroot\LABELINSP_DATA\TestLabels\InspectedLabels\";
-            invalidLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\TestLabels\"; ;
+            RAW_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\TestLabels\";
+            INSPECTED_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\TestLabels\InspectedLabels\";
+            INVALID_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\TestLabels\";
+            WORKORDERS_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\WorkordersLabels\";
         }
-
         public LabelInspectionManager(IDbContextLabelInsp db)
         {
             labelsToBeInspected = new ConcurrentQueue<string>();
             uow = new UnitOfWorkLabelInsp(db);
             imgProcessing = new ImageProcessing();
 
-            rawLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\RawLabels\";
-            inspectedLabelsPath = @"C:\inetpub\wwwroot\LABELINSP_DATA\InspectedLabels\";
-            invalidLabelsPath = @"C:\inetpub\wwwroot\\LABELINSP_DATA\InvalidLabels\";
+            RAW_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\RawLabels\";
+            INSPECTED_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\InspectedLabels\";
+            INVALID_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\InvalidLabels\";
+            WORKORDERS_LABELS_PATH = @"C:\inetpub\wwwroot\LABELINSP_DATA\WorkordersLabels\";
 
             ConnectionParameters cp = new ConnectionParameters();
-            cp.RawLabelsPath = rawLabelsPath;
+            cp.RawLabelsPath = RAW_LABELS_PATH;
             cp.DbSever = @"192.168.0.221\SQLEXPRESS";
             cp.DbName = "LabelPrinter_2";
             cp.DbUser = "labelinsp_user";
@@ -63,7 +65,7 @@ namespace MDL_LABELINSP.Models
             cp.PrinterF = "192.168.0.218";
 
             ConnectionParameters cp2 = new ConnectionParameters();
-            cp2.RawLabelsPath = rawLabelsPath;
+            cp2.RawLabelsPath = RAW_LABELS_PATH;
             cp2.DbSever = @"192.168.0.220\SQLEXPRESS";
             cp2.DbName = "LabelPrinter_1";
             cp2.DbUser = "labelinsp_user";
@@ -73,7 +75,7 @@ namespace MDL_LABELINSP.Models
             cp2.PrinterF = "192.168.0.213";
 
             ConnectionParameters cp3 = new ConnectionParameters();
-            cp3.RawLabelsPath = rawLabelsPath;
+            cp3.RawLabelsPath = RAW_LABELS_PATH;
             cp3.DbSever = @"192.168.0.210";
             cp3.DbName = "LabelPrinter_3";
             cp3.DbUser = "labelinsp_user";
@@ -121,6 +123,7 @@ namespace MDL_LABELINSP.Models
         private void InspectLabel_Thread()
         {
             Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.Started");
+            int i = 0;
             while (appIsRunning)
             {
                 try
@@ -130,10 +133,19 @@ namespace MDL_LABELINSP.Models
                     if (isData && data != null && data.Length > 0)
                     {
                         InspectLabel(data);
+                        i++;
                     }
                     else
                     {
+                        DeleteOldFiles();
+                        i = 0;
                         Thread.Sleep(1000);
+                    }
+
+                    if(i >= 30)
+                    {
+                        DeleteOldFiles();
+                        i = 0;
                     }
                 }
                 catch (Exception ex)
@@ -158,6 +170,7 @@ namespace MDL_LABELINSP.Models
                     bool allTestsPassed = uow.WorkorderLabelInspectionRepo.SaveInspectionResults(workorderLabel, itemData, labelType);
                     uow.WorkorderRepo.UpdateStats(wo, allTestsPassed);
                     ArchiveOrDeleteRawLabel(fileName, allTestsPassed);
+                    CopyWorkorderLabelIfNotExists(wo.WorkorderNumber, $"{serialNumber}_{labelType.ToString()}");
                     Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.InspectLabel(" + fileName + ") END");
                 }
                 else
@@ -222,7 +235,7 @@ namespace MDL_LABELINSP.Models
             string labelType_ = barcode[barcode.Length - 1];
             labelType = GetLabelTypeByChar(labelType_);
 
-            imgProcessing.SetImage(string.Format("{0}{1}.{2}", rawLabelsPath, fileName, "png"));
+            imgProcessing.SetImage(string.Format("{0}{1}.{2}", RAW_LABELS_PATH, fileName, "png"));
             imgProcessing.RotateImage(180);
             string bigBarcode = imgProcessing.BarcodeDetectReadAddFrame_Big("");
 
@@ -251,7 +264,7 @@ namespace MDL_LABELINSP.Models
                         IsDataEmpty = true
                     };
                 }
-                imgProcessing.SaveFinalPreviewImage(string.Format("{0}{1}_{2}.{3}", inspectedLabelsPath, serialNumber, labelType_, "png"));
+                imgProcessing.SaveFinalPreviewImage(string.Format("{0}{1}_{2}.{3}", INSPECTED_LABELS_PATH, serialNumber, labelType_, "png"));
             }
             else
             {
@@ -261,19 +274,52 @@ namespace MDL_LABELINSP.Models
 
         private static EnumLabelType GetLabelTypeByChar(string labelType_)
         {
-            return labelType_ == "S" ? EnumLabelType.Side : (labelType_ == "R" ? EnumLabelType.Rear : EnumLabelType.Front);
+            return labelType_ == "S" ? EnumLabelType.S : (labelType_ == "R" ? EnumLabelType.R : EnumLabelType.F);
         }
-        private void ArchiveOrDeleteRawLabel(string data, bool allTestsPassed)
+        private void ArchiveOrDeleteRawLabel(string labelFileName, bool allTestsPassed)
         {
             if (allTestsPassed)
             {
-                File.Delete(string.Format("{0}{1}.{2}", rawLabelsPath, data, "png"));
+                File.Delete(string.Format("{0}{1}.{2}", RAW_LABELS_PATH, labelFileName, "png"));
             }
             else
             {
-                File.Move(string.Format("{0}{1}.{2}", rawLabelsPath, data, "png"), string.Format("{0}{1}.{2}", invalidLabelsPath, data, "png"));
+                File.Move(string.Format("{0}{1}.{2}", RAW_LABELS_PATH, labelFileName, "png"), string.Format("{0}{1}.{2}", INVALID_LABELS_PATH, labelFileName, "png"));
             }
         }       
+        private void DeleteOldFiles()
+        {
+            try
+            {
+                Directory.GetFiles(INSPECTED_LABELS_PATH)
+                    .Select(f => new FileInfo(f))
+                    .Where(f => f.CreationTime < DateTime.Now.AddHours(-1))
+                    .ToList()
+                    .ForEach(f => f.Delete());
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.DeleteOldFiles ex:" + ex.ToString());
+            }
+        }
+        private void CopyWorkorderLabelIfNotExists(string orderNumber, string labelFileName)
+        {
+            string sourceFilePath = string.Format("{0}{1}.{2}", INSPECTED_LABELS_PATH, labelFileName, "png");
+            string destFilePath = string.Format("{0}{1}.{2}", WORKORDERS_LABELS_PATH, orderNumber, "png");
+            try
+            {
+                if (!File.Exists(string.Format("{0}{1}.{2}", WORKORDERS_LABELS_PATH, orderNumber, "png")))
+                {
+                    File.Copy( sourceFilePath, destFilePath, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.CopyWorkorderLabelIfNotExists source:" + sourceFilePath);
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.CopyWorkorderLabelIfNotExists dest:" + destFilePath);
+                Logger2FileSingleton.Instance.SaveLog("LabelInspectionManager.CopyWorkorderLabelIfNotExists ex:" + ex.ToString());
+            }
+        }
         private void ParseBarcode_PackLabel(string data, out string serialNumber, out string pnc)
         {
             //240|911076047|21|03412345|0

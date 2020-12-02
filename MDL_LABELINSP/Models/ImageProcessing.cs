@@ -578,10 +578,10 @@ namespace MDL_LABELINSP.Models
             }
             return rect;
         }
-        public Rectangle DrawGreenFrame(Mat capturedFrame, Rectangle rect)
+        public Rectangle DrawGreenFrame(Mat capturedFrame, Rectangle rect, int width = 3)
         {
             rect = _TrimRectangleToMat(capturedFrame, rect);
-            CvInvoke.Rectangle(capturedFrame, rect, new MCvScalar(0.0, 255.0, 0.0), 3);
+            CvInvoke.Rectangle(capturedFrame, rect, new MCvScalar(0.0, 255.0, 0.0), width);
             return rect;
         }
         public Rectangle DrawRedFrame(Mat capturedFrame, Rectangle rect)

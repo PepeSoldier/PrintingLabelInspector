@@ -215,7 +215,6 @@ namespace MDL_LABELINSP.Models
         private void Thread_DownloadLabelsFromPrinter()
         {
             downloadedLabels = new List<string>();
-            string printerIp = "";
 
             Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Thread Start");
 
@@ -225,28 +224,27 @@ namespace MDL_LABELINSP.Models
 
                 if (isData)
                 {
-                    Task task = Task.Factory.StartNew(() => {
+                    Task task = Task.Factory.StartNew(() => 
+                    {
+                        string printerIp = "";
+
                         if (downloadTask.LabelType == "Label_F") printerIp = connparams.PrinterF;
                         else if (downloadTask.LabelType == "Label_R") printerIp = connparams.PrinterR;
                         else if (downloadTask.LabelType == "Label_S") printerIp = connparams.PrinterS;
-
-                        //if (true) //(dt.LabelType == "Label_S")
-
-                        Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode + "_" + downloadTask.LabelType);
 
                         using (var client = new WebClient())
                         {
                             try
                             {
+                                Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode + "_" + downloadTask.LabelType);
                                 string dateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
                                 client.DownloadFile("http://" + printerIp + "/printer/label.png", connparams.RawLabelsPath + dateNow + "_" + downloadTask.Barcode + "_" + downloadTask.LabelType + ".png");
-                                //downloadedLabels.Add(dateNow + "_" + dt.Barcode + "_" + dt.LabelType);
                                 string downloadedLabel = dateNow + "_" + downloadTask.Barcode + "_" + downloadTask.LabelType;
                                 NotifyObservers(downloadedLabel);
                             }
                             catch (Exception ex)
                             {
-                                Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Exception: " + printerIp + " / " + downloadTask.Barcode + ": " + ex.Message + " d:" + ex.InnerException?.Message);
+                                Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Exception: " + printerIp +  " (" + downloadTask.LabelType + ") / " + downloadTask.Barcode + ": " + ex.Message + " d:" + ex.InnerException?.Message);
                             }
                         }
                         //Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode + " END");
@@ -259,42 +257,6 @@ namespace MDL_LABELINSP.Models
             }
 
             Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Thread Stopped!");
-
-            //foreach (var downloadTask in downloadTasks)
-            //{
-            //    if (downloadTask.LabelType == "Label_F") printerIp = connparams.PrinterF;
-            //    else if (downloadTask.LabelType == "Label_R") printerIp = connparams.PrinterR;
-            //    else if (downloadTask.LabelType == "Label_S") printerIp = connparams.PrinterS;
-
-            //    if(true) //(dt.LabelType == "Label_S")
-            //    {
-            //        Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode);
-
-            //        Task.Factory.StartNew(() =>
-            //        {
-            //            using (var client = new WebClient())
-            //            {
-            //                try
-            //                {
-
-            //                    string dateNow = DateTime.Now.ToString("yyyyMMddHHmmss");
-            //                    client.DownloadFile("http://" + printerIp + "/printer/label.png", connparams.RawLabelsPath + dateNow + "_" + downloadTask.Barcode + "_" + downloadTask.LabelType + ".png");
-            //                    //downloadedLabels.Add(dateNow + "_" + dt.Barcode + "_" + dt.LabelType);
-            //                    string downloadedLabel = dateNow + "_" + downloadTask.Barcode + "_" + downloadTask.LabelType;
-            //                    NotifyObservers(downloadedLabel);
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter Exception: " + ex.Message + " d:" + ex.InnerException?.Message);
-            //                }
-            //            }
-            //            Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode + " FINISHED!");
-            //        });
-            //        Logger2FileSingleton.Instance.SaveLog("LabelsDownloader.DownloadLabelFromPrinter: " + printerIp + " / " + downloadTask.Barcode + " [AFTER TASK]");
-            //    }
-            //}
-
-            //downloadTasks.Clear();
         }
         private void NotifyObservers(string downloadedLabel)
         {
