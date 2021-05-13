@@ -91,6 +91,7 @@ namespace MDL_LABELINSP.Repos
             catch (Exception ex)
             {
                 Logger2FileSingleton.Instance.SaveLog("WorkorderRepo.GetBySerialNumber Get wo Exception: " + ex.Message);
+                return null;
             }
             
             try
@@ -99,13 +100,20 @@ namespace MDL_LABELINSP.Repos
                 //wo.FirstInspectionDate = DateTime.Now;
                 //wo.LastInspectionDate = DateTime.Now;
 
-                int.TryParse(wo.SerialNumberFrom, out int sf);
-                int.TryParse(wo.SerialNumberTo, out int st);
+                if (wo != null)
+                {
+                    int.TryParse(wo.SerialNumberFrom, out int sf);
+                    int.TryParse(wo.SerialNumberTo, out int st);
 
-                wo.SerialNumberFromInt = sf;
-                wo.SerialNumberToInt = st;
+                    wo.SerialNumberFromInt = sf;
+                    wo.SerialNumberToInt = st;
 
-                Add(wo);
+                    Add(wo);
+                }
+                else
+                {
+                    Logger2FileSingleton.Instance.SaveLog($"WorkorderRepo.GetBySerialNumber Get wo Exception: WO not found (serial: {serialNumber})");
+                }
                 return wo;
             }
             catch (Exception ex)

@@ -21,6 +21,19 @@ namespace _LABELINSP_APPWEB
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);       
             HostingEnvironment.RegisterObject(new HostingEnvironmentRegisteredObject());
+
+            try
+            {
+                System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator = ".";
+                if (!System.Globalization.CultureInfo.DefaultThreadCurrentCulture.IsReadOnly)
+                {
+                    System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("pl-PL");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger2FileSingleton.Instance.SaveLog("System.Globalization SET exception: " + ex.ToString());
+            }
         }
     }
 

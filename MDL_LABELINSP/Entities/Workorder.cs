@@ -8,6 +8,12 @@ namespace MDL_LABELINSP.Entities
     [Table("Workorder", Schema = "LABELINSP")]
     public class Workorder : IModelEntity
     {
+        public Workorder()
+        {
+            FirstInspectionDate = new DateTime(1900, 1, 1);
+            LastInspectionDate = new DateTime(1900, 1, 1);
+        }
+
         public int Id { get; set; }
         [MaxLength(50)]
         public string WorkorderNumber { get; set; }
@@ -26,12 +32,15 @@ namespace MDL_LABELINSP.Entities
         public int SerialNumberToInt { get; set; }
 
         public DateTime FirstInspectionDate { get; set; }
-
         public DateTime LastInspectionDate { get; set; }
 
         public int SuccessfullInspections { get; set; }
         public int FailfullInspections { get; set; }
         public string FailInspectionLabelPath { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Id}. {WorkorderNumber}. {FirstInspectionDate.ToString()}. {LastInspectionDate.ToString()}";
+        }
     }
 }
